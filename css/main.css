@@ -16,3 +16,7 @@ h3 {
   color: navy;
   margin-left: 40px;
 }
+
+.menu {
+  border:2px solid #b100fa;  
+}
