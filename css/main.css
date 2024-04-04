@@ -20,3 +20,7 @@ h3 {
 .menu {
   border:2px solid #b100fa;  
 }
+
+.pagemenu {
+  display: flex;
+}
