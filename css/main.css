@@ -17,11 +17,25 @@ h3 {
   margin-left: 40px;
 }
 
-.menu {
-  border:2px solid #b100fa;  
+.menulink {
+  border:1px solid #0f087b;  
+  padding: 5pt;
+  color:blueviolet ;
+  text-decoration: none;
 }
 
 .pagemenu {
   display: flex;
-  color: aqua;
+  margin: auto;
+  border: none;
+
+}
+
+.pagemenuitem {
+   background-color:#ffffff;
+   padding: 10pt;
+}
+
+#hhimage {
+  width: 400px;
 }
