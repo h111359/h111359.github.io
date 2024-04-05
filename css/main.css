@@ -37,7 +37,11 @@ h3 {
 }
 
 #hhimage {
-  width: 400px;
+  width: 200px;
+}
+
+#moto {
+  font-style: italic;
 }
 
 .myartimg {
