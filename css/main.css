@@ -48,3 +48,21 @@ h3 {
   /*width: 400px;*/
   height: 400px;
 }
+
+.links_list {
+  display: block;
+}
+
+.links_list_element {
+  display:inline-block;
+  list-style-type: none;
+  margin: 1px;
+  padding: 15px;
+  background-color:beige;  
+}
+
+.link_button {
+  padding: 5px;
+  margin: 10px;
+  text-decoration: none;
+}
