@@ -25,6 +25,8 @@ h3 {
   color:blueviolet ;
   text-decoration: none;
   font-size: 1rem;
+  width: 200px;
+  display: inline-block;
 }
 
 .pagemenu {
@@ -68,4 +70,6 @@ h3 {
   padding: 5px;
   margin: 10px;
   text-decoration: none;
+  width: 100px;
+  display: inline-block
 }
