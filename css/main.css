@@ -1,28 +1,28 @@
 body {
-  background-color: #fff8ff;
+  background-color: #FAEED1;
   font-size: 14pt;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 h1 {
-  color: navy;
+  color: #603F26;
   margin-left: 20px;
 }
 
 h2 {
-  color: navy;
+  color: #603F26;
   margin-left: 30px;
 }
 
 h3 {
-  color: navy;
+  color: #603F26;
   margin-left: 40px;
 }
 
 .menulink {
-  border:1px solid #0f087b;  
+  border:1px solid #6C4E31;  
   padding: 5pt;
-  color:blueviolet ;
+  color: #603F26 ;
   text-decoration: none;
   font-size: 1rem;
   width: 200px;
@@ -37,7 +37,7 @@ h3 {
 }
 
 .pagemenuitem {
-   background-color:#ffffff;
+   background-color:#FAEED1;
    padding: 10pt;
 }
 
@@ -63,7 +63,7 @@ h3 {
   list-style-type: none;
   margin: 1px;
   padding: 15px;
-  background-color:beige;  
+  background-color:#DED0B6;  
 }
 
 .link_button {
