@@ -1,5 +1,7 @@
+/* Color scheme: https://colorhunt.co/palette/fdf7e4faeed1ded0b6bbab8c */
+
 body {
-  background-color: #FAEED1;
+  background-color: #FDF7E4;
   font-size: 14pt;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -21,7 +23,8 @@ h3 {
 }
 
 .menulink {
-  border:1px solid #6C4E31;  
+  border:1px none #6C4E31; 
+  background-color:#FAEED1; 
   padding: 5pt;
   text-decoration: none;
   font-size: 1.25rem;
@@ -34,11 +37,15 @@ h3 {
   display: flex;
   margin: auto;
   border: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
 
 }
 
 .pagemenuitem {
-   background-color:#FAEED1;
+   background-color:#FDF7E4;
    padding: 10pt;
    width: 100%;
 }
