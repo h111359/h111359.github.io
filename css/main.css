@@ -37,7 +37,7 @@ h3 {
   display: flex;
   margin: auto;
   border: none;
-  position: fixed;
+  position: sticky;
   left: 0;
   top: 0;
   width: 100%;
