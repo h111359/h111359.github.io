@@ -12,6 +12,7 @@ h1, h2, h3, .menulink {
 
 h1 {
   margin-left: 20px;
+  text-align: center;
 }
 
 h2 {
@@ -85,4 +86,33 @@ h4 {
   text-decoration: none;
   width: 100px;
   display: inline-block
+}
+
+.cv-employer-name {
+  font-weight: bold;
+  font-size: 1.25rem;  
+}
+
+.cv-location {
+  text-align: right; 
+  float: right;
+  font-weight: bold;
+}
+
+.cv-job-title {
+  font-style: italic;
+}
+
+.cv-table-cell-period {
+  vertical-align: top;
+  padding-right: 20px;
+  width: 10%;
+}
+
+.outlying-table {
+  padding: 50px;
+}
+
+.cv-inner-table {
+  width: 100%;
 }
