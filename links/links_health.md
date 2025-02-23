@@ -1,7 +1,7 @@
 ### Храна
 
 - [Питка със сирене и масло](https://www.az-jenata.bg/a/107-pitki/14148-pita-sas-sirene)
-- [Месене на хлаб](Как да се научим да месим тесто-За начинаещи)![image](https://github.com/user-attachments/assets/aba08b24-fa85-4450-b457-bd955151cbef)
+- [Месене на хлаб - Как да се научим да месим тесто-За начинаещи](https://github.com/user-attachments/assets/aba08b24-fa85-4450-b457-bd955151cbef)
 
 
 ### Здраве
