@@ -1,3 +1,7 @@
+### General
+
+- [Google](www.google.com)
+
 ### Coca-Cola
 
 - [Finance Knowledge Exchange](https://connect.coke.com/all/finance/en/learning-development/finance-kx.html)
