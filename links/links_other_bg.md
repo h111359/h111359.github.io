@@ -1,4 +1,10 @@
+### Други връзки
 
+- [Калкулатор: Работна заплата бруто – нето](https://kik-info.com/trz/zaplata-bruto.php)
+- [УПОТРЕБЯВАНИ КОМПЮТРИ втора употреба, монитори на старо, лаптопи втора ръка:](http://alphacom-bg.com/)
+- [High-Quality Programming Code Construction](http://codecourse.sourceforge.net/)
+- [Център за безопасен интернет | SafeNet](http://www.safenet.bg/bg/)
+- [Как да смените MAC Address на LAN карта](http://pchelpbg.com/index.php/articles/101-mac-address-change-windows)
 ### General
 
 - [Enterprise Skills Initiative: Welcome](https://techskillsforbusiness.microsoft.com/)
@@ -84,10 +90,6 @@
 - [Forget data warehousing, it’s ‘data lakes’ now | Digital News Asia](https://www.digitalnewsasia.com/business/forget-data-warehousing-its-data-lakes-now)
 
 
-### Interview Questions
-
-### Power BI
-- [Top 50 Power BI Interview Questions For 2018 | Edureka](https://www.edureka.co/blog/interview-questions/power-bi-interview-questions/)
 
 
 ### To Watch
