@@ -81,10 +81,10 @@ h4 {
 .links_list_element {
   background-color: #DED0B6;
   margin: 5px;
-  padding: 10px; /* Reduced padding */
+  padding: 2px; /* Reduced padding */
   border-radius: 5px;
-  width: calc(25% - 20px); /* Adjust the width as needed for your layout */
-  height: ;
+  width: auto; /* Changed the width to auto to fit content */ 
+  min-width: 100px; /* Optional: Set a min-width to ensure they don't get too small */
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
   box-sizing: border-box; /* Ensure padding and border are included in the width */
@@ -95,11 +95,11 @@ h4 {
 }
 
 .link_button {
-  padding: 1px;
+  padding: 2px 5px; /* Adjusted padding to make the button narrower */
   margin: 5px;
   text-decoration: none;
-  width: 100px;
-  display: inline-block
+  display: inline-block;
+  white-space: nowrap; /* Prevent the text from wrapping to keep buttons narrow */
 }
 
 .cv-employer-name {
