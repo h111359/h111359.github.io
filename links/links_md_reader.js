@@ -23,16 +23,18 @@ function parseMarkdown(linksMarkdown) {
     let currentSection = null;
     const lines = linksMarkdown.split('\n');
     const linkPattern = /\[([^\]]+)\]\(([^\)]+)\)/;
+    const headerPattern = /^(#{1,6})\s+(.*)/;
 
     lines.forEach(line => {
         line = line.trim();
 
-        if (line.startsWith('### ')) {
+        const headerMatch = line.match(headerPattern);
+        if (headerMatch) {
             if (currentSection) {
                 sections.push(currentSection);
             }
             currentSection = {
-                title: line.substring(4).trim() || 'Untitled Section',
+                title: headerMatch[2].trim() || 'Untitled Section',
                 links: []
             };
         } else if (linkPattern.test(line)) {
