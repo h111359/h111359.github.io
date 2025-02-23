@@ -74,7 +74,7 @@ h4 {
   flex-wrap: wrap;
   gap: 10px; /* Adjust the gap between the elements */
   padding: 0;
-  justify-content: center; /* Center the elements */
+  justify-content: left; /* Center the elements */
   margin: 10px 0;
 }
 
@@ -98,7 +98,9 @@ h4 {
   padding: 2px 5px; /* Adjusted padding to make the button narrower */
   margin: 5px;
   text-decoration: none;
-  display: inline-block;
+  display: flex; /* Change display to flex */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
   white-space: nowrap; /* Prevent the text from wrapping to keep buttons narrow */
 }
 
