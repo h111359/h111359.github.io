@@ -4,7 +4,7 @@
 - [Google](www.google.com)
 - [HHristov Web](hmhristov.com)
 
-### Coca-Cola
+### Coca-Cola 3
 
 - [Finance Knowledge Exchange](https://connect.coke.com/all/finance/en/learning-development/finance-kx.html)
 - [Coca-Cola University](https://coca-colacompany.csod.com/ui/lms-learner-home/home?tab_page_id=-200300006&tab_id=20000621)
