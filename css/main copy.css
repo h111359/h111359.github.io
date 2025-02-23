@@ -1,0 +1,118 @@
+/* Color scheme: https://colorhunt.co/palette/fdf7e4faeed1ded0b6bbab8c */
+
+body {
+  background-color: #FDF7E4;
+  font-size: 14pt;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3, .menulink {
+  color: #603F26;
+}
+
+h1 {
+  margin-left: 20px;
+  text-align: center;
+}
+
+h2 {
+  margin-left: 30px;
+}
+
+h3 {
+  margin-left: 40px;
+}
+
+h4 {
+  margin-left: 50px;
+}
+
+.menulink {
+  border:1px none #6C4E31; 
+  background-color:#FAEED1; 
+  padding: 5pt;
+  text-decoration: none;
+  font-size: 1.25rem;
+  width: 90%;
+  display: inline-block;
+  text-align: center;
+}
+
+.pagemenu {
+  display: flex;
+  margin: auto;
+  border: none;
+  position: sticky;
+  left: 0;
+  top: 0;
+  width: 100%;
+
+}
+
+.pagemenuitem {
+   background-color:#FDF7E4;
+   padding: 10pt;
+   width: 100%;
+}
+
+#hhimage {
+  width: 200px;
+}
+
+#moto {
+  font-style: italic;
+}
+
+.myartimg {
+  /*width: 400px;*/
+  height: 400px;
+}
+
+.links_list {
+  display: block;
+}
+
+.links_list_element {
+  display:inline-block;
+  list-style-type: none;
+  margin: 1px;
+  padding: 15px;
+  background-color:#DED0B6;  
+}
+
+.link_button {
+  padding: 5px;
+  margin: 10px;
+  text-decoration: none;
+  width: 100px;
+  display: inline-block
+}
+
+.cv-employer-name {
+  font-weight: bold;
+  font-size: 1.25rem;  
+}
+
+.cv-location {
+  text-align: right; 
+  float: right;
+  font-weight: bold;
+}
+
+.cv-job-title {
+  font-style: italic;
+}
+
+.cv-table-cell-period {
+  vertical-align: top;
+  padding-right: 20px;
+  width: 10%;
+}
+
+.outlying-table {
+  padding: 50px;
+}
+
+.cv-inner-table {
+  width: 100%;
+}
