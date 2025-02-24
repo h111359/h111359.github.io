@@ -1,6 +1,7 @@
 ### Other Links
 
 - [Lifehacker.com](http://updates.lifehacker.com)
+- [75 Witty and Funny Responses to “How Are You?”](https://boxofpuns.com/funny-responses-how-are-you/)
 
 ### Kids
 
