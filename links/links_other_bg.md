@@ -27,6 +27,9 @@
 - [YouTube](https://youtube.com/)
 - [Maps](https://maps.google.com/)
 - [Смесители за баня - Качество на супер цени | Баня Стил](https://baniastil.com/?p=4&a=filter&manual_filter=1&main=6&sort-by=date_added&order-by=desc&min-price=0&max-price=11380&types%5B0%5D=%D1%81%D0%BC%D0%B5%D1%81%D0%B8%D1%82%D0%B5%D0%BB%D0%B8-%D0%B7%D0%B0-%D0%BC%D0%B8%D0%B2%D0%BA%D0%B0&origins%5B0%5D=%D0%B1%D1%8A%D0%BB%D0%B3%D0%B0%D1%80%D0%B8%D1%8F&origins%5B1%5D=%D0%B3%D0%B5%D1%80%D0%BC%D0%B0%D0%BD%D0%B8%D1%8F&origins%5B2%5D=%D0%B8%D1%81%D0%BF%D0%B0%D0%BD%D0%B8%D1%8F&origins%5B3%5D=%D0%B8%D1%82%D0%B0%D0%BB%D0%B8%D1%8F&origins%5B4%5D=%D0%BF%D0%BE%D0%BB%D1%88%D0%B0&origins%5B5%5D=%D1%83%D0%BD%D0%B3%D0%B0%D1%80%D0%B8%D1%8F&colours%5B0%5D=%D1%85%D1%80%D0%BE%D0%BC&search=1#list)
+
+- [Бумът на безсмислената работа](https://www.kaldata.com/it-%d0%bd%d0%be%d0%b2%d0%b8%d0%bd%d0%b8/%d0%b1%d1%83%d0%bc%d1%8a%d1%82-%d0%bd%d0%b0-%d0%b1%d0%b5%d0%b7%d1%81%d0%bc%d0%b8%d1%81%d0%bb%d0%b5%d0%bd%d0%b0%d1%82%d0%b0-%d1%80%d0%b0%d0%b1%d0%be%d1%82%d0%b0-535947.html)
+
 - 
 ### Теодор
 - [Питагор](http://priem.parvamatematicheska.com/component/comprofiler/userprofile)
