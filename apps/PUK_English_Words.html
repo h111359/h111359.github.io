@@ -12,6 +12,10 @@
     .word-box {
       margin: 20px;
     }
+    #question-word {
+      font-size: 2em;
+      font-weight: bold;
+    }
     .option {
       display: inline-block;
       margin: 10px;
@@ -29,12 +33,18 @@
       font-size: 1.5em;
       margin: 20px;
     }
+    .message.correct {
+      color: green;
+    }
+    .message.incorrect {
+      color: red;
+    }
   </style>
 </head>
 <body>
   <h1>Word Learning Game</h1>
   <div id="word-container" class="word-box">
-    <span id="english-word"></span>
+    <span id="question-word"></span>
     <div id="options-container" class="options">
     </div>
   </div>
@@ -179,21 +189,26 @@
     ];
 
     let currentWordIndex;
+    let isEnglishToBulgarian = true;
 
     function displayNewWord() {
+      // Randomly decide direction of translation
+      isEnglishToBulgarian = Math.random() >= 0.5;
+
       // Get a random word
       currentWordIndex = Math.floor(Math.random() * words.length);
       const word = words[currentWordIndex];
 
-      // Display the English word
-      document.getElementById('english-word').textContent = word.en;
+      // Display the English or Bulgarian word
+      document.getElementById('question-word').textContent = isEnglishToBulgarian ? word.en : word.bg;
 
       // Display the options
       const optionsContainer = document.getElementById('options-container');
       optionsContainer.innerHTML = '';
 
       // Create a shuffled list of options
-      const shuffledOptions = shuffleArray([word.bg, ...getRandomOptions()]);
+      const correctAnswer = isEnglishToBulgarian ? word.bg : word.en;
+      const shuffledOptions = shuffleArray([correctAnswer, ...getRandomOptions()]);
 
       shuffledOptions.forEach(option => {
         const optionDiv = document.createElement('div');
@@ -216,8 +231,9 @@
       let randomOptions = [];
       while (randomOptions.length < 2) {
         const index = Math.floor(Math.random() * words.length);
-        if (index !== currentWordIndex && !randomOptions.includes(words[index].bg)) {
-          randomOptions.push(words[index].bg);
+        const randomOption = isEnglishToBulgarian ? words[index].bg : words[index].en;
+        if (index !== currentWordIndex && !randomOptions.includes(randomOption)) {
+          randomOptions.push(randomOption);
         }
       }
       return randomOptions;
@@ -225,13 +241,18 @@
 
     function checkAnswer(selectedOption) {
       const word = words[currentWordIndex];
+      const correctAnswer = isEnglishToBulgarian ? word.bg : word.en;
       const messageContainer = document.getElementById('message');
       const messageText = document.getElementById('message-text');
 
-      if (selectedOption === word.bg) {
+      if (selectedOption === correctAnswer) {
         messageText.textContent = 'Correct!';
+        messageContainer.classList.add('correct');
+        messageContainer.classList.remove('incorrect');
       } else {
-        messageText.textContent = `Incorrect. The correct word was ${word.bg}.`;
+        messageText.textContent = `Incorrect. The correct word was ${correctAnswer}.`;
+        messageContainer.classList.add('incorrect');
+        messageContainer.classList.remove('correct');
       }
       messageContainer.classList.remove('hidden');
     }
