@@ -1,4 +1,10 @@
-### Zdrawe i hrana
+### Храна
+
+- [Питка със сирене и масло](https://www.az-jenata.bg/a/107-pitki/14148-pita-sas-sirene)
+- [Месене на хлаб - как да се научим да месим тесто](https://www.youtube.com/watch?v=6N-2PKSXCq4)
+
+
+### Здраве
 
 - [Cryo-Save](http://www.cryo-save.com/)
 - [Психологическа литература](http://www.psychology-bg.com/office/index.htm)
