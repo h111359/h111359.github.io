@@ -1,147 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Word Learning Game</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-      }
-      .word-box {
-        margin: 20px;
-      }
-      #question-word {
-        font-size: 2em;
-        font-weight: bold;
-      }
-      .option {
-        display: inline-block;
-        margin: 10px;
-        padding: 10px;
-        border: 1px solid #333;
-        cursor: pointer;
-      }
-      .option:hover {
-        background-color: #efefef;
-      }
-      .hidden {
-        display: none;
-      }
-      .message {
-        font-size: 1.5em;
-        margin: 20px;
-      }
-      .message.correct {
-        color: green;
-      }
-      .message.incorrect {
-        color: red;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Word Learning Game</h1>
-    <div id="word-container" class="word-box">
-      <span id="question-word"></span>
-      <div id="options-container" class="options"></div>
-    </div>
-    <div id="message" class="message hidden">
-      <span id="message-text"></span>
-      <button id="next-word-btn">Next Word</button>
-    </div>
-    <script>
-      let words = [];
-      let currentWordIndex;
-      let isEnglishToBulgarian = true;
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Learning Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    .word-box {
+      margin: 20px;
+    }
+    #question-word {
+      font-size: 2em;
+      font-weight: bold;
+    }
+    .option {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px;
+      border: 1px solid #333;
+      cursor: pointer;
+    }
+    .option:hover {
+      background-color: #efefef;
+    }
+    .hidden {
+      display: none;
+    }
+    .message {
+      font-size: 1.5em;
+      margin: 20px;
+    }
+    .message.correct {
+      color: green;
+    }
+    .message.incorrect {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Word Learning Game</h1>
+  <div id="word-container" class="word-box">
+    <span id="question-word"></span>
+    <div id="options-container" class="options"></div>
+  </div>
+  <div id="message" class="message hidden">
+    <span id="message-text"></span>
+    <button id="next-word-btn">Next Word</button>
+  </div>
+  <script>
+    let words = [];
+    let currentWordIndex;
+    let isEnglishToBulgarian = true;
 
-      function loadWords() {
-        fetch('./words.json')
-          .then(response => response.json())
-          .then(data => {
-            words = data;
-            displayNewWord();
-          })
-          .catch(error => console.error('Error loading the words:', error));
+    function loadWords() {
+      fetch('words.json')
+        .then(response => response.json())
+        .then(data => {
+          words = data;
+          displayNewWord();
+        })
+        .catch(error => console.error('Error loading the words:', error));
+    }
+
+    function displayNewWord() {
+      // Randomly decide direction of translation
+      isEnglishToBulgarian = Math.random() >= 0.5;
+
+      // Get a random word
+      currentWordIndex = Math.floor(Math.random() * words.length);
+      const word = words[currentWordIndex];
+
+      // Display the English or Bulgarian word
+      document.getElementById('question-word').textContent = isEnglishToBulgarian ? word.en : word.bg;
+
+      // Display the options
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+
+      // Create a shuffled list of options
+      const correctAnswer = isEnglishToBulgarian ? word.bg : word.en;
+      const shuffledOptions = shuffleArray([correctAnswer, ...getRandomOptions(4)]);
+
+      shuffledOptions.forEach(option => {
+        const optionDiv = document.createElement('div');
+        optionDiv.textContent = option;
+        optionDiv.className = 'option';
+        optionDiv.onclick = () => checkAnswer(option);
+        optionsContainer.appendChild(optionDiv);
+      });
+    }
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
       }
+      return array;
+    }
 
-      function displayNewWord() {
-        // Randomly decide direction of translation
-        isEnglishToBulgarian = Math.random() >= 0.5;
-
-        // Get a random word
-        currentWordIndex = Math.floor(Math.random() * words.length);
-        const word = words[currentWordIndex];
-
-        // Display the English or Bulgarian word
-        document.getElementById('question-word').textContent = isEnglishToBulgarian
-          ? word.en
-          : word.bg;
-
-        // Display the options
-        const optionsContainer = document.getElementById('options-container');
-        optionsContainer.innerHTML = '';
-
-        // Create a shuffled list of options
-        const correctAnswer = isEnglishToBulgarian ? word.bg : word.en;
-        const shuffledOptions = shuffleArray([correctAnswer, ...getRandomOptions()]);
-
-        shuffledOptions.forEach(option => {
-          const optionDiv = document.createElement('div');
-          optionDiv.textContent = option;
-          optionDiv.className = 'option';
-          optionDiv.onclick = () => checkAnswer(option);
-          optionsContainer.appendChild(optionDiv);
-        });
-      }
-
-      function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
+    function getRandomOptions(number) {
+      let randomOptions = [];
+      while (randomOptions.length < number) {
+        const index = Math.floor(Math.random() * words.length);
+        const randomOption = isEnglishToBulgarian ? words[index].bg : words[index].en;
+        if (index !== currentWordIndex && !randomOptions.includes(randomOption)) {
+          randomOptions.push(randomOption);
         }
-        return array;
+      }
+      return randomOptions;
+    }
+
+    function checkAnswer(selectedOption) {
+      const word = words[currentWordIndex];
+      const correctAnswer = isEnglishToBulgarian ? word.bg : word.en;
+      const messageContainer = document.getElementById('message');
+      const messageText = document.getElementById('message-text');
+
+      if (selectedOption === correctAnswer) {
+        messageText.textContent = 'Correct!';
+        messageContainer.classList.add('correct');
+        messageContainer.classList.remove('incorrect');
+      } else {
+        messageText.textContent = `Incorrect. The correct word was ${correctAnswer}.`;
+        messageContainer.classList.add('incorrect');
+        messageContainer.classList.remove('correct');
       }
 
-      function getRandomOptions() {
-        let randomOptions = [];
-        while (randomOptions.length < 2) {
-          const index = Math.floor(Math.random() * words.length);
-          const randomOption = isEnglishToBulgarian ? words[index].bg : words[index].en;
-          if (index !== currentWordIndex && !randomOptions.includes(randomOption)) {
-            randomOptions.push(randomOption);
-          }
-        }
-        return randomOptions;
-      }
+      messageContainer.classList.remove('hidden');
+    }
 
-      function checkAnswer(selectedOption) {
-        const word = words[currentWordIndex];
-        const correctAnswer = isEnglishToBulgarian ? word.bg : word.en;
-        const messageContainer = document.getElementById('message');
-        const messageText = document.getElementById('message-text');
+    document.getElementById('next-word-btn').onclick = () => {
+      document.getElementById('message').classList.add('hidden');
+      displayNewWord();
+    };
 
-        if (selectedOption === correctAnswer) {
-          messageText.textContent = 'Correct!';
-          messageContainer.classList.add('correct');
-          messageContainer.classList.remove('incorrect');
-        } else {
-          messageText.textContent = `Incorrect. The correct word was ${correctAnswer}.`;
-          messageContainer.classList.add('incorrect');
-          messageContainer.classList.remove('correct');
-        }
-
-        messageContainer.classList.remove('hidden');
-      }
-
-      document.getElementById('next-word-btn').onclick = () => {
-        document.getElementById('message').classList.add('hidden');
-        displayNewWord();
-      };
-
-      // Load words and display the first word when the page loads
-      window.onload = loadWords;
-    </script>
-  </body>
+    // Load words and display the first word when the page loads
+    window.onload = loadWords;
+  </script>
+</body>
 </html>
