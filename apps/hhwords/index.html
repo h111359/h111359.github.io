@@ -63,20 +63,28 @@
     let wrongCount = 0;
     let remainingWords = [];
 
-    function loadWords() {
-      fetch('./words.json')
-        .then(response => response.json())
-        .then(data => {
-          words = data;
-          remainingWords = [...words];
-          displayNewWord();
-        })
-        .catch(error => console.error('Error loading the words:', error));
+    async function loadWords() {
+      console.log("Starting to load words...");
+      try {
+        const response = await fetch('https://hmhristov.com/apps/hhwords/words.json');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Words loaded:", data);
+        words = data;
+        remainingWords = [...words];
+        console.log("Initial remaining words:", remainingWords);
+        displayNewWord();
+      } catch (error) {
+        console.error('Error loading the words:', error);
+      }
     }
 
     function displayNewWord() {
+      console.log("Displaying new word...");
       if (remainingWords.length === 0) {
-        // All words have been answered correctly
+        console.log("All words answered correctly!");
         document.getElementById('word-container').classList.add('hidden');
         document.getElementById('message').classList.add('hidden');
         document.body.innerHTML += "<h2>Congratulations! You've answered all words correctly! 🎉</h2>";
@@ -85,21 +93,23 @@
 
       // Randomly decide direction of translation
       isEnglishToBulgarian = Math.random() >= 0.5;
+      console.log("Direction:", isEnglishToBulgarian ? "English to Bulgarian" : "Bulgarian to English");
 
       // Get a random word from remaining words
       currentWordIndex = Math.floor(Math.random() * remainingWords.length);
       const word = remainingWords[currentWordIndex];
+      console.log("Current word:", word);
 
       // Display the English or Bulgarian word
       document.getElementById('question-word').textContent = isEnglishToBulgarian ? word.en : word.bg;
-
-      // Display the options
       const optionsContainer = document.getElementById('options-container');
       optionsContainer.innerHTML = '';
 
       // Create a shuffled list of options
       const correctAnswer = isEnglishToBulgarian ? word.bg : word.en;
-      const shuffledOptions = shuffleArray([correctAnswer, ...getRandomOptions(4)]);
+      const options = [correctAnswer, ...getRandomOptions(4, correctAnswer)];
+      const shuffledOptions = shuffleArray(options);
+      console.log("Options:", shuffledOptions);
 
       shuffledOptions.forEach(option => {
         const optionDiv = document.createElement('div');
@@ -118,19 +128,25 @@
       return array;
     }
 
-    function getRandomOptions(number) {
-      let randomOptions = [];
+    function getRandomOptions(number, correctAnswer) {
+      const randomOptions = [];
+      const seenOptions = new Set();
+      seenOptions.add(correctAnswer); // Ensure the correct answer does not get included again
       while (randomOptions.length < number) {
         const index = Math.floor(Math.random() * words.length);
         const randomOption = isEnglishToBulgarian ? words[index].bg : words[index].en;
-        if (!remainingWords.includes(words[index]) && !randomOptions.includes(randomOption)) {
+        if (!seenOptions.has(randomOption)) {
           randomOptions.push(randomOption);
+          seenOptions.add(randomOption);
+        } else {
+          console.log("duplicate random option", randomOption);
         }
       }
       return randomOptions;
     }
 
     function checkAnswer(selectedOption) {
+      console.log("Checking answer:", selectedOption);
       const word = remainingWords[currentWordIndex];
       const correctAnswer = isEnglishToBulgarian ? word.bg : word.en;
       const messageContainer = document.getElementById('message');
@@ -141,7 +157,9 @@
         messageContainer.classList.add('correct');
         messageContainer.classList.remove('incorrect');
         correctCount++;
+        console.log("Correct answer! Remaining words before removal:", remainingWords);
         remainingWords.splice(currentWordIndex, 1); // Remove the correctly answered word
+        console.log("Remaining words after removal:", remainingWords);
       } else {
         messageText.textContent = `Incorrect. The correct word was ${correctAnswer}.`;
         messageContainer.classList.add('incorrect');
@@ -155,12 +173,16 @@
     }
 
     document.getElementById('next-word-btn').onclick = () => {
+      console.log("Next word button clicked");
       document.getElementById('message').classList.add('hidden');
       displayNewWord();
     };
 
-    // Load words and display the first word when the page loads
-    window.onload = loadWords;
+    // Ensure DOM is actually loaded and ready before calling loadWords
+    document.addEventListener("DOMContentLoaded", (event) => {
+        console.log("DOM fully loaded and parsed");
+        loadWords();
+    });
   </script>
 </body>
 </html>
