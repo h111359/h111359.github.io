@@ -10,6 +10,7 @@
 
 #### Generative Pre-Trained Transformers
 
+- [Reddit: What are some of your favorite ChatGPT prompts that are useful](https://www.reddit.com/r/ChatGPT/comments/13cklzh/what_are_some_of_your_favorite_chatgpt_prompts/)
 - [What is RAG (Retrieval-Augmented Generation)](https://aws.amazon.com/what-is/retrieval-augmented-generation/)
 - [Consensus - scientific researches](https://consensus.app/)
 
