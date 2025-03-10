@@ -164,10 +164,11 @@
       const correctAnswer = isEnglishToBulgarian ? word.bg : word.en;
       const messageContainer = document.getElementById('message');
       const messageText = document.getElementById('message-text');
+      const transcriptionText = document.getElementById('transcription');
       const exampleSentence1 = document.getElementById('sentence1');
       const exampleSentence2 = document.getElementById('sentence2');
       const exampleSentencesContainer = document.getElementById('example-sentences');
-      
+
       transcriptionText.textContent = `Transcription: ${word.transcription}`;
       exampleSentence1.textContent = `1: ${word.sentence1}`;
       exampleSentence2.textContent = `2: ${word.sentence2}`;
