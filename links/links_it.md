@@ -10,6 +10,7 @@
 
 #### Generative Pre-Trained Transformers
 
+- [What is RAG (Retrieval-Augmented Generation)](https://aws.amazon.com/what-is/retrieval-augmented-generation/)
 - [Consensus - scientific researches](https://consensus.app/)
 
 #### Internet
