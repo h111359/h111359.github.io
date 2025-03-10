@@ -1,5 +1,10 @@
 ### English
 
+#### Apps
+
+- [PUK game](https://hmhristov.com/apps/PUK_English_Words.html)
+- [Words game](https://hmhristov.com/apps/hhwords/index.html)
+
 #### AVO
 
 &nbsp;&nbsp;&nbsp;&nbsp;These links were shared with me while I was studying English at [AVO](https://avo.bg/)
