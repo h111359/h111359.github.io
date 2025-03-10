@@ -61,6 +61,7 @@
   </div>
   <div id="message" class="message hidden">
     <span id="message-text"></span>
+    <span id="transcription"></span>
     <div id="example-sentences" class="hidden">
       <p id="sentence1"></p>
       <p id="sentence2"></p>
@@ -166,7 +167,8 @@
       const exampleSentence1 = document.getElementById('sentence1');
       const exampleSentence2 = document.getElementById('sentence2');
       const exampleSentencesContainer = document.getElementById('example-sentences');
-
+      
+      transcriptionText.textContent = `Transcription: ${word.transcription}`;
       exampleSentence1.textContent = `1: ${word.sentence1}`;
       exampleSentence2.textContent = `2: ${word.sentence2}`;
       exampleSentencesContainer.classList.remove('hidden');
