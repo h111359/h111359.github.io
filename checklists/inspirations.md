@@ -1,3 +1,9 @@
+## Mushin
+
+In ancient Japan, samurai warriors practiced "Mushin" (無心)—the state of "no mind." It meant clearing thoughts, emotions, and doubts to act with pure instinct and focus. This allowed them to react without hesitation or fear.
+
+Lesson: Overthinking creates hesitation, but clarity comes when you let go of unnecessary noise. Trust yourself, act decisively, and embrace the moment.
+
 ## Kaizen
 
 In Japan, there’s a philosophy called Kaizen, meaning continuous improvement. Instead of drastic changes, it focuses on small, consistent progress. Toyota built its empire using Kaizen, improving bit by bit every day.
