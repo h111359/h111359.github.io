@@ -1,3 +1,8 @@
+## Dunbar Number
+
+The Dunbar Number suggests that humans can meaningfully maintain about 150 social connections at a time. This comes from evolutionary psychology and our brain’s capacity for relationships.
+
+Lesson: Focus on quality over quantity in your relationships. Strengthening a few meaningful connections will bring more fulfillment than spreading yourself too thin.
 
 ## Zeigarnik Effect
 
