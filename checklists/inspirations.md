@@ -1,3 +1,9 @@
+## Whakapapa
+
+In New Zealand, the Māori people have a concept called "Whakapapa", which means knowing your roots and connection to the world. It teaches that you are part of something bigger—your ancestors, your family, your community. When facing struggles, they look to their lineage for strength, reminding themselves they are not alone.
+
+Lesson: You are not just one person alone in the world. You carry the strength, wisdom, and resilience of those who came before you. When in doubt, remember—your story is still being written.
+
 ## Dunbar Number
 
 The Dunbar Number suggests that humans can meaningfully maintain about 150 social connections at a time. This comes from evolutionary psychology and our brain’s capacity for relationships.
