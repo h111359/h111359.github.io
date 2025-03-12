@@ -1,3 +1,9 @@
+## Fear of Spartans
+
+In ancient Greece, Spartan warriors were taught from childhood that fear is natural, but how you respond to it defines you. They believed that courage wasn’t the absence of fear but acting in spite of it.
+
+Lesson: Fear is not your enemy—it’s a sign you’re stepping outside your comfort zone. Face it head-on, and you’ll discover strength you never knew you had.
+
 ## Mushin
 
 In ancient Japan, samurai warriors practiced "Mushin" (無心)—the state of "no mind." It meant clearing thoughts, emotions, and doubts to act with pure instinct and focus. This allowed them to react without hesitation or fear.
