@@ -1,3 +1,10 @@
+
+## Zeigarnik Effect
+
+The Zeigarnik Effect states that our brains remember unfinished tasks better than completed ones. This is why procrastinated tasks keep nagging at you.
+
+Lesson: Start a task, even if just for a few minutes. Your brain will naturally push you to finish it, making progress easier than you thought.
+
 ## Eudaimonia
 
 In ancient Greece, philosophers believed that Eudaimonia, or flourishing, was achieved through a balance of virtue and self-reflection. It was not about seeking pleasure or wealth, but about living a life aligned with your true values.
