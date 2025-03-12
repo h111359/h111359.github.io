@@ -1,3 +1,9 @@
+## Eudaimonia
+
+In ancient Greece, philosophers believed that Eudaimonia, or flourishing, was achieved through a balance of virtue and self-reflection. It was not about seeking pleasure or wealth, but about living a life aligned with your true values.
+
+Lesson: To thrive, focus on personal growth and aligning your actions with your core values. Success isn’t external—it’s about how you live in harmony with yourself.
+
 ## Everest Team
 
 In 1953, Sir Edmund Hillary and Tenzing Norgay became the first climbers confirmed to reach the summit of Mount Everest. But when asked who reached the top first, they refused to answer, saying they had climbed as a team.
