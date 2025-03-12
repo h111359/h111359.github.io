@@ -72,7 +72,7 @@
                         return response.text();
                     })
                     .then(markdown => {
-                        const content = marked(markdown);
+                        const content = marked.parse(markdown);
                         document.getElementById('content').innerHTML = content;
                     })
                     .catch(error => {
