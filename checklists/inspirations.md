@@ -1,3 +1,10 @@
+## Everest Team
+
+In 1953, Sir Edmund Hillary and Tenzing Norgay became the first climbers confirmed to reach the summit of Mount Everest. But when asked who reached the top first, they refused to answer, saying they had climbed as a team.
+
+Lesson: True success isn’t about who gets the credit—it’s about reaching the goal together. Whether in work, family, or personal growth, supporting each other makes the journey meaningful.
+
+
 ## Fear of Spartans
 
 In ancient Greece, Spartan warriors were taught from childhood that fear is natural, but how you respond to it defines you. They believed that courage wasn’t the absence of fear but acting in spite of it.
