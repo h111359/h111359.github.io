@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Markdown Viewer</title>
+    <link rel="stylesheet" href="./css/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        /* Basic styles for responsiveness and layout */
+        body {
+            display: flex;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background: #333;
+            color: #fff;
+            padding: 1rem;
+        }
+
+        nav a {
+            color: #fff;
+            margin-right: 1rem;
+            text-decoration: none;
+        }
+
+        main {
+            padding: 1rem;
+        }
+
+        /* Responsive text sizes */
+        h1, h2, h3, h4, h5, h6 {
+            font-size: 1.2rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+
+        /* Focus indicator for accessibility */
+        a:focus {
+            outline: 2px solid #00f;
+        }
+    </style>
+</head>
+<body>
+    <nav role="navigation">
+        <a href="./checklists/rules.md" class="md-link" data-file="example1.md">Rules</a>
+        <a href="#" class="md-link" data-file="example2.md">Example 2</a>
+        <a href="#" class="md-link" data-file="example3.md">Example 3</a>
+    </nav>
+    <main id="content" role="main" aria-live="polite">
+        <!-- Content will be loaded here -->
+    </main>
+    
+    <script>
+        // Function to fetch and display markdown content
+        document.querySelectorAll('.md-link').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                const file = event.target.getAttribute('data-file');
+                fetch(`./checklists/${file}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok.');
+                        }
+                        return response.text();
+                    })
+                    .then(markdown => {
+                        const content = marked(markdown);
+                        document.getElementById('content').innerHTML = content;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching markdown file:', error);
+                    });
+            });
+        });
+    </script>
+</body>
+</html>
