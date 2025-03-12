@@ -1,3 +1,9 @@
+## Kaizen
+
+In Japan, there’s a philosophy called Kaizen, meaning continuous improvement. Instead of drastic changes, it focuses on small, consistent progress. Toyota built its empire using Kaizen, improving bit by bit every day.
+
+Lesson: Don’t aim for perfection overnight. Just improve 1% daily, and over time, you’ll achieve massive transformation.
+
 ## We can't control everything
 
 In ancient Greece, Stoic philosophers like Epictetus taught that we can't control everything—only our reactions. A storm may rage outside, but you decide whether it ruins your mood. This mindset helped Roman emperors, war generals, and modern leaders stay calm under pressure.
