@@ -5,3 +5,5 @@
 
 [1200 XP
 Design a data storage solution for relational data](https://learn.microsoft.com/en-us/training/modules/design-data-storage-solution-for-relational-data/)
+
+[Configure virtual networks](https://learn.microsoft.com/en-us/training/modules/configure-virtual-networks/)
