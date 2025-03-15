@@ -12,4 +12,4 @@ Design a data storage solution for relational data](https://learn.microsoft.com/
 
 [Епицентър](https://epicenter.bg/)
 
-
+[BGGPT](https://bggpt.ai/)
