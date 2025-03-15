@@ -10,4 +10,6 @@ Design a data storage solution for relational data](https://learn.microsoft.com/
 
 [Meditation](https://www.huffpost.com/entry/meditation-routine_b_2853424)
 
+[Епицентър](https://epicenter.bg/)
+
 
