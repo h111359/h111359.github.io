@@ -1,6 +1,7 @@
 * Reminders
 * News
 * Bluesky
+* Медитация
 * Personify Health (Virgin Pulse)
 * English Words Game
 * Email
