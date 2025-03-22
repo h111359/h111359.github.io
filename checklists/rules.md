@@ -90,7 +90,7 @@ To get something you never had you have to do someting you never did.
 
 Neutrality in discussions about others. Avoid mentioning someone they may not favor unless it's positive or unavoidable. 
 
-Като говориш с друг човек - задавай много въпроси. Питай повече, отколкото ти говориш.
+Като говориш с друг човек - задавай много въпроси. Питай повече, отколкото ти говориш. Намисли си въпроси, които можеш да зададеш винаги и ги запомни.
 
 Shift from statements to open-ended questions like "What are your thoughts on this?", "How would you handle such situations?" 
 
