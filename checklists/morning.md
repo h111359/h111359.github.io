@@ -1,5 +1,6 @@
 * Reminders
 * News
+* [Думинация](https://nauchi.bg/duminaciq)
 * Bluesky
 * Медитация
 * Personify Health (Virgin Pulse)
