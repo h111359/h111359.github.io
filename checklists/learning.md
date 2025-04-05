@@ -4,7 +4,7 @@
 
 * [Azure AI Engineer](https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-engineer)
 
-* [Design an application architecture](https://learn.microsoft.com/en-us/training/modules/design-application-architecture/)
+* [AZ-305: Design infrastructure solutions](https://learn.microsoft.com/en-us/training/modules/design-application-architecture/)
 
 
 * [Design a data storage solution for relational data](https://learn.microsoft.com/en-us/training/modules/design-data-storage-solution-for-relational-data/)
