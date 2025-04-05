@@ -4,11 +4,29 @@
 * News
 * [Думинация](https://nauchi.bg/duminaciq)
 * Bluesky
-* WithU
+* Email
+* Тренировка - WithU
 * Медитация
 * Personify Health (Virgin Pulse)
+* Учене - Udemy, Datacamp
+* To-do
 * English Words Game
 * Voscreen 
+
+## Почивни дни
+
+* Снимките
+* Файлове на телефон
+* Игри с децата
+* Книга на живота
+* Семейни хроники
+* Рисуване
+* Финанси - преглед
+* Подреждане
+* Книги
+* Учи хора
+* Китара, пиано
+* Личен web site
 
 ## Мантри
 
