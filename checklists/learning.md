@@ -1,5 +1,7 @@
 [Renewal assessment material - 10-12-2022](https://learn.microsoft.com/en-us/collections/d4xphowjnrq0n5)
 
+(https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-engineer)
+
 [Design an application architecture](https://learn.microsoft.com/en-us/training/modules/design-application-architecture/)
 
 
