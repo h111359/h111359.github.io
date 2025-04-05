@@ -12,6 +12,8 @@
 * [Configure virtual networks](https://learn.microsoft.com/en-us/training/modules/configure-virtual-networks/)
 
 
+[AZ-104: Configure and manage virtual networks for Azure administrators](https://learn.microsoft.com/en-us/training/paths/az-104-manage-virtual-networks/)
+
 
 ## Links
 
