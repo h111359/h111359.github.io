@@ -8,10 +8,20 @@
 * Тренировка - WithU
 * Медитация
 * Personify Health (Virgin Pulse)
+* Prompt engineering
 * Учене - Udemy, Datacamp
 * To-do
 * English Words Game
 * Voscreen 
+
+## Work
+
+* Calendar
+* Workday
+* Inbox Emails
+* Viva Engage on phone
+* People records
+* Reminders 
 
 ## Почивни дни
 
