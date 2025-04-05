@@ -41,6 +41,10 @@
     }
     #example-sentences {
         font-size: 0.75em;
+        transition: opacity 0.3s ease; /* Add smooth transition for visibility */
+    }
+    #example-sentences.hidden {
+        opacity: 0;
     }
     #counters {
         display: flex;
@@ -57,7 +61,7 @@
   </div>
   <div id="word-container" class="word-box">
     <span id="question-word"></span>
-    <div id="options-container" class="options"></div>
+    <div id="options-container" class="options" role="list"></div>
   </div>
   <div id="message" class="message hidden">
     <span id="message-text"></span>
@@ -85,12 +89,13 @@
         }
         const data = await response.json();
         console.log("Words loaded:", data);
-        words = data;
+        words = data.filter(word => word.en && word.bg); // Ensure words have required properties
         remainingWords = [...words];
         console.log("Initial remaining words:", remainingWords);
         displayNewWord();
       } catch (error) {
         console.error('Error loading the words:', error);
+        document.body.innerHTML += "<h2>Error loading words. Please try again later.</h2>";
       }
     }
 
@@ -112,6 +117,13 @@
       currentWordIndex = Math.floor(Math.random() * remainingWords.length);
       const word = remainingWords[currentWordIndex];
       console.log("Current word:", word);
+
+      if (!word.transcription || !word.sentence1 || !word.sentence2) {
+        console.warn("Word missing data:", word);
+        remainingWords.splice(currentWordIndex, 1); // Skip this word
+        displayNewWord();
+        return;
+      }
 
       // Display the English or Bulgarian word
       document.getElementById('question-word').textContent = isEnglishToBulgarian ? word.en : word.bg;
@@ -144,15 +156,13 @@
     function getRandomOptions(number, correctAnswer) {
       const randomOptions = [];
       const seenOptions = new Set();
-      seenOptions.add(correctAnswer); // Ensure the correct answer does not get included again
+      seenOptions.add(correctAnswer);
       while (randomOptions.length < number) {
         const index = Math.floor(Math.random() * words.length);
         const randomOption = isEnglishToBulgarian ? words[index].bg : words[index].en;
         if (!seenOptions.has(randomOption)) {
           randomOptions.push(randomOption);
           seenOptions.add(randomOption);
-        } else {
-          console.log("duplicate random option", randomOption);
         }
       }
       return randomOptions;
@@ -169,9 +179,9 @@
       const exampleSentence2 = document.getElementById('sentence2');
       const exampleSentencesContainer = document.getElementById('example-sentences');
 
-      transcriptionText.textContent = `Transcription: ${word.transcription}`;
-      exampleSentence1.textContent = `1: ${word.sentence1}`;
-      exampleSentence2.textContent = `2: ${word.sentence2}`;
+      transcriptionText.textContent = word.transcription ? `Transcription: ${word.transcription}` : '';
+      exampleSentence1.textContent = word.sentence1 ? `1: ${word.sentence1}` : '';
+      exampleSentence2.textContent = word.sentence2 ? `2: ${word.sentence2}` : '';
       exampleSentencesContainer.classList.remove('hidden');
 
       if (selectedOption === correctAnswer) {
