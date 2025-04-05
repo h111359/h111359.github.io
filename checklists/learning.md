@@ -13,3 +13,9 @@ Design a data storage solution for relational data](https://learn.microsoft.com/
 [Епицентър](https://epicenter.bg/)
 
 [BGGPT](https://bggpt.ai/)
+
+## Links
+
+* [Air Frier Cossori](https://cosori.bg/category/device/twinfry/)
+
+
