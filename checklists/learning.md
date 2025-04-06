@@ -1,8 +1,13 @@
-## Learning
-
-* [Renewal assessment material - 10-12-2022](https://learn.microsoft.com/en-us/collections/d4xphowjnrq0n5)
+## AI and Data Science 
 
 * [Azure AI Engineer](https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-engineer)
+
+* [Microsoft Certified: Azure Data Scientist Associate](https://learn.microsoft.com/en-us/credentials/certifications/azure-data-scientist/?practice-assessment-type=certification)
+
+## Azure Solution Architect 
+
+
+* [Renewal assessment material - 10-12-2022](https://learn.microsoft.com/en-us/collections/d4xphowjnrq0n5)
 
 ## AZ-104
 
@@ -40,6 +45,12 @@
 
 * [Design a data storage solution for relational data](https://learn.microsoft.com/en-us/training/modules/design-data-storage-solution-for-relational-data/)
 
+
+## Fabric
+
+* [Microsoft Certified: Fabric Analytics Engineer Associate](https://learn.microsoft.com/en-us/credentials/certifications/fabric-analytics-engineer-associate/?practice-assessment-type=certification)
+
+* [Microsoft Certified: Fabric Data Engineer Associate](https://learn.microsoft.com/en-us/credentials/certifications/fabric-data-engineer-associate/?practice-assessment-type=certification)
 
 ## Links
 
