@@ -4,6 +4,8 @@
 
 * [Azure AI Engineer](https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-engineer)
 
+## AZ-104
+
 * [AZ-104: Prerequisites for Azure administrators](https://learn.microsoft.com/en-us/training/paths/az-104-administrator-prerequisites/)
 
 * [AZ-104: Manage identities and governance in Azure](https://learn.microsoft.com/en-us/training/paths/az-104-manage-identities-governance/)
@@ -16,7 +18,23 @@
 
 * [AZ-104: Monitor and back up Azure resources](https://learn.microsoft.com/en-us/training/paths/az-104-monitor-backup-resources/)
 
+## AZ-305
+
+* [Exam AZ-305: Designing Microsoft Azure Infrastructure Solutions](https://learn.microsoft.com/en-us/credentials/certifications/exams/az-305/)
+
+* [AZ-305 Microsoft Azure Architect Design Prerequisites](https://learn.microsoft.com/en-us/training/paths/microsoft-azure-architect-design-prerequisites/)
+
+* [AZ-305: Design identity, governance, and monitor solutions](https://learn.microsoft.com/en-us/training/paths/design-identity-governance-monitor-solutions/)
+
+* [AZ-305: Design business continuity solutions](https://learn.microsoft.com/en-us/training/paths/design-business-continuity-solutions/)
+
+*[AZ-305: Design data storage solutions](https://learn.microsoft.com/en-us/training/paths/design-data-storage-solutions/)
+
 * [AZ-305: Design infrastructure solutions](https://learn.microsoft.com/en-us/training/paths/design-infranstructure-solutions/)
+
+* [Build great solutions with the Microsoft Azure Well-Architected Framework](https://learn.microsoft.com/en-us/training/paths/azure-well-architected-framework/)
+
+* [Accelerate cloud adoption with the Microsoft Cloud Adoption Framework for Azure](https://learn.microsoft.com/en-us/training/paths/cloud-adoption-framework/)
 
 * [Design a data storage solution for relational data](https://learn.microsoft.com/en-us/training/modules/design-data-storage-solution-for-relational-data/)
 
