@@ -55,6 +55,7 @@
 * [Air Frier Cossori](https://cosori.bg/category/device/twinfry/)
 
 * [Meditation](https://www.huffpost.com/entry/meditation-routine_b_2853424)
+* [Медитация](https://youtu.be/ggkwVeu6UCk?si=3aG0lzVluCOdTGZa)
 
 * [Епицентър](https://epicenter.bg/)
 

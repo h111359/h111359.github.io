@@ -1,3 +1,8 @@
+
+### Данъци
+
+- [Акции - попълване на данъчна декларация, данъци и деклариране на Акции и ETF](https://angelovdimitar.com/%D0%B4%D0%B0%D0%BD%D1%8A%D1%86%D0%B8-%D0%B4%D0%B5%D0%BA%D0%BB%D0%B0%D1%80%D0%B8%D1%80%D0%B0%D0%BD%D0%B5-%D0%BD%D0%B0-%D0%B0%D0%BA%D1%86%D0%B8%D0%B8-%D0%B8-etf/) 
+
 ### Други връзки
 
 - [Калкулатор: Работна заплата бруто – нето](https://kik-info.com/trz/zaplata-bruto.php)
@@ -5,6 +10,7 @@
 - [High-Quality Programming Code Construction](http://codecourse.sourceforge.net/)
 - [Център за безопасен интернет | SafeNet](http://www.safenet.bg/bg/)
 - [Как да смените MAC Address на LAN карта](http://pchelpbg.com/index.php/articles/101-mac-address-change-windows)
+  
 ### General
 
 - [Enterprise Skills Initiative: Welcome](https://techskillsforbusiness.microsoft.com/)
