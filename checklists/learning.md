@@ -35,7 +35,7 @@
 
 * [AZ-305: Design business continuity solutions](https://learn.microsoft.com/en-us/training/paths/design-business-continuity-solutions/)
 
-*[AZ-305: Design data storage solutions](https://learn.microsoft.com/en-us/training/paths/design-data-storage-solutions/)
+* [AZ-305: Design data storage solutions](https://learn.microsoft.com/en-us/training/paths/design-data-storage-solutions/)
 
 * [AZ-305: Design infrastructure solutions](https://learn.microsoft.com/en-us/training/paths/design-infranstructure-solutions/)
 
