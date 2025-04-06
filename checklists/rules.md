@@ -1,9 +1,6 @@
 ----------------------------------------------------
-
 # Правила на живота 
-
 -----------------------------------------------------
-
 
 Действай. Бъди постоянно активен и любопитен. 
 
@@ -100,3 +97,22 @@ Before an event prepare safe topics
 * Shared interests like travel, food, or hobbies.
 * Asking for advice or insights (people enjoy sharing their expertise).
 * FORD model * family, occupation, recreation, dreams
+
+----------------------------------------------------
+# Be Agile! 
+-----------------------------------------------------
+
+
+Being more agile gives us the ability to move quickly and easily to accelerate growth. This means.. 
+
+1. Breaking large problems into smaller pieces 
+
+2. Rapidly adapting and failing fast (and learning from it!) 
+
+3. Focusing on the most valuable work 
+
+4. Sharing transparent views of minimum viable products (version 1.0, 
+2.0) 
+
+5. Collaboarting with customers to receive and integrate feedback 
+throughout the process 
