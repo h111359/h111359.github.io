@@ -43,8 +43,6 @@
 
 * [Accelerate cloud adoption with the Microsoft Cloud Adoption Framework for Azure](https://learn.microsoft.com/en-us/training/paths/cloud-adoption-framework/)
 
-* [Design a data storage solution for relational data](https://learn.microsoft.com/en-us/training/modules/design-data-storage-solution-for-relational-data/)
-
 
 ## Fabric
 
