@@ -150,15 +150,9 @@
 
 ### Copilot
 
-- [GHC: What is Azure AI Agent Service? - Azure AI services | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-agent-service/)
-
 - [What is Azure AI Agent Service? - Azure AI services | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/agents/overview)
 
-- [GHC: Do more with Copilot and agents | Microsoft Community Hub](https://techcommunity.microsoft.com/t5/microsoft-copilot-blog/do-more-with-copilot-and-agents/ba-p/3891234)
-
 - [Do more with Copilot and agents | Microsoft Community Hub](https://techcommunity.microsoft.com/blog/appsonazureblog/do-more-with-copilot-and-agents/4373519)
-
-- [GHC: Use the Copilot Studio Agent Builder to Build Agents | Microsoft Learn](https://learn.microsoft.com/en-us/copilot-studio/agent-builder/)
 
 - [Use the Copilot Studio Agent Builder to Build Agents | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/copilot-studio-agent-builder-build)
 
@@ -166,59 +160,31 @@
 
 - [Microsoft 365 Copilot Extensibility Options | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/decision-guide)
 
-- [GHC: Declarative Agents for Microsoft 365 Copilot | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/copilot/declarative-agents/)
-
 - [Declarative Agents for Microsoft 365 Copilot | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/overview-declarative-agent)
-
-- [GHC: Declarative Agents in Microsoft 365 Copilot FAQ | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/copilot/declarative-agents-faq/)
 
 - [Declarative Agents in Microsoft 365 Copilot FAQ | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/transparency-faq-declarative-agent)
 
-- [GHC: Write effective instructions for declarative agents | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/copilot/write-effective-instructions/)
-
 - [Write effective instructions for declarative agents | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/declarative-agent-instructions)
-
-- [GHC: Create declarative agents using Teams Toolkit | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/copilot/teams-toolkit/)
 
 - [Create declarative agents using Teams Toolkit | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/build-declarative-agents?tabs=ttk)
 
-- [GHC: Copilot Developer Camp](https://learn.microsoft.com/en-us/microsoft-365/copilot/developer-camp/)
-
 - [Copilot Developer Camp](https://microsoft.github.io/copilot-camp/)
 
-- [GHC: Configure Authentication for API plugins in Agents in Microsoft 365 Copilot | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/copilot/configure-authentication/)
-  
 - [Configure Authentication for API plugins in Agents in Microsoft 365 Copilot | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/api-plugin-authentication)
-
-- [GHC: Managed identities for Azure resources - Managed identities for Azure resources | Microsoft Learn](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/)
 
 - [Managed identities for Azure resources - Managed identities for Azure resources | Microsoft Learn](https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/overview)
 
-- [GHC: The Great Microsoft 365 Copilot Journey: Empower Your Team with Copilot | Microsoft Community Hub](https://techcommunity.microsoft.com/t5/microsoft-copilot-blog/the-great-microsoft-365-copilot-journey/ba-p/3891235)
-
 - [The Great Microsoft 365 Copilot Journey: Empower Your Team with Copilot | Microsoft Community Hub](https://techcommunity.microsoft.com/blog/microsoft365copilotblog/the-great-microsoft-365-copilot-journey-empower-your-team-with-copilot/4364094)
-
-- [GHC: Microsoft 365 Copilot – Microsoft Adoption](https://adoption.microsoft.com/en-us/microsoft-365/copilot/)
 
 - [Microsoft 365 Copilot – Microsoft Adoption](https://adoption.microsoft.com/en-us/copilot/)
 
-- [GHC: Get access - Microsoft Copilot Studio | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/copilot/get-access/)
-  
 - [Get access - Microsoft Copilot Studio | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-licensing-subscriptions)
 
-- [GHC: Copilot in PowerPoint help & learning](https://support.microsoft.com/en-us/powerpoint/copilot/)
-  
 - [Copilot in PowerPoint help & learning](https://support.microsoft.com/en-us/copilot-powerpoint)
-
-- [GHC: Language support - Microsoft Copilot Studio | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/copilot/language-support/)
 
 - [Language support - Microsoft Copilot Studio | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-copilot-studio/authoring-language-support)
 
-- [GHC: Declarative Agents for Microsoft 365 Copilot | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/copilot/declarative-agents/)
-
 - [Declarative Agents for Microsoft 365 Copilot | Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365-copilot/extensibility/overview-declarative-agent)
-
-- [GHC: Use templates and prebuilt agents - Power Platform | Microsoft Learn](https://learn.microsoft.com/en-us/power-platform/templates-prebuilt-agents/)
 
 - [Use templates and prebuilt agents - Power Platform | Microsoft Learn](https://learn.microsoft.com/en-us/power-platform/sap/templates/overview)
 
