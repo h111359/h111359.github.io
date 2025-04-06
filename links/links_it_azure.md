@@ -1,6 +1,6 @@
-### Azure
+## Azure
 
-#### Product
+### Product
 
 - [Microsoft Azure Cloud](https://azure.microsoft.com/en-us/) - Azure official site
 - [Directory of Azure Cloud Services | Microsoft Azure](https://azure.microsoft.com/en-us/services/#storage)
@@ -8,7 +8,7 @@
 - [Azure status](https://status.azure.com/en-us/status)
 - [Azure DevOps - Status](https://status.dev.azure.com/)
 
-#### Learning
+### Learning
 
 - [Azure Resource Providers](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-providers-and-types)
 - [Enterprise Skills Initiative: Welcome](https://esi.microsoft.com/)
@@ -19,7 +19,7 @@
 - [Azure Fundamentals](https://www.microsoft.com/en-us/learning/azure-fundamentals.aspx)
 - [MSSQLTips - Koen Verbeeck](https://www.mssqltips.com/sqlserverauthor/114/koen-verbeeck/)
 
-#### Microsoft Docs
+### Microsoft Docs
 
 - [Microsoft Docs](https://docs.microsoft.com/en-us/learn/browse/?roles=administrator&products=azure)
 - [Azure documentation | Microsoft Docs](https://docs.microsoft.com/en-us/azure/?product=featured)
@@ -56,7 +56,80 @@
 - [Create C# ASP.NET Core web app - Azure App Service | Microsoft Docs](https://docs.microsoft.com/en-us/azure/app-service/app-service-web-get-started-dotnet)
 - [Create Python app on Linux - Azure App Service | Microsoft Docs](https://docs.microsoft.com/en-us/azure/app-service/containers/quickstart-python)
 
-#### Other
+### AI
+
+- Copilot Documentation with Advanced Automation Capabilities: [Microsoft Copilot in Azure capabilities | Microsoft Learn](https://learn.microsoft.com/en-us/azure/copilot/capabilities)
+
+- Microsoft AI Services Documentation: [Azure AI services documentation | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-services/)
+
+- [Microsoft Certified: Azure AI Engineer Associate](https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-engineer/)
+
+- [Microsoft Learning Courses (Filtered for AI Engineer Role)](https://learn.microsoft.com/en-us/training/browse/?resource_type=learning%20path&roles=ai-engineer)
+
+- [Openart Promptbook](https://openart.ai/promptbook)
+
+### AI Foundry
+
+- [Azure AI Foundry - Generative AI Development Hub | Microsoft Azure](https://azure.microsoft.com/en-us/products/ai-foundry/)
+
+- [Plan and Prepare to Develop AI Solutions on Azure - Training | Microsoft Learn](https://learn.microsoft.com/en-us/training/modules/prepare-azure-ai-development/)
+
+- [Plans | Microsoft Learn](https://learn.microsoft.com/en-us/plans/0n5kby2d63d0n3)
+
+- [Get started with language models in Azure Databricks - Training | Microsoft Learn](https://learn.microsoft.com/en-us/training/modules/introduction-language-models-databricks/)
+
+- [Explore and deploy models from the model catalog in Azure AI Foundry portal - Training | Microsoft Learn](https://learn.microsoft.com/en-us/training/modules/explore-models-azure-ai-studio/)
+
+- [Explore the model catalog in Azure AI Foundry portal - Azure AI Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/model-catalog-overview?ns-enrollment-type=Collection&ns-enrollment-id=nepofg18dy8gym)
+
+
+- [Explore model benchmarks in Azure AI Foundry portal - Azure AI Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/model-benchmarks?ns-enrollment-type=Collection&ns-enrollment-id=nepofg18dy8gym)
+
+- [How to use the Meta Llama family of models with Azure AI Foundry - Azure AI Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/deploy-models-llama?ns-enrollment-type=Collection&ns-enrollment-id=nepofg18dy8gym&tabs=python-llama-3-3%2Cmeta-llama-3-1&pivots=programming-language-python)
+
+- [Get started with prompt flow to develop Large Language Model (LLM) apps - Training | Microsoft Learn](https://learn.microsoft.com/en-us/training/modules/get-started-prompt-flow/?ns-enrollment-type=Collection&ns-enrollment-id=nepofg18dy8gym)
+  
+- [How to deploy Azure OpenAI models with Azure AI Foundry - Azure AI Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/deploy-models-openai?ns-enrollment-type=Collection&ns-enrollment-id=nepofg18dy8gym)
+
+- [Develop Generative AI solutions with Azure OpenAI Service - Training | Microsoft Learn](https://learn.microsoft.com/en-us/training/paths/develop-ai-solutions-azure-openai/)
+
+- [Evaluation of generative AI applications with Azure AI Foundry - Azure AI Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/evaluation-approach-gen-ai?ns-enrollment-type=Collection&ns-enrollment-id=nepofg18dy8gym)
+  
+- [Evaluate the performance of generative AI apps with Azure AI Foundry - Training | Microsoft Learn](https://learn.microsoft.com/en-us/training/modules/evaluate-models-azure-ai-studio/)
+  
+- [Evaluate language models with Azure Databricks - Training | Microsoft Learn](https://learn.microsoft.com/en-us/training/modules/evaluate-language-models-azure-databricks/)
+
+- [Azure AI Foundry documentation | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-foundry/)
+  
+- [What is Azure AI Foundry? - Azure AI Foundry | Microsoft Learn](https://learn.microsoft.com/en-us/azure/ai-foundry/what-is-ai-foundry)
+
+- [Azure AI Foundry](https://ai.azure.com/?tid=548d26ab-8caa-49e1-97c2-a1b1a06cc39c)
+
+### Copilot
+
+What is Azure AI Agent Service? - Azure AI services | Microsoft Learn
+
+Do more with Copilot and agents | Microsoft Community Hub
+
+Use the Copilot Studio Agent Builder to Build Agents | Microsoft Learn
+Microsoft 365 Copilot Extensibility Options | Microsoft Learn
+Declarative Agents for Microsoft 365 Copilot | Microsoft Learn
+Declarative Agents in Microsoft 365 Copilot FAQ | Microsoft Learn
+Write effective instructions for declarative agents | Microsoft Learn
+Create declarative agents using Teams Toolkit | Microsoft Learn
+Copilot Developer Camp
+Configure Authentication for API plugins in Agents in Microsoft 365 Copilot | Microsoft Learn
+Managed identities for Azure resources - Managed identities for Azure resources | Microsoft Learn
+The Great Microsoft 365 Copilot Journey: Empower Your Team with Copilot | Microsoft Community Hub
+Microsoft 365 Copilot – Microsoft Adoption
+Get access - Microsoft Copilot Studio | Microsoft Learn
+Copilot in PowerPoint help & learning
+Language support - Microsoft Copilot Studio | Microsoft Learn
+Declarative Agents for Microsoft 365 Copilot | Microsoft Learn
+Use templates and prebuilt agents - Power Platform | Microsoft Learn
+
+
+### Other
 
 - [Cosmic Notes - Cosmic drawings illustrating the main concepts of Azure Cosmos DB](https://azurecosmosdb.github.io/CosmicNotes/)
 - [Query Azure resources using the Azure CLI](https://techcommunity.microsoft.com/t5/ITOps-Talk-Blog/How-to-query-Azure-resources-using-the-Azure-CLI/ba-p/360147)
