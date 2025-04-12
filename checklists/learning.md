@@ -62,3 +62,19 @@
 * [BGGPT](https://bggpt.ai/)
 
 
+Злато:
+
+https://blog.nula.bg/oblagane-na-dohodi-ot-turgoviq-s-investicionno-zlato/
+
+https://www.capital.bg/moiat_capital/investments/2022/03/02/4318965_turseneto_na_investicionno_zlato_v_bulgariia_riazko_se/
+
+
+https://limar24.bg/post/danuchno-oblagane-pri-pokupka-i-prodajba-na-investicionno-zlato/
+
+
+Kiril: Едно видео от co-founder на ChatGPT за това как той използва различни ллм модели:
+
+[How I use LLMs](https://www.youtube.com/watch?v=EWvNQjAaOHw)
+
+
+
