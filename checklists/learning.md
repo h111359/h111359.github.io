@@ -77,4 +77,10 @@ Kiril: Едно видео от co-founder на ChatGPT за това как т�
 [How I use LLMs](https://www.youtube.com/watch?v=EWvNQjAaOHw)
 
 
+Agentic RAG
+
+[The ULTIMATE n8n RAG AI Agent Template - Local AI Edition](https://youtu.be/T2QWhXpnT5I?si=w-HHYWZsXelgpvxH)
+
+
+
 
