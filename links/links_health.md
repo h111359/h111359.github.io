@@ -23,6 +23,7 @@
 - [Jewlish - Challah In A Bag - it's so easy! Make it this Shabbat:](https://www.facebook.com/sojewlish/videos/642087279282104/)
 - [СЕГА - Децата на Капитан Планета](http://www.segabg.com/article.php?id=869478)
 - [Tasty - Here's 7 dorm-friendly microwave meals, PLUS a microwave...](https://www.facebook.com/buzzfeedtasty/videos/2039841952935110/)
+- [Online Tone Generator](https://onlinetonegenerator.com/)
 
 ### Предсърдно Мъждене
 
