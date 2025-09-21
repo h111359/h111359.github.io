@@ -6,14 +6,16 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mini Gallery — Images + Videos</title>
 
-  <!-- CSP updated: allow Drive previews in iframes and thumbnails from googleusercontent -->
+  <!-- CSP updated: styles from self + blob:, images from Drive/googleusercontent, frames from Drive -->
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'self';
                  img-src 'self' https://drive.google.com https://lh3.googleusercontent.com https://*.googleusercontent.com data: blob:;
                  frame-src https://drive.google.com;
                  child-src https://drive.google.com;
                  script-src 'self';
-                 style-src 'self' 'unsafe-inline';
+                 style-src 'self' blob:;
+                 style-src-elem 'self' blob:;
+                 style-src-attr 'unsafe-inline';
                  connect-src 'self';">
 
   <link rel="preload" href="gallery.css" as="style">
