@@ -113,16 +113,18 @@ const items = [
   const lbBody   = document.getElementById('lbBody');
   const lbCaption= document.getElementById('lbCaption');
 
-  function openLightboxImage(src, item){
-    clearLightbox();
-    const img=document.createElement('img');
-    img.alt=item.name; img.loading='eager'; img.decoding='sync'; img.referrerPolicy='no-referrer';
-    img.src=src;
-    img.onerror=()=>{ showFallback(`Preview unavailable for <strong>${escapeHtml(item.name)}</strong>. Check Google Drive sharing.`); };
-    lbBody.appendChild(img);
-    lbCaption.innerHTML = captionHtml(item);
-    lightbox.classList.add('open');
-  }
+function openLightboxImage(item){
+  clearLightbox();
+  const frame = document.createElement('iframe');
+  frame.className = 'frame';
+  frame.allow = 'fullscreen; picture-in-picture';
+  frame.referrerPolicy = 'no-referrer';
+  // Use Drive's preview page inside the lightbox (works even when direct image fetch is blocked)
+  frame.src = item.preview;
+  lbBody.appendChild(frame);
+  lbCaption.innerHTML = captionHtml(item);
+  lightbox.classList.add('open');
+}
 
   function openLightboxVideo(previewUrl, item){
     clearLightbox();
