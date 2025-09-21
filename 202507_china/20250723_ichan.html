@@ -6,10 +6,51 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mini Gallery — Images + Videos</title>
 
-  <!-- NOTE: Removed CSP <meta> to avoid blocking CSS and Drive assets on GitHub Pages -->
+  <!-- INLINE CSS to avoid any external/CSP/MIME issues -->
+  <style>
+    :root { --bg:#0b0c0f; --card:#12141a; --muted:#9aa3af; --text:#e5e7eb; --accent:#60a5fa;
+            --radius:16px; --gap:14px; --border:#1f2937; --borderHover:#334155; }
+    body.no-scroll { overflow:hidden; }
+    *{box-sizing:border-box}
+    body{
+      margin:0; color:var(--text);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial;
+      background:radial-gradient(1200px 600px at 15% -10%, #0f172a 0%, #0b0c0f 55%) no-repeat fixed, var(--bg);
+    }
+    .hdr{max-width:1000px;margin:24px auto 8px;padding:0 16px;display:flex;gap:12px;align-items:baseline}
+    .hdr h1{margin:0;font-size:1.15rem}
+    .meta{color:var(--muted);font-size:.9rem}
+    .toolbar{max-width:1000px;margin:0 auto 8px;padding:0 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .search{flex:1 1 260px;display:flex;background:var(--card);border-radius:999px;padding:8px 12px;border:1px solid var(--border)}
+    .search input{flex:1;background:transparent;border:0;outline:none;color:var(--text);font-size:.95rem}
+    .counts,.hint{color:var(--muted);font-size:.85rem}
 
-  <link rel="preload" href="gallery.css" as="style">
-  <link rel="stylesheet" href="gallery.css?v=2">
+    .grid{max-width:1000px;margin:0 auto 48px;padding:0 16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:var(--gap)}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:clip;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
+    .card:hover{border-color:var(--borderHover);box-shadow:0 6px 24px rgba(0,0,0,.35)}
+    .media-btn{all:unset;display:block;width:100%;cursor:pointer;outline-offset:2px}
+    .thumb,.poster{width:100%;aspect-ratio:4/3;display:block;object-fit:cover;background:#0a0c12;filter:saturate(1.05);transition:transform .25s ease}
+    .card:hover .thumb,.card:hover .poster{transform:scale(1.02)}
+    .caption{padding:10px 12px;font-size:.85rem;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+    .cap-top{display:flex;justify-content:space-between;gap:8px;align-items:center}
+    .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .caption .desc{color:#cbd5e1;line-height:1.3}
+    .video-wrap{position:relative}
+    .play{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+    .play svg{width:56px;height:56px;background:rgba(0,0,0,.45);border-radius:999px;padding:10px}
+
+    /* FULLSCREEN LIGHTBOX */
+    .lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.92);z-index:9999;padding:0}
+    .lightbox.open{display:flex}
+    .lb-body{width:96vw;height:90vh;display:grid;place-items:center}
+    .lightbox .frame,.lightbox img{
+      width:96vw;height:90vh;max-width:96vw;max-height:90vh;object-fit:contain;border:0;border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,.6);background:#000
+    }
+    .lb-caption{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);max-width:min(96vw,1100px);color:#e5e7eb;font-size:.95rem;line-height:1.35;text-align:center;text-shadow:0 2px 6px rgba(0,0,0,.5)}
+    .lb-meta{color:#9aa3af;font-size:.85rem;margin-top:4px}
+    .close{position:fixed;top:16px;right:16px;background:#0b1020;color:#d1d5db;border:1px solid #283246;border-radius:999px;padding:8px 12px;cursor:pointer;font-size:.9rem}
+    .lb-fallback{display:grid;place-items:center;width:min(96vw,800px);min-height:40vh;background:#0b1020;border:1px dashed #374151;border-radius:12px;padding:16px;color:#cbd5e1}
+  </style>
 </head>
 <body>
   <header class="hdr">
