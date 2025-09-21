@@ -5,9 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mini Gallery — Images + Videos</title>
   <style>
-    :root { --bg:#0b0c0f; --card:#12141a; --muted:#9aa3af; --text:#e5e7eb; --accent:#60a5fa; --radius:16px; --gap:14px; --border:#1f2937; --borderHover:#334155; }
+    :root { --bg:#0b0c0f; --card:#12141a; --muted:#9aa3af; --text:#e5e7eb; --accent:#60a5fa;
+            --radius:16px; --gap:14px; --border:#1f2937; --borderHover:#334155; }
     *{box-sizing:border-box}
-    body{margin:0;background:radial-gradient(1200px 600px at 15% -10%, #0f172a 0%, #0b0c0f 55%) no-repeat fixed, var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial}
+    body{
+      margin:0; color:var(--text);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial;
+      background:radial-gradient(1200px 600px at 15% -10%, #0f172a 0%, #0b0c0f 55%) no-repeat fixed, var(--bg);
+    }
     header{max-width:1000px;margin:24px auto 8px;padding:0 16px;display:flex;gap:12px;align-items:baseline}
     header h1{margin:0;font-size:1.15rem}
     header .meta{color:var(--muted);font-size:.9rem}
@@ -17,40 +22,42 @@
     .counts,.hint{color:var(--muted);font-size:.85rem}
 
     .grid{max-width:1000px;margin:0 auto 48px;padding:0 16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:var(--gap)}
-    .card{
-      background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:clip;
-      transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;
-    }
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:clip;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
     .card:hover{border-color:var(--borderHover);box-shadow:0 6px 24px rgba(0,0,0,.35)}
-    .media-btn{
-      all:unset;display:block;width:100%;cursor:pointer;outline-offset:2px;
-    }
+    .media-btn{all:unset;display:block;width:100%;cursor:pointer;outline-offset:2px}
     .thumb,.poster{width:100%;aspect-ratio:4/3;display:block;object-fit:cover;background:#0a0c12;filter:saturate(1.05);transition:transform .25s ease}
     .card:hover .thumb,.card:hover .poster{transform:scale(1.02)}
-    .caption{padding:10px 12px;font-size:.85rem;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+    .caption{padding:10px 12px;font-size:.85rem;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+    .cap-top{display:flex;justify-content:space-between;gap:8px;align-items:center}
     .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .caption .desc{color:#cbd5e1;line-height:1.3}
     .caption a{color:var(--accent);text-decoration:none;font-weight:500;font-size:.85rem}
 
     .video-wrap{position:relative}
     .play{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
     .play svg{width:56px;height:56px;background:rgba(0,0,0,.45);border-radius:999px;padding:10px}
 
-    .lightbox{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.88);z-index:50;padding:24px;backdrop-filter:blur(2px)}
+    /* Lightbox */
+    .lightbox{position:fixed;inset:0;display:none;grid-template-rows:auto 1fr auto;justify-items:center;align-items:center;background:rgba(0,0,0,.88);z-index:50;padding:24px;backdrop-filter:blur(2px)}
     .lightbox.open{display:grid}
-    .lightbox .frame,.lightbox img{max-width:min(96vw,1600px);max-height:86vh;width:auto;height:auto;border:0;border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,.6);background:#000}
+    .lb-body{display:grid;place-items:center;width:100%}
+    .lightbox .frame,.lightbox img{max-width:min(96vw,1600px);max-height:76vh;width:auto;height:auto;border:0;border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,.6);background:#000}
+    .lb-caption{max-width:min(96vw,1600px);margin-top:12px;color:#e5e7eb;font-size:.95rem;line-height:1.35;text-align:center}
+    .lb-meta{color:#9aa3af;font-size:.85rem;margin-top:4px}
     .close{position:fixed;top:16px;right:16px;background:#0b1020;color:#d1d5db;border:1px solid #283246;border-radius:999px;padding:8px 12px;cursor:pointer;font-size:.9rem}
+    .lb-fallback{display:grid;place-items:center;width:min(96vw,800px);min-height:40vh;background:#0b1020;border:1px dashed #374151;border-radius:12px;padding:16px;color:#cbd5e1}
   </style>
 </head>
 <body>
   <header>
     <h1>Mini Gallery</h1>
-    <div class="meta">3 images + 2 videos (Google Drive preview)</div>
+    <div class="meta">3 images + 2 videos • Click to enlarge or play</div>
   </header>
 
   <div class="toolbar">
-    <div class="search"><input id="q" type="search" placeholder="Filter by filename…" aria-label="Filter items"></div>
+    <div class="search"><input id="q" type="search" placeholder="Filter by filename or text…" aria-label="Filter items"></div>
     <div class="counts" id="counts">Loading…</div>
-    <div class="hint">Tip: click a card to open. Press Esc to close.</div>
+    <div class="hint">Tip: Press Esc to close the viewer.</div>
   </div>
 
   <main class="grid" id="grid" aria-live="polite"></main>
@@ -58,59 +65,60 @@
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Viewer">
     <button class="close" id="closeBtn" title="Close (Esc)">Close</button>
+    <div class="lb-body" id="lbBody"></div>
+    <div class="lb-caption" id="lbCaption"></div>
   </div>
 
   <script>
-    // ===== Google Drive helpers =====
+    // ===== Helpers for Google Drive =====
     function extractId(previewUrl){ const m=String(previewUrl).match(/\/d\/([^/]+)\/preview/); return m?m[1]:null; }
     const viewImg = (id)=>`https://drive.google.com/uc?export=view&id=${id}`;
     const thumb   = (id,w=1600)=>`https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
-    // Drive video player inside iframe
-    const iframeSrc = (previewUrl)=>{
-      const url = new URL(previewUrl);
-      url.searchParams.set('autoplay','1');
-      return url.toString();
-    };
+    const iframeSrc = (previewUrl)=>{ const u=new URL(previewUrl); u.searchParams.set('autoplay','1'); return u.toString(); };
 
-    // ===== YOUR ITEMS (3 images + 2 videos) =====
+    // ===== Your items (add/remove here). Each entry can have a 'desc' =====
     const items = [
-      ["20250723_061843.jpg","https://drive.google.com/file/d/1VvR5d1FTOED24vwO3Mp0SZZujDeH-KLC/preview?authuser=0"],
-      ["20250723_062457.jpg","https://drive.google.com/file/d/1Ta-kRWK3o89Ak5y--CyyZdtLX7TYt0NK/preview?authuser=0"],
-      ["20250723_065326.jpg","https://drive.google.com/file/d/1_hu0y5NlJzDaZvVifH8G75bwoTv92g1x/preview?authuser=0"],
-      ["20250723_094339.mp4","https://drive.google.com/file/d/1b0TghvL7oS6CLoDY1--Rvsqrknfi4xyM/preview?authuser=0"],
-      ["20250723_095426.mp4","https://drive.google.com/file/d/1_TkiNZrTPAX2fnBsfh8v-W8Nr7XhuQDj/preview?authuser=0"],
+      { name:"20250723_061843.jpg", preview:"https://drive.google.com/file/d/1VvR5d1FTOED24vwO3Mp0SZZujDeH-KLC/preview?authuser=0", desc:"Morning shot — soft light." },
+      { name:"20250723_062457.jpg", preview:"https://drive.google.com/file/d/1Ta-kRWK3o89Ak5y--CyyZdtLX7TYt0NK/preview?authuser=0", desc:"Close-up detail." },
+      { name:"20250723_065326.jpg", preview:"https://drive.google.com/file/d/1_hu0y5NlJzDaZvVifH8G75bwoTv92g1x/preview?authuser=0", desc:"Wide composition." },
+
+      { name:"20250723_094339.mp4", preview:"https://drive.google.com/file/d/1b0TghvL7oS6CLoDY1--Rvsqrknfi4xyM/preview?authuser=0", desc:"Short video clip #1." },
+      { name:"20250723_095426.mp4", preview:"https://drive.google.com/file/d/1_TkiNZrTPAX2fnBsfh8v-W8Nr7XhuQDj/preview?authuser=0", desc:"Short video clip #2." },
     ];
 
-    const media = items.map(([name, preview])=>{
-      const id = extractId(preview);
-      const lower = name.toLowerCase();
+    // Normalize & build typed list
+    const media = items.map(it=>{
+      const id = extractId(it.preview);
+      const lower = it.name.toLowerCase();
       const kind = lower.endsWith('.mp4') ? 'video' : 'image';
-      return id ? { name, id, preview, kind } : null;
+      return id ? { ...it, id, kind } : null;
     }).filter(Boolean);
 
-    const grid = document.getElementById('grid');
+    // UI refs
+    const grid   = document.getElementById('grid');
     const counts = document.getElementById('counts');
-    const q = document.getElementById('q');
+    const q      = document.getElementById('q');
 
+    // Cards
     function makeImageCard(item){
       const card = document.createElement('article'); card.className='card';
-      const btn = document.createElement('button'); btn.className='media-btn'; btn.type='button'; btn.setAttribute('aria-label',`Open ${item.name}`);
-      const img = document.createElement('img');
+      const btn  = document.createElement('button'); btn.className='media-btn'; btn.type='button'; btn.setAttribute('aria-label',`Open ${item.name}`);
+      const img  = document.createElement('img');
       img.className='thumb'; img.loading='lazy'; img.decoding='async'; img.referrerPolicy='no-referrer';
       img.alt=item.name; img.src=viewImg(item.id);
-
       let triedThumb=false;
       img.onerror=()=>{ if(!triedThumb){ triedThumb=true; img.src=thumb(item.id,1600); } };
-
-      // Click + keyboard open
       btn.addEventListener('click',()=>openLightboxImage(viewImg(item.id), item));
-      btn.addEventListener('keydown',(e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLightboxImage(viewImg(item.id), item); } });
-
+      btn.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLightboxImage(viewImg(item.id), item); } });
       btn.appendChild(img);
 
       const cap=document.createElement('div'); cap.className='caption';
-      cap.innerHTML=`<span class="name" title="${item.name}">${item.name}</span>
-                     <a href="${item.preview}" target="_blank" rel="noopener">Drive</a>`;
+      cap.innerHTML=`
+        <div class="cap-top">
+          <span class="name" title="${item.name}">${item.name}</span>
+          <span></span>
+        </div>
+        ${item.desc ? `<div class="desc">${item.desc}</div>` : ''}`;
       card.appendChild(btn); card.appendChild(cap);
       return card;
     }
@@ -122,19 +130,24 @@
       const poster=document.createElement('img');
       poster.className='poster'; poster.loading='lazy'; poster.decoding='async'; poster.referrerPolicy='no-referrer';
       poster.alt=item.name+' (video)'; poster.src=thumb(item.id,1600);
+      poster.onerror=()=>{ /* keep empty; card still clickable to open player */ };
 
       const play=document.createElement('div'); play.className='play';
       play.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="#e5e7eb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="10" opacity=".7"></circle><polygon points="10,8 16,12 10,16" fill="#e5e7eb"></polygon></svg>`;
 
-      btn.addEventListener('click',()=>openLightboxVideo(item.preview));
-      btn.addEventListener('keydown',(e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLightboxVideo(item.preview); } });
+      btn.addEventListener('click',()=>openLightboxVideo(item.preview, item));
+      btn.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLightboxVideo(item.preview, item); } });
 
       wrap.appendChild(poster); wrap.appendChild(play); btn.appendChild(wrap);
 
       const cap=document.createElement('div'); cap.className='caption';
-      cap.innerHTML=`<span class="name" title="${item.name}">${item.name}</span>
-                     <a href="${item.preview}" target="_blank" rel="noopener">Drive</a>`;
+      cap.innerHTML=`
+        <div class="cap-top">
+          <span class="name" title="${item.name}">${item.name}</span>
+          <span></span>
+        </div>
+        ${item.desc ? `<div class="desc">${item.desc}</div>` : ''}`;
       card.appendChild(btn); card.appendChild(cap);
       return card;
     }
@@ -146,49 +159,18 @@
       counts.textContent=`${list.length} items • ${imgs} images • ${vids} videos`;
     }
 
+    // Search by filename or desc
     q.addEventListener('input',()=>{
       const term=q.value.trim().toLowerCase();
-      render(term?media.filter(m=>m.name.toLowerCase().includes(term)):media);
+      render(term?media.filter(m=>(m.name.toLowerCase().includes(term) || (m.desc||'').toLowerCase().includes(term))):media);
     });
 
     // ===== Lightbox =====
-    const lightbox=document.getElementById('lightbox');
-    const closeBtn=document.getElementById('closeBtn');
+    const lightbox = document.getElementById('lightbox');
+    const closeBtn = document.getElementById('closeBtn');
+    const lbBody   = document.getElementById('lbBody');
+    const lbCaption= document.getElementById('lbCaption');
 
     function openLightboxImage(src, item){
-      // build fresh content (keeps the Close button + its event)
-      [...lightbox.childNodes].forEach(n=>{ if(n!==closeBtn) lightbox.removeChild(n); });
+      clearLightbox();
       const img=document.createElement('img');
-      img.alt=item.name; img.loading='eager'; img.decoding='sync'; img.referrerPolicy='no-referrer';
-      img.src=src;
-      // If image fails (permissions), open Drive as a fallback so the user still sees it
-      img.onerror=()=>{ window.open(item.preview,'_blank','noopener'); };
-      lightbox.appendChild(img);
-      lightbox.classList.add('open');
-    }
-
-    function openLightboxVideo(previewUrl){
-      [...lightbox.childNodes].forEach(n=>{ if(n!==closeBtn) lightbox.removeChild(n); });
-      const frame=document.createElement('iframe');
-      frame.className='frame';
-      frame.allow='autoplay; fullscreen; picture-in-picture';
-      frame.referrerPolicy='no-referrer';
-      frame.src=iframeSrc(previewUrl);
-      lightbox.appendChild(frame);
-      lightbox.classList.add('open');
-    }
-
-    function closeLightbox(){
-      lightbox.classList.remove('open');
-      const frame=lightbox.querySelector('iframe'); if(frame) frame.src='about:blank';
-      const img=lightbox.querySelector('img'); if(img) img.removeAttribute('src');
-    }
-    closeBtn.addEventListener('click',closeLightbox);
-    lightbox.addEventListener('click',(e)=>{ if(e.target===lightbox) closeLightbox(); });
-    window.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeLightbox(); });
-
-    // Init
-    render(media);
-  </script>
-</body>
-</html>
