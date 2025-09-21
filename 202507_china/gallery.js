@@ -8,7 +8,7 @@ const items = window.GALLERY_ITEMS || [];
   const thumb   = (id,w=1600)=>`https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
   const iframeSrc = (previewUrl)=>{ const u=new URL(previewUrl); u.searchParams.set('autoplay','1'); return u.toString(); };
 
-  // DOM refs (after DOM is ready)
+  // DOM refs
   function getRefs(){
     return {
       grid: document.getElementById('grid'),
@@ -21,7 +21,6 @@ const items = window.GALLERY_ITEMS || [];
     };
   }
 
-  // Wait for DOM and data
   function onReady(fn){
     if(document.readyState === 'loading'){
       document.addEventListener('DOMContentLoaded', fn, { once:true });
@@ -36,7 +35,7 @@ const items = window.GALLERY_ITEMS || [];
       if (Array.isArray(window.GALLERY_ITEMS)) return window.GALLERY_ITEMS;
       await new Promise(r => setTimeout(r, pollMs));
     }
-    return window.GALLERY_ITEMS || []; // fallback (maybe empty)
+    return window.GALLERY_ITEMS || [];
   }
 
   function normalize(items){
@@ -53,36 +52,51 @@ const items = window.GALLERY_ITEMS || [];
     return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
   }
 
-  // ---------- NEW: ensure CSS is applied; if not, inject it inline ----------
+  // ENSURE STYLES: try link (cache-busted) -> blob stylesheet
   async function ensureStyles() {
+    const gridEl = document.getElementById('grid');
+    if (!gridEl) return;
+    const looksApplied = () => getComputedStyle(gridEl).display === 'grid';
+
+    // If already applied, bail
+    if (looksApplied()) return;
+
+    // 1) Try adding a cache-busted <link rel="stylesheet">
     try {
-      // Heuristic: our grid should compute to 'grid' when CSS is active
-      const gridEl = document.getElementById('grid');
-      const computed = gridEl ? getComputedStyle(gridEl).display : '';
-      const cssLooksApplied = computed === 'grid';
+      await new Promise((resolve, reject) => {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'gallery.css?v=' + Date.now();
+        link.onload = resolve;
+        link.onerror = () => reject(new Error('link load error'));
+        document.head.appendChild(link);
+      });
+      if (looksApplied()) return;
+    } catch (_) {
+      // ignore and try blob fallback
+    }
 
-      if (cssLooksApplied) return; // all good
-
-      // Try to fetch the CSS from same folder and inline it
+    // 2) Fetch CSS and attach as a Blob stylesheet (respects CSP style-src blob:)
+    try {
       const resp = await fetch('gallery.css', { cache: 'no-store' });
       if (!resp.ok) throw new Error('gallery.css fetch failed: ' + resp.status);
       const cssText = await resp.text();
-      const style = document.createElement('style');
-      style.textContent = cssText;
-      document.head.appendChild(style);
+      const blob = new Blob([cssText], { type: 'text/css' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = url;
+      document.head.appendChild(link);
 
-      // Re-check after injecting
-      const computed2 = getComputedStyle(gridEl).display;
-      if (computed2 !== 'grid') {
-        console.warn('Gallery: CSS injected but still not applied (CSP header may block inline styles).');
-      } else {
-        console.log('Gallery: CSS inlined as fallback.');
+      // Give the browser a tick to apply
+      await new Promise(r => setTimeout(r, 30));
+      if (!looksApplied()) {
+        console.warn('Gallery: stylesheet loaded but CSS still not applied. Check server CSP headers for style-src.');
       }
     } catch (err) {
-      console.error('Gallery: failed to inline CSS fallback:', err);
+      console.error('Gallery: failed to load CSS via blob stylesheet:', err);
     }
   }
-  // -------------------------------------------------------------------------
 
   // Card builders
   function makeImageCard(item, openLightboxImage){
@@ -119,110 +133,4 @@ const items = window.GALLERY_ITEMS || [];
     btn.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLightboxVideo(item.preview, item); } });
     wrap.appendChild(poster); wrap.appendChild(play); btn.appendChild(wrap);
 
-    const cap=document.createElement('div'); cap.className='caption';
-    cap.innerHTML=`
-      <div class="cap-top"><span class="name" title="${item.name}">${item.name}</span><span></span></div>
-      ${item.desc ? `<div class="desc">${escapeHtml(item.desc)}</div>` : ''}`;
-    card.appendChild(btn); card.appendChild(cap);
-    return card;
-  }
-
-  function startApp(media){
-    const { grid, counts, q, lightbox, closeBtn, lbBody, lbCaption } = getRefs();
-
-    function render(list){
-      grid.innerHTML='';
-      for(const m of list){
-        grid.appendChild(m.kind==='video'
-          ? makeVideoCard(m, openLightboxVideo)
-          : makeImageCard(m, openLightboxImage));
-      }
-      const imgs=list.filter(x=>x.kind==='image').length, vids=list.filter(x=>x.kind==='video').length;
-      counts.textContent=`${list.length} items • ${imgs} images • ${vids} videos`;
-    }
-
-    // Search
-    q.addEventListener('input',()=>{
-      const term=q.value.trim().toLowerCase();
-      render(term
-        ? media.filter(m => m.name.toLowerCase().includes(term) || (m.desc||'').toLowerCase().includes(term))
-        : media);
-    });
-
-    // Lightbox
-    function captionHtml(item){
-      const d = item.desc ? `<div>${escapeHtml(item.desc)}</div>` : '';
-      return `<div><strong>${escapeHtml(item.name)}</strong></div>${d}<div class="lb-meta">${item.kind==='video'?'Video':'Image'}</div>`;
-    }
-
-    function clearLightbox(){ lbBody.innerHTML=''; lbCaption.textContent=''; }
-
-    function openLightboxImage(item){
-      clearLightbox();
-      const frame = document.createElement('iframe');
-      frame.className = 'frame';
-      frame.allow = 'fullscreen; picture-in-picture';
-      frame.referrerPolicy = 'no-referrer';
-      frame.src = item.preview; // Drive preview page (works when direct image fetch is blocked)
-      lbBody.appendChild(frame);
-      lbCaption.innerHTML = captionHtml(item);
-      document.body.classList.add('no-scroll');
-      lightbox.classList.add('open');
-    }
-
-    function openLightboxVideo(previewUrl, item){
-      clearLightbox();
-      const frame=document.createElement('iframe');
-      frame.className='frame';
-      frame.allow='autoplay; fullscreen; picture-in-picture';
-      frame.referrerPolicy='no-referrer';
-      frame.src=iframeSrc(previewUrl);
-      lbBody.appendChild(frame);
-      lbCaption.innerHTML = captionHtml(item);
-      document.body.classList.add('no-scroll');
-      lightbox.classList.add('open');
-    }
-
-    function closeLightbox(){
-      lightbox.classList.remove('open');
-      document.body.classList.remove('no-scroll');
-      const frame=lbBody.querySelector('iframe'); if(frame) frame.src='about:blank';
-      const img=lbBody.querySelector('img'); if(img) img.removeAttribute('src');
-      clearLightbox();
-    }
-
-    closeBtn.addEventListener('click',closeLightbox);
-    lightbox.addEventListener('click',(e)=>{ if(e.target===lightbox) closeLightbox(); });
-    window.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeLightbox(); });
-
-    // Initial render
-    render(media);
-  }
-
-  function showNoDataMessage(){
-    const { grid, counts } = getRefs();
-    counts.textContent = '0 items';
-    const msg = document.createElement('div');
-    msg.style.cssText = 'padding:12px;border:1px solid #374151;border-radius:12px;background:#111827;color:#e5e7eb';
-    msg.innerHTML = 'No gallery items loaded.<br>' +
-      'Make sure <code>media-data.js</code> is in the same folder and included <strong>before</strong> <code>gallery.js</code>.';
-    grid.innerHTML = '';
-    grid.appendChild(msg);
-  }
-
-  onReady(async ()=>{
-    try{
-      // 1) Ensure styles are active; if not, inline as fallback
-      await ensureStyles();
-
-      // 2) Wait for data and start
-      const raw = await waitForData();               // wait for media-data.js
-      const media = normalize(raw);
-      if (!media.length) { showNoDataMessage(); return; }
-      startApp(media);
-    } catch (e){
-      console.error('Gallery init error:', e);
-      showNoDataMessage();
-    }
-  });
-})();
+    const cap=d
