@@ -4,6 +4,18 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mini Gallery — Images + Videos</title>
+
+  <!-- Allow loading Google Drive previews inside iframes and images -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 img-src 'self' https://drive.google.com data:;
+                 frame-src https://drive.google.com;
+                 child-src https://drive.google.com;
+                 script-src 'self';
+                 style-src 'self' 'unsafe-inline';
+                 connect-src 'self';">
+
+  <!-- Styles -->
   <link rel="preload" href="gallery.css" as="style">
   <link rel="stylesheet" href="gallery.css">
 </head>
@@ -34,7 +46,7 @@
     </div>
   </noscript>
 
-  <!-- External JS (avoids inline-script CSP issues) -->
+  <!-- IMPORTANT: data file must load BEFORE gallery.js -->
   <script src="media-data.js" defer></script>
   <script src="gallery.js" defer></script>
 </body>
