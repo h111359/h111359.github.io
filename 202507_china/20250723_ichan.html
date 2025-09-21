@@ -2,20 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mini Gallery — Images + Videos</title>
 
-  <!-- Allow loading Google Drive previews inside iframes and images -->
+  <!-- CSP updated: allow Drive previews in iframes and thumbnails from googleusercontent -->
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'self';
-                 img-src 'self' https://drive.google.com data:;
+                 img-src 'self' https://drive.google.com https://lh3.googleusercontent.com https://*.googleusercontent.com data: blob:;
                  frame-src https://drive.google.com;
                  child-src https://drive.google.com;
                  script-src 'self';
                  style-src 'self' 'unsafe-inline';
                  connect-src 'self';">
 
-  <!-- Styles -->
   <link rel="preload" href="gallery.css" as="style">
   <link rel="stylesheet" href="gallery.css">
 </head>
@@ -46,8 +46,8 @@
     </div>
   </noscript>
 
-  <!-- IMPORTANT: data file must load BEFORE gallery.js -->
-  <script src="media-data.js" defer></script>
-  <script src="gallery.js" defer></script>
+  <!-- Data must load BEFORE app script -->
+  <script src="media-data.js" charset="utf-8" defer></script>
+  <script src="gallery.js" charset="utf-8" defer></script>
 </body>
 </html>
