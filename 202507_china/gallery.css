@@ -31,7 +31,16 @@ body{
 .play{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
 .play svg{width:56px;height:56px;background:rgba(0,0,0,.45);border-radius:999px;padding:10px}
 
-.lightbox{position:fixed;inset:0;display:none;grid-template-rows:auto 1fr auto;justify-items:center;align-items:center;background:rgba(0,0,0,.88);z-index:50;padding:24px;backdrop-filter:blur(2px)}
+.lightbox .frame, .lightbox img{
+  width: min(96vw, 1600px);
+  height: 80vh;            /* bigger viewing area */
+  max-width: 96vw;
+  max-height: 80vh;
+  border: 0;
+  border-radius: 10px;
+  box-shadow: 0 8px 40px rgba(0,0,0,.6);
+  background: #000;
+}
 .lightbox.open{display:grid}
 .lb-body{display:grid;place-items:center;width:100%}
 .lightbox .frame,.lightbox img{max-width:min(96vw,1600px);max-height:76vh;width:auto;height:auto;border:0;border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,.6);background:#000}
