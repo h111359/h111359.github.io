@@ -1,6 +1,5 @@
-/* ----- CONFIG: edit only this items list ----- */
+/* Use data from separate file */
 const items = window.GALLERY_ITEMS || [];
-/* -------------------------------------------- */
 
 (function () {
   // Helpers for Google Drive
@@ -32,8 +31,9 @@ const items = window.GALLERY_ITEMS || [];
     let triedThumb=false;
     img.onerror=()=>{ if(!triedThumb){ triedThumb=true; img.src=thumb(item.id,1600); } };
 
+    // Open image in fullscreen lightbox (use Drive preview iframe so permissions don't block)
     btn.addEventListener('click',()=>openLightboxImage(item));
-    btn.addEventListener('keydown',(e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLightboxImage(item); } });
+    btn.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLightboxImage(item); } });
     btn.appendChild(img);
 
     const cap=document.createElement('div'); cap.className='caption';
@@ -84,18 +84,18 @@ const items = window.GALLERY_ITEMS || [];
   const lbBody   = document.getElementById('lbBody');
   const lbCaption= document.getElementById('lbCaption');
 
-function openLightboxImage(item){
-  clearLightbox();
-  const frame = document.createElement('iframe');
-  frame.className = 'frame';
-  frame.allow = 'fullscreen; picture-in-picture';
-  frame.referrerPolicy = 'no-referrer';
-  // Use Drive's preview page inside the lightbox (works even when direct image fetch is blocked)
-  frame.src = item.preview;
-  lbBody.appendChild(frame);
-  lbCaption.innerHTML = captionHtml(item);
-  lightbox.classList.add('open');
-}
+  function openLightboxImage(item){
+    clearLightbox();
+    const frame = document.createElement('iframe');
+    frame.className = 'frame';
+    frame.allow = 'fullscreen; picture-in-picture';
+    frame.referrerPolicy = 'no-referrer';
+    frame.src = item.preview;           // Use Drive preview page
+    lbBody.appendChild(frame);
+    lbCaption.innerHTML = captionHtml(item);
+    document.body.classList.add('no-scroll');  // lock page scroll
+    lightbox.classList.add('open');
+  }
 
   function openLightboxVideo(previewUrl, item){
     clearLightbox();
@@ -106,6 +106,7 @@ function openLightboxImage(item){
     frame.src=iframeSrc(previewUrl);
     lbBody.appendChild(frame);
     lbCaption.innerHTML = captionHtml(item);
+    document.body.classList.add('no-scroll');  // lock page scroll
     lightbox.classList.add('open');
   }
 
@@ -127,6 +128,7 @@ function openLightboxImage(item){
 
   function closeLightbox(){
     lightbox.classList.remove('open');
+    document.body.classList.remove('no-scroll');   // restore page scroll
     const frame=lbBody.querySelector('iframe'); if(frame) frame.src='about:blank';
     const img=lbBody.querySelector('img'); if(img) img.removeAttribute('src');
     clearLightbox();
@@ -137,9 +139,10 @@ function openLightboxImage(item){
   }
 
   closeBtn.addEventListener('click',closeLightbox);
+  // Click on backdrop closes; clicks inside media do not
   lightbox.addEventListener('click',(e)=>{ if(e.target===lightbox) closeLightbox(); });
   window.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeLightbox(); });
 
-  // Init after DOM is ready (defer ensures this has DOM)
+  // Init
   render(media);
 })();
