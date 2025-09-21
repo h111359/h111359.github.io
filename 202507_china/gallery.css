@@ -1,94 +1,193 @@
-:root {
-  --bg:#0b0c0f; --card:#12141a; --muted:#9aa3af; --text:#e5e7eb; --accent:#60a5fa;
-  --radius:16px; --gap:14px; --border:#1f2937; --borderHover:#334155;
-}
+/* Robust loader: waits for media-data.js to provide window.GALLERY_ITEMS */
+(function () {
+  // Helpers for Google Drive
+  function extractId(previewUrl){ const m=String(previewUrl).match(/\/d\/([^/]+)\/preview/); return m?m[1]:null; }
+  const viewImg = (id)=>`https://drive.google.com/uc?export=view&id=${id}`;
+  const thumb   = (id,w=1600)=>`https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
+  const iframeSrc = (previewUrl)=>{ const u=new URL(previewUrl); u.searchParams.set('autoplay','1'); return u.toString(); };
 
-/* Prevent page scroll when lightbox is open */
-body.no-scroll { overflow: hidden; }
+  // DOM refs (after DOM is ready)
+  function getRefs(){
+    return {
+      grid: document.getElementById('grid'),
+      counts: document.getElementById('counts'),
+      q: document.getElementById('q'),
+      lightbox: document.getElementById('lightbox'),
+      closeBtn: document.getElementById('closeBtn'),
+      lbBody: document.getElementById('lbBody'),
+      lbCaption: document.getElementById('lbCaption'),
+    };
+  }
 
-*{box-sizing:border-box}
-body{
-  margin:0; color:var(--text);
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial;
-  background:radial-gradient(1200px 600px at 15% -10%, #0f172a 0%, #0b0c0f 55%) no-repeat fixed, var(--bg);
-}
+  // Wait for DOM and data
+  function onReady(fn){
+    if(document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', fn, { once:true });
+    } else {
+      fn();
+    }
+  }
 
-.hdr{max-width:1000px;margin:24px auto 8px;padding:0 16px;display:flex;gap:12px;align-items:baseline}
-.hdr h1{margin:0;font-size:1.15rem}
-.meta{color:var(--muted);font-size:.9rem}
+  async function waitForData(timeoutMs = 10000, pollMs = 100){
+    const start = Date.now();
+    while (Date.now() - start < timeoutMs) {
+      if (Array.isArray(window.GALLERY_ITEMS)) return window.GALLERY_ITEMS;
+      await new Promise(r => setTimeout(r, pollMs));
+    }
+    return window.GALLERY_ITEMS || []; // fallback (maybe empty)
+  }
 
-.toolbar{max-width:1000px;margin:0 auto 8px;padding:0 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.search{flex:1 1 260px;display:flex;background:var(--card);border-radius:999px;padding:8px 12px;border:1px solid var(--border)}
-.search input{flex:1;background:transparent;border:0;outline:none;color:var(--text);font-size:.95rem}
-.counts,.hint{color:var(--muted);font-size:.85rem}
+  function normalize(items){
+    return items.map(it=>{
+      const id = extractId(it.preview || '');
+      if(!id) return null;
+      const lower = String(it.name || '').toLowerCase();
+      const kind = lower.endsWith('.mp4') ? 'video' : 'image';
+      return { name: it.name || id, preview: it.preview, desc: it.desc || '', id, kind };
+    }).filter(Boolean);
+  }
 
-.grid{max-width:1000px;margin:0 auto 48px;padding:0 16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:var(--gap)}
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:clip;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
-.card:hover{border-color:var(--borderHover);box-shadow:0 6px 24px rgba(0,0,0,.35)}
-.media-btn{all:unset;display:block;width:100%;cursor:pointer;outline-offset:2px}
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+  }
 
-.thumb,.poster{
-  width:100%;aspect-ratio:4/3;display:block;object-fit:cover;background:#0a0c12;
-  filter:saturate(1.05);transition:transform .25s ease
-}
-.card:hover .thumb,.card:hover .poster{transform:scale(1.02)}
+  // Card builders
+  function makeImageCard(item, openLightboxImage){
+    const card = document.createElement('article'); card.className='card';
+    const btn  = document.createElement('button'); btn.className='media-btn'; btn.type='button';
+    const img  = document.createElement('img');
+    img.className='thumb'; img.loading='lazy'; img.decoding='async'; img.referrerPolicy='no-referrer';
+    img.alt=item.name; img.src=viewImg(item.id);
+    let triedThumb=false;
+    img.onerror=()=>{ if(!triedThumb){ triedThumb=true; img.src=thumb(item.id,1600); } };
+    btn.addEventListener('click',()=>openLightboxImage(item));
+    btn.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLightboxImage(item); } });
+    btn.appendChild(img);
 
-.caption{padding:10px 12px;font-size:.85rem;color:var(--muted);display:flex;flex-direction:column;gap:6px}
-.cap-top{display:flex;justify-content:space-between;gap:8px;align-items:center}
-.name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.caption .desc{color:#cbd5e1;line-height:1.3}
+    const cap=document.createElement('div'); cap.className='caption';
+    cap.innerHTML=`
+      <div class="cap-top"><span class="name" title="${item.name}">${item.name}</span><span></span></div>
+      ${item.desc ? `<div class="desc">${escapeHtml(item.desc)}</div>` : ''}`;
+    card.appendChild(btn); card.appendChild(cap);
+    return card;
+  }
 
-.video-wrap{position:relative}
-.play{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
-.play svg{width:56px;height:56px;background:rgba(0,0,0,.45);border-radius:999px;padding:10px}
+  function makeVideoCard(item, openLightboxVideo){
+    const card=document.createElement('article'); card.className='card';
+    const btn=document.createElement('button'); btn.className='media-btn'; btn.type='button';
+    const wrap=document.createElement('div'); wrap.className='video-wrap';
+    const poster=document.createElement('img');
+    poster.className='poster'; poster.loading='lazy'; poster.decoding='async'; poster.referrerPolicy='no-referrer';
+    poster.alt=item.name+' (video)'; poster.src=thumb(item.id,1600);
+    const play=document.createElement('div'); play.className='play';
+    play.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="#e5e7eb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10" opacity=".7"></circle><polygon points="10,8 16,12 10,16" fill="#e5e7eb"></polygon></svg>`;
+    btn.addEventListener('click',()=>openLightboxVideo(item.preview, item));
+    btn.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLightboxVideo(item.preview, item); } });
+    wrap.appendChild(poster); wrap.appendChild(play); btn.appendChild(wrap);
 
-/* ===== FULLSCREEN LIGHTBOX ===== */
-.lightbox{
-  position:fixed; inset:0;
-  display:none;                  /* hidden by default */
-  align-items:center;            /* center content vertically */
-  justify-content:center;        /* center content horizontally */
-  background:rgba(0,0,0,.92);
-  z-index:9999;
-  padding:0;                     /* content will size itself */
-}
-.lightbox.open{ display:flex; }
+    const cap=document.createElement('div'); cap.className='caption';
+    cap.innerHTML=`
+      <div class="cap-top"><span class="name" title="${item.name}">${item.name}</span><span></span></div>
+      ${item.desc ? `<div class="desc">${escapeHtml(item.desc)}</div>` : ''}`;
+    card.appendChild(btn); card.appendChild(cap);
+    return card;
+  }
 
-.lb-body{
-  /* container that holds either <img> or <iframe> */
-  width:96vw; height:90vh;
-  display:grid; place-items:center;
-}
+  function startApp(media){
+    const { grid, counts, q, lightbox, closeBtn, lbBody, lbCaption } = getRefs();
 
-.lightbox .frame,
-.lightbox img{
-  /* Make media truly fullscreen within safe bounds */
-  width:96vw;                    /* span nearly full viewport width */
-  height:90vh;                   /* span nearly full viewport height */
-  max-width:96vw;
-  max-height:90vh;
-  object-fit:contain;            /* maintain aspect ratio without cropping */
-  border:0;
-  border-radius:10px;
-  box-shadow:0 8px 40px rgba(0,0,0,.6);
-  background:#000;
-}
+    function render(list){
+      grid.innerHTML='';
+      for(const m of list){
+        grid.appendChild(m.kind==='video'
+          ? makeVideoCard(m, openLightboxVideo)
+          : makeImageCard(m, openLightboxImage));
+      }
+      const imgs=list.filter(x=>x.kind==='image').length, vids=list.filter(x=>x.kind==='video').length;
+      counts.textContent=`${list.length} items • ${imgs} images • ${vids} videos`;
+    }
 
-.lb-caption{
-  position:fixed; bottom:18px; left:50%; transform:translateX(-50%);
-  max-width:min(96vw, 1100px);
-  color:#e5e7eb; font-size:.95rem; line-height:1.35; text-align:center;
-  text-shadow:0 2px 6px rgba(0,0,0,.5);
-}
-.lb-meta{color:#9aa3af;font-size:.85rem;margin-top:4px}
+    // Search
+    q.addEventListener('input',()=>{
+      const term=q.value.trim().toLowerCase();
+      render(term
+        ? media.filter(m => m.name.toLowerCase().includes(term) || (m.desc||'').toLowerCase().includes(term))
+        : media);
+    });
 
-.close{
-  position:fixed; top:16px; right:16px;
-  background:#0b1020; color:#d1d5db; border:1px solid #283246;
-  border-radius:999px; padding:8px 12px; cursor:pointer; font-size:.9rem;
-}
+    // Lightbox
+    function captionHtml(item){
+      const d = item.desc ? `<div>${escapeHtml(item.desc)}</div>` : '';
+      return `<div><strong>${escapeHtml(item.name)}</strong></div>${d}<div class="lb-meta">${item.kind==='video'?'Video':'Image'}</div>`;
+    }
 
-.lb-fallback{
-  display:grid;place-items:center;width:min(96vw,800px);min-height:40vh;
-  background:#0b1020;border:1px dashed #374151;border-radius:12px;padding:16px;color:#cbd5e1
-}
+    function clearLightbox(){ lbBody.innerHTML=''; lbCaption.textContent=''; }
+
+    function openLightboxImage(item){
+      clearLightbox();
+      const frame = document.createElement('iframe');
+      frame.className = 'frame';
+      frame.allow = 'fullscreen; picture-in-picture';
+      frame.referrerPolicy = 'no-referrer';
+      frame.src = item.preview; // Drive preview page (works when direct image fetch is blocked)
+      lbBody.appendChild(frame);
+      lbCaption.innerHTML = captionHtml(item);
+      document.body.classList.add('no-scroll');
+      lightbox.classList.add('open');
+    }
+
+    function openLightboxVideo(previewUrl, item){
+      clearLightbox();
+      const frame=document.createElement('iframe');
+      frame.className='frame';
+      frame.allow='autoplay; fullscreen; picture-in-picture';
+      frame.referrerPolicy='no-referrer';
+      frame.src=iframeSrc(previewUrl);
+      lbBody.appendChild(frame);
+      lbCaption.innerHTML = captionHtml(item);
+      document.body.classList.add('no-scroll');
+      lightbox.classList.add('open');
+    }
+
+    function closeLightbox(){
+      lightbox.classList.remove('open');
+      document.body.classList.remove('no-scroll');
+      const frame=lbBody.querySelector('iframe'); if(frame) frame.src='about:blank';
+      const img=lbBody.querySelector('img'); if(img) img.removeAttribute('src');
+      clearLightbox();
+    }
+
+    closeBtn.addEventListener('click',closeLightbox);
+    lightbox.addEventListener('click',(e)=>{ if(e.target===lightbox) closeLightbox(); });
+    window.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeLightbox(); });
+
+    // Initial render
+    render(media);
+  }
+
+  function showNoDataMessage(){
+    const { grid, counts } = getRefs();
+    counts.textContent = '0 items';
+    const msg = document.createElement('div');
+    msg.style.cssText = 'padding:12px;border:1px solid #374151;border-radius:12px;background:#111827;color:#e5e7eb';
+    msg.innerHTML = `No gallery items loaded.<br>
+      Make sure <code>media-data.js</code> is in the same folder and included <strong>before</strong> <code>gallery.js</code>:
+      <pre style="white-space:pre-wrap;margin:8px 0 0"> &lt;script src="media-data.js" defer&gt;&lt;/script&gt;
+ &lt;script src="gallery.js" defer&gt;&lt;/script&gt;</pre>`;
+    grid.innerHTML = '';
+    grid.appendChild(msg);
+  }
+
+  onReady(async ()=>{
+    try{
+      const raw = await waitForData();               // wait for media-data.js
+      const media = normalize(raw);
+      if (!media.length) { showNoDataMessage(); return; }
+      startApp(media);
+    } catch (e){
+      console.error('Gallery init error:', e);
+      showNoDataMessage();
+    }
+  });
+})();
