@@ -133,4 +133,107 @@ const items = window.GALLERY_ITEMS || [];
     btn.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLightboxVideo(item.preview, item); } });
     wrap.appendChild(poster); wrap.appendChild(play); btn.appendChild(wrap);
 
-    const cap=d
+    const cap=document.createElement('div'); cap.className='caption';
+    cap.innerHTML=`
+      <div class="cap-top"><span class="name" title="${item.name}">${item.name}</span><span></span></div>
+      ${item.desc ? `<div class="desc">${escapeHtml(item.desc)}</div>` : ''}`;
+    card.appendChild(btn); card.appendChild(cap);
+    return card;
+  }
+
+  function startApp(media){
+    const { grid, counts, q, lightbox, closeBtn, lbBody, lbCaption } = getRefs();
+
+    function render(list){
+      grid.innerHTML='';
+      for(const m of list){
+        grid.appendChild(m.kind==='video'
+          ? makeVideoCard(m, openLightboxVideo)
+          : makeImageCard(m, openLightboxImage));
+      }
+      const imgs=list.filter(x=>x.kind==='image').length, vids=list.filter(x=>x.kind==='video').length;
+      counts.textContent=`${list.length} items • ${imgs} images • ${vids} videos`;
+    }
+
+    // Search
+    q.addEventListener('input',()=>{
+      const term=q.value.trim().toLowerCase();
+      render(term
+        ? media.filter(m => m.name.toLowerCase().includes(term) || (m.desc||'').toLowerCase().includes(term))
+        : media);
+    });
+
+    // Lightbox
+    function captionHtml(item){
+      const d = item.desc ? `<div>${escapeHtml(item.desc)}</div>` : '';
+      return `<div><strong>${escapeHtml(item.name)}</strong></div>${d}<div class="lb-meta">${item.kind==='video'?'Video':'Image'}</div>`;
+    }
+
+    function clearLightbox(){ lbBody.innerHTML=''; lbCaption.textContent=''; }
+
+    function openLightboxImage(item){
+      clearLightbox();
+      const frame = document.createElement('iframe');
+      frame.className = 'frame';
+      frame.allow = 'fullscreen; picture-in-picture';
+      frame.referrerPolicy = 'no-referrer';
+      frame.src = item.preview; // Drive preview page
+      lbBody.appendChild(frame);
+      lbCaption.innerHTML = captionHtml(item);
+      document.body.classList.add('no-scroll');
+      lightbox.classList.add('open');
+    }
+
+    function openLightboxVideo(previewUrl, item){
+      clearLightbox();
+      const frame=document.createElement('iframe');
+      frame.className='frame';
+      frame.allow='autoplay; fullscreen; picture-in-picture';
+      frame.referrerPolicy='no-referrer';
+      frame.src=iframeSrc(previewUrl);
+      lbBody.appendChild(frame);
+      lbCaption.innerHTML = captionHtml(item);
+      document.body.classList.add('no-scroll');
+      lightbox.classList.add('open');
+    }
+
+    function closeLightbox(){
+      lightbox.classList.remove('open');
+      document.body.classList.remove('no-scroll');
+      const frame=lbBody.querySelector('iframe'); if(frame) frame.src='about:blank';
+      const img=lbBody.querySelector('img'); if(img) img.removeAttribute('src');
+      clearLightbox();
+    }
+
+    closeBtn.addEventListener('click',closeLightbox);
+    lightbox.addEventListener('click',(e)=>{ if(e.target===lightbox) closeLightbox(); });
+    window.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeLightbox(); });
+
+    // Initial render
+    render(media);
+  }
+
+  function showNoDataMessage(){
+    const { grid, counts } = getRefs();
+    counts.textContent = '0 items';
+    const msg = document.createElement('div');
+    msg.style.cssText = 'padding:12px;border:1px solid #374151;border-radius:12px;background:#111827;color:#e5e7eb';
+    msg.innerHTML = 'No gallery items loaded.<br>' +
+      'Make sure <code>media-data.js</code> is in the same folder and included <strong>before</strong> <code>gallery.js</code>.';
+    grid.innerHTML = '';
+    grid.appendChild(msg);
+  }
+
+  onReady(async ()=>{
+    try{
+      await ensureStyles();                   // make sure CSS is actually applied
+      const raw = await waitForData();        // wait for media-data.js
+      const media = normalize(raw);
+      if (!media.length) { showNoDataMessage(); return; }
+      startApp(media);
+    } catch (e){
+      console.error('Gallery init error:', e);
+      showNoDataMessage();
+    }
+  });
+})();
