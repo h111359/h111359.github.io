@@ -1,34 +1,5 @@
 /* ----- CONFIG: edit only this items list ----- */
-const items = [
-  // 3 IMAGES
-  {
-    name: "20250723_061843.jpg",
-    preview: "https://drive.google.com/file/d/1VvR5d1FTOED24vwO3Mp0SZZujDeH-KLC/preview?authuser=0",
-    desc: "Това е нашата стая. За съжаление в хладилника имаше само пепси. Каквото - такова, отпуска съм, няма сега да вдигам скандали за такива неща. Продаваха и Кола по магазините, не е да е нямало. Но тоталното надмощие над пепси го няма - не е както в България. Хайде сега да видим този дълъг текст как ще се появи на картинката"
-  },
-  {
-    name: "20250723_062457.jpg",
-    preview: "https://drive.google.com/file/d/1Ta-kRWK3o89Ak5y--CyyZdtLX7TYt0NK/preview?authuser=0",
-    desc: "Close-up detail."
-  },
-  {
-    name: "20250723_065326.jpg",
-    preview: "https://drive.google.com/file/d/1_hu0y5NlJzDaZvVifH8G75bwoTv92g1x/preview?authuser=0",
-    desc: "Wide composition."
-  },
-
-  // 2 VIDEOS
-  {
-    name: "20250723_094339.mp4",
-    preview: "https://drive.google.com/file/d/1b0TghvL7oS6CLoDY1--Rvsqrknfi4xyM/preview?authuser=0",
-    desc: "Short video clip #1."
-  },
-  {
-    name: "20250723_095426.mp4",
-    preview: "https://drive.google.com/file/d/1_TkiNZrTPAX2fnBsfh8v-W8Nr7XhuQDj/preview?authuser=0",
-    desc: "Short video clip #2."
-  }
-];
+const items = window.GALLERY_ITEMS || [];
 /* -------------------------------------------- */
 
 (function () {
