@@ -8,21 +8,84 @@ const items = window.GALLERY_ITEMS || [];
   const thumb   = (id,w=1600)=>`https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
   const iframeSrc = (previewUrl)=>{ const u=new URL(previewUrl); u.searchParams.set('autoplay','1'); return u.toString(); };
 
-  // Normalize items
-  const media = items.map(it=>{
-    const id = extractId(it.preview);
-    const lower = it.name.toLowerCase();
-    const kind = lower.endsWith('.mp4') ? 'video' : 'image';
-    return id ? { ...it, id, kind } : null;
-  }).filter(Boolean);
+  // DOM refs (after DOM is ready)
+  function getRefs(){
+    return {
+      grid: document.getElementById('grid'),
+      counts: document.getElementById('counts'),
+      q: document.getElementById('q'),
+      lightbox: document.getElementById('lightbox'),
+      closeBtn: document.getElementById('closeBtn'),
+      lbBody: document.getElementById('lbBody'),
+      lbCaption: document.getElementById('lbCaption'),
+    };
+  }
 
-  // DOM refs
-  const grid   = document.getElementById('grid');
-  const counts = document.getElementById('counts');
-  const q      = document.getElementById('q');
+  // Wait for DOM and data
+  function onReady(fn){
+    if(document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', fn, { once:true });
+    } else {
+      fn();
+    }
+  }
+
+  async function waitForData(timeoutMs = 10000, pollMs = 100){
+    const start = Date.now();
+    while (Date.now() - start < timeoutMs) {
+      if (Array.isArray(window.GALLERY_ITEMS)) return window.GALLERY_ITEMS;
+      await new Promise(r => setTimeout(r, pollMs));
+    }
+    return window.GALLERY_ITEMS || []; // fallback (maybe empty)
+  }
+
+  function normalize(items){
+    return items.map(it=>{
+      const id = extractId(it.preview || '');
+      if(!id) return null;
+      const lower = String(it.name || '').toLowerCase();
+      const kind = lower.endsWith('.mp4') ? 'video' : 'image';
+      return { name: it.name || id, preview: it.preview, desc: it.desc || '', id, kind };
+    }).filter(Boolean);
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+  }
+
+  // ---------- NEW: ensure CSS is applied; if not, inject it inline ----------
+  async function ensureStyles() {
+    try {
+      // Heuristic: our grid should compute to 'grid' when CSS is active
+      const gridEl = document.getElementById('grid');
+      const computed = gridEl ? getComputedStyle(gridEl).display : '';
+      const cssLooksApplied = computed === 'grid';
+
+      if (cssLooksApplied) return; // all good
+
+      // Try to fetch the CSS from same folder and inline it
+      const resp = await fetch('gallery.css', { cache: 'no-store' });
+      if (!resp.ok) throw new Error('gallery.css fetch failed: ' + resp.status);
+      const cssText = await resp.text();
+      const style = document.createElement('style');
+      style.textContent = cssText;
+      document.head.appendChild(style);
+
+      // Re-check after injecting
+      const computed2 = getComputedStyle(gridEl).display;
+      if (computed2 !== 'grid') {
+        console.warn('Gallery: CSS injected but still not applied (CSP header may block inline styles).');
+      } else {
+        console.log('Gallery: CSS inlined as fallback.');
+      }
+    } catch (err) {
+      console.error('Gallery: failed to inline CSS fallback:', err);
+    }
+  }
+  // -------------------------------------------------------------------------
 
   // Card builders
-  function makeImageCard(item){
+  function makeImageCard(item, openLightboxImage){
     const card = document.createElement('article'); card.className='card';
     const btn  = document.createElement('button'); btn.className='media-btn'; btn.type='button';
     const img  = document.createElement('img');
@@ -30,8 +93,6 @@ const items = window.GALLERY_ITEMS || [];
     img.alt=item.name; img.src=viewImg(item.id);
     let triedThumb=false;
     img.onerror=()=>{ if(!triedThumb){ triedThumb=true; img.src=thumb(item.id,1600); } };
-
-    // Open image in fullscreen lightbox (use Drive preview iframe so permissions don't block)
     btn.addEventListener('click',()=>openLightboxImage(item));
     btn.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLightboxImage(item); } });
     btn.appendChild(img);
@@ -44,7 +105,7 @@ const items = window.GALLERY_ITEMS || [];
     return card;
   }
 
-  function makeVideoCard(item){
+  function makeVideoCard(item, openLightboxVideo){
     const card=document.createElement('article'); card.className='card';
     const btn=document.createElement('button'); btn.className='media-btn'; btn.type='button';
     const wrap=document.createElement('div'); wrap.className='video-wrap';
@@ -66,83 +127,102 @@ const items = window.GALLERY_ITEMS || [];
     return card;
   }
 
-  function render(list){
-    grid.innerHTML='';
-    for(const m of list){ grid.appendChild(m.kind==='video'?makeVideoCard(m):makeImageCard(m)); }
-    const imgs=list.filter(x=>x.kind==='image').length, vids=list.filter(x=>x.kind==='video').length;
-    counts.textContent=`${list.length} items • ${imgs} images • ${vids} videos`;
+  function startApp(media){
+    const { grid, counts, q, lightbox, closeBtn, lbBody, lbCaption } = getRefs();
+
+    function render(list){
+      grid.innerHTML='';
+      for(const m of list){
+        grid.appendChild(m.kind==='video'
+          ? makeVideoCard(m, openLightboxVideo)
+          : makeImageCard(m, openLightboxImage));
+      }
+      const imgs=list.filter(x=>x.kind==='image').length, vids=list.filter(x=>x.kind==='video').length;
+      counts.textContent=`${list.length} items • ${imgs} images • ${vids} videos`;
+    }
+
+    // Search
+    q.addEventListener('input',()=>{
+      const term=q.value.trim().toLowerCase();
+      render(term
+        ? media.filter(m => m.name.toLowerCase().includes(term) || (m.desc||'').toLowerCase().includes(term))
+        : media);
+    });
+
+    // Lightbox
+    function captionHtml(item){
+      const d = item.desc ? `<div>${escapeHtml(item.desc)}</div>` : '';
+      return `<div><strong>${escapeHtml(item.name)}</strong></div>${d}<div class="lb-meta">${item.kind==='video'?'Video':'Image'}</div>`;
+    }
+
+    function clearLightbox(){ lbBody.innerHTML=''; lbCaption.textContent=''; }
+
+    function openLightboxImage(item){
+      clearLightbox();
+      const frame = document.createElement('iframe');
+      frame.className = 'frame';
+      frame.allow = 'fullscreen; picture-in-picture';
+      frame.referrerPolicy = 'no-referrer';
+      frame.src = item.preview; // Drive preview page (works when direct image fetch is blocked)
+      lbBody.appendChild(frame);
+      lbCaption.innerHTML = captionHtml(item);
+      document.body.classList.add('no-scroll');
+      lightbox.classList.add('open');
+    }
+
+    function openLightboxVideo(previewUrl, item){
+      clearLightbox();
+      const frame=document.createElement('iframe');
+      frame.className='frame';
+      frame.allow='autoplay; fullscreen; picture-in-picture';
+      frame.referrerPolicy='no-referrer';
+      frame.src=iframeSrc(previewUrl);
+      lbBody.appendChild(frame);
+      lbCaption.innerHTML = captionHtml(item);
+      document.body.classList.add('no-scroll');
+      lightbox.classList.add('open');
+    }
+
+    function closeLightbox(){
+      lightbox.classList.remove('open');
+      document.body.classList.remove('no-scroll');
+      const frame=lbBody.querySelector('iframe'); if(frame) frame.src='about:blank';
+      const img=lbBody.querySelector('img'); if(img) img.removeAttribute('src');
+      clearLightbox();
+    }
+
+    closeBtn.addEventListener('click',closeLightbox);
+    lightbox.addEventListener('click',(e)=>{ if(e.target===lightbox) closeLightbox(); });
+    window.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeLightbox(); });
+
+    // Initial render
+    render(media);
   }
 
-  q.addEventListener('input',()=>{
-    const term=q.value.trim().toLowerCase();
-    render(term?media.filter(m=>(m.name.toLowerCase().includes(term) || (m.desc||'').toLowerCase().includes(term))):media);
+  function showNoDataMessage(){
+    const { grid, counts } = getRefs();
+    counts.textContent = '0 items';
+    const msg = document.createElement('div');
+    msg.style.cssText = 'padding:12px;border:1px solid #374151;border-radius:12px;background:#111827;color:#e5e7eb';
+    msg.innerHTML = 'No gallery items loaded.<br>' +
+      'Make sure <code>media-data.js</code> is in the same folder and included <strong>before</strong> <code>gallery.js</code>.';
+    grid.innerHTML = '';
+    grid.appendChild(msg);
+  }
+
+  onReady(async ()=>{
+    try{
+      // 1) Ensure styles are active; if not, inline as fallback
+      await ensureStyles();
+
+      // 2) Wait for data and start
+      const raw = await waitForData();               // wait for media-data.js
+      const media = normalize(raw);
+      if (!media.length) { showNoDataMessage(); return; }
+      startApp(media);
+    } catch (e){
+      console.error('Gallery init error:', e);
+      showNoDataMessage();
+    }
   });
-
-  // Lightbox logic
-  const lightbox = document.getElementById('lightbox');
-  const closeBtn = document.getElementById('closeBtn');
-  const lbBody   = document.getElementById('lbBody');
-  const lbCaption= document.getElementById('lbCaption');
-
-  function openLightboxImage(item){
-    clearLightbox();
-    const frame = document.createElement('iframe');
-    frame.className = 'frame';
-    frame.allow = 'fullscreen; picture-in-picture';
-    frame.referrerPolicy = 'no-referrer';
-    frame.src = item.preview;           // Use Drive preview page
-    lbBody.appendChild(frame);
-    lbCaption.innerHTML = captionHtml(item);
-    document.body.classList.add('no-scroll');  // lock page scroll
-    lightbox.classList.add('open');
-  }
-
-  function openLightboxVideo(previewUrl, item){
-    clearLightbox();
-    const frame=document.createElement('iframe');
-    frame.className='frame';
-    frame.allow='autoplay; fullscreen; picture-in-picture';
-    frame.referrerPolicy='no-referrer';
-    frame.src=iframeSrc(previewUrl);
-    lbBody.appendChild(frame);
-    lbCaption.innerHTML = captionHtml(item);
-    document.body.classList.add('no-scroll');  // lock page scroll
-    lightbox.classList.add('open');
-  }
-
-  function captionHtml(item){
-    const d = item.desc ? `<div>${escapeHtml(item.desc)}</div>` : '';
-    return `<div><strong>${escapeHtml(item.name)}</strong></div>${d}<div class="lb-meta">${item.kind==='video'?'Video':'Image'}</div>`;
-  }
-
-  function showFallback(message){
-    const fb=document.createElement('div');
-    fb.className='lb-fallback';
-    fb.innerHTML = message;
-    lbBody.innerHTML=''; lbBody.appendChild(fb);
-  }
-
-  function clearLightbox(){
-    lbBody.innerHTML=''; lbCaption.textContent='';
-  }
-
-  function closeLightbox(){
-    lightbox.classList.remove('open');
-    document.body.classList.remove('no-scroll');   // restore page scroll
-    const frame=lbBody.querySelector('iframe'); if(frame) frame.src='about:blank';
-    const img=lbBody.querySelector('img'); if(img) img.removeAttribute('src');
-    clearLightbox();
-  }
-
-  function escapeHtml(s){
-    return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
-  }
-
-  closeBtn.addEventListener('click',closeLightbox);
-  // Click on backdrop closes; clicks inside media do not
-  lightbox.addEventListener('click',(e)=>{ if(e.target===lightbox) closeLightbox(); });
-  window.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeLightbox(); });
-
-  // Init
-  render(media);
 })();
