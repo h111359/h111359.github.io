@@ -61,8 +61,8 @@ const items = [
     let triedThumb=false;
     img.onerror=()=>{ if(!triedThumb){ triedThumb=true; img.src=thumb(item.id,1600); } };
 
-    btn.addEventListener('click',()=>openLightboxImage(viewImg(item.id), item));
-    btn.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLightboxImage(viewImg(item.id), item); } });
+    btn.addEventListener('click',()=>openLightboxImage(item));
+    btn.addEventListener('keydown',(e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLightboxImage(item); } });
     btn.appendChild(img);
 
     const cap=document.createElement('div'); cap.className='caption';
