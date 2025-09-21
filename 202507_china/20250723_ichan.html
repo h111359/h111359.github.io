@@ -6,20 +6,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mini Gallery — Images + Videos</title>
 
-  <!-- CSP updated: styles from self + blob:, images from Drive/googleusercontent, frames from Drive -->
-  <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self';
-                 img-src 'self' https://drive.google.com https://lh3.googleusercontent.com https://*.googleusercontent.com data: blob:;
-                 frame-src https://drive.google.com;
-                 child-src https://drive.google.com;
-                 script-src 'self';
-                 style-src 'self' blob:;
-                 style-src-elem 'self' blob:;
-                 style-src-attr 'unsafe-inline';
-                 connect-src 'self';">
+  <!-- NOTE: Removed CSP <meta> to avoid blocking CSS and Drive assets on GitHub Pages -->
 
   <link rel="preload" href="gallery.css" as="style">
-  <link rel="stylesheet" href="gallery.css">
+  <link rel="stylesheet" href="gallery.css?v=2">
 </head>
 <body>
   <header class="hdr">
