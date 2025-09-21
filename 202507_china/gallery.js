@@ -29,15 +29,6 @@ const items = window.GALLERY_ITEMS || [];
     }
   }
 
-  async function waitForData(timeoutMs = 10000, pollMs = 100){
-    const start = Date.now();
-    while (Date.now() - start < timeoutMs) {
-      if (Array.isArray(window.GALLERY_ITEMS)) return window.GALLERY_ITEMS;
-      await new Promise(r => setTimeout(r, pollMs));
-    }
-    return window.GALLERY_ITEMS || [];
-  }
-
   function normalize(items){
     return items.map(it=>{
       const id = extractId(it.preview || '');
@@ -50,52 +41,6 @@ const items = window.GALLERY_ITEMS || [];
 
   function escapeHtml(s){
     return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
-  }
-
-  // ENSURE STYLES: try link (cache-busted) -> blob stylesheet
-  async function ensureStyles() {
-    const gridEl = document.getElementById('grid');
-    if (!gridEl) return;
-    const looksApplied = () => getComputedStyle(gridEl).display === 'grid';
-
-    // If already applied, bail
-    if (looksApplied()) return;
-
-    // 1) Try adding a cache-busted <link rel="stylesheet">
-    try {
-      await new Promise((resolve, reject) => {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'gallery.css?v=' + Date.now();
-        link.onload = resolve;
-        link.onerror = () => reject(new Error('link load error'));
-        document.head.appendChild(link);
-      });
-      if (looksApplied()) return;
-    } catch (_) {
-      // ignore and try blob fallback
-    }
-
-    // 2) Fetch CSS and attach as a Blob stylesheet (respects CSP style-src blob:)
-    try {
-      const resp = await fetch('gallery.css', { cache: 'no-store' });
-      if (!resp.ok) throw new Error('gallery.css fetch failed: ' + resp.status);
-      const cssText = await resp.text();
-      const blob = new Blob([cssText], { type: 'text/css' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = url;
-      document.head.appendChild(link);
-
-      // Give the browser a tick to apply
-      await new Promise(r => setTimeout(r, 30));
-      if (!looksApplied()) {
-        console.warn('Gallery: stylesheet loaded but CSS still not applied. Check server CSP headers for style-src.');
-      }
-    } catch (err) {
-      console.error('Gallery: failed to load CSS via blob stylesheet:', err);
-    }
   }
 
   // Card builders
@@ -224,11 +169,9 @@ const items = window.GALLERY_ITEMS || [];
     grid.appendChild(msg);
   }
 
-  onReady(async ()=>{
+  onReady(()=>{
     try{
-      await ensureStyles();                   // make sure CSS is actually applied
-      const raw = await waitForData();        // wait for media-data.js
-      const media = normalize(raw);
+      const media = normalize(items);
       if (!media.length) { showNoDataMessage(); return; }
       startApp(media);
     } catch (e){
