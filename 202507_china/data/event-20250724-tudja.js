@@ -1,6 +1,4 @@
 window.GALLERY_ITEMS = [
-/* Auto-generated 2025-09-22T19:28:33.544Z */
-const images = [
   { name: "20250724_080817.jpg", preview: "https://drive.google.com/file/d/1X3i9b8e14xIs_zWID3ch4n8Nf1q2OYtk/preview?authuser=0", desc: "Снимка – временно описание." },
   { name: "20250724_080824.jpg", preview: "https://drive.google.com/file/d/1Qn2WP4nFnslm8eHQ-fiiSEy4XlGAQe4C/preview?authuser=0", desc: "Снимка – временно описание." },
   { name: "20250724_082254.jpg", preview: "https://drive.google.com/file/d/1vBCADoE7uWY4U5_C4gc5yMbFzIfd3DLF/preview?authuser=0", desc: "Снимка – временно описание." },
