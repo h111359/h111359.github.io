@@ -64,6 +64,53 @@
     .lb-caption{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);max-width:min(96vw,1100px);color:#e5e7eb;font-size:.95rem;line-height:1.35;text-align:center;text-shadow:0 2px 6px rgba(0,0,0,.5)}
     .lb-meta{color:#9aa3af;font-size:.85rem;margin-top:4px}
     .close{position:fixed;top:16px;right:16px;background:#0b1020;color:#d1d5db;border:1px solid #283246;border-radius:999px;padding:8px 12px;cursor:pointer;font-size:.9rem}
+  
+/* === LEFT SIDEBAR TABS (desktop) === */
+.container{
+  display:grid;
+  grid-template-columns: 220px 1fr;   /* лява колона за табовете, дясна за съдържанието */
+  grid-template-rows: auto auto 1fr;  /* header | toolbar | grid */
+  gap: 12px 16px;
+  align-items:start;
+}
+
+/* header да е над двете колони */
+header.hdr{ grid-column: 1 / -1; }
+
+/* навигацията да е в лявата колона и да “залепва” при скрол */
+.nav{
+  grid-column: 1;
+  grid-row: 2 / span 2;   /* заема редовете на toolbar + grid */
+  position: sticky;
+  top: 16px;
+  align-self: start;
+  display: block;
+}
+
+/* вертикални табове */
+.tabs{
+  display:flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tab{
+  width:100%;
+  text-align:left;
+}
+
+/* toolbar + grid в дясната колона */
+.toolbar{ grid-column: 2; }
+.grid{ grid-column: 2; }
+
+/* на мобилни: връщаме стария layout с dropdown */
+@media (max-width: 700px){
+  .container{ display:block; }
+  .nav{ position:static; margin-top:14px; }
+  .tabs{ display:none; }
+  .select-wrap{ display:block; margin-bottom:10px; }
+}
+
+  
   </style>
 </head>
 <body>
