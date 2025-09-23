@@ -1,0 +1,215 @@
+  :root { --bg:#0b0c0f; --card:#12141a; --muted:#9aa3af; --text:#e5e7eb; --accent:#60a5fa;
+            --radius:16px; --gap:14px; --border:#1f2937; --borderHover:#334155; }
+    *{box-sizing:border-box}
+    body{ margin:0; color:var(--text);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial;
+      background:radial-gradient(1200px 600px at 15% -10%, #0f172a 0%, #0b0c0f 55%) no-repeat fixed, var(--bg);
+    }
+    body.no-scroll { overflow:hidden; }
+
+    .container{max-width:1100px;margin:20px auto;padding:0 16px}
+    header.hdr{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+    .hdr h1{margin:0;font-size:1.15rem}
+    .meta{color:var(--muted);font-size:.9rem}
+
+    /* tabs / event picker */
+    .nav{margin-top:14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap}
+    .tab{border:1px solid var(--border);background:var(--card);color:#cbd5e1;border-radius:999px;padding:6px 12px;cursor:pointer}
+    .tab[aria-selected="true"]{border-color:var(--accent);box-shadow:0 0 0 2px rgba(96,165,250,.25)}
+    .select-wrap{display:none}
+    .select{background:var(--card);color:#e5e7eb;border:1px solid var(--border);border-radius:8px;padding:8px 10px}
+
+    @media (max-width:700px){
+      .tabs{display:none}
+      .select-wrap{display:block}
+    }
+
+    /* toolbar */
+    .toolbar{margin:12px 0 10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .search{flex:1 1 260px;display:flex;background:var(--card);border-radius:999px;padding:8px 12px;border:1px solid var(--border)}
+    .search input{flex:1;background:transparent;border:0;outline:none;color:var(--text);font-size:.95rem}
+    .counts,.hint{color:var(--muted);font-size:.85rem}
+
+    /* grid/cards */
+    .grid{
+      margin:0 0 48px;
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); /* was 240px */
+      gap: var(--gap);
+    }
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:clip;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
+    .card:hover{border-color:var(--borderHover);box-shadow:0 6px 24px rgba(0,0,0,.35)}
+    .media-btn{all:unset;display:block;width:100%;cursor:pointer;outline-offset:2px}
+    .thumb, .poster{
+      width:100%;
+      aspect-ratio: 4 / 3;
+      display:block;
+      object-fit: contain;                /* was cover */
+      background:#0a0c12;
+      filter:saturate(1.05);
+      transition:transform .25s ease;
+    }
+    .card:hover .thumb,.card:hover .poster{transform:scale(1.02)}
+    .caption{padding:10px 12px;font-size:.85rem;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+    .cap-top{display:flex;justify-content:space-between;gap:8px;align-items:center}
+    .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .caption .desc{color:#cbd5e1;line-height:1.3}
+    .video-wrap{position:relative}
+    .play{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+    .play svg{width:56px;height:56px;background:rgba(0,0,0,.45);border-radius:999px;padding:10px}
+
+    /* fullscreen lightbox */
+    .lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.92);z-index:9999}
+    .lightbox.open{display:flex}
+    .lb-body{width:96vw;height:90vh;display:grid;place-items:center}
+    .lightbox .frame,.lightbox img{width:96vw;height:90vh;max-width:96vw;max-height:90vh;object-fit:contain;border:0;border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,.6);background:#000}
+    .lb-caption{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);max-width:min(96vw,1100px);color:#e5e7eb;font-size:.95rem;line-height:1.35;text-align:center;text-shadow:0 2px 6px rgba(0,0,0,.5)}
+    .lb-meta{color:#9aa3af;font-size:.85rem;margin-top:4px}
+    .close{position:fixed;top:16px;right:16px;background:#0b1020;color:#d1d5db;border:1px solid #283246;border-radius:999px;padding:8px 12px;cursor:pointer;font-size:.9rem}
+  
+/* === LEFT SIDEBAR TABS (desktop) === */
+.container{
+  display:grid;
+  grid-template-columns: 220px 1fr;   /* лява колона за табовете, дясна за съдържанието */
+  grid-template-rows: auto auto 1fr;  /* header | toolbar | grid */
+  gap: 12px 16px;
+  align-items:start;
+}
+
+/* header да е над двете колони */
+header.hdr{ grid-column: 1 / -1; }
+
+/* навигацията да е в лявата колона и да “залепва” при скрол */
+.nav{
+  grid-column: 1;
+  grid-row: 2 / span 2;   /* заема редовете на toolbar + grid */
+  position: sticky;
+  top: 16px;
+  align-self: start;
+  display: block;
+}
+
+/* вертикални табове */
+.tabs{
+  display:flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tab{
+  width:100%;
+  text-align:left;
+}
+
+/* toolbar + grid в дясната колона */
+.toolbar{ grid-column: 2; }
+.grid{ grid-column: 2; }
+
+/* на мобилни: връщаме стария layout с dropdown */
+@media (max-width: 700px){
+  .container{ display:block; }
+  .nav{ position:static; margin-top:14px; }
+  .tabs{ display:none; }
+  .select-wrap{ display:block; margin-bottom:10px; }
+}
+
+.video-wrap .poster { aspect-ratio: 16 / 9; }
+
+.toLowerCase().includes(term);
+        })
+      : state.media;
+    renderGrid(list);
+  });
+}
+No other changes in index.html are needed. You’re already loading events.js + app.js the right way. 
+index
+
+
+B) style.css – styles for text cards & lightbox
+Add these rules to the end of style.css (or near similar blocks): 
+style
+
+
+css
+Copy code
+/* === Text cards === */
+.text-card .text-wrap{
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  text-align: left;
+}
+/* .text-icon{
+  font-size: 24px;
+  line-height: 1;
+  opacity: .9;
+} */
+.text-title{
+  color: #e5e7eb;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.text-sub{
+  color: #9aa3af;
+  font-size: .9rem;
+}
+.text-excerpt{
+  color: #cbd5e1;
+  font-size: .95rem;
+  line-height: 1.35;
+  white-space: pre-wrap;
+}
+
+/* === Text lightbox === */
+.text-frame{
+  width: min(96vw, 900px);
+  max-height: 86vh;
+  overflow: auto;
+  background: #0b1020;
+  border: 1px solid #283246;
+  border-radius: 10px;
+  padding: 18px 20px;
+  box-shadow: 0 8px 40px rgba(0,0,0,.6);
+}
+.lb-title{ margin: 0 0 6px; font-size: 1.25rem; color: #e5e7eb; }
+.lb-sub{ color: #9aa3af; margin-bottom: 10px; }
+.lb-text{ color: #dbe0e6; line-height: 1.5; white-space: pre-wrap; }
+
+/* Make text cards span the entire grid width */
+.text-card {
+  grid-column: 1 / -1;
+}
+
+/* (Optional) give the text content a nice readable max-width while still spanning the row */
+.text-card .text-wrap {
+  max-width: 1100px;     /* tweak to taste, or remove if you truly want edge-to-edge */
+  margin: 0 auto;        /* center the text within the full-row card */
+}
+
+/* Make text cards span the entire grid width (you likely have this already) */
+.text-card { grid-column: 1 / -1; }
+
+/* Text card layout */
+.text-card .text-wrap{
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  text-align: left;
+  max-width: 1100px;   /* keep paragraphs readable */
+  margin: 0 auto;      /* center within the full-row card */
+}
+
+/* Title / subtitle */
+.text-title{ color:#e5e7eb; font-weight:600; font-size:1.05rem; }
+.text-sub{ color:#9aa3af; font-size:.95rem; }
+
+/* Full body — ALWAYS show entire text */
+.text-body{
+  color:#dbe0e6;
+  font-size:1rem;
+  line-height:1.55;
+  white-space:pre-wrap;     /* preserve newlines */
+  overflow:visible;         /* no clipping */
+}
+
+/* (Optional) if you had .text-excerpt before, it’s no longer used */

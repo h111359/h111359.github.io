@@ -89,6 +89,19 @@
   // ---------- Load Event Data ----------
   function normalize(items){
     return (items||[]).map(it=>{
+
+      const t = String(it.type || '').toLowerCase();
+
+      // New: text blocks
+      if (t === 'text') {
+        return {
+          kind: 'text',
+          title: it.title || it.name || '',
+          body: it.body || '',
+          desc: it.desc || ''
+        };
+      }
+
       const id = extractId(it.preview || '');
       if(!id) return null;
       const lower = String(it.name||'').toLowerCase();
@@ -167,16 +180,58 @@
     return card;
   }
 
-  function renderGrid(list){
-    refs.grid.innerHTML='';
-    for(const m of list){
-      refs.grid.appendChild(m.kind==='video'
-        ? makeVideoCard(m, openLightboxVideo)
-        : makeImageCard(m, openLightboxImage));
-    }
-    const imgs=list.filter(x=>x.kind==='image').length, vids=list.filter(x=>x.kind==='video').length;
-    refs.counts.textContent=`${list.length} items • ${imgs} images • ${vids} videos`;
+//function makeTextCard(item, openLightboxText){
+//  const card = el('article','card text-card');
+//
+//  const btn = el('button','media-btn'); btn.type = 'button';
+//  btn.addEventListener('click', ()=> openLightboxText(item));
+//  btn.addEventListener('keydown', e => {
+//    if (e.key==='Enter' || e.key===' ') { e.preventDefault(); openLightboxText(item); }
+//  });
+//   const wrap = el('div','text-wrap');
+//   wrap.innerHTML = `
+//     <div class="text-icon" aria-hidden="true">📝</div>
+//     <div class="text-title">${esc(item.title || 'Note')}</div>
+//     ${item.desc ? `<div class="text-sub">${esc(item.desc)}</div>` : ''}
+//     <div class="text-excerpt">${esc(item.body).slice(0, 220)}${item.body.length > 220 ? '…' : ''}</div>
+//   `;
+//   btn.appendChild(wrap);
+
+//   card.appendChild(btn);
+//   return card;
+// }
+
+function makeTextCard(item){
+  const card = el('article','card text-card');      // full-row via CSS
+  const wrap = el('div','text-wrap');
+  const hasTitle = (item.title || '').trim().length > 0;
+
+  wrap.innerHTML = `
+    ${hasTitle ? `<div class="text-title">${esc(item.title)}</div>` : ''}
+    ${item.desc ? `<div class="text-sub">${esc(item.desc)}</div>` : ''}
+    <div class="text-body">${esc(item.body).replace(/\n/g,'<br>')}</div>
+  `;
+
+  card.appendChild(wrap);
+  return card;
+}
+
+
+
+function renderGrid(list){
+  refs.grid.innerHTML = '';
+  for (const m of list) {
+  refs.grid.appendChild(
+    m.kind === 'video' ? makeVideoCard(m, openLightboxVideo) :
+    m.kind === 'image' ? makeImageCard(m, openLightboxImage) :
+    /* text */           makeTextCard(m)                // <- no openLightboxText
+  );
   }
+  const imgs = list.filter(x => x.kind === 'image').length;
+  const vids = list.filter(x => x.kind === 'video').length;
+  const notes = list.filter(x => x.kind === 'text').length;
+  refs.counts.textContent = `${list.length} items • ${imgs} images • ${vids} videos • ${notes} notes`;
+}
 
   // ---------- Lightbox ----------
   function captionHtml(item){
@@ -212,6 +267,41 @@
     $('#lightbox').classList.add('open');
   }
 
+  // function openLightboxText(item){
+  //   clearLightbox();
+  //   const box = el('div','text-frame');
+  //   box.innerHTML = `
+  //     <h2 class="lb-title">${esc(item.title || 'Note')}</h2>
+  //     ${item.desc ? `<div class="lb-sub">${esc(item.desc)}</div>` : ''}
+  //     <div class="lb-text">${esc(item.body).replace(/\n/g,'<br>')}</div>
+  //   `;
+  //   refs.lbBody.appendChild(box);
+  //   refs.lbCaption.innerHTML = `<div><strong>${esc(item.title || 'Note')}</strong></div><div class="lb-meta">Text</div>`;
+  //   document.body.classList.add('no-scroll');
+  //   document.getElementById('lightbox').classList.add('open');
+  // }
+
+  function openLightboxText(item){
+    clearLightbox();
+    const box = el('div','text-frame');
+    const hasTitle = (item.title || '').trim().length > 0;
+
+    box.innerHTML = `
+      ${hasTitle ? `<h2 class="lb-title">${esc(item.title)}</h2>` : ''}
+      ${item.desc ? `<div class="lb-sub">${esc(item.desc)}</div>` : ''}
+      <div class="lb-text">${esc(item.body).replace(/\n/g,'<br>')}</div>
+    `;
+    refs.lbBody.appendChild(box);
+
+    // Caption: if no title, just show "Text"
+    refs.lbCaption.innerHTML = hasTitle
+      ? `<div><strong>${esc(item.title)}</strong></div><div class="lb-meta">Text</div>`
+      : `<div class="lb-meta">Text</div>`;
+
+    document.body.classList.add('no-scroll');
+    document.getElementById('lightbox').classList.add('open');
+  }
+
   function closeLightbox(){
     $('#lightbox').classList.remove('open');
     document.body.classList.remove('no-scroll');
@@ -225,7 +315,15 @@
     refs.q.addEventListener('input', ()=>{
       const term = refs.q.value.trim().toLowerCase();
       const list = term
-        ? state.media.filter(m => m.name.toLowerCase().includes(term) || (m.desc||'').toLowerCase().includes(term))
+        ? state.media.filter(m => {
+            if (m.kind === 'text') {
+              return (m.title || '').toLowerCase().includes(term)
+                  || (m.body || '').toLowerCase().includes(term)
+                  || (m.desc || '').toLowerCase().includes(term);
+            }
+            return (m.name || '').toLowerCase().includes(term)
+                || (m.desc || '').toLowerCase().includes(term);
+          })
         : state.media;
       renderGrid(list);
     });

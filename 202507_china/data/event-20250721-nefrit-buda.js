@@ -1,4 +1,10 @@
 window.GALLERY_ITEMS = [
+
+  { type: "text", 
+    title: "Ден първи", 
+    body: "Първият посетен обект беше Храмът на Нефритения Буда в Шанхай - едно от най-свещените будистки места в Китай и истински духовен оазис в сърцето на мегаполиса. Построен през 1882 г., той приютява две изключителни нефритени статуи на Буда, донесени от монаха Хуиген след поклонничество в Бирма. Будизмът в Китай съчетава елементи от махаяна традицията и местни вярвания, като акцентира върху състраданието, мъдростта и стремежа към хармония.", 
+    desc: "Бележка" },
+
   { name: "20250721_005847.jpg", preview: "https://drive.google.com/file/d/1JNS9Eqy2DyZOksrlokrZaK6Tet9ttac4/preview?authuser=0", desc: "Снимка – временно описание." },
   { name: "20250721_073744.jpg", preview: "https://drive.google.com/file/d/1EcFXVsySYlrYhZkncZBYgDc0OAHBpKKZ/preview?authuser=0", desc: "Снимка – временно описание." },
   { name: "20250721_073748.jpg", preview: "https://drive.google.com/file/d/1g1vD7-Ymkie4kJuExBqiCQwNYpVIXPY-/preview?authuser=0", desc: "Снимка – временно описание." },

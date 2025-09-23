@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gallery List Editor</title>
+  <style>
+    :root {
+      --bg: #0b0e13;
+      --panel: #11151c;
+      --muted: #7a8699;
+      --text: #eef3f8;
+      --accent: #4cc9f0;
+      --accent-2: #a1ffce;
+      --danger: #ff6b6b;
+      --ok: #6ef3a5;
+      --border: #1e2530;
+    }
+    html, body { height: 100%; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text); background: radial-gradient(1200px 800px at 80% -10%, #132033, var(--bg));
+    }
+    header { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px); background: linear-gradient(180deg, rgba(17,21,28,.8), rgba(17,21,28,.4)); border-bottom: 1px solid var(--border); }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 18px 16px; }
+    h1 { margin: 0 0 12px; font-size: 20px; letter-spacing: .2px; }
+    .desc { color: var(--muted); font-size: 13px; }
+
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 8px 30px rgba(0,0,0,.25); }
+    .section { padding: 16px; }
+    .section + .section { border-top: 1px dashed var(--border); }
+
+    textarea.input {
+      width: 100%; min-height: 180px; resize: vertical; padding: 12px 12px; border-radius: 10px;
+      border: 1px solid var(--border); background: #0f131a; color: var(--text); font: 13px/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+
+    .row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
+    .controls { display: flex; gap: 8px; flex-wrap: wrap; }
+    button, .btn {
+      appearance: none; border: 1px solid var(--border); background: #121824; color: var(--text);
+      padding: 10px 12px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 13px;
+      transition: transform .04s ease, background .2s ease, border-color .2s ease;
+    }
+    button:hover { background: #151e2e; border-color: #2a3446; }
+    button:active { transform: translateY(1px); }
+    .primary { border-color: transparent; background: linear-gradient(135deg, var(--accent), #9b5cf6); color: #001219; }
+    .success { background: linear-gradient(135deg, var(--ok), #9bffdd); color: #062a12; border-color: transparent; }
+    .danger { background: linear-gradient(135deg, var(--danger), #ff8fab); color: #3a0a0a; border-color: transparent; }
+    .muted { color: var(--muted); }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+    .media {
+      display: flex; flex-direction: column; gap: 8px; padding: 12px; background: #0f141d; border: 1px solid var(--border); border-radius: 12px;
+    }
+    .media header { position: static; backdrop-filter: none; background: transparent; border: 0; padding: 0; }
+    .media .head { display: flex; gap: 8px; align-items: center; justify-content: space-between; }
+    .media .name { font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .media .name b { color: var(--text); }
+    .media iframe, .media img, .media video { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; border: 1px solid var(--border); background: #0a0f16; }
+    .media textarea { width: 100%; min-height: 60px; resize: vertical; border-radius: 8px; border: 1px solid var(--border); background: #0a0f16; color: var(--text); font: 12px/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; padding: 8px; }
+
+    .footer { display: grid; gap: 8px; }
+    .out { width: 100%; min-height: 160px; white-space: pre; }
+
+    .pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 999px; background: #0f141d; border: 1px solid var(--border); font-size: 12px; color: var(--muted); }
+    .pill input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); }
+    .tiny { font-size: 11px; color: var(--muted); }
+
+    .hint { font-size: 12px; color: var(--muted); }
+    .hr { height: 1px; background: var(--border); margin: 8px 0; opacity: .7; }
+
+    @media (min-width: 900px) {
+      .row { grid-template-columns: 1fr auto auto; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Gallery List Editor</h1>
+      <div class="desc">Paste your <code>window.GALLERY_ITEMS = [ ... ]</code> list (or just an array of items). Edit descriptions and choose which rows to include. A regenerated list appears at the bottom.</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="card">
+      <div class="section">
+        <div class="row" style="align-items:start;">
+          <textarea id="src" class="input" placeholder="Paste here..."></textarea>
+          <div class="controls">
+            <button id="load" class="primary">Load Items</button>
+            <button id="sample" title="Insert a small sample">Sample</button>
+            <button id="clear">Clear</button>
+          </div>
+        </div>
+        <div class="hint" style="margin-top:8px">Tip: We accept either the whole assignment (e.g. <code>window.GALLERY_ITEMS = [ ... ];</code>) or just the array. Keys may be unquoted like in JS object literals; we handle that.</div>
+      </div>
+
+      <div class="section">
+        <div class="row">
+          <div class="muted">Rendered items</div>
+          <div class="controls">
+            <span class="pill"><input type="checkbox" id="allToggle" checked/> Toggle all</span>
+            <button id="regenerate" class="success">Regenerate Output</button>
+          </div>
+        </div>
+        <div id="grid" class="grid" aria-live="polite"></div>
+      </div>
+
+      <div class="section footer">
+        <div class="row">
+          <div class="muted">Resulting list</div>
+          <div class="controls">
+            <button id="copy" class="primary">Copy</button>
+            <button id="download">Download .js</button>
+            <span id="status" class="tiny"></span>
+          </div>
+        </div>
+        <textarea id="out" class="input out" readonly></textarea>
+        <div class="hint">Unchecked items are <b>commented</b> out in the output. Descriptions are taken from the text boxes above.</div>
+      </div>
+    </div>
+
+    <div class="hr"></div>
+    <div class="tiny">Single-file app • No network requests except the media previews you already have.</div>
+  </main>
+
+  <script>
+    const byId = (id) => document.getElementById(id);
+    const src = byId('src');
+    const grid = byId('grid');
+    const out = byId('out');
+    const status = byId('status');
+
+    const SAMPLE = `window.GALLERY_ITEMS = [
+  { name: "20250721_180222.jpg", preview: "https://drive.google.com/file/d/1xvpiwUPikjLHbelx5GLxvqMELYtZwu6s/preview?authuser=0", desc: "Снимка – временно описание." },
+  { name: "20250721_193611.mp4", preview: "https://drive.google.com/file/d/1cCYAzAWaCQehku8F7hzJwZz0SJusPXBk/preview?authuser=0", desc: "Видео – временно описание." }
+];`;
+
+    byId('sample').addEventListener('click', () => { src.value = SAMPLE; });
+    byId('clear').addEventListener('click', () => { src.value = ''; grid.innerHTML = ''; out.value = ''; status.textContent=''; });
+
+    function tryParseItems(text) {
+      if (!text || !text.trim()) return [];
+      // Grab the array literal between the first '[' and the matching last ']'
+      const first = text.indexOf('[');
+      const last = text.lastIndexOf(']');
+      let arrStr = text;
+      if (first !== -1 && last !== -1 && last > first) arrStr = text.slice(first, last + 1);
+      // Convert JS object literal style into JSON (quote keys, remove trailing commas)
+      // 1) Quote keys like name:, preview:, desc:
+      arrStr = arrStr.replace(/([\{,]\s*)([a-zA-Z_$][\w$]*)\s*:/g, '$1"$2":');
+      // 2) Remove trailing commas before } or ]
+      arrStr = arrStr.replace(/,(\s*[\}\]])/g, '$1');
+      try {
+        const items = JSON.parse(arrStr);
+        if (!Array.isArray(items)) throw new Error('Parsed value is not an array');
+        // Normalize to objects with name, preview, desc
+        return items.map((it, idx) => ({
+          name: String(it.name ?? ''),
+          preview: String(it.preview ?? ''),
+          desc: String(it.desc ?? ''),
+          _checked: true,
+          _id: idx
+        }));
+      } catch (e) {
+        throw new Error('Could not parse the list. Ensure it is an array of { name, preview, desc } items.\nDetails: ' + e.message);
+      }
+    }
+
+    function mediaElementFor(item) {
+      const lowerName = (item.name || '').toLowerCase();
+      const isVideo = lowerName.endsWith('.mp4') || /[?&]format=mp4/.test(item.preview);
+      const isDrivePreview = /\/preview(\?|$)/.test(item.preview);
+      if (isDrivePreview) {
+        // Works for both images and videos hosted on Google Drive with /preview
+        const ifr = document.createElement('iframe');
+        ifr.src = item.preview;
+        ifr.allow = 'autoplay; encrypted-media';
+        ifr.loading = 'lazy';
+        ifr.referrerPolicy = 'no-referrer';
+        ifr.title = item.name;
+        return ifr;
+      }
+      if (isVideo) {
+        const v = document.createElement('video');
+        v.src = item.preview;
+        v.controls = true; v.playsInline = true; v.preload = 'metadata';
+        return v;
+      }
+      const img = document.createElement('img');
+      img.src = item.preview;
+      img.alt = item.name;
+      img.loading = 'lazy';
+      return img;
+    }
+
+    function render(items) {
+      grid.innerHTML = '';
+      items.forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.className = 'media';
+
+        const head = document.createElement('div');
+        head.className = 'head';
+        const left = document.createElement('div');
+        left.className = 'name';
+        left.innerHTML = `<b>${escapeHtml(item.name || 'Unnamed')}</b>`;
+
+        const pill = document.createElement('label');
+        pill.className = 'pill';
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.checked = item._checked !== false;
+        cb.addEventListener('change', () => { item._checked = cb.checked; regenerate(items); });
+        pill.append(cb, document.createTextNode(' include'));
+
+        head.append(left, pill);
+
+        const media = mediaElementFor(item);
+
+        const ta = document.createElement('textarea');
+        ta.placeholder = 'Enter description…';
+        ta.value = item.desc || '';
+        ta.addEventListener('input', () => { item.desc = ta.value; throttleRegenerate(); });
+
+        card.append(head, media, ta);
+        grid.append(card);
+      });
+      regenerate(items);
+    }
+
+    function escapeHtml(str) { return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[s])); }
+    function jsStringEscape(str) { return String(str).replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/\r/g,'').replace(/\t/g,'\\t').replace(/\"/g,'\\"'); }
+
+    function buildOutput(items) {
+      const lines = [];
+      lines.push('window.GALLERY_ITEMS = [');
+      items.forEach((it, idx) => {
+        const line = `  { name: "${jsStringEscape(it.name)}", preview: "${jsStringEscape(it.preview)}", desc: "${jsStringEscape(it.desc)}" }`;
+        lines.push((it._checked === false ? '  // ' : '  ') + line + (idx < items.length - 1 ? ',' : ''));
+      });
+      lines.push('];');
+      return lines.join('\n');
+    }
+
+    let regenTimer = null;
+    function throttleRegenerate(itemsRef) {
+      if (regenTimer) cancelAnimationFrame(regenTimer);
+      regenTimer = requestAnimationFrame(() => { regenerate(itemsRef); });
+    }
+
+    function regenerate(items) {
+      const txt = buildOutput(items);
+      out.value = txt;
+      status.textContent = `Items: ${items.filter(i=>i._checked!==false).length} included / ${items.length} total`;
+    }
+
+    // Toggle all
+    byId('allToggle').addEventListener('change', (e) => {
+      const c = e.target.checked;
+      document.querySelectorAll('.media input[type="checkbox"]').forEach(cb => { cb.checked = c; cb.dispatchEvent(new Event('change')); });
+    });
+
+    // Actions
+    byId('load').addEventListener('click', () => {
+      try {
+        const items = tryParseItems(src.value);
+        if (!items.length) { alert('No items found.'); return; }
+        render(items);
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+
+    byId('regenerate').addEventListener('click', () => {
+      // Re-scan current UI state into items & regenerate (useful if DOM changed)
+      const items = [];
+      grid.querySelectorAll('.media').forEach((card) => {
+        const name = card.querySelector('.name b')?.textContent || '';
+        const desc = card.querySelector('textarea')?.value || '';
+        const checked = card.querySelector('input[type="checkbox"]').checked;
+        // Try to recover preview from element
+        let preview = '';
+        const ifr = card.querySelector('iframe');
+        const img = card.querySelector('img');
+        const vid = card.querySelector('video');
+        if (ifr) preview = ifr.src; else if (img) preview = img.src; else if (vid) preview = vid.currentSrc || vid.src;
+        items.push({ name, preview, desc, _checked: checked });
+      });
+      regenerate(items);
+    });
+
+    byId('copy').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(out.value);
+        flash('Copied to clipboard');
+      } catch {
+        out.select(); document.execCommand('copy'); flash('Copied (fallback)');
+      }
+    });
+
+    byId('download').addEventListener('click', () => {
+      const blob = new Blob([out.value], { type: 'application/javascript;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'gallery-items.js';
+      a.click();
+      setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
+    });
+
+    function flash(msg) { status.textContent = msg; setTimeout(()=>status.textContent='', 1500); }
+  </script>
+</body>
+</html>
