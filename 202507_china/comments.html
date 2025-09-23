@@ -3,28 +3,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gallery List Editor</title>
+  <title>Gallery & Text Blocks Editor</title>
   <style>
     :root {
-      --bg: #0b0e13;
-      --panel: #11151c;
-      --muted: #7a8699;
-      --text: #eef3f8;
-      --accent: #4cc9f0;
-      --accent-2: #a1ffce;
-      --danger: #ff6b6b;
-      --ok: #6ef3a5;
-      --border: #1e2530;
+      --bg: #0b0e13; --panel: #11151c; --muted: #7a8699; --text: #eef3f8;
+      --accent: #4cc9f0; --danger: #ff6b6b; --ok: #6ef3a5; --border: #1e2530;
     }
     html, body { height: 100%; }
     * { box-sizing: border-box; }
-    body {
-      margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-      color: var(--text); background: radial-gradient(1200px 800px at 80% -10%, #132033, var(--bg));
-    }
-    header { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px); background: linear-gradient(180deg, rgba(17,21,28,.8), rgba(17,21,28,.4)); border-bottom: 1px solid var(--border); }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      color: var(--text); background: radial-gradient(1200px 800px at 80% -10%, #132033, var(--bg)); }
+    header { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, rgba(17,21,28,.8), rgba(17,21,28,.4)); border-bottom: 1px solid var(--border); }
     .wrap { max-width: 1200px; margin: 0 auto; padding: 18px 16px; }
-    h1 { margin: 0 0 12px; font-size: 20px; letter-spacing: .2px; }
+    h1 { margin: 0 0 8px; font-size: 20px; }
     .desc { color: var(--muted); font-size: 13px; }
 
     .card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 8px 30px rgba(0,0,0,.25); }
@@ -32,55 +24,57 @@
     .section + .section { border-top: 1px dashed var(--border); }
 
     textarea.input {
-      width: 100%; min-height: 180px; resize: vertical; padding: 12px 12px; border-radius: 10px;
-      border: 1px solid var(--border); background: #0f131a; color: var(--text); font: 13px/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      width: 100%; min-height: 180px; resize: vertical; padding: 12px; border-radius: 10px;
+      border: 1px solid var(--border); background: #0f131a; color: var(--text);
+      font: 13px/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
     }
 
     .row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
     .controls { display: flex; gap: 8px; flex-wrap: wrap; }
-    button, .btn {
-      appearance: none; border: 1px solid var(--border); background: #121824; color: var(--text);
+    button {
+      border: 1px solid var(--border); background: #121824; color: var(--text);
       padding: 10px 12px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 13px;
-      transition: transform .04s ease, background .2s ease, border-color .2s ease;
     }
     button:hover { background: #151e2e; border-color: #2a3446; }
-    button:active { transform: translateY(1px); }
     .primary { border-color: transparent; background: linear-gradient(135deg, var(--accent), #9b5cf6); color: #001219; }
     .success { background: linear-gradient(135deg, var(--ok), #9bffdd); color: #062a12; border-color: transparent; }
-    .danger { background: linear-gradient(135deg, var(--danger), #ff8fab); color: #3a0a0a; border-color: transparent; }
     .muted { color: var(--muted); }
 
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
-    .media {
-      display: flex; flex-direction: column; gap: 8px; padding: 12px; background: #0f141d; border: 1px solid var(--border); border-radius: 12px;
-    }
-    .media header { position: static; backdrop-filter: none; background: transparent; border: 0; padding: 0; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+    .media { display: flex; flex-direction: column; gap: 8px; padding: 12px; background: #0f141d; border: 1px solid var(--border); border-radius: 12px; }
     .media .head { display: flex; gap: 8px; align-items: center; justify-content: space-between; }
     .media .name { font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .media .name b { color: var(--text); }
-    .media iframe, .media img, .media video { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; border: 1px solid var(--border); background: #0a0f16; }
-    .media textarea { width: 100%; min-height: 60px; resize: vertical; border-radius: 8px; border: 1px solid var(--border); background: #0a0f16; color: var(--text); font: 12px/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; padding: 8px; }
-
-    .footer { display: grid; gap: 8px; }
-    .out { width: 100%; min-height: 160px; white-space: pre; }
+    .media iframe, .media img, .media video {
+      width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; border: 1px solid var(--border); background: #0a0f16;
+    }
 
     .pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 999px; background: #0f141d; border: 1px solid var(--border); font-size: 12px; color: var(--muted); }
     .pill input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); }
-    .tiny { font-size: 11px; color: var(--muted); }
 
-    .hint { font-size: 12px; color: var(--muted); }
-    .hr { height: 1px; background: var(--border); margin: 8px 0; opacity: .7; }
-
-    @media (min-width: 900px) {
-      .row { grid-template-columns: 1fr auto auto; }
+    .field { display: grid; gap: 6px; }
+    .label { font-size: 11px; color: var(--muted); }
+    .text, .area {
+      width: 100%; padding: 8px; border-radius: 8px; border: 1px solid var(--border); background: #0a0f16; color: var(--text);
+      font: 12px/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
     }
+    .area { min-height: 60px; resize: vertical; }
+    .body { min-height: 120px; }
+
+    .footer { display: grid; gap: 8px; }
+    .out { width: 100%; min-height: 160px; white-space: pre; }
+    .tiny { font-size: 11px; color: var(--muted); }
   </style>
 </head>
 <body>
   <header>
     <div class="wrap">
-      <h1>Gallery List Editor</h1>
-      <div class="desc">Paste your <code>window.GALLERY_ITEMS = [ ... ]</code> list (or just an array of items). Edit descriptions and choose which rows to include. A regenerated list appears at the bottom.</div>
+      <h1>Gallery & Text Blocks Editor</h1>
+      <div class="desc">
+        Paste your <code>window.GALLERY_ITEMS = [ ... ]</code> (or just the array). Supports
+        <b>media</b> items (<code>{ name, preview, desc }</code>) and <b>text</b> blocks
+        (<code>{ type: "text", title, body, desc }</code>) anywhere in the list. Toggle include, edit fields, and get a regenerated list below.
+      </div>
     </div>
   </header>
 
@@ -91,11 +85,13 @@
           <textarea id="src" class="input" placeholder="Paste here..."></textarea>
           <div class="controls">
             <button id="load" class="primary">Load Items</button>
-            <button id="sample" title="Insert a small sample">Sample</button>
+            <button id="sample">Sample</button>
             <button id="clear">Clear</button>
           </div>
         </div>
-        <div class="hint" style="margin-top:8px">Tip: We accept either the whole assignment (e.g. <code>window.GALLERY_ITEMS = [ ... ];</code>) or just the array. Keys may be unquoted like in JS object literals; we handle that.</div>
+        <div class="tiny" style="margin-top:8px">
+          Tip: We accept the full assignment (e.g. <code>window.GALLERY_ITEMS = [ ... ];</code>) or just the array. Unquoted keys OK.
+        </div>
       </div>
 
       <div class="section">
@@ -119,12 +115,12 @@
           </div>
         </div>
         <textarea id="out" class="input out" readonly></textarea>
-        <div class="hint">Unchecked items are <b>commented</b> out in the output. Descriptions are taken from the text boxes above.</div>
+        <div class="tiny">
+          Unchecked items are <b>commented</b> out in the output. Media rows use their <code>desc</code>;
+          text blocks include <code>type</code>, <code>title</code>, <code>body</code>, and <code>desc</code>.
+        </div>
       </div>
     </div>
-
-    <div class="hr"></div>
-    <div class="tiny">Single-file app • No network requests except the media previews you already have.</div>
   </main>
 
   <script>
@@ -135,8 +131,10 @@
     const status = byId('status');
 
     const SAMPLE = `window.GALLERY_ITEMS = [
+  { type: "text", title: "Ден първи", body: "Първият посетен обект беше Храмът на Нефритения Буда в Шанхай - едно от най-свещените будистки места в Китай и истински духовен оазис в сърцето на мегаполиса. Построен през 1882 г., той приютява две изключителни нефритени статуи на Буда, донесени от монаха Хуиген след поклонничество в Бирма. Будизмът в Китай съчетава елементи от махаяна традицията и местни вярвания, като акцентира върху състраданието, мъдростта и стремежа към хармония.", desc: "Бележка" },
   { name: "20250721_180222.jpg", preview: "https://drive.google.com/file/d/1xvpiwUPikjLHbelx5GLxvqMELYtZwu6s/preview?authuser=0", desc: "Снимка – временно описание." },
-  { name: "20250721_193611.mp4", preview: "https://drive.google.com/file/d/1cCYAzAWaCQehku8F7hzJwZz0SJusPXBk/preview?authuser=0", desc: "Видео – временно описание." }
+  { name: "20250721_193611.mp4", preview: "https://drive.google.com/file/d/1cCYAzAWaCQehku8F7hzJwZz0SJusPXBk/preview?authuser=0", desc: "Видео – временно описание." },
+  { type: "text", title: "Край", body: "Финален текстов блок.", desc: "" }
 ];`;
 
     byId('sample').addEventListener('click', () => { src.value = SAMPLE; });
@@ -144,70 +142,59 @@
 
     function tryParseItems(text) {
       if (!text || !text.trim()) return [];
-      // Grab the array literal between the first '[' and the matching last ']'
       const first = text.indexOf('[');
       const last = text.lastIndexOf(']');
       let arrStr = text;
       if (first !== -1 && last !== -1 && last > first) arrStr = text.slice(first, last + 1);
-      // Convert JS object literal style into JSON (quote keys, remove trailing commas)
-      // 1) Quote keys like name:, preview:, desc:
-      arrStr = arrStr.replace(/([\{,]\s*)([a-zA-Z_$][\w$]*)\s*:/g, '$1"$2":');
-      // 2) Remove trailing commas before } or ]
-      arrStr = arrStr.replace(/,(\s*[\}\]])/g, '$1');
+      // Quote object-literal keys + strip trailing commas
+      arrStr = arrStr.replace(/([{\,]\s*)([a-zA-Z_$][\w$]*)\s*:/g, '$1"$2":');
+      arrStr = arrStr.replace(/,(\s*[}\]])/g, '$1');
+
       try {
-        const items = JSON.parse(arrStr);
-        if (!Array.isArray(items)) throw new Error('Parsed value is not an array');
-        // Normalize to objects with name, preview, desc
-        return items.map((it, idx) => ({
-          name: String(it.name ?? ''),
-          preview: String(it.preview ?? ''),
-          desc: String(it.desc ?? ''),
-          _checked: true,
-          _id: idx
-        }));
+        const raw = JSON.parse(arrStr);
+        if (!Array.isArray(raw)) throw new Error('Parsed value is not an array');
+        return raw.map((it, idx) => {
+          if (it.type === 'text') {
+            return { _kind: 'text', type: String(it.type || 'text'), title: String(it.title || ''), body: String(it.body || ''), desc: String(it.desc || ''), _checked: true, _id: idx };
+          }
+          return { _kind: 'media', name: String(it.name || ''), preview: String(it.preview || ''), desc: String(it.desc || ''), _checked: true, _id: idx };
+        });
       } catch (e) {
-        throw new Error('Could not parse the list. Ensure it is an array of { name, preview, desc } items.\nDetails: ' + e.message);
+        throw new Error('Could not parse the list. Expect media { name, preview, desc } and/or text blocks { type: "text", title, body, desc }. Details: ' + e.message);
       }
     }
 
     function mediaElementFor(item) {
       const lowerName = (item.name || '').toLowerCase();
-      const isVideo = lowerName.endsWith('.mp4') || /[?&]format=mp4/.test(item.preview);
-      const isDrivePreview = /\/preview(\?|$)/.test(item.preview);
+      const isVideo = lowerName.endsWith('.mp4') || /[?&]format=mp4/.test(item.preview || '');
+      const isDrivePreview = /\/preview(\?|$)/.test(item.preview || '');
       if (isDrivePreview) {
-        // Works for both images and videos hosted on Google Drive with /preview
         const ifr = document.createElement('iframe');
-        ifr.src = item.preview;
-        ifr.allow = 'autoplay; encrypted-media';
-        ifr.loading = 'lazy';
-        ifr.referrerPolicy = 'no-referrer';
-        ifr.title = item.name;
+        ifr.src = item.preview; ifr.allow = 'autoplay; encrypted-media'; ifr.loading = 'lazy'; ifr.referrerPolicy = 'no-referrer';
+        ifr.title = item.name || '';
         return ifr;
       }
       if (isVideo) {
         const v = document.createElement('video');
-        v.src = item.preview;
-        v.controls = true; v.playsInline = true; v.preload = 'metadata';
+        v.src = item.preview; v.controls = true; v.playsInline = true; v.preload = 'metadata';
         return v;
       }
       const img = document.createElement('img');
-      img.src = item.preview;
-      img.alt = item.name;
-      img.loading = 'lazy';
+      img.src = item.preview; img.alt = item.name || ''; img.loading = 'lazy';
       return img;
     }
 
     function render(items) {
       grid.innerHTML = '';
-      items.forEach((item, idx) => {
+      items.forEach((item) => {
         const card = document.createElement('div');
         card.className = 'media';
+        card.dataset.kind = item._kind;
 
         const head = document.createElement('div');
         head.className = 'head';
         const left = document.createElement('div');
         left.className = 'name';
-        left.innerHTML = `<b>${escapeHtml(item.name || 'Unnamed')}</b>`;
 
         const pill = document.createElement('label');
         pill.className = 'pill';
@@ -217,29 +204,71 @@
         cb.addEventListener('change', () => { item._checked = cb.checked; regenerate(items); });
         pill.append(cb, document.createTextNode(' include'));
 
-        head.append(left, pill);
+        if (item._kind === 'text') {
+          left.innerHTML = `<b>Text block</b> — <span class="muted">${escapeHtml(item.title || 'Untitled')}</span>`;
+          head.append(left, pill);
 
-        const media = mediaElementFor(item);
+          // TYPE
+          const typeField = field('Type', 'text', item.type || 'text');
+          typeField.input.addEventListener('input', () => { item.type = typeField.input.value; throttleRegenerate(items); });
 
-        const ta = document.createElement('textarea');
-        ta.placeholder = 'Enter description…';
-        ta.value = item.desc || '';
-        ta.addEventListener('input', () => { item.desc = ta.value; throttleRegenerate(); });
+          // TITLE
+          const titleField = field('Title', 'text', item.title || '');
+          titleField.input.addEventListener('input', () => { item.title = titleField.input.value; throttleRegenerate(items); });
 
-        card.append(head, media, ta);
+          // BODY
+          const bodyField = field('Body', 'area', item.body || '');
+          bodyField.input.classList.add('body');
+          bodyField.input.addEventListener('input', () => { item.body = bodyField.input.value; throttleRegenerate(items); });
+
+          // DESC
+          const descField = field('Desc (note)', 'area', item.desc || '');
+          descField.input.addEventListener('input', () => { item.desc = descField.input.value; throttleRegenerate(items); });
+
+          card.append(head, typeField.el, titleField.el, bodyField.el, descField.el);
+        } else {
+          left.innerHTML = `<b>${escapeHtml(item.name || 'Unnamed')}</b>`;
+          head.append(left, pill);
+
+          const media = mediaElementFor(item);
+          const descField = field('Description', 'area', item.desc || '');
+          descField.input.addEventListener('input', () => { item.desc = descField.input.value; throttleRegenerate(items); });
+
+          card.append(head, media, descField.el);
+        }
         grid.append(card);
       });
       regenerate(items);
     }
 
-    function escapeHtml(str) { return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[s])); }
+    function field(label, kind, value) {
+      const wrap = document.createElement('div'); wrap.className = 'field';
+      const lab = document.createElement('div'); lab.className = 'label'; lab.textContent = label;
+      let input;
+      if (kind === 'area') {
+        input = document.createElement('textarea'); input.className = 'area';
+      } else {
+        input = document.createElement('input'); input.type = 'text'; input.className = 'text';
+      }
+      input.value = value || '';
+      wrap.append(lab, input);
+      return { el: wrap, input };
+    }
+
+    function escapeHtml(str) { return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s])); }
     function jsStringEscape(str) { return String(str).replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/\r/g,'').replace(/\t/g,'\\t').replace(/\"/g,'\\"'); }
 
     function buildOutput(items) {
       const lines = [];
       lines.push('window.GALLERY_ITEMS = [');
       items.forEach((it, idx) => {
-        const line = `  { name: "${jsStringEscape(it.name)}", preview: "${jsStringEscape(it.preview)}", desc: "${jsStringEscape(it.desc)}" }`;
+        let line = '';
+        if (it._kind === 'text') {
+          // Use user-edited type/title/body/desc
+          line = `  { type: "${jsStringEscape(it.type || 'text')}", title: "${jsStringEscape(it.title || '')}", body: "${jsStringEscape(it.body || '')}", desc: "${jsStringEscape(it.desc || '')}" }`;
+        } else {
+          line = `  { name: "${jsStringEscape(it.name || '')}", preview: "${jsStringEscape(it.preview || '')}", desc: "${jsStringEscape(it.desc || '')}" }`;
+        }
         lines.push((it._checked === false ? '  // ' : '  ') + line + (idx < items.length - 1 ? ',' : ''));
       });
       lines.push('];');
@@ -276,19 +305,28 @@
     });
 
     byId('regenerate').addEventListener('click', () => {
-      // Re-scan current UI state into items & regenerate (useful if DOM changed)
       const items = [];
       grid.querySelectorAll('.media').forEach((card) => {
-        const name = card.querySelector('.name b')?.textContent || '';
-        const desc = card.querySelector('textarea')?.value || '';
-        const checked = card.querySelector('input[type="checkbox"]').checked;
-        // Try to recover preview from element
-        let preview = '';
-        const ifr = card.querySelector('iframe');
-        const img = card.querySelector('img');
-        const vid = card.querySelector('video');
-        if (ifr) preview = ifr.src; else if (img) preview = img.src; else if (vid) preview = vid.currentSrc || vid.src;
-        items.push({ name, preview, desc, _checked: checked });
+        const include = card.querySelector('input[type="checkbox"]').checked;
+        const kind = card.dataset.kind || 'media';
+
+        if (kind === 'text') {
+          const inputs = card.querySelectorAll('.field .text, .field .area');
+          const type = inputs[0]?.value || 'text';
+          const title = inputs[1]?.value || '';
+          const body = inputs[2]?.value || '';
+          const desc = inputs[3]?.value || '';
+          items.push({ _kind: 'text', type, title, body, desc, _checked: include });
+        } else {
+          const name = card.querySelector('.name b')?.textContent || '';
+          const desc = card.querySelector('.field .area')?.value || '';
+          let preview = '';
+          const ifr = card.querySelector('iframe');
+          const img = card.querySelector('img');
+          const vid = card.querySelector('video');
+          if (ifr) preview = ifr.src; else if (img) preview = img.src; else if (vid) preview = vid.currentSrc || vid.src;
+          items.push({ _kind: 'media', name, preview, desc, _checked: include });
+        }
       });
       regenerate(items);
     });
