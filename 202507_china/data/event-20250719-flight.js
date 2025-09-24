@@ -16,16 +16,16 @@ window.GALLERY_ITEMS = [
     preview: "https://drive.google.com/file/d/1tkHNHilw0pFO0cf7ZKXR6Ihwf84N4pME/preview?authuser=0", 
     desc: "Билетите са в нас. За съжаление само на полета до Истанбул сме един до друг. На дългият полет сме на отдалечени места. Все още тук се надявахме да можем да се разместим. Уви - бяха ни дали доста неатрактивни средни места и никой не искаше да се размества." },
   
-  //{ name: "20250720_013053.jpg", preview: "https://drive.google.com/file/d/16MChjVfYy31yu-fWtDSxsxhix4V7w0Ak/preview?authuser=0", desc: "Снимка – временно описание." },
+  //{ name: "20250720_013053.jpg", preview: "https://drive.google.com/file/d/16MChjVfYy31yu-fWtDSxsxhix4V7w0Ak/preview?authuser=0", desc: "" },
   
-  { name: "20250720_050326.jpg", preview: "https://drive.google.com/file/d/1WyGTWWzyB-eGatRRbHsBz9UYPRtY-Hu1/preview?authuser=0", desc: "Снимка – временно описание." },
+  { name: "20250720_050326.jpg", preview: "https://drive.google.com/file/d/1WyGTWWzyB-eGatRRbHsBz9UYPRtY-Hu1/preview?authuser=0", desc: "" },
   
-  //{ name: "20250720_050344.jpg", preview: "https://drive.google.com/file/d/1yxWwzG5_lykASbpJpQWP0ebvrsKns4Hz/preview?authuser=0", desc: "Снимка – временно описание." },
+  //{ name: "20250720_050344.jpg", preview: "https://drive.google.com/file/d/1yxWwzG5_lykASbpJpQWP0ebvrsKns4Hz/preview?authuser=0", desc: "" },
   
   { name: "20250720_052713.jpg", preview: "https://drive.google.com/file/d/1Lg4YrxlUTSKwAc6mDt_M1oqIv-uWK9D3/preview?authuser=0", 
     desc: "На летището в Истанбул - изненада. Полетът ни за Шанхай е със закъснение 5 часа. Нямаше как - трябваше да поспим по седалките на летището, да си купим да ядем нещо там. И ето ни тук - чакаме вече да ни качат на самолета за Шанхай." },
   
-  //{ name: "20250720_140423.jpg", preview: "https://drive.google.com/file/d/1DSid8LlVLDtjo_FY7DgIkCMSiDyVyxQY/preview?authuser=0", desc: "Снимка – временно описание." },
+  //{ name: "20250720_140423.jpg", preview: "https://drive.google.com/file/d/1DSid8LlVLDtjo_FY7DgIkCMSiDyVyxQY/preview?authuser=0", desc: "" },
   
   { name: "20250720_140500.jpg", preview: "https://drive.google.com/file/d/1z5arxVNiJ-gatp1LvR-lDE3N4XyfBS-F/preview?authuser=0", desc: " Това е екранът пред всеки от пътниците. Имаше филми, музика, следене на полета - все ценни неща, за да може да понесе човек по-лесно 10 часов полет. Седалките са доста тесни, ако не си бизнес класа (която е 4 пъти по-скъпа, но пък 5 пъти по-комфортна)" },
   
@@ -35,9 +35,9 @@ window.GALLERY_ITEMS = [
   
   { name: "20250720_225001.jpg", preview: "https://drive.google.com/file/d/1h5UvMZ9LfjB9wj7msqdZTnn7lxDuXqIm/preview?authuser=0", desc: " И тук вече сме в хотела. Времето е много по-топло и влажно от София, ние сме още с дългите панталони и дънки. За последно (освен някои по-официални вечери на корабчето) бяхме с толкова дебели дрехи.Хотелът беше добър, имаше контакти като за европейци (както и навсякъде другаде - китайците са се погрижили да е комфортно на чуждоземните туристи). Време беше за сън" },
   
-  { name: "20250720_225211.jpg", preview: "https://drive.google.com/file/d/1EV5dgMYPWn5dJEAiq7PndaPDnWy-4ehy/preview?authuser=0", desc: "Снимка – временно описание." },
-  { name: "20250720_225238.jpg", preview: "https://drive.google.com/file/d/1x6275pAcSyz19UlhKlbS1hR_J_50We3x/preview?authuser=0", desc: "Снимка – временно описание." },
-  { name: "20250720_225242.jpg", preview: "https://drive.google.com/file/d/1i9p97AlrCIaKne2sdTiaDHR3VPpDDgJ6/preview?authuser=0", desc: "Снимка – временно описание." }
+  { name: "20250720_225211.jpg", preview: "https://drive.google.com/file/d/1EV5dgMYPWn5dJEAiq7PndaPDnWy-4ehy/preview?authuser=0", desc: "" },
+  { name: "20250720_225238.jpg", preview: "https://drive.google.com/file/d/1x6275pAcSyz19UlhKlbS1hR_J_50We3x/preview?authuser=0", desc: "" },
+  { name: "20250720_225242.jpg", preview: "https://drive.google.com/file/d/1i9p97AlrCIaKne2sdTiaDHR3VPpDDgJ6/preview?authuser=0", desc: "" }
 ];
 
 
