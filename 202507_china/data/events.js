@@ -20,6 +20,21 @@ window.GALLERY_EVENT_INDEX = [
   { slug: "event-20250724-tudja", title: "20250724_08 Племето Туджа от народа Ба", data: "data/event-20250724-tudja.js" },
   
   { slug: "event-20250724_14-damn.js", title: "20250724_14 Язовир Трите клисури", data: "data/event-20250724_14-damn.js" },
+  { slug: "event-20250724_21-ship-evening", title: "20250724_21 Вечер на кораба", data: "data/event-20250724_21-ship-evening.js" },  
+
+
+  { slug: "event-20250725_08-ship-trip", title: "20250725_08 Яндзъ разходка с корабче", data: "data/event-20250725_08-ship-trip.js" }, 
+  { slug: "event-20250725_10-ship-walk", title: "20250725_10 Из корабчето", data: "data/event-20250725_10-ship-walk.js" },
+  { slug: "event-20250725_13-yandzi", title: "20250725_11 Яндзъ", data: "data/event-20250725_13-yandzi.js" },
+  { slug: "event-20250725_13-yandzi-gorge", title: "20250725_13 Яндзъ през клисурата", data: "data/event-20250725_13-yandzi-gorge.js" },
+  { slug: "", title: "", data: "data/" },
+  { slug: "", title: "", data: "data/" },
+  { slug: "", title: "", data: "data/" },
+  { slug: "", title: "", data: "data/" },
+  { slug: "", title: "", data: "data/" },
+  { slug: "", title: "", data: "data/" },
+  { slug: "", title: "", data: "data/" },
+
   // { slug: "", title: "", data: "" },  
   
 
