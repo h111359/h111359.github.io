@@ -8,21 +8,15 @@ window.GALLERY_EVENT_INDEX = [
   { slug: "event-20250721_04-razhodka-shanghai", title: "20250721_04 Разходка в Шанхай", data: "data/event-20250721_04-razhodka-shanghai.js"},
   { slug: "event-20250721_05-lui-vuiton", title: "20250721_05 Шанхай - инсталация на Луи Вюитон", data: "data/event-20250721_05-lui-vuiton.js"},
   { slug: "event-20250721_06-huanpu", title: "20250721_06 Шанхай - разходка с корабче по река Хуанпу", data: "data/event-20250721_06-huanpu.js"},
-
   { slug: "event-20250722_01-tower", title: "20250722_01 Шанхайската кула", data: "data/event-20250722_01-tower.js"},
   { slug: "event-20250722_02-uan", title: "20250722_02 Шанхай градините Ю Юан", data: "data/event-20250722_02-uan.js"},
   { slug: "event-20250722_03-djudjadjao", title: "20250722_03 Джуджаджао", data: "data/event-20250722_03-djudjadjao.js"},
   { slug: "event-20250722-04-acrobat", title: "20250722_04 Акробатично шоу", data: "data/event-20250722-04-acrobat.js" },
-
   { slug: "event-20250723-ichan", title: "20250723 Пътуване до Ичан", data: "data/event-20250723-ichan.js" },
   { slug: "event-20250724-tudja", title: "20250724_08 Племето Туджа от народа Ба", data: "data/event-20250724-tudja.js" },
-
   { slug: "event-20250724-tudja", title: "20250724_08 Племето Туджа от народа Ба", data: "data/event-20250724-tudja.js" },
-  
-  { slug: "event-20250724_14-damn.js", title: "20250724_14 Язовир Трите клисури", data: "data/event-20250724_14-damn.js" },
+  { slug: "event-20250724_14-damn", title: "20250724_14 Язовир Трите клисури", data: "data/event-20250724_14-damn.js" },
   { slug: "event-20250724_21-ship-evening", title: "20250724_21 Вечер на кораба", data: "data/event-20250724_21-ship-evening.js" },  
-
-
   { slug: "event-20250725_08-ship-trip", title: "20250725_08 Яндзъ разходка с корабче", data: "data/event-20250725_08-ship-trip.js" }, 
   { slug: "event-20250725_10-ship-walk", title: "20250725_10 Из корабчето", data: "data/event-20250725_10-ship-walk.js" },
   { slug: "event-20250725_13-yandzi", title: "20250725_11 Яндзъ", data: "data/event-20250725_13-yandzi.js" },
@@ -36,20 +30,25 @@ window.GALLERY_EVENT_INDEX = [
   { slug: "event-20250726_11-vuling", title: "20250726_11 Каньона Вулинг", data: "data/event-20250726_11-vuling.js" },
   { slug: "event-20250727_08-chintsin", title: "20250727_08 Чинцин зоологическа градина", data: "data/event-20250727_08-chintsin.js" },
   { slug: "event-20250727_12-train", title: "20250727_12 Влак стрела", data: "data/event-20250727_12-train.js" },
-  { slug: "event-20250727_17-sian.js", title: "20250727_17 Сиан пристигане", data: "data/event-20250727_17-sian.js" },
+  { slug: "event-20250727_17-sian", title: "20250727_17 Сиан пристигане", data: "data/event-20250727_17-sian.js" },
   { slug: "event-20250727_21-sian-street", title: "20250727_21 Сиан улицата на традициите", data: "data/event-20250727_21-sian-street.js" },
-  { slug: "", title: "", data: "data/" },
-  { slug: "", title: "", data: "data/" },
-  { slug: "", title: "", data: "data/" },
-  { slug: "", title: "", data: "data/" },
-  { slug: "", title: "", data: "data/" },
-  { slug: "", title: "", data: "data/" },
-  { slug: "", title: "", data: "data/" },
-  { slug: "", title: "", data: "data/" },
-  { slug: "", title: "", data: "data/" },
-  { slug: "", title: "", data: "data/" },
-  { slug: "", title: "", data: "data/" },
-
+  { slug: "event-20250728_10-nefrit", title: "20250728_10 Сиан фабрика нефрит и теракота", data: "data/event-20250728_10-nefrit.js" },
+  { slug: "event-20250728_13-teraarmia", title: "20250728_13 Сиан теракотена армия", data: "data/event-20250728_13-teraarmia.js" },
+  { slug: "event-20250728_17-siankrepost", title: "20250728_17 Сиан разходка край крепостната стена", data: "data/event-20250728_17-siankrepost.js" },
+  { slug: "event-20250728_19-sianjpgara", title: "20250728_19 Сиан ЖП гара и нощен влак", data: "data/event-20250728_19-sianjpgara.js" },
+  { slug: "event-20250729_08-pekinarrival", title: "20250729_08 Пекин пристигане", data: "data/event-20250729_08-pekinarrival.js" },
+  { slug: "event-20250729_11-chai", title: "20250729_11 Пекин чаена церемония", data: "data/event-20250729_11-chai.js" },
+  { slug: "event-20250729_13-tiananmin", title: "20250729_13 Площад Тянънмън", data: "data/event-20250729_13-tiananmin.js" },
+  { slug: "event-20250729_16-summercity", title: "20250729_16 Летния дворец", data: "data/event-20250729_16-summercity.js" },
+  { slug: "event-20250730_10-forbiddencity", title: "20250730_10 Забранения град", data: "data/event-20250730_10-forbiddencity.js" },
+  { slug: "event-20250730_14-perls", title: "20250730_14 Фабрика за перли", data: "data/event-20250730_14-perls.js" },
+  { slug: "event-20250730_15-stadium", title: "20250730_15 Олимпийския стадион", data: "data/event-20250730_15-stadium.js" },
+  { slug: "event-20250730_19-pekinoldcity", title: "20250730_19 Пекин нощна разходка в старият град", data: "data/event-20250730_19-pekinoldcity.js" },
+  { slug: "event-20250731_10-greatwall", title: "20250731_10 Великата китайска стена", data: "data/event-20250731_10-greatwall.js" },
+  { slug: "event-20250731_13-skytemple", title: "20250731_13 Храма на небето", data: "data/event-20250731_13-skytemple.js" },
+  { slug: "event-20250731_17-watershow", title: "20250731_17 Водно шоу", data: "data/event-20250731_17-watershow.js" },
+  { slug: "event-20250731_18-pekinduck", title: "20250731_18 Патица по пекински", data: "data/event-20250731_18-pekinduck.js" }
+ 
   // { slug: "", title: "", data: "" },  
   
 
