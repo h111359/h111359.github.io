@@ -139,24 +139,29 @@
   }
 
   // ---------- Grid Rendering ----------
-  function makeImageCard(item, openLightboxImage){
-    const card = el('article','card');
-    const btn  = el('button','media-btn'); btn.type='button';
-    const img  = el('img','thumb');
-    img.loading='lazy'; img.decoding='async'; img.referrerPolicy='no-referrer';
-    img.alt=item.name; img.src=viewImg(item.id);
-    let tried=false; img.onerror=()=>{ if(!tried){ tried=true; img.src=thumb(item.id,1600); } };
-    btn.addEventListener('click',()=>openLightboxImage(item));
-    btn.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLightboxImage(item); } });
-    btn.appendChild(img);
+function makeImageCard(item, openLightboxImage){
+  // NEW: detect if the item has a description
+  const hasDesc = (item.desc || '').trim().length > 0;
 
-    const cap=el('div','caption');
-    cap.innerHTML = `
-      <div class="cap-top"><span class="name" title="${esc(item.name)}">${esc(item.name)}</span><span></span></div>
-      ${item.desc ? `<div class="desc">${esc(item.desc)}</div>` : ''}`;
-    card.appendChild(btn); card.appendChild(cap);
-    return card;
-  }
+  // CHANGE: add "has-desc" when there is a description
+  const card = el('article', hasDesc ? 'card has-desc' : 'card');
+
+  const btn  = el('button','media-btn'); btn.type='button';
+  const img  = el('img','thumb');
+  img.loading='lazy'; img.decoding='async'; img.referrerPolicy='no-referrer';
+  img.alt=item.name; img.src=viewImg(item.id);
+  let tried=false; img.onerror=()=>{ if(!tried){ tried=true; img.src=thumb(item.id,1600); } };
+  btn.addEventListener('click',()=>openLightboxImage(item));
+  btn.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLightboxImage(item); } });
+  btn.appendChild(img);
+
+  const cap=el('div','caption');
+  cap.innerHTML = `
+    <div class="cap-top"><span class="name" title="${esc(item.name)}">${esc(item.name)}</span><span></span></div>
+    ${item.desc ? `<div class="desc">${esc(item.desc)}</div>` : ''}`;
+  card.appendChild(btn); card.appendChild(cap);
+  return card;
+}
 
   function makeVideoCard(item, openLightboxVideo){
     const card = el('article','card');

@@ -54,14 +54,26 @@ header.hdr{
    ========================= */
 .nav{
   grid-column: 1;
-  grid-row: 2 / span 2;  /* sticks next to toolbar + grid */
-  position: sticky; top: 16px;
+  grid-row: 2 / span 2;      /* sticks next to toolbar + grid */
+  position: sticky;
+  top: 16px;
+
+  /* NEW: scrollable sidebar */
+  max-height: calc(100vh - 16px); /* full viewport minus the sticky offset */
+  overflow: auto;                 /* enable scrolling when items overflow */
+  padding-right: 6px;             /* space for scrollbar so content doesn't hide */
   align-self: start;
   display: block;
 }
+
+/* keep the vertical stack; allow inner overflow just in case */
 .tabs{
-  display: flex; flex-direction: column; gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;            /* NEW: prevents flex children from forcing overflow */
 }
+
 .tab{
   border: 1px solid var(--border);
   background: var(--card);
@@ -76,7 +88,16 @@ header.hdr{
   box-shadow: 0 0 0 2px rgba(255,138,91,.25);
 }
 
-/* mobile fallback: dropdown */
+/* Optional: nicer, slim scrollbar (only on WebKit/Blink; safe no-ops elsewhere) */
+.nav::-webkit-scrollbar{ width: 10px; }
+.nav::-webkit-scrollbar-track{ background: transparent; }
+.nav::-webkit-scrollbar-thumb{
+  background: rgba(255,138,91,.35);
+  border-radius: 8px;
+}
+.nav:hover::-webkit-scrollbar-thumb{ background: rgba(255,138,91,.6); }
+
+/* mobile fallback: dropdown (unchanged) */
 .select-wrap{ display: none; }
 .select{
   background: var(--card);
@@ -84,6 +105,14 @@ header.hdr{
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 8px 10px;
+}
+
+/* Responsive: on small screens we already switch to the dropdown, so no sidebar scroll there */
+@media (max-width: 700px){
+  .container{ display: block; }
+  .nav{ position: static; max-height: none; overflow: visible; margin-top: 14px; }
+  .tabs{ display: none; }
+  .select-wrap{ display: block; margin-bottom: 10px; }
 }
 
 /* =========================
@@ -161,6 +190,55 @@ header.hdr{
   border-radius: 999px; padding: 10px;
 }
 
+
+/* === Image-with-description: full row, image left · text right === */
+.grid > .card.has-desc { grid-column: 1 / -1; }
+
+.card.has-desc{
+  display: grid;
+  grid-template-columns: minmax(340px, 1.2fr) 1fr; /* image | text */
+  gap: 20px;
+  align-items: start;
+  padding: 12px; /* optional: card padding to breathe */
+}
+
+/* Left pane (the existing image button) */
+.card.has-desc .media-btn{ align-self: stretch; }
+.card.has-desc .thumb{
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;            /* keep entire photo visible */
+  background: var(--media-bg);
+  border-radius: 8px;
+}
+
+/* Right pane (your existing caption) */
+.card.has-desc .caption{
+  padding: 0;                     /* remove bottom-card padding; now it's a side panel */
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+.card.has-desc .cap-top{ justify-content: flex-start; }
+.card.has-desc .name{ white-space: normal; font-weight: 600; color: var(--text); }
+.card.has-desc .desc{ color: var(--text); line-height: 1.55; white-space: pre-wrap; }
+
+/* Hover effect consistent with other media */
+.card.has-desc:hover .thumb{
+  transform: scale(1.01);
+  box-shadow: 0 6px 20px rgba(255,138,91,0.12);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+/* Stack on narrow screens */
+@media (max-width: 800px){
+  .card.has-desc{
+    grid-template-columns: 1fr;
+  }
+  .card.has-desc .caption{ padding: 10px 12px; } /* restore padding when stacked */
+}
+
+
 /* =========================
    Lightbox (images/videos)
    ========================= */
@@ -232,4 +310,52 @@ header.hdr{
   .nav{ position: static; margin-top: 14px; }
   .tabs{ display: none; }
   .select-wrap{ display: block; margin-bottom: 10px; }
+}
+
+
+.media-card.has-desc .media-split{
+  display: grid;
+  grid-template-columns: minmax(340px, 1.2fr) 1fr; /* image | text */
+  gap: 20px;
+  align-items: start;
+  padding: 12px;
+}
+
+/* Left image */
+.media-card.has-desc .poster{
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: var(--media-bg);
+  border-radius: 8px;
+}
+
+/* Right text panel */
+.media-card.has-desc .media-side{
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+.media-card.has-desc .side-title{
+  color: var(--text);
+  font-weight: 600;
+  font-size: 1.05rem;
+  word-break: break-word;
+}
+.media-card.has-desc .side-desc{
+  color: var(--text);
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+/* Hover (optional, consistent) */
+.media-card.has-desc:hover .poster{
+  transform: scale(1.01);
+  box-shadow: 0 6px 20px rgba(255,138,91,0.12);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+/* Stack on narrow screens */
+@media (max-width: 800px){
+  .media-card.has-desc .media-split{ grid-template-columns: 1fr; }
 }
