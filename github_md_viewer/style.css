@@ -3,6 +3,56 @@ body {
   margin: 0;
   background: #f7f7f7;
 }
+
+/* Desktop sidebar */
+#file-tree {
+  position: sticky;
+  top: 0;
+  width: 250px;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  padding: 1em;
+  overflow-y: auto;
+}
+
+/* Mobile: hide sidebar by default, show toggle button */
+@media (max-width: 700px) {
+  #file-tree {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 80vw;
+    max-width: 320px;
+    height: 100vh;
+    z-index: 100;
+    background: #fff;
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+  }
+  #file-tree.open {
+    transform: translateX(0);
+  }
+  #menu-toggle {
+    display: block;
+    position: fixed;
+    left: 12px;
+    top: 12px;
+    z-index: 101;
+    background: #4cc9f0;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+}
+
+/* Hide toggle button on desktop */
+#menu-toggle {
+  display: none;
+}
 header {
   background: #222;
   color: #fff;
@@ -14,6 +64,54 @@ nav#repo-nav {
 main {
   display: flex;
   min-height: 80vh;
+}
+
+@media (max-width: 700px) {
+  main {
+    display: block;
+    width: 100vw;
+    min-height: 80vh;
+    margin: 0;
+    padding: 0;
+  }
+  #file-tree {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 80vw;
+    max-width: 320px;
+    height: 100vh;
+    z-index: 100;
+    background: #fff;
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+  }
+  #file-tree.open {
+    transform: translateX(0);
+  }
+  #md-content {
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0;
+    padding: 2em 1em;
+    box-sizing: border-box;
+  }
+  #menu-toggle {
+    display: block;
+    position: fixed;
+    left: 12px;
+    top: 12px;
+    z-index: 101;
+    background: #4cc9f0;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+}
 }
 aside#file-tree {
   width: 250px;

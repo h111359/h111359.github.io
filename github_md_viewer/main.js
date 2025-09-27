@@ -1,3 +1,13 @@
+// Mobile sidebar toggle
+window.addEventListener('DOMContentLoaded', () => {
+  const menuToggle = document.getElementById('menu-toggle');
+  const fileTree = document.getElementById('file-tree');
+  if (menuToggle && fileTree) {
+    menuToggle.addEventListener('click', function() {
+      fileTree.classList.toggle('open');
+    });
+  }
+});
 // Loads repo list from setup.js, fetches .md files, builds navigation, renders markdown
 const repoNav = document.getElementById('repo-nav');
 const fileTree = document.getElementById('file-tree');
