@@ -6,5 +6,6 @@
 // ];
 window.GITHUB_MD_REPOS = [
   // Add your repos here
-   { name: 'hmh-git', owner: 'h111359', repo: 'hmh-git', branch: 'main' },
+   { name: 'Git and GitHub', owner: 'h111359', repo: 'hmh-git', branch: 'main' },
+   { name: 'Awesome GitHub Copilot', owner: 'github', repo: 'awesome-copilot', branch: 'main' },   
 ];

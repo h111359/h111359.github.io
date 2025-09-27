@@ -87,12 +87,20 @@ function buildFileTree(structure, prefix = '') {
 
 function loadRepo(idx) {
   currentRepo = REPOS[idx];
-  fetchRepoMdFiles(currentRepo).then(structure => {
-    fileStructure = structure;
-    buildFileTree(fileStructure);
-    mdContent.innerHTML = '<p>Select a markdown file to view.</p>';
-    currentFile = null;
-  });
+  fetchRepoMdFiles(currentRepo)
+    .then(structure => {
+      fileStructure = structure;
+      buildFileTree(fileStructure);
+      const repoUrl = `https://github.com/${currentRepo.owner}/${currentRepo.repo}`;
+  mdContent.innerHTML = `<div style='margin-top:2em;text-align:center;'><a href="${repoUrl}" target="_blank" class="repo-link" style='font-size:1.2em;padding:1em 2em;background:#222;color:#fff;border-radius:8px;display:inline-block;border:2px solid #4cc9f0;text-decoration:none;'>Open <b>${currentRepo.name}</b> on GitHub</a></div>`;
+      currentFile = null;
+    })
+    .catch(() => {
+      // Always show the link even if fetch fails
+      const repoUrl = `https://github.com/${currentRepo.owner}/${currentRepo.repo}`;
+  mdContent.innerHTML = `<div style='margin-top:2em;text-align:center;'><a href="${repoUrl}" target="_blank" class="repo-link" style='font-size:1.2em;padding:1em 2em;background:#222;color:#fff;border-radius:8px;display:inline-block;border:2px solid #4cc9f0;text-decoration:none;'>Open <b>${currentRepo.name}</b> on GitHub</a></div>`;
+      currentFile = null;
+    });
 }
 
 function fetchRepoMdFiles(repo) {
