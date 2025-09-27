@@ -22,6 +22,12 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     window.addEventListener('resize', updateSidebarVisibility);
     updateSidebarVisibility();
+    // Collapse menu when a link in the sidebar is clicked (mobile only)
+    fileTree.addEventListener('click', function(e) {
+      if (isMobile() && e.target.tagName === 'A') {
+        fileTree.classList.remove('open');
+      }
+    });
   }
 });
 // Loads repo list from setup.js, fetches .md files, builds navigation, renders markdown
