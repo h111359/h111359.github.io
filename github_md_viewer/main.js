@@ -2,10 +2,26 @@
 window.addEventListener('DOMContentLoaded', () => {
   const menuToggle = document.getElementById('menu-toggle');
   const fileTree = document.getElementById('file-tree');
+  function isMobile() {
+    return window.innerWidth <= 700;
+  }
+  function updateSidebarVisibility() {
+    if (isMobile()) {
+      fileTree.classList.remove('open');
+      fileTree.style.display = '';
+    } else {
+      fileTree.classList.remove('open');
+      fileTree.style.display = '';
+    }
+  }
   if (menuToggle && fileTree) {
     menuToggle.addEventListener('click', function() {
-      fileTree.classList.toggle('open');
+      if (isMobile()) {
+        fileTree.classList.toggle('open');
+      }
     });
+    window.addEventListener('resize', updateSidebarVisibility);
+    updateSidebarVisibility();
   }
 });
 // Loads repo list from setup.js, fetches .md files, builds navigation, renders markdown
