@@ -132,17 +132,29 @@ function renderMarkdown(md) {
   // Basic markdown rendering (headings, links, code, lists, paragraphs, newlines)
   // Add anchors to headings for TOC navigation
   let html = escapeHtml(md)
-    .replace(/^# (.*)$/gm, function(_, t) {
+    .replace(/^###### (.*)$/gm, function(_, t) {
       const id = t.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
-      return `<h1 id="${id}">${t}</h1>`;
+      return `<h6 id="${id}">${t}</h6>`;
+    })
+    .replace(/^##### (.*)$/gm, function(_, t) {
+      const id = t.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      return `<h5 id="${id}">${t}</h5>`;
+    })
+    .replace(/^#### (.*)$/gm, function(_, t) {
+      const id = t.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      return `<h4 id="${id}">${t}</h4>`;
+    })
+    .replace(/^### (.*)$/gm, function(_, t) {
+      const id = t.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      return `<h3 id="${id}">${t}</h3>`;
     })
     .replace(/^## (.*)$/gm, function(_, t) {
       const id = t.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
       return `<h2 id="${id}">${t}</h2>`;
     })
-    .replace(/^### (.*)$/gm, function(_, t) {
+    .replace(/^# (.*)$/gm, function(_, t) {
       const id = t.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
-      return `<h3 id="${id}">${t}</h3>`;
+      return `<h1 id="${id}">${t}</h1>`;
     })
     .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
     .replace(/\*(.*?)\*/g, '<i>$1</i>')
