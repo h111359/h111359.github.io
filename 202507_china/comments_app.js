@@ -12,6 +12,47 @@ const SAMPLE = `window.GALLERY_ITEMS = [
 
 byId('sample').addEventListener('click', () => { src.value = SAMPLE; });
 byId('clear').addEventListener('click', () => { src.value = ''; grid.innerHTML = ''; });
+
+// Add copy button functionality
+const copyBtn = document.createElement('button');
+copyBtn.textContent = 'Copy Input';
+copyBtn.className = 'primary';
+copyBtn.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(src.value);
+    copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = 'Copy Input'; }, 1200);
+  } catch {
+    src.select();
+    document.execCommand('copy');
+    copyBtn.textContent = 'Copied!';
+    setTimeout(() => { copyBtn.textContent = 'Copy Input'; }, 1200);
+  }
+});
+
+// Insert the button next to the input field
+window.addEventListener('DOMContentLoaded', () => {
+  const controls = src.parentElement.querySelector('.controls');
+  if (controls) controls.appendChild(copyBtn);
+  // Add Download Input button
+  const downloadBtn = document.createElement('button');
+  downloadBtn.textContent = 'Download Input';
+  downloadBtn.className = 'primary';
+  downloadBtn.addEventListener('click', () => {
+    const blob = new Blob([src.value], { type: 'application/javascript' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'gallery_items.js';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 100);
+  });
+  controls.appendChild(downloadBtn);
+});
 byId('load').addEventListener('click', () => {
   try {
     const items = tryParseItems(src.value);
@@ -25,23 +66,55 @@ byId('load').addEventListener('click', () => {
 // ---- Parsing ----
 function tryParseItems(text) {
   if (!text || !text.trim()) return [];
+  // Strictly extract only the array part
   const first = text.indexOf('[');
   const last = text.lastIndexOf(']');
-  let arrStr = text;
-  if (first !== -1 && last !== -1 && last > first) arrStr = text.slice(first, last + 1);
-  // Quote object-literal keys + strip trailing commas
-  arrStr = arrStr.replace(/([{\,]\s*)([a-zA-Z_$][\w$]*)\s*:/g, '$1"$2":');
-  arrStr = arrStr.replace(/,(\s*[}\]])/g, '$1');
+  if (first === -1 || last === -1 || last < first) throw new Error('No array found');
+  let arrStr = text.substring(first + 1, last); // exclude [ and ]
 
-  const raw = JSON.parse(arrStr);
-  if (!Array.isArray(raw)) throw new Error('Parsed value is not an array');
-
-  return raw.map((it, idx) => {
-    if (it.type === 'text') {
-      return { _kind: 'text', type: String(it.type || 'text'), title: String(it.title || ''), body: String(it.body || ''), desc: String(it.desc || ''), _checked: true, _id: idx };
+  // Split into lines, detect commented-out items
+  const lines = arrStr.split('\n');
+  let jsonLines = [];
+  lines.forEach(line => {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed === ',' || trimmed === ']') return; // skip empty lines and stray commas
+    if (trimmed.startsWith('//')) {
+      const uncommented = trimmed.replace(/^\/\/\s*/, '').replace(/,$/, '');
+      if (uncommented) jsonLines.push({ line: uncommented, checked: false });
+    } else {
+      const cleanLine = trimmed.replace(/,$/, '');
+      if (cleanLine) jsonLines.push({ line: cleanLine, checked: true });
     }
-    return { _kind: 'media', name: String(it.name || ''), preview: String(it.preview || ''), desc: String(it.desc || ''), _checked: true, _id: idx };
   });
+
+  // Rebuild array string for JSON.parse
+  const arrStrClean = '[' + jsonLines.map(l => l.line).join(',') + ']';
+  let arrStrQuoted = arrStrClean.replace(/([{\,]\s*)([a-zA-Z_$][\w$]*)\s*:/g, '$1"$2":');
+  arrStrQuoted = arrStrQuoted.replace(/,([\s]*[}\]])/g, '$1');
+
+  // Advanced logging
+  console.log('Extracted array string:', arrStrClean);
+  console.log('Quoted array string:', arrStrQuoted);
+
+  try {
+    const raw = JSON.parse(arrStrQuoted);
+    if (!Array.isArray(raw)) throw new Error('Parsed value is not an array');
+    return raw.map((it, idx) => {
+      const checked = jsonLines[idx]?.checked !== false;
+      if (it.type === 'text') {
+        return { _kind: 'text', type: String(it.type || 'text'), title: String(it.title || ''), body: String(it.body || ''), desc: String(it.desc || ''), _checked: checked, _id: idx };
+      }
+      return { _kind: 'media', name: String(it.name || ''), preview: String(it.preview || ''), desc: String(it.desc || ''), _checked: checked, _id: idx };
+    });
+  } catch (e) {
+    // Log error details
+    console.error('JSON parse error:', e.message);
+    let pos = 0;
+    const match = e.message.match(/position (\\d+)/);
+    if (match) pos = parseInt(match[1], 10);
+    console.error('Error context:', arrStrQuoted.slice(Math.max(0, pos - 40), pos + 40));
+    throw new Error('Could not parse the list. Details: ' + e.message);
+  }
 }
 
 // ---- Rendering ----

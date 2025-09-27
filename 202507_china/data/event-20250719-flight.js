@@ -1,43 +1,18 @@
 window.GALLERY_ITEMS = [
-  { type: "text", 
-    title: "Ден 1 - полет до Шанхай", 
-    body: "", 
-    desc: "" },
-
-  { type: "text", 
-    title: "", 
-    body: "Летище София. Започваме нашето пътешествие към Китай. Полетът е с Turkish Airlines, с прекачване в Истанбул. Полетът до Истанбул е кратък, около 2 часа, а следващият до Шанхай е дълъг - около 10 часа. За щастие полетът до Истанбул беше навреме и успяхме да хванем връзката си. В Истанбул имахме около 3 часа престой, което беше достатъчно време да се разходим из летището и да хапнем нещо.", 
-    desc: "" },
-
-  { name: "20250719_205554.jpg", preview: "https://drive.google.com/file/d/1PH0P0S9V4By3NsH__J52Fg9tfIo2OARm/preview?authuser=0", 
-    desc: "Залез на летище София. Мама говори със Стефи за последно преди полета." },
-  
-  { name: "20250720_000843.jpg", 
-    preview: "https://drive.google.com/file/d/1tkHNHilw0pFO0cf7ZKXR6Ihwf84N4pME/preview?authuser=0", 
-    desc: "Билетите са в нас. За съжаление само на полета до Истанбул сме един до друг. На дългият полет сме на отдалечени места. Все още тук се надявахме да можем да се разместим. Уви - бяха ни дали доста неатрактивни средни места и никой не искаше да се размества." },
-  
-  //{ name: "20250720_013053.jpg", preview: "https://drive.google.com/file/d/16MChjVfYy31yu-fWtDSxsxhix4V7w0Ak/preview?authuser=0", desc: "" },
-  
-  { name: "20250720_050326.jpg", preview: "https://drive.google.com/file/d/1WyGTWWzyB-eGatRRbHsBz9UYPRtY-Hu1/preview?authuser=0", desc: "" },
-  
-  //{ name: "20250720_050344.jpg", preview: "https://drive.google.com/file/d/1yxWwzG5_lykASbpJpQWP0ebvrsKns4Hz/preview?authuser=0", desc: "" },
-  
-  { name: "20250720_052713.jpg", preview: "https://drive.google.com/file/d/1Lg4YrxlUTSKwAc6mDt_M1oqIv-uWK9D3/preview?authuser=0", 
-    desc: "На летището в Истанбул - изненада. Полетът ни за Шанхай е със закъснение 5 часа. Нямаше как - трябваше да поспим по седалките на летището, да си купим да ядем нещо там. И ето ни тук - чакаме вече да ни качат на самолета за Шанхай." },
-  
-  //{ name: "20250720_140423.jpg", preview: "https://drive.google.com/file/d/1DSid8LlVLDtjo_FY7DgIkCMSiDyVyxQY/preview?authuser=0", desc: "" },
-  
-  { name: "20250720_140500.jpg", preview: "https://drive.google.com/file/d/1z5arxVNiJ-gatp1LvR-lDE3N4XyfBS-F/preview?authuser=0", desc: " Това е екранът пред всеки от пътниците. Имаше филми, музика, следене на полета - все ценни неща, за да може да понесе човек по-лесно 10 часов полет. Седалките са доста тесни, ако не си бизнес класа (която е 4 пъти по-скъпа, но пък 5 пъти по-комфортна)" },
-  
-  { name: "20250720_215858.jpg", preview: "https://drive.google.com/file/d/1VWfrpRkHbSRWImgaSRpPd0AEHcMdlX2X/preview?authuser=0", desc: "Но накрая стигаме Шанхай. Вечер е и не става за снимки - затова - ето как изглеждаме ние. Не е зле." },
-  
-  // { name: "20250720_224959.jpg", preview: "https://drive.google.com/file/d/1N_nXNCh4uLUQhCauLieYCpP5bn713ffI/preview?authuser=0", desc: " И тук вече сме в хотела. Времето е много по-топло и влажно от София, ние сме още с дългите панталони и дънки. За последно (освен някои по-официални вечери на корабчето) бяхме с толкова дебели дрехи.Хотелът беше добър, имаше контакти като за европейци (както и навсякъде другаде - китайците са се погрижили да е комфортно на чуждоземните туристи). Време беше за сън" },
-  
-  { name: "20250720_225001.jpg", preview: "https://drive.google.com/file/d/1h5UvMZ9LfjB9wj7msqdZTnn7lxDuXqIm/preview?authuser=0", desc: " И тук вече сме в хотела. Времето е много по-топло и влажно от София, ние сме още с дългите панталони и дънки. За последно (освен някои по-официални вечери на корабчето) бяхме с толкова дебели дрехи.Хотелът беше добър, имаше контакти като за европейци (както и навсякъде другаде - китайците са се погрижили да е комфортно на чуждоземните туристи). Време беше за сън" },
-  
-  { name: "20250720_225211.jpg", preview: "https://drive.google.com/file/d/1EV5dgMYPWn5dJEAiq7PndaPDnWy-4ehy/preview?authuser=0", desc: "" },
-  { name: "20250720_225238.jpg", preview: "https://drive.google.com/file/d/1x6275pAcSyz19UlhKlbS1hR_J_50We3x/preview?authuser=0", desc: "" },
-  { name: "20250720_225242.jpg", preview: "https://drive.google.com/file/d/1i9p97AlrCIaKne2sdTiaDHR3VPpDDgJ6/preview?authuser=0", desc: "" }
+    { type: "text", title: "Ден 1 - полет до Шанхай", body: "", desc: "" },
+    { type: "text", title: "", body: "Летище София. Започваме нашето пътешествие към Китай. Полетът е с Turkish Airlines, с прекачване в Истанбул. Полетът до Истанбул е кратък, около 2 часа, а следващият до Шанхай е дълъг - около 10 часа. За щастие полетът до Истанбул беше навреме и успяхме да хванем връзката си. В Истанбул имахме около 3 часа престой, което беше достатъчно време да се разходим из летището и да хапнем нещо.", desc: "" },
+    { name: "20250719_205554.jpg", preview: "https://drive.google.com/file/d/1PH0P0S9V4By3NsH__J52Fg9tfIo2OARm/preview?authuser=0", desc: "Залез на летище София. Мама говори със Стефи за последно преди полета." },
+    { name: "20250720_000843.jpg", preview: "https://drive.google.com/file/d/1tkHNHilw0pFO0cf7ZKXR6Ihwf84N4pME/preview?authuser=0", desc: "Билетите са в нас. За съжаление само на полета до Истанбул сме един до друг. На дългият полет сме на отдалечени места. Все още тук се надявахме да можем да се разместим. Уви - бяха ни дали доста неатрактивни средни места и никой не искаше да се размества." },
+    { name: "20250720_013053.jpg", preview: "https://drive.google.com/file/d/16MChjVfYy31yu-fWtDSxsxhix4V7w0Ak/preview?authuser=0", desc: "" },
+    { name: "20250720_050326.jpg", preview: "https://drive.google.com/file/d/1WyGTWWzyB-eGatRRbHsBz9UYPRtY-Hu1/preview?authuser=0", desc: "" },
+  //   { name: "20250720_050344.jpg", preview: "https://drive.google.com/file/d/1yxWwzG5_lykASbpJpQWP0ebvrsKns4Hz/preview?authuser=0", desc: "" },
+    { name: "20250720_052713.jpg", preview: "https://drive.google.com/file/d/1Lg4YrxlUTSKwAc6mDt_M1oqIv-uWK9D3/preview?authuser=0", desc: "На летището в Истанбул - изненада. Полетът ни за Шанхай е със закъснение 5 часа. Нямаше как - трябваше да поспим по седалките на летището, да си купим да ядем нещо там. И ето ни тук - чакаме вече да ни качат на самолета за Шанхай." },
+    { name: "20250720_140423.jpg", preview: "https://drive.google.com/file/d/1DSid8LlVLDtjo_FY7DgIkCMSiDyVyxQY/preview?authuser=0", desc: "" },
+    { name: "20250720_140500.jpg", preview: "https://drive.google.com/file/d/1z5arxVNiJ-gatp1LvR-lDE3N4XyfBS-F/preview?authuser=0", desc: " Това е екранът пред всеки от пътниците. Имаше филми, музика, следене на полета - все ценни неща, за да може да понесе човек по-лесно 10 часов полет. Седалките са доста тесни, ако не си бизнес класа (която е 4 пъти по-скъпа, но пък 5 пъти по-комфортна)" },
+    { name: "20250720_215858.jpg", preview: "https://drive.google.com/file/d/1VWfrpRkHbSRWImgaSRpPd0AEHcMdlX2X/preview?authuser=0", desc: "Но накрая стигаме Шанхай. Вечер е и не става за снимки - затова - ето как изглеждаме ние. Не е зле." },
+  //   { name: "20250720_224959.jpg", preview: "https://drive.google.com/file/d/1N_nXNCh4uLUQhCauLieYCpP5bn713ffI/preview?authuser=0", desc: " И тук вече сме в хотела. Времето е много по-топло и влажно от София, ние сме още с дългите панталони и дънки. За последно (освен някои по-официални вечери на корабчето) бяхме с толкова дебели дрехи.Хотелът беше добър, имаше контакти като за европейци (както и навсякъде другаде - китайците са се погрижили да е комфортно на чуждоземните туристи). Време беше за сън" },
+    { name: "20250720_225001.jpg", preview: "https://drive.google.com/file/d/1h5UvMZ9LfjB9wj7msqdZTnn7lxDuXqIm/preview?authuser=0", desc: " И тук вече сме в хотела. Времето е много по-топло и влажно от София, ние сме още с дългите панталони и дънки. За последно (освен някои по-официални вечери на корабчето) бяхме с толкова дебели дрехи.Хотелът беше добър, имаше контакти като за европейци (както и навсякъде другаде - китайците са се погрижили да е комфортно на чуждоземните туристи). Време беше за сън" },
+  //   { name: "20250720_225211.jpg", preview: "https://drive.google.com/file/d/1EV5dgMYPWn5dJEAiq7PndaPDnWy-4ehy/preview?authuser=0", desc: "" },
+    { name: "20250720_225238.jpg", preview: "https://drive.google.com/file/d/1x6275pAcSyz19UlhKlbS1hR_J_50We3x/preview?authuser=0", desc: "" },
+  //   { name: "20250720_225242.jpg", preview: "https://drive.google.com/file/d/1i9p97AlrCIaKne2sdTiaDHR3VPpDDgJ6/preview?authuser=0", desc: "" }
 ];
-
-

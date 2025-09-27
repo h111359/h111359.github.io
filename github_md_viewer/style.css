@@ -1,0 +1,54 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f7f7f7;
+}
+header {
+  background: #222;
+  color: #fff;
+  padding: 1em;
+}
+nav#repo-nav {
+  margin-top: 0.5em;
+}
+main {
+  display: flex;
+  min-height: 80vh;
+}
+aside#file-tree {
+  width: 250px;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  padding: 1em;
+  overflow-y: auto;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 2;
+}
+section#md-content {
+  flex: 1;
+  padding: 2em;
+  background: #fff;
+  overflow-y: auto;
+}
+.markdown-body {
+  max-width: 800px;
+  margin: auto;
+}
+.file-link {
+  display: block;
+  padding: 0.3em 0.5em;
+  color: #222;
+  text-decoration: none;
+  border-radius: 3px;
+}
+.file-link.active {
+  background: #e0e0e0;
+  font-weight: bold;
+}
+.repo-link {
+  margin-right: 1em;
+  color: #fff;
+  text-decoration: underline;
+}
