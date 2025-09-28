@@ -2,48 +2,56 @@ const byId = (id) => document.getElementById(id);
 const src = byId('src');
 const grid = byId('grid');
 
-// ---- Sample & actions (keep existing workflow) ----
-const SAMPLE = `window.GALLERY_ITEMS = [
-  { type: "text", title: "Ден първи", body: "Първият посетен обект беше Храмът на Нефритения Буда в Шанхай - едно от най-свещените будистки места в Китай и истински духовен оазис в сърцето на мегаполиса. Построен през 1882 г., той приютява две изключителни нефритени статуи на Буда, донесени от монаха Хуиген след поклонничество в Бирма. Будизмът в Китай съчетава елементи от махаяна традицията и местни вярвания, като акцентира върху състраданието, мъдростта и стремежа към хармония.", desc: "Бележка" },
-  { name: "20250721_180222.jpg", preview: "https://drive.google.com/file/d/1xvpiwUPikjLHbelx5GLxvqMELYtZwu6s/preview?authuser=0", desc: "Снимка – временно описание." },
-  { name: "20250721_193611.mp4", preview: "https://drive.google.com/file/d/1cCYAzAWaCQehku8F7hzJwZz0SJusPXBk/preview?authuser=0", desc: "Видео – временно описание." },
-  { type: "text", title: "Край", body: "Финален текстов блок.", desc: "" }
-];`;
+// File upload/download state
+let loadedFileName = '';
 
-byId('sample').addEventListener('click', () => { src.value = SAMPLE; });
-byId('clear').addEventListener('click', () => { src.value = ''; grid.innerHTML = ''; });
-
-// Add copy button functionality
-const copyBtn = document.createElement('button');
-copyBtn.textContent = 'Copy Input';
-copyBtn.className = 'primary';
-copyBtn.addEventListener('click', async () => {
-  try {
-    await navigator.clipboard.writeText(src.value);
-    copyBtn.textContent = 'Copied!';
-    setTimeout(() => { copyBtn.textContent = 'Copy Input'; }, 1200);
-  } catch {
-    src.select();
-    document.execCommand('copy');
-    copyBtn.textContent = 'Copied!';
-    setTimeout(() => { copyBtn.textContent = 'Copy Input'; }, 1200);
-  }
-});
-
-// Insert the button next to the input field
 window.addEventListener('DOMContentLoaded', () => {
   const controls = src.parentElement.querySelector('.controls');
-  if (controls) controls.appendChild(copyBtn);
-  // Add Download Input button
-  const downloadBtn = document.createElement('button');
-  downloadBtn.textContent = 'Download Input';
-  downloadBtn.className = 'primary';
+
+  // Upload button logic
+  const uploadBtn = byId('upload');
+  const fileInput = document.createElement('input');
+  fileInput.type = 'file';
+  fileInput.style.display = 'none';
+  controls.appendChild(fileInput);
+  uploadBtn.addEventListener('click', () => {
+    fileInput.click();
+  });
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    loadedFileName = file.name;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      // Sanitize: escape tabs, carriage returns, and other control chars except \n
+      let content = ev.target.result;
+      // Only inside string values, so we can do a broad replace for tabs and carriage returns
+      // Replace raw tab, carriage return, form feed, vertical tab, backspace
+      content = content.replace(/[\t\r\f\v\b]/g, function(c) {
+        switch (c) {
+          case '\t': return '\\t';
+          case '\r': return '';
+          case '\f': return '';
+          case '\v': return '';
+          case '\b': return '';
+          default: return c;
+        }
+      });
+      src.value = content;
+      grid.innerHTML = '';
+      autoLoadItems();
+    };
+    reader.readAsText(file);
+  });
+
+  // Download button logic
+  const downloadBtn = byId('download');
   downloadBtn.addEventListener('click', () => {
     const blob = new Blob([src.value], { type: 'application/javascript' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'gallery_items.js';
+    a.download = loadedFileName || 'gallery_items.js';
     document.body.appendChild(a);
     a.click();
     setTimeout(() => {
@@ -51,17 +59,28 @@ window.addEventListener('DOMContentLoaded', () => {
       URL.revokeObjectURL(url);
     }, 100);
   });
-  controls.appendChild(downloadBtn);
+
+  // Clear button logic
+  const clearBtn = byId('clear');
+  clearBtn.addEventListener('click', () => {
+    src.value = '';
+    grid.innerHTML = '';
+    loadedFileName = '';
+  });
+
+  // Auto-load items on input change
+  src.addEventListener('input', autoLoadItems);
 });
-byId('load').addEventListener('click', () => {
+
+function autoLoadItems() {
   try {
     const items = tryParseItems(src.value);
-    if (!items.length) { alert('No items found.'); return; }
+    if (!items.length) { grid.innerHTML = ''; return; }
     render(items);
   } catch (err) {
-    alert(err.message);
+    grid.innerHTML = '';
   }
-});
+}
 
 // ---- Parsing ----
 function tryParseItems(text) {

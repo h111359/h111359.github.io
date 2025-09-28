@@ -10,12 +10,6 @@
   <header>
     <div class="wrap">
       <h1>Gallery & Text Blocks Editor</h1>
-      <div class="desc">
-        Paste your <code>window.GALLERY_ITEMS = [ ... ]</code> (or just the array). Supports
-        <b>media</b> items (<code>{ name, preview, desc }</code>) and <b>text</b> blocks
-        (<code>{ type: "text", title, body, desc }</code>) anywhere in the list.
-        Toggle include, edit fields — the top textarea always reflects the current state.
-      </div>
     </div>
   </header>
 
@@ -25,13 +19,10 @@
         <div class="row" style="align-items:start;">
           <textarea id="src" class="input" placeholder="Paste here..."></textarea>
           <div class="controls">
-            <button id="load" class="primary">Load Items</button>
-            <button id="sample">Sample</button>
+            <button id="upload" class="primary">Upload</button>
+            <button id="download" class="primary">Download</button>
             <button id="clear">Clear</button>
           </div>
-        </div>
-        <div class="tiny" style="margin-top:8px">
-          Tip: We accept the full assignment (e.g. <code>window.GALLERY_ITEMS = [ ... ];</code>) or just the array. Unquoted keys OK.
         </div>
       </div>
 
