@@ -187,8 +187,10 @@ header.hdr{
 
 /* Posters: show entire media with a light letterbox */
 .thumb, .poster{
-  width: 100vw;
-  height: 80vh;
+  width: auto;
+  max-width: 100vw;
+  height: auto;
+  max-height: 100vh;
   display: block;
   object-fit: contain;
   background: var(--media-bg);
