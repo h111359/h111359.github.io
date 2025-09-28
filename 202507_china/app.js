@@ -254,7 +254,7 @@ function renderGrid(list){
 
   // ---------- Lightbox ----------
   function captionHtml(item){
-  return `<div><strong>${esc(item.name)}</strong></div><div class="lb-meta">${item.kind==='video'?'Video':'Image'}</div>`;
+  return `<div class="lb-meta">${item.kind==='video'?'Video':'Image'}</div>`;
   }
 
   function clearLightbox(){ refs.lbBody.innerHTML=''; refs.lbCaption.textContent=''; }
