@@ -37,12 +37,12 @@
 
   // ---------- UI Refs ----------
   const refs = {
-    topnav: null, eventSelectMobile: null, grid: null,
+  topnav: null, eventSelect: null, grid: null,
     lightbox: null, closeBtn: null, lbBody: null, lbCaption: null,
   };
   function cacheRefs(){
-    refs.topnav = document.getElementById('topnav');
-    refs.eventSelectMobile = document.getElementById('eventSelectMobile');
+  refs.topnav = document.getElementById('topnav');
+  refs.eventSelect = document.getElementById('eventSelect');
     refs.grid = document.getElementById('grid');
     refs.lightbox = document.getElementById('lightbox');
     refs.closeBtn = document.getElementById('closeBtn');
@@ -56,48 +56,25 @@
 
   // ---------- Event Registry UI ----------
   function buildEventNav(){
-    // Topnav tabs (desktop)
-    if (refs.topnav) {
-      refs.topnav.innerHTML = '';
-      state.events.forEach(ev=>{
-        const b = el('button','tab');
-        b.type = 'button';
-        b.setAttribute('role','tab');
-        b.setAttribute('data-slug', ev.slug);
-        b.textContent = ev.title || ev.slug;
-        b.addEventListener('click', ()=> navigateTo(ev.slug));
-        refs.topnav.appendChild(b);
-      });
-    } else {
-      console.error('Missing topnav element for event navigation');
-    }
-
-    // Mobile dropdown
-    if (refs.eventSelectMobile) {
-      refs.eventSelectMobile.innerHTML = '';
-      state.events.forEach(ev=>{
+    // Topnav dropdown menu
+    if (refs.eventSelect) {
+      refs.eventSelect.innerHTML = '';
+      state.events.forEach(ev => {
         const opt = el('option');
-        opt.value = ev.slug; opt.textContent = ev.title || ev.slug;
-        refs.eventSelectMobile.appendChild(opt);
+        opt.value = ev.slug;
+        opt.textContent = ev.title || ev.slug;
+        refs.eventSelect.appendChild(opt);
       });
-      refs.eventSelectMobile.addEventListener('change', ()=> navigateTo(refs.eventSelectMobile.value));
+      refs.eventSelect.addEventListener('change', () => navigateTo(refs.eventSelect.value));
     } else {
-      console.error('Missing eventSelectMobile element for event navigation');
+      console.error('Missing eventSelect element for event navigation');
     }
   }
 
   function updateActiveNav(slug){
-    // Tabs
-    if (refs.topnav) {
-      Array.from(refs.topnav.querySelectorAll('.tab')).forEach(b=>{
-        const on = b.getAttribute('data-slug') === slug;
-        b.setAttribute('aria-selected', on ? 'true' : 'false');
-        b.classList.toggle('active', on);
-      });
-    }
-    // Mobile select
-    if (refs.eventSelectMobile && typeof refs.eventSelectMobile.value !== 'undefined') {
-      refs.eventSelectMobile.value = slug;
+    // Dropdown select
+    if (refs.eventSelect && typeof refs.eventSelect.value !== 'undefined') {
+      refs.eventSelect.value = slug;
     }
   }
 

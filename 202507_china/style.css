@@ -44,83 +44,22 @@ header.hdr{
 .meta{ color: var(--muted); font-size: .9rem; }
 
 /* =========================
-   Tabs / event picker
-   ========================= */
-.nav{
-  grid-column: 1;
-  grid-row: 2 / span 2;      /* sticks next to toolbar + grid */
-  position: sticky;
-  top: 16px;
 
-  /* NEW: scrollable sidebar */
-  max-height: calc(100vh - 16px); /* full viewport minus the sticky offset */
-  overflow: auto;                 /* enable scrolling when items overflow */
-  padding-right: 6px;             /* space for scrollbar so content doesn't hide */
-  align-self: start;
-  display: block;
-}
-  /* Sidebar styles moved to #sidebar */
-
-#sidebar {
-  transition: transform 0.3s;
-  background: #fff;
-  box-shadow: 2px 0 12px rgba(0,0,0,0.08);
-  z-index: 100;
-}
-#sidebar.collapsed {
-  transform: translateX(-100%);
-}
-.sidebar-toggle {
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 22px;
-  cursor: pointer;
-  margin-right: 8px;
-  z-index: 101;
-}
-
-/* keep the vertical stack; allow inner overflow just in case */
-.tabs{
+/* Top navigation dropdown menu */
+.topnav {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-height: 0;            /* NEW: prevents flex children from forcing overflow */
+  justify-content: center;
+  align-items: center;
+  margin: 24px 0;
 }
-
-.tab{
-  border: 1px solid var(--border);
-  background: var(--card);
-  color: var(--muted);
+.event-select {
+  padding: 8px 18px;
   border-radius: 999px;
-  padding: 6px 12px;
-  cursor: pointer;
-  text-align: left;
-}
-.tab[aria-selected="true"]{
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(255,138,91,.25);
-}
-
-/* Optional: nicer, slim scrollbar (only on WebKit/Blink; safe no-ops elsewhere) */
-.nav::-webkit-scrollbar{ width: 10px; }
-.nav::-webkit-scrollbar-track{ background: transparent; }
-.nav::-webkit-scrollbar-thumb{
-  background: rgba(255,138,91,.35);
-  border-radius: 8px;
-}
-.nav:hover::-webkit-scrollbar-thumb{ background: rgba(255,138,91,.6); }
-
-/* mobile fallback: dropdown (unchanged) */
-.select-wrap{ display: none; }
-.select{
+  border: 1px solid var(--border);
+  font-size: 1rem;
   background: var(--card);
   color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 8px 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
 }
 
 /* Responsive: on small screens we already switch to the dropdown, so no sidebar scroll there */
