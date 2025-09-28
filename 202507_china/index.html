@@ -12,24 +12,12 @@
     <header class="hdr">
       <h1>Пътуване до Китай - юли 2025</h1>
       <div class="meta">Едно пътешествие на семейство Христови</div>
+      <nav class="topnav" id="topnav">
+        <!-- Event tabs injected by JS -->
+        <select id="eventSelectMobile" class="event-select"></select>
+      </nav>
     </header>
 
-    <nav class="nav" aria-label="Events">
-      <div class="tabs" id="tabs" role="tablist" aria-label="Event tabs">
-        <!-- tabs injected by app.js -->
-        <noscript>Enable JavaScript to see event tabs.</noscript>
-      </div>
-      <div class="select-wrap">
-        <label for="eventSelect" class="sr-only" style="position:absolute;left:-9999px">Select event</label>
-        <select id="eventSelect" class="select"></select>
-      </div>
-    </nav>
-
-    <div class="toolbar">
-      <div class="search"><input id="q" type="search" placeholder="Filter by filename or text…" aria-label="Filter items"></div>
-      <div class="counts" id="counts">Loading…</div>
-      <div class="hint">Tip: Press Esc to close the viewer.</div>
-    </div>
 
     <main class="grid" id="grid" aria-live="polite"></main>
   </div>
@@ -55,7 +43,11 @@
   <script>
     window.addEventListener('DOMContentLoaded', function(){
       setTimeout(function(){
-        if (!document.getElementById('tabs').children.length) {
+        var topnav = document.getElementById('topnav');
+        var mobileSelect = document.getElementById('eventSelectMobile');
+        var hasTabs = topnav && topnav.querySelectorAll('.tab').length > 0;
+        var hasDropdown = mobileSelect && mobileSelect.options.length > 0;
+        if (!hasTabs && !hasDropdown) {
           const grid = document.getElementById('grid');
           const msg = document.createElement('div');
           msg.style.cssText = 'padding:12px;border:1px solid #374151;border-radius:12px;background:#111827;color:#e5e7eb';

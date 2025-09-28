@@ -37,53 +37,68 @@
 
   // ---------- UI Refs ----------
   const refs = {
-    tabs: null, select: null, grid: null, counts: null, q: null,
+    topnav: null, eventSelectMobile: null, grid: null,
     lightbox: null, closeBtn: null, lbBody: null, lbCaption: null,
   };
   function cacheRefs(){
-    refs.tabs = document.getElementById('tabs');
-    refs.select = document.getElementById('eventSelect');
+    refs.topnav = document.getElementById('topnav');
+    refs.eventSelectMobile = document.getElementById('eventSelectMobile');
     refs.grid = document.getElementById('grid');
-    refs.counts = document.getElementById('counts');
-    refs.q = document.getElementById('q');
     refs.lightbox = document.getElementById('lightbox');
     refs.closeBtn = document.getElementById('closeBtn');
     refs.lbBody = document.getElementById('lbBody');
     refs.lbCaption = document.getElementById('lbCaption');
+    // Log missing refs for debugging
+    Object.entries(refs).forEach(([key, val]) => {
+      if (!val) console.error('Missing DOM element for ref:', key);
+    });
   }
 
   // ---------- Event Registry UI ----------
   function buildEventNav(){
-    // Tabs
-    refs.tabs.innerHTML = '';
-    state.events.forEach(ev=>{
-      const b = el('button','tab');
-      b.type = 'button';
-      b.setAttribute('role','tab');
-      b.setAttribute('data-slug', ev.slug);
-      b.textContent = ev.title || ev.slug;
-      b.addEventListener('click', ()=> navigateTo(ev.slug));
-      refs.tabs.appendChild(b);
-    });
+    // Topnav tabs (desktop)
+    if (refs.topnav) {
+      refs.topnav.innerHTML = '';
+      state.events.forEach(ev=>{
+        const b = el('button','tab');
+        b.type = 'button';
+        b.setAttribute('role','tab');
+        b.setAttribute('data-slug', ev.slug);
+        b.textContent = ev.title || ev.slug;
+        b.addEventListener('click', ()=> navigateTo(ev.slug));
+        refs.topnav.appendChild(b);
+      });
+    } else {
+      console.error('Missing topnav element for event navigation');
+    }
 
-    // Mobile select
-    refs.select.innerHTML = '';
-    state.events.forEach(ev=>{
-      const opt = el('option');
-      opt.value = ev.slug; opt.textContent = ev.title || ev.slug;
-      refs.select.appendChild(opt);
-    });
-    refs.select.addEventListener('change', ()=> navigateTo(refs.select.value));
+    // Mobile dropdown
+    if (refs.eventSelectMobile) {
+      refs.eventSelectMobile.innerHTML = '';
+      state.events.forEach(ev=>{
+        const opt = el('option');
+        opt.value = ev.slug; opt.textContent = ev.title || ev.slug;
+        refs.eventSelectMobile.appendChild(opt);
+      });
+      refs.eventSelectMobile.addEventListener('change', ()=> navigateTo(refs.eventSelectMobile.value));
+    } else {
+      console.error('Missing eventSelectMobile element for event navigation');
+    }
   }
 
   function updateActiveNav(slug){
     // Tabs
-    Array.from(refs.tabs.querySelectorAll('.tab')).forEach(b=>{
-      const on = b.getAttribute('data-slug') === slug;
-      b.setAttribute('aria-selected', on ? 'true' : 'false');
-    });
-    // Select
-    if (refs.select.value !== slug) refs.select.value = slug;
+    if (refs.topnav) {
+      Array.from(refs.topnav.querySelectorAll('.tab')).forEach(b=>{
+        const on = b.getAttribute('data-slug') === slug;
+        b.setAttribute('aria-selected', on ? 'true' : 'false');
+        b.classList.toggle('active', on);
+      });
+    }
+    // Mobile select
+    if (refs.eventSelectMobile && typeof refs.eventSelectMobile.value !== 'undefined') {
+      refs.eventSelectMobile.value = slug;
+    }
   }
 
   // ---------- Load Event Data ----------
@@ -141,10 +156,8 @@
   // ---------- Grid Rendering ----------
 function makeImageCard(item, openLightboxImage){
   // NEW: detect if the item has a description
-  const hasDesc = (item.desc || '').trim().length > 0;
-
-  // CHANGE: add "has-desc" when there is a description
-  const card = el('article', hasDesc ? 'card has-desc' : 'card');
+  // Always use 'card' class only for images
+  const card = el('article', 'card');
 
   const btn  = el('button','media-btn'); btn.type='button';
   const img  = el('img','thumb');
@@ -154,12 +167,7 @@ function makeImageCard(item, openLightboxImage){
   btn.addEventListener('click',()=>openLightboxImage(item));
   btn.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLightboxImage(item); } });
   btn.appendChild(img);
-
-  const cap=el('div','caption');
-  cap.innerHTML = `
-    <div class="cap-top"><span class="name" title="${esc(item.name)}">${esc(item.name)}</span><span></span></div>
-    ${item.desc ? `<div class="desc">${esc(item.desc)}</div>` : ''}`;
-  card.appendChild(btn); card.appendChild(cap);
+  card.appendChild(btn);
   return card;
 }
 
@@ -177,11 +185,8 @@ function makeImageCard(item, openLightboxImage){
     btn.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLightboxVideo(item.preview, item); } });
     wrap.appendChild(poster); wrap.appendChild(play); btn.appendChild(wrap);
 
-    const cap=el('div','caption');
-    cap.innerHTML = `
-      <div class="cap-top"><span class="name" title="${esc(item.name)}">${esc(item.name)}</span><span></span></div>
-      ${item.desc ? `<div class="desc">${esc(item.desc)}</div>` : ''}`;
-    card.appendChild(btn); card.appendChild(cap);
+    // If description is rendered as a separate card, do not show it here
+    card.appendChild(btn);
     return card;
   }
 
@@ -224,24 +229,32 @@ function makeTextCard(item){
 
 
 function renderGrid(list){
+  if (!refs.grid) {
+    console.error('Missing grid element for gallery rendering');
+    return;
+  }
   refs.grid.innerHTML = '';
   for (const m of list) {
-  refs.grid.appendChild(
-    m.kind === 'video' ? makeVideoCard(m, openLightboxVideo) :
-    m.kind === 'image' ? makeImageCard(m, openLightboxImage) :
-    /* text */           makeTextCard(m)                // <- no openLightboxText
-  );
+    if ((m.kind === 'image' || m.kind === 'video') && (m.desc || '').trim().length > 0) {
+      // Render description as a separate text card before the media card
+      const descCard = makeTextCard({
+        title: '',
+        desc: '',
+        body: m.desc,
+      });
+      refs.grid.appendChild(descCard);
+    }
+    refs.grid.appendChild(
+      m.kind === 'video' ? makeVideoCard(m, openLightboxVideo) :
+      m.kind === 'image' ? makeImageCard(m, openLightboxImage) :
+      /* text */           makeTextCard(m)
+    );
   }
-  const imgs = list.filter(x => x.kind === 'image').length;
-  const vids = list.filter(x => x.kind === 'video').length;
-  const notes = list.filter(x => x.kind === 'text').length;
-  refs.counts.textContent = `${list.length} items • ${imgs} images • ${vids} videos • ${notes} notes`;
 }
 
   // ---------- Lightbox ----------
   function captionHtml(item){
-    const d = item.desc ? `<div>${esc(item.desc)}</div>` : '';
-    return `<div><strong>${esc(item.name)}</strong></div>${d}<div class="lb-meta">${item.kind==='video'?'Video':'Image'}</div>`;
+  return `<div><strong>${esc(item.name)}</strong></div><div class="lb-meta">${item.kind==='video'?'Video':'Image'}</div>`;
   }
 
   function clearLightbox(){ refs.lbBody.innerHTML=''; refs.lbCaption.textContent=''; }
@@ -344,17 +357,15 @@ function renderGrid(list){
 
     // Load data
     const ev = state.events.find(e=>e.slug===slug);
-    refs.grid.innerHTML = '<div style="padding:12px;border:1px solid #374151;border-radius:12px;background:#111827;color:#e5e7eb">Loading…</div>';
+    if (refs.grid) refs.grid.innerHTML = '<div style="padding:12px;border:1px solid #374151;border-radius:12px;background:#111827;color:#e5e7eb">Loading…</div>';
     try{
       const media = await loadEventData(ev);
       state.currentSlug = slug;
       state.media = media;
-      refs.q.value = '';
       renderGrid(media);
     } catch (err){
       console.error(err);
-      refs.grid.innerHTML = '<div style="padding:12px;border:1px solid #ef4444;border-radius:12px;background:#111827;color:#fecaca">Failed to load event data.</div>';
-      refs.counts.textContent = '0 items';
+      if (refs.grid) refs.grid.innerHTML = '<div style="padding:12px;border:1px solid #ef4444;border-radius:12px;background:#111827;color:#fecaca">Failed to load event data. Check that the event data file exists and is accessible.</div>';
     }
   }
 
@@ -367,13 +378,12 @@ function renderGrid(list){
       return;
     }
 
-    buildEventNav();
-    bindSearch();
-
-    // Lightbox bindings
-    refs.closeBtn.addEventListener('click', closeLightbox);
-    $('#lightbox').addEventListener('click', (e)=>{ if(e.target===refs.lightbox) closeLightbox(); });
-    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeLightbox(); });
+  buildEventNav();
+  // Lightbox bindings
+  if (refs.closeBtn) refs.closeBtn.addEventListener('click', closeLightbox);
+  const lb = document.getElementById('lightbox');
+  if (lb) lb.addEventListener('click', (e)=>{ if(e.target===refs.lightbox) closeLightbox(); });
+  window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeLightbox(); });
 
     // Select event from hash or default to first
     const { event } = getHashParams();
