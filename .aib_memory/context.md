@@ -19,6 +19,7 @@
 - Markdown reader app fetches raw files from configured GitHub repos and renders them in-browser.
 - Site-wide shared stylesheet at css/main.css used by all root-level pages.
 - No build toolchain, transpiler, or package manager; pure static HTML, CSS, and vanilla JavaScript.
+- HTML markup stored directly in body and desc string fields of gallery event data files; rendered via innerHTML in app.js gallery viewer; authored only through the trusted local data_editor.html editor.
 
 ## Requirements
 
@@ -28,6 +29,7 @@
 - MUST NOT: No server-side dependencies or build tools may be introduced.
 - OPTIONAL: Gallery events may include text block items (type: text) with title and body fields in addition to image and video items.
 - OPTIONAL: Comments utility app may be used to upload, preview, and download event data JS files.
+- MUST: app.js MUST render body and desc fields of gallery items via innerHTML to support stored HTML rich text formatting.
 
 ## Solution
 
@@ -42,6 +44,16 @@
 - cl.html renders markdown via the external marked.js library loaded from CDN.
 - sidebar-toggle.js handles mobile responsive sidebar toggle for the gallery page.
 - art/ directory holds static JPG art/drawing images displayed via art_drawing.html.
+- data_editor.html is a standalone full-featured local editor for 202507_china/data/ event JS files; uses File System Access API for in-place read/write of event JS files and events.js; supports HTML rich text in desc/body fields via contentEditable toolbar, full item CRUD, move-up/down reorder, and events.js registry editing; runs fully offline in Chromium-based browsers.
+
+## Issues
+- events.js contains a duplicate entry for event-20250724-tudja; the gallery dropdown shows this event twice.
+- events.js event-20250726_08-3gorges has an empty title field; the gallery dropdown shows a blank label for this event.
+- comments_app.js tryParseItems(): broad regex for property-name quoting may misparse indented continuation lines in unusual JS formatting.
+- comments_app.js tryParseItems(): _checked flag mapping index may misalign if jsonLines entries are filtered during parsing.
+- comments_app.js jsStringEscape(): does not handle Unicode surrogate pairs, null bytes, or non-breaking spaces that may appear in text copied from external sources.
+- app.js makeImageCard(): onerror fallback silently swallows the error when extractId() returns null for an already-invalid preview URL.
+- comments_app.js render(): direct textarea edits may trigger autoLoadItems() on intermediate invalid parse states, clearing the rendered grid unexpectedly.
 
 ## File Structure
 
@@ -67,6 +79,7 @@ art/ - 13 art/drawing image files matching 20XXXX_*.JPG
   style.css - primary gallery styles
   _style.css - alternate gallery styles
   comments_styles.css - styles for comments utility
+  data_editor.html — standalone full-featured local editor for data/*.js event JS files and events.js; requires Chromium-based browser for File System Access API
   data/ - Contains 47 files: events.js (event registry for GALLERY_EVENT_INDEX), event-20250724-template.js (empty template), and 45 event data files matching event-YYYYMMDD[-_]*.js (one per event)
 apps/
   PUK_English_Words.html - simple English/Bulgarian word quiz game with inline word list

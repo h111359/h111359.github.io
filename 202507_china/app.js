@@ -193,11 +193,22 @@ function makeTextCard(item){
   const wrap = el('div','text-wrap');
   const hasTitle = (item.title || '').trim().length > 0;
 
-  wrap.innerHTML = `
-    ${hasTitle ? `<div class="text-title">${esc(item.title)}</div>` : ''}
-    ${item.desc ? `<div class="text-sub">${esc(item.desc)}</div>` : ''}
-    <div class="text-body">${esc(item.body).replace(/\n/g,'<br>')}</div>
-  `;
+  // title is plain text; body and desc may contain HTML authored via data_editor.html
+  if (hasTitle) {
+    const titleEl = el('div', 'text-title');
+    titleEl.textContent = item.title;
+    wrap.appendChild(titleEl);
+  }
+  if (item.desc) {
+    const descEl = el('div', 'text-sub');
+    // Render stored HTML formatting; content originates from the trusted local editor
+    descEl.innerHTML = item.desc;
+    wrap.appendChild(descEl);
+  }
+  const bodyEl = el('div', 'text-body');
+  // Render stored HTML formatting; content originates from the trusted local editor
+  bodyEl.innerHTML = item.body;
+  wrap.appendChild(bodyEl);
 
   card.appendChild(wrap);
   return card;

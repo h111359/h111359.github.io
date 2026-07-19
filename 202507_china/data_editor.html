@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<!--
+  data_editor.html: Standalone full-featured local editor for 202507_china/data/ event JS files and events.js.
+  Component: Data Editor — full CRUD for window.GALLERY_ITEMS arrays and window.GALLERY_EVENT_INDEX registry.
+  Request: R-20260719-1206
+  Requires a Chromium-based browser (Chrome 86+ or Edge 86+) for File System Access API.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>China 2025 Gallery — Data Editor</title>
+  <style>
+    /*
+     * data_editor.html — Inline styles for the standalone event data editor.
+     * Sections: Reset & Base, Layout, Header Bar, Formatting Toolbar,
+     *           Validation Area, Global Add Buttons, Item Cards,
+     *           Between-item Insert Controls, Registry Panel.
+     */
+
+    /* ============================================================
+       Reset & Base
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      background: #f5f5f5;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ============================================================
+       Layout
+       ============================================================ */
+    #app-main {
+      flex: 1;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* ============================================================
+       Header Bar — folder open button, event select, badges, save
+       ============================================================ */
+    #app-header {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 10px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    #app-header .header-title {
+      font-weight: 700;
+      font-size: 15px;
+      margin-right: 4px;
+    }
+    /* Chromium requirement notice — highlighted in amber */
+    #browser-note {
+      font-size: 11px;
+      color: #ffcc66;
+      background: rgba(0,0,0,0.3);
+      border-radius: 3px;
+      padding: 2px 6px;
+    }
+    #btn-open-folder {
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    #btn-open-folder:hover { background: #4338ca; }
+    #event-select-label {
+      color: #ccc;
+      font-size: 12px;
+    }
+    #event-select {
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid #888;
+      font-size: 13px;
+      max-width: 300px;
+    }
+    /* Unsaved changes badge — hidden by default, shown via JS when dirty */
+    #unsaved-badge {
+      display: none;
+      background: #dc2626;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 12px;
+    }
+    /* Saved confirmation notification — shown for 2 s after a successful save */
+    #save-notification {
+      display: none;
+      background: #16a34a;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 12px;
+    }
+    #btn-toggle-registry {
+      background: #374151;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    #btn-toggle-registry:hover { background: #4b5563; }
+    /* Push Save button to the far right of the header row */
+    #btn-save {
+      background: #16a34a;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 12px;
+      cursor: pointer;
+      font-size: 13px;
+      margin-left: auto;
+    }
+    #btn-save:hover { background: #15803d; }
+    #btn-save:disabled { background: #9ca3af; cursor: default; }
+
+    /* ============================================================
+       Formatting Toolbar — operates on the last focused rich text field
+       ============================================================ */
+    #fmt-toolbar {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      padding: 6px 0 2px;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      margin-top: 4px;
+    }
+    .fmt-btn {
+      background: #374151;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      padding: 3px 7px;
+      cursor: pointer;
+      font-size: 12px;
+      min-width: 28px;
+    }
+    .fmt-btn:hover { background: #4b5563; }
+    /* Color picker wrapper — overlays a native input over the visible button label */
+    #fmt-color-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      background: #374151;
+      border-radius: 3px;
+      padding: 3px 7px;
+      cursor: pointer;
+    }
+    #fmt-color-wrap:hover { background: #4b5563; }
+    /* Transparent native input covers the entire wrap area so it intercepts clicks */
+    #fmt-color-input {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      border: none;
+    }
+    /* Pointer events disabled so the underlying input receives the click */
+    #fmt-color-btn {
+      color: #fff;
+      font-size: 12px;
+      pointer-events: none;
+    }
+
+    /* ============================================================
+       Validation Warning Area — shown above Save when issues are found
+       ============================================================ */
+    #validation-area {
+      display: none;
+      background: #fef9c3;
+      border: 1px solid #fbbf24;
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    #validation-area h3 { margin-bottom: 6px; font-size: 13px; }
+    #validation-area ul { padding-left: 18px; font-size: 12px; }
+    #btn-dismiss-validation {
+      margin-top: 8px;
+      background: #f59e0b;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    #btn-dismiss-validation:hover { background: #d97706; }
+
+    /* ============================================================
+       Global Add Buttons Row
+       ============================================================ */
+    .global-add-row {
+      display: flex;
+      gap: 8px;
+      margin: 10px 0;
+    }
+    .global-add-row button {
+      background: #0891b2;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .global-add-row button:hover { background: #0e7490; }
+
+    /* ============================================================
+       Item Cards
+       ============================================================ */
+    .item-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .item-card-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .item-type-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #6b7280;
+      background: #f3f4f6;
+      border-radius: 3px;
+      padding: 2px 6px;
+    }
+    /* Action buttons pushed to the right of the card header */
+    .item-actions {
+      display: flex;
+      gap: 4px;
+      margin-left: auto;
+    }
+    .btn-move, .btn-delete {
+      border: none;
+      border-radius: 3px;
+      padding: 3px 7px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .btn-move { background: #e5e7eb; color: #374151; }
+    .btn-move:hover { background: #d1d5db; }
+    .btn-move:disabled { background: #f3f4f6; color: #9ca3af; cursor: default; }
+    .btn-delete { background: #fee2e2; color: #dc2626; }
+    .btn-delete:hover { background: #fecaca; }
+    /* Drive thumbnail — capped at 400 px tall to keep cards manageable */
+    .card-thumb {
+      max-height: 400px;
+      max-width: 100%;
+      display: block;
+      border-radius: 4px;
+      background: #e5e7eb;
+      object-fit: contain;
+    }
+    .thumb-placeholder {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f3f4f6;
+      border-radius: 4px;
+      color: #9ca3af;
+      font-size: 12px;
+    }
+    /* Field label + input/editable group */
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .field-group label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .field-group input[type="text"] {
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      padding: 5px 8px;
+      font-size: 13px;
+      width: 100%;
+    }
+    .field-group input[type="text"]:focus { outline: 2px solid #4f46e5; border-color: transparent; }
+    /* URL validation warning displayed below the preview input */
+    .url-warning {
+      font-size: 11px;
+      color: #dc2626;
+      margin-top: 2px;
+    }
+    /* ContentEditable rich text editor field */
+    .rich-field {
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      padding: 6px 8px;
+      min-height: 60px;
+      font-size: 13px;
+      line-height: 1.5;
+      background: #fff;
+    }
+    .rich-field:focus { outline: 2px solid #4f46e5; border-color: transparent; }
+
+    /* ============================================================
+       Between-item Insert Controls — compact row between adjacent cards
+       ============================================================ */
+    .insert-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 2px 0;
+    }
+    .insert-row button {
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px dashed #93c5fd;
+      border-radius: 3px;
+      padding: 2px 8px;
+      cursor: pointer;
+      font-size: 11px;
+    }
+    .insert-row button:hover { background: #bae6fd; }
+
+    /* ============================================================
+       Events.js Registry Panel
+       ============================================================ */
+    #registry-section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+    #registry-section h2 {
+      font-size: 14px;
+      margin-bottom: 10px;
+      color: #1a1a2e;
+    }
+    .registry-entry {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+    .registry-entry input[type="text"] {
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      padding: 4px 6px;
+      font-size: 12px;
+    }
+    /* Fixed widths keep the registry table tidy */
+    .reg-slug  { width: 140px; }
+    .reg-title { flex: 1; min-width: 120px; }
+    .reg-data  { width: 220px; }
+    .reg-actions { display: flex; gap: 4px; }
+    .reg-actions button {
+      border: none;
+      border-radius: 3px;
+      padding: 3px 6px;
+      cursor: pointer;
+      font-size: 11px;
+    }
+    .btn-reg-move { background: #e5e7eb; color: #374151; }
+    .btn-reg-move:hover { background: #d1d5db; }
+    .btn-reg-move:disabled { background: #f3f4f6; color: #9ca3af; cursor: default; }
+    .btn-reg-remove { background: #fee2e2; color: #dc2626; }
+    .btn-reg-remove:hover { background: #fecaca; }
+    #btn-add-registry-entry {
+      background: #0891b2;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      margin-top: 6px;
+      margin-right: 6px;
+    }
+    #btn-add-registry-entry:hover { background: #0e7490; }
+    #btn-save-events-js {
+      background: #16a34a;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      margin-top: 6px;
+    }
+    #btn-save-events-js:hover { background: #15803d; }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     Application Header — folder open, event navigation, toolbar, save
+     ============================================================ -->
+<header id="app-header">
+  <span class="header-title">📂 Gallery Data Editor</span>
+  <!-- Chromium requirement notice — File System Access API is Chromium-only -->
+  <span id="browser-note">⚠ Requires Chrome or Edge (Chromium 86+)</span>
+  <button id="btn-open-folder" type="button">Open data/ folder</button>
+  <label id="event-select-label" for="event-select">Event:</label>
+  <select id="event-select" aria-label="Select event to edit">
+    <option disabled selected value="">— open folder first —</option>
+  </select>
+  <span id="unsaved-badge" aria-live="polite">● Unsaved changes</span>
+  <span id="save-notification" aria-live="polite">Saved ✓</span>
+  <button id="btn-toggle-registry" type="button">events.js registry ▾</button>
+  <button id="btn-save" type="button" disabled>Save</button>
+
+  <!-- ============================================================
+       Formatting Toolbar — applies rich text commands to last focused field
+       ============================================================ -->
+  <div id="fmt-toolbar" role="toolbar" aria-label="Rich text formatting toolbar">
+    <button class="fmt-btn" id="fmt-bold"      type="button" title="Bold"><strong>B</strong></button>
+    <button class="fmt-btn" id="fmt-italic"    type="button" title="Italic"><em>I</em></button>
+    <button class="fmt-btn" id="fmt-underline" type="button" title="Underline"><u>U</u></button>
+    <button class="fmt-btn" id="fmt-strike"    type="button" title="Strikethrough"><s>S</s></button>
+    <!-- Color picker: native <input type="color"> is overlaid transparently over the label button -->
+    <span id="fmt-color-wrap" title="Text color">
+      <span id="fmt-color-btn">A 🎨</span>
+      <input type="color" id="fmt-color-input" value="#ff0000"
+             aria-label="Choose foreground text color">
+    </span>
+    <button class="fmt-btn" id="fmt-h2"   type="button" title="Heading 2">H2</button>
+    <button class="fmt-btn" id="fmt-h3"   type="button" title="Heading 3">H3</button>
+    <button class="fmt-btn" id="fmt-list" type="button" title="Bulleted list">• List</button>
+  </div>
+</header> <!-- end #app-header -->
+
+<!-- ============================================================
+     Main Content Area
+     ============================================================ -->
+<main id="app-main">
+
+  <!-- ============================================================
+       events.js Registry Editor Panel — collapsed by default
+       ============================================================ -->
+  <section id="registry-section" style="display:none;" aria-label="events.js registry editor">
+    <h2>events.js Registry Editor</h2>
+    <div id="registry-list" role="list" aria-label="Event registry entries"></div>
+    <button id="btn-add-registry-entry" type="button">＋ Add event entry</button>
+    <button id="btn-save-events-js" type="button">Save events.js</button>
+  </section> <!-- end #registry-section -->
+
+  <!-- Validation warning area — displayed before save when issues are detected -->
+  <div id="validation-area" role="alert" aria-live="polite">
+    <h3>⚠ Pre-save validation warnings</h3>
+    <ul id="validation-list"></ul>
+    <button id="btn-dismiss-validation" type="button">Dismiss and continue saving</button>
+  </div>
+
+  <!-- Global add buttons — top position (above the item list) -->
+  <div class="global-add-row" id="global-add-top">
+    <button type="button" id="btn-add-photo-top">＋ Add photo entry (top)</button>
+    <button type="button" id="btn-add-text-top">＋ Add text block (top)</button>
+  </div>
+
+  <!-- Item list container — all item cards are rendered here by renderItems() -->
+  <div id="item-list" aria-label="Gallery item list"></div>
+
+  <!-- Global add buttons — bottom position (below the item list) -->
+  <div class="global-add-row" id="global-add-bottom">
+    <button type="button" id="btn-add-photo-bottom">＋ Add photo entry (bottom)</button>
+    <button type="button" id="btn-add-text-bottom">＋ Add text block (bottom)</button>
+  </div>
+
+</main> <!-- end #app-main -->
+
+<!-- ============================================================
+     Inline script — all editor logic; no external dependencies
+     ============================================================ -->
+<script>
+/**
+ * data_editor.html — Inline script: standalone event data editor for 202507_china/data/.
+ * Part of request R-20260719-1206.
+ * Responsibilities: folder open via File System Access API, events.js loading and registry editing,
+ *   per-event GALLERY_ITEMS CRUD (add, edit, delete, reorder), rich text toolbar,
+ *   pre-save validation, serialization, in-place file write, and events.js registry save.
+ */
+
+'use strict';
+
+// ============================================================
+// Module-level state
+// ============================================================
+
+/** @type {FileSystemDirectoryHandle|null} Handle to the opened data/ directory. */
+let directoryHandle = null;
+
+/** @type {FileSystemFileHandle|null} Handle to the currently loaded event JS file. */
+let currentEventHandle = null;
+
+/** @type {number} Zero-based index of the current event in eventRegistry; -1 when none loaded. */
+let currentEventIndex = -1;
+
+/** @type {Object[]} Gallery items array for the currently loaded event. */
+let items = [];
+
+/** @type {boolean} True when there are unsaved changes to the current event. */
+let dirty = false;
+
+/** @type {Object[]} Entries of window.GALLERY_EVENT_INDEX from events.js. */
+let eventRegistry = [];
+
+/** @type {HTMLElement|null} The contentEditable field that last received focus; used by the toolbar. */
+let lastFocusedEditable = null;
+
+/** @type {Function|null} Promise resolve callback awaited during the save-validation flow. */
+let pendingValidationResolve = null;
+
+// ============================================================
+// Cached DOM references — populated in DOMContentLoaded
+// ============================================================
+let elEventSelect, elUnsavedBadge, elSaveNotification, elSaveBtn,
+    elItemList, elRegistrySection, elRegistryList,
+    elValidationArea, elValidationList, elBtnDismissValidation;
+
+// ============================================================
+// Initialization
+// ============================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+  elEventSelect          = document.getElementById('event-select');
+  elUnsavedBadge         = document.getElementById('unsaved-badge');
+  elSaveNotification     = document.getElementById('save-notification');
+  elSaveBtn              = document.getElementById('btn-save');
+  elItemList             = document.getElementById('item-list');
+  elRegistrySection      = document.getElementById('registry-section');
+  elRegistryList         = document.getElementById('registry-list');
+  elValidationArea       = document.getElementById('validation-area');
+  elValidationList       = document.getElementById('validation-list');
+  elBtnDismissValidation = document.getElementById('btn-dismiss-validation');
+
+  document.getElementById('btn-open-folder').addEventListener('click', openFolder);
+  document.getElementById('btn-toggle-registry').addEventListener('click', toggleRegistryPanel);
+  document.getElementById('btn-add-registry-entry').addEventListener('click', handleAddRegistryEntry);
+  document.getElementById('btn-save-events-js').addEventListener('click', saveEventsJs);
+  elSaveBtn.addEventListener('click', handleSave);
+  elEventSelect.addEventListener('change', handleEventSelectChange);
+  elBtnDismissValidation.addEventListener('click', handleDismissValidation);
+
+  // Global add buttons
+  document.getElementById('btn-add-photo-top').addEventListener('click', () => handleGlobalAdd('photo', 'top'));
+  document.getElementById('btn-add-text-top').addEventListener('click',  () => handleGlobalAdd('text',  'top'));
+  document.getElementById('btn-add-photo-bottom').addEventListener('click', () => handleGlobalAdd('photo', 'bottom'));
+  document.getElementById('btn-add-text-bottom').addEventListener('click',  () => handleGlobalAdd('text',  'bottom'));
+
+  // Track the last focused contentEditable so the toolbar knows where to apply commands
+  elItemList.addEventListener('focusin', (e) => {
+    if (e.target && e.target.getAttribute('contenteditable') === 'true') {
+      lastFocusedEditable = e.target;
+    }
+  });
+
+  bindFormattingToolbar();
+});
+
+// ============================================================
+// Formatting Toolbar (Task 4)
+// ============================================================
+
+/**
+ * Attaches click handlers to each formatting toolbar button.
+ * Each handler restores focus to lastFocusedEditable before executing
+ * document.execCommand so the browser retains the text selection.
+ * @returns {void}
+ */
+function bindFormattingToolbar() {
+  /**
+   * Focuses the last active rich text field then executes a formatting command.
+   * execCommand is deprecated but remains the only cross-browser mechanism for
+   * applying inline formatting to contentEditable regions without a full editor library.
+   * @param {string} cmd - The execCommand command name.
+   * @param {string|undefined} value - Optional command value (e.g. hex color).
+   */
+  const exec = (cmd, value) => {
+    if (lastFocusedEditable) lastFocusedEditable.focus();
+    document.execCommand(cmd, false, value || null);
+  };
+
+  document.getElementById('fmt-bold').addEventListener('click',      () => exec('bold'));
+  document.getElementById('fmt-italic').addEventListener('click',    () => exec('italic'));
+  document.getElementById('fmt-underline').addEventListener('click', () => exec('underline'));
+  document.getElementById('fmt-strike').addEventListener('click',    () => exec('strikeThrough'));
+  document.getElementById('fmt-h2').addEventListener('click',        () => exec('formatBlock', 'h2'));
+  document.getElementById('fmt-h3').addEventListener('click',        () => exec('formatBlock', 'h3'));
+  document.getElementById('fmt-list').addEventListener('click',      () => exec('insertUnorderedList'));
+
+  // Apply the chosen color whenever the native color picker value changes
+  const colorInput = document.getElementById('fmt-color-input');
+  colorInput.addEventListener('change', () => exec('foreColor', colorInput.value));
+}
+
+// ============================================================
+// Folder and Event Loading (Task 2)
+// ============================================================
+
+/**
+ * Opens a directory picker targeting the data/ folder and loads events.js.
+ * Requires File System Access API (Chromium 86+); non-Abort errors are surfaced to the user.
+ * @returns {Promise<void>}
+ */
+async function openFolder() {
+  try {
+    // readwrite mode is required so the same handle can be used for in-place saves
+    directoryHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+    await loadEventsJs();
+  } catch (err) {
+    // AbortError means the user dismissed the picker — no action needed
+    if (err.name !== 'AbortError') {
+      alert(`Failed to open folder: ${err.message}`);
+    }
+  }
+}
+
+/**
+ * Reads events.js from the directory handle, evaluates window.GALLERY_EVENT_INDEX,
+ * stores the result in eventRegistry, and populates the event dropdown.
+ * The Function constructor is used to evaluate known-trusted local file content;
+ * it is scoped to avoid pollution of the global window object.
+ * @returns {Promise<void>}
+ */
+async function loadEventsJs() {
+  const fileHandle = await directoryHandle.getFileHandle('events.js');
+  const file = await fileHandle.getFile();
+  const text = await file.text();
+
+  // Evaluate the local file in an isolated scope; window is shadowed to capture the assignment
+  const evalFn = new Function(`
+    let window = {};
+    ${text}
+    return window.GALLERY_EVENT_INDEX;
+  `);
+  const result = evalFn();
+
+  if (!Array.isArray(result)) {
+    alert('events.js does not define window.GALLERY_EVENT_INDEX as an array.');
+    return;
+  }
+  // Shallow-copy each entry to avoid mutating the evaluated object
+  eventRegistry = result.map(e => ({ slug: e.slug || '', title: e.title || '', data: e.data || '' }));
+  populateEventDropdown();
+}
+
+/**
+ * Clears and repopulates the event <select> dropdown from the current eventRegistry.
+ * Preserves the currently selected event index when re-populated after registry edits.
+ * @returns {void}
+ */
+function populateEventDropdown() {
+  elEventSelect.innerHTML = '';
+
+  const placeholder = document.createElement('option');
+  placeholder.disabled = true;
+  placeholder.value = '';
+  placeholder.textContent = '— select event —';
+  // Keep placeholder selected only when no event is currently loaded
+  placeholder.selected = currentEventIndex === -1;
+  elEventSelect.appendChild(placeholder);
+
+  eventRegistry.forEach((entry, idx) => {
+    const opt = document.createElement('option');
+    opt.value = String(idx);
+    opt.textContent = entry.title || `(no title) — ${entry.slug}`;
+    if (idx === currentEventIndex) opt.selected = true;
+    elEventSelect.appendChild(opt);
+  });
+}
+
+/**
+ * Handles the event <select> change event.
+ * Prompts for confirmation before discarding unsaved changes.
+ * @returns {Promise<void>}
+ */
+async function handleEventSelectChange() {
+  const selectedIdx = parseInt(elEventSelect.value, 10);
+  if (isNaN(selectedIdx)) return;
+
+  if (dirty) {
+    const confirmed = window.confirm('Switch event? Unsaved changes will be lost.');
+    if (!confirmed) {
+      // Restore dropdown to the currently loaded event
+      elEventSelect.value = currentEventIndex === -1 ? '' : String(currentEventIndex);
+      return;
+    }
+  }
+  await loadEvent(selectedIdx);
+}
+
+/**
+ * Loads the event JS file for the given registry index.
+ * Evaluates window.GALLERY_ITEMS, stores a shallow copy in items[], and renders cards.
+ * @param {number} index - Zero-based index into eventRegistry.
+ * @returns {Promise<void>}
+ */
+async function loadEvent(index) {
+  const entry = eventRegistry[index];
+  // entry.data may be a relative path like "data/event-*.js"; extract the bare filename
+  const filename = entry.data.replace(/^.*\//, '');
+
+  const fileHandle = await directoryHandle.getFileHandle(filename);
+  const file = await fileHandle.getFile();
+  const text = await file.text();
+
+  const evalFn = new Function(`
+    let window = {};
+    ${text}
+    return window.GALLERY_ITEMS;
+  `);
+  const result = evalFn();
+
+  if (!Array.isArray(result)) {
+    alert(`${filename} does not define window.GALLERY_ITEMS as an array.`);
+    return;
+  }
+
+  // Shallow-copy each item so edits do not affect the evaluated source objects
+  items = result.map(it => Object.assign({}, it));
+  currentEventHandle = fileHandle;
+  currentEventIndex = index;
+  dirty = false;
+  elUnsavedBadge.style.display = 'none';
+  elSaveBtn.disabled = false;
+  renderItems();
+}
+
+// ============================================================
+// events.js Registry Editor (Task 3)
+// ============================================================
+
+/**
+ * Toggles visibility of the registry editor panel.
+ * Re-renders the panel each time it becomes visible to reflect the latest state.
+ * @returns {void}
+ */
+function toggleRegistryPanel() {
+  const isVisible = elRegistrySection.style.display !== 'none';
+  elRegistrySection.style.display = isVisible ? 'none' : 'block';
+  if (!isVisible) renderRegistryPanel();
+}
+
+/**
+ * Renders all event registry entries as editable rows in the registry panel.
+ * @returns {void}
+ */
+function renderRegistryPanel() {
+  elRegistryList.innerHTML = '';
+  eventRegistry.forEach((entry, i) => {
+    const row = document.createElement('div');
+    row.className = 'registry-entry';
+    row.dataset.index = String(i);
+
+    const slugInput  = makeTextInput('reg-slug',  entry.slug,  `Slug for registry entry ${i + 1}`);
+    const titleInput = makeTextInput('reg-title', entry.title, `Title for registry entry ${i + 1}`);
+    const dataInput  = makeTextInput('reg-data',  entry.data,  `Data path for registry entry ${i + 1}`);
+
+    const btnUp = makeRegistryMoveBtn('▲', i === 0, () => {
+      syncRegistryFromDOM();
+      [eventRegistry[i - 1], eventRegistry[i]] = [eventRegistry[i], eventRegistry[i - 1]];
+      renderRegistryPanel();
+    });
+    const btnDown = makeRegistryMoveBtn('▼', i === eventRegistry.length - 1, () => {
+      syncRegistryFromDOM();
+      [eventRegistry[i], eventRegistry[i + 1]] = [eventRegistry[i + 1], eventRegistry[i]];
+      renderRegistryPanel();
+    });
+
+    const btnRemove = document.createElement('button');
+    btnRemove.type = 'button';
+    btnRemove.className = 'btn-reg-remove';
+    btnRemove.textContent = '✕ Remove';
+    btnRemove.addEventListener('click', () => {
+      if (window.confirm(`Remove event entry "${entry.title || entry.slug}"?`)) {
+        syncRegistryFromDOM();
+        eventRegistry.splice(i, 1);
+        renderRegistryPanel();
+      }
+    });
+
+    const actionsDiv = document.createElement('div');
+    actionsDiv.className = 'reg-actions';
+    actionsDiv.appendChild(btnUp);
+    actionsDiv.appendChild(btnDown);
+    actionsDiv.appendChild(btnRemove);
+
+    row.appendChild(slugInput);
+    row.appendChild(titleInput);
+    row.appendChild(dataInput);
+    row.appendChild(actionsDiv);
+    elRegistryList.appendChild(row);
+  });
+}
+
+/**
+ * Creates a text input element with the given CSS class, initial value, and aria-label.
+ * @param {string} className - CSS class to assign to the input.
+ * @param {string} value - Initial input value.
+ * @param {string} ariaLabel - Accessible label text for screen readers.
+ * @returns {HTMLInputElement}
+ */
+function makeTextInput(className, value, ariaLabel) {
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.className = className;
+  input.value = value;
+  input.setAttribute('aria-label', ariaLabel);
+  return input;
+}
+
+/**
+ * Creates a move button for the registry panel rows.
+ * @param {string} label - Button label (▲ or ▼).
+ * @param {boolean} isDisabled - True when the button should be non-interactive.
+ * @param {Function} onClick - Handler called on click.
+ * @returns {HTMLButtonElement}
+ */
+function makeRegistryMoveBtn(label, isDisabled, onClick) {
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'btn-reg-move';
+  btn.textContent = label;
+  btn.disabled = isDisabled;
+  btn.addEventListener('click', onClick);
+  return btn;
+}
+
+/**
+ * Reads current text-input values from all rendered registry rows into eventRegistry.
+ * Must be called before any structural change that triggers a re-render.
+ * @returns {void}
+ */
+function syncRegistryFromDOM() {
+  const rows = elRegistryList.querySelectorAll('.registry-entry');
+  rows.forEach((row) => {
+    const idx = parseInt(row.dataset.index, 10);
+    if (isNaN(idx) || idx >= eventRegistry.length) return;
+    // Input order within each row: slug, title, data
+    const inputs = row.querySelectorAll('input[type="text"]');
+    if (inputs[0]) eventRegistry[idx].slug  = inputs[0].value;
+    if (inputs[1]) eventRegistry[idx].title = inputs[1].value;
+    if (inputs[2]) eventRegistry[idx].data  = inputs[2].value;
+  });
+}
+
+/**
+ * Appends a blank entry to eventRegistry and re-renders the registry panel.
+ * @returns {void}
+ */
+function handleAddRegistryEntry() {
+  syncRegistryFromDOM();
+  eventRegistry.push({ slug: '', title: '', data: '' });
+  renderRegistryPanel();
+}
+
+/**
+ * Serializes eventRegistry and writes the result to events.js via File System Access API.
+ * Refreshes the event dropdown after a successful write so title changes are reflected.
+ * @returns {Promise<void>}
+ */
+async function saveEventsJs() {
+  syncRegistryFromDOM();
+
+  let output = 'window.GALLERY_EVENT_INDEX = [\n';
+  eventRegistry.forEach((entry, i) => {
+    const comma = i < eventRegistry.length - 1 ? ',' : '';
+    output += `  { slug: "${jsEscape(entry.slug)}", title: "${jsEscape(entry.title)}", data: "${jsEscape(entry.data)}" }${comma}\n`;
+  });
+  output += '];\n';
+
+  try {
+    const evHandle = await directoryHandle.getFileHandle('events.js');
+    const writable = await evHandle.createWritable();
+    await writable.write(output);
+    await writable.close();
+    populateEventDropdown();
+    alert('events.js saved successfully.');
+  } catch (err) {
+    alert(`Failed to save events.js: ${err.message}`);
+  }
+}
+
+// ============================================================
+// Item Card Rendering (Task 4)
+// ============================================================
+
+/**
+ * Clears the item list container and renders all items as editable cards.
+ * Inserts between-item insert control rows between adjacent card pairs.
+ * @returns {void}
+ */
+function renderItems() {
+  elItemList.innerHTML = '';
+
+  if (items.length === 0) {
+    const empty = document.createElement('p');
+    empty.style.cssText = 'color:#9ca3af;text-align:center;padding:32px;';
+    empty.textContent = 'No items. Use the Add buttons to create entries.';
+    elItemList.appendChild(empty);
+    return;
+  }
+
+  items.forEach((item, i) => {
+    if (i > 0) {
+      // Insert the between-item control before each card except the first
+      elItemList.appendChild(makeInsertRow(i));
+    }
+    elItemList.appendChild(createItemCard(item, i));
+  });
+}
+
+/**
+ * Creates an editable card element for a single gallery item.
+ * Delegates to createMediaCard for media entries and createTextBlockCard for text blocks.
+ * @param {Object} item - Gallery item object.
+ * @param {number} i - Zero-based index of the item in items[].
+ * @returns {HTMLElement}
+ */
+function createItemCard(item, i) {
+  if (item.type === 'text') {
+    return createTextBlockCard(item, i);
+  }
+  return createMediaCard(item, i);
+}
+
+/**
+ * Creates an editable card for a media (image/video) gallery item.
+ * Displays a Google Drive thumbnail and exposes name, preview, and desc fields.
+ * @param {Object} item - Media item with name, preview, and desc properties.
+ * @param {number} i - Zero-based index in items[].
+ * @returns {HTMLElement}
+ */
+function createMediaCard(item, i) {
+  const card = document.createElement('div');
+  card.className = 'item-card';
+  card.dataset.index = String(i);
+  card.dataset.cardType = 'media';
+
+  card.appendChild(makeCardHeader('📷 Media', i));
+
+  // Extract the Drive file ID to construct a thumbnail URL
+  // Pattern: /d/<id>/preview where id is 20+ alphanumeric chars, hyphens, or underscores
+  const idMatch = String(item.preview || '').match(/\/d\/([a-zA-Z0-9_-]{20,})\/preview/);
+  if (idMatch) {
+    const img = document.createElement('img');
+    img.className = 'card-thumb';
+    // sz=w400 requests a 400-px-wide thumbnail; max-height CSS caps the card height
+    img.src = `https://drive.google.com/thumbnail?id=${idMatch[1]}&sz=w400`;
+    img.alt = item.name || 'Media thumbnail';
+    img.loading = 'lazy';
+    img.referrerPolicy = 'no-referrer';
+    card.appendChild(img);
+  } else {
+    const placeholder = document.createElement('div');
+    placeholder.className = 'thumb-placeholder';
+    placeholder.textContent = 'No valid preview URL — thumbnail unavailable';
+    card.appendChild(placeholder);
+  }
+
+  card.appendChild(makeInputField('name',    'Name',                           item.name    || '', i, false));
+  card.appendChild(makeInputField('preview', 'Preview URL (Google Drive)',     item.preview || '', i, true));
+  card.appendChild(makeRichTextField('desc', 'Description', item.desc || '', i));
+
+  return card;
+}
+
+/**
+ * Creates an editable card for a text block gallery item.
+ * Exposes a read-only type label and editable title, body, and desc fields.
+ * @param {Object} item - Text block item with type, title, body, and desc properties.
+ * @param {number} i - Zero-based index in items[].
+ * @returns {HTMLElement}
+ */
+function createTextBlockCard(item, i) {
+  const card = document.createElement('div');
+  card.className = 'item-card';
+  card.dataset.index = String(i);
+  card.dataset.cardType = 'text';
+
+  card.appendChild(makeCardHeader('📝 Text block', i));
+  card.appendChild(makeInputField('title', 'Title', item.title || '', i, false));
+  card.appendChild(makeRichTextField('body', 'Body',        item.body || '', i));
+  card.appendChild(makeRichTextField('desc', 'Description', item.desc || '', i));
+
+  return card;
+}
+
+/**
+ * Creates the card header containing the type label and Move-up, Move-down, Delete buttons.
+ * @param {string} typeLabel - Human-readable item type label.
+ * @param {number} i - Zero-based index used for button enable/disable logic.
+ * @returns {HTMLElement}
+ */
+function makeCardHeader(typeLabel, i) {
+  const header = document.createElement('div');
+  header.className = 'item-card-header';
+
+  const label = document.createElement('span');
+  label.className = 'item-type-label';
+  label.textContent = typeLabel;
+  header.appendChild(label);
+
+  const actions = document.createElement('div');
+  actions.className = 'item-actions';
+
+  const btnUp = document.createElement('button');
+  btnUp.type = 'button';
+  btnUp.className = 'btn-move';
+  btnUp.title = 'Move up';
+  btnUp.textContent = '▲';
+  btnUp.disabled = i === 0;
+  btnUp.addEventListener('click', () => {
+    syncItemsFromDOM();
+    [items[i - 1], items[i]] = [items[i], items[i - 1]];
+    setDirty();
+    renderItems();
+  });
+
+  const btnDown = document.createElement('button');
+  btnDown.type = 'button';
+  btnDown.className = 'btn-move';
+  btnDown.title = 'Move down';
+  btnDown.textContent = '▼';
+  btnDown.disabled = i === items.length - 1;
+  btnDown.addEventListener('click', () => {
+    syncItemsFromDOM();
+    [items[i], items[i + 1]] = [items[i + 1], items[i]];
+    setDirty();
+    renderItems();
+  });
+
+  const btnDelete = document.createElement('button');
+  btnDelete.type = 'button';
+  btnDelete.className = 'btn-delete';
+  btnDelete.textContent = '✕ Delete';
+  btnDelete.addEventListener('click', () => {
+    const itemType = items[i] && items[i].type === 'text' ? 'text block' : 'media';
+    if (window.confirm(`Delete item ${i + 1} (${itemType})?`)) {
+      syncItemsFromDOM();
+      items.splice(i, 1);
+      setDirty();
+      renderItems();
+    }
+  });
+
+  actions.appendChild(btnUp);
+  actions.appendChild(btnDown);
+  actions.appendChild(btnDelete);
+  header.appendChild(actions);
+  return header;
+}
+
+/**
+ * Creates a labeled text input field group for a card property.
+ * Optionally adds a URL validation warning span and a blur validator for preview fields.
+ * @param {string} fieldName - Property name; stored as data-field on the input.
+ * @param {string} labelText - Human-readable field label.
+ * @param {string} value - Initial input value.
+ * @param {number} cardIndex - Card index used to generate a unique element id.
+ * @param {boolean} withUrlValidation - When true, attaches Drive URL format validation on blur.
+ * @returns {HTMLElement}
+ */
+function makeInputField(fieldName, labelText, value, cardIndex, withUrlValidation) {
+  const group = document.createElement('div');
+  group.className = 'field-group';
+
+  const inputId = `field-${fieldName}-${cardIndex}`;
+  const label = document.createElement('label');
+  label.htmlFor = inputId;
+  label.textContent = labelText;
+  group.appendChild(label);
+
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.id = inputId;
+  input.value = value;
+  input.dataset.field = fieldName;
+  input.addEventListener('input', setDirty);
+  group.appendChild(input);
+
+  if (withUrlValidation) {
+    const warning = document.createElement('span');
+    warning.className = 'url-warning';
+    warning.hidden = true;
+    group.appendChild(warning);
+
+    input.addEventListener('blur', () => {
+      // Google Drive preview URL pattern: https://drive.google.com/file/d/<id>/preview
+      const DRIVE_PREVIEW_PATTERN = /^https:\/\/drive\.google\.com\/file\/d\/[a-zA-Z0-9_-]+\/preview$/;
+      const val = input.value;
+      if (val.length > 0 && !DRIVE_PREVIEW_PATTERN.test(val)) {
+        warning.textContent = '⚠ Invalid Google Drive preview URL';
+        warning.hidden = false;
+      } else {
+        warning.hidden = true;
+      }
+    });
+  }
+
+  return group;
+}
+
+/**
+ * Creates a labeled contentEditable div (rich text field) for a card property.
+ * Sets innerHTML from the stored value so any HTML formatting is rendered correctly.
+ * Attaches an input listener to mark the editor as dirty on change.
+ * @param {string} fieldName - Property name; stored as data-field on the element.
+ * @param {string} labelText - Human-readable field label.
+ * @param {string} htmlValue - Initial HTML content for the field.
+ * @param {number} cardIndex - Card index used for the accessible label.
+ * @returns {HTMLElement}
+ */
+function makeRichTextField(fieldName, labelText, htmlValue, cardIndex) {
+  const group = document.createElement('div');
+  group.className = 'field-group';
+
+  const label = document.createElement('label');
+  label.textContent = labelText;
+  group.appendChild(label);
+
+  const field = document.createElement('div');
+  field.className = 'rich-field';
+  field.contentEditable = 'true';
+  field.setAttribute('aria-label', `${labelText} rich text editor for item ${cardIndex + 1}`);
+  field.dataset.field = fieldName;
+  // Assign innerHTML directly so stored HTML markup renders as formatted text
+  field.innerHTML = htmlValue;
+  field.addEventListener('input', setDirty);
+  group.appendChild(field);
+
+  return group;
+}
+
+// ============================================================
+// Item Management Controls (Task 5)
+// ============================================================
+
+/**
+ * Creates a between-item insert control row offering Photo and Text insertion.
+ * Items are inserted before insertAtIndex when a button is clicked.
+ * @param {number} insertAtIndex - Target insertion index in items[].
+ * @returns {HTMLElement}
+ */
+function makeInsertRow(insertAtIndex) {
+  const row = document.createElement('div');
+  row.className = 'insert-row';
+
+  const btnPhoto = document.createElement('button');
+  btnPhoto.type = 'button';
+  btnPhoto.textContent = '＋ Photo';
+  btnPhoto.addEventListener('click', () => {
+    syncItemsFromDOM();
+    items.splice(insertAtIndex, 0, { name: '', preview: '', desc: '' });
+    setDirty();
+    renderItems();
+  });
+
+  const btnText = document.createElement('button');
+  btnText.type = 'button';
+  btnText.textContent = '＋ Text';
+  btnText.addEventListener('click', () => {
+    syncItemsFromDOM();
+    items.splice(insertAtIndex, 0, { type: 'text', title: '', body: '', desc: '' });
+    setDirty();
+    renderItems();
+  });
+
+  row.appendChild(btnPhoto);
+  row.appendChild(btnText);
+  return row;
+}
+
+/**
+ * Handles all four global add buttons (photo/text × top/bottom).
+ * @param {'photo'|'text'} type - Type of entry to create.
+ * @param {'top'|'bottom'} position - Prepend to front or append to end of items[].
+ * @returns {void}
+ */
+function handleGlobalAdd(type, position) {
+  syncItemsFromDOM();
+  const newItem = type === 'text'
+    ? { type: 'text', title: '', body: '', desc: '' }
+    : { name: '', preview: '', desc: '' };
+
+  if (position === 'top') {
+    items.unshift(newItem);
+  } else {
+    items.push(newItem);
+  }
+  setDirty();
+  renderItems();
+}
+
+/**
+ * Reads current field values from all rendered item card DOM elements back into items[].
+ * Must be called before any operation that modifies items[] structure and triggers re-render,
+ * to prevent in-progress edits from being discarded.
+ * @returns {void}
+ */
+function syncItemsFromDOM() {
+  const cards = elItemList.querySelectorAll('.item-card');
+  cards.forEach((card) => {
+    const idx = parseInt(card.dataset.index, 10);
+    if (isNaN(idx) || idx >= items.length) return;
+
+    if (card.dataset.cardType === 'media') {
+      const nameInput    = card.querySelector('input[data-field="name"]');
+      const previewInput = card.querySelector('input[data-field="preview"]');
+      const descField    = card.querySelector('[data-field="desc"]');
+      if (nameInput)    items[idx].name    = nameInput.value;
+      if (previewInput) items[idx].preview = previewInput.value;
+      // innerHTML captures HTML formatting applied by the toolbar
+      if (descField)    items[idx].desc    = descField.innerHTML;
+    } else if (card.dataset.cardType === 'text') {
+      const titleInput = card.querySelector('input[data-field="title"]');
+      const bodyField  = card.querySelector('[data-field="body"]');
+      const descField  = card.querySelector('[data-field="desc"]');
+      if (titleInput) items[idx].title = titleInput.value;
+      if (bodyField)  items[idx].body  = bodyField.innerHTML;
+      if (descField)  items[idx].desc  = descField.innerHTML;
+    }
+  });
+}
+
+/**
+ * Marks the current event as having unsaved changes and shows the unsaved badge.
+ * @returns {void}
+ */
+function setDirty() {
+  dirty = true;
+  elUnsavedBadge.style.display = '';
+}
+
+// ============================================================
+// Serialization and Save (Task 6)
+// ============================================================
+
+/**
+ * Escapes a string for safe embedding inside a JavaScript double-quoted string literal.
+ * Replaces backslash, double-quote, and C0 control characters (excluding \n U+000A and \t U+0009).
+ * Does NOT escape characters above U+007F; Unicode content is preserved as-is.
+ * Does NOT HTML-encode < > & because the output is a JS file, not HTML.
+ * @param {string} str - Raw string value to escape.
+ * @returns {string} Escaped string safe for use inside "...".
+ */
+function jsEscape(str) {
+  return String(str)
+    .replace(/\\/g, '\\\\')
+    .replace(/"/g, '\\"')
+    // Escape C0 control characters except tab (0x09) and newline (0x0A)
+    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, (c) => {
+      const hex = c.charCodeAt(0).toString(16).padStart(4, '0');
+      return `\\u${hex}`;
+    });
+}
+
+/**
+ * Serializes items[] to the window.GALLERY_ITEMS = [...]; JS assignment format.
+ * Calls syncItemsFromDOM() first to capture any uncommitted in-progress edits.
+ * @returns {string} Complete JS file content ready to be written to the event file.
+ */
+function buildOutput() {
+  syncItemsFromDOM();
+  let out = 'window.GALLERY_ITEMS = [\n';
+  items.forEach((item, i) => {
+    const comma = i < items.length - 1 ? ',' : '';
+    if (item.type === 'text') {
+      out += `  { type: "text", title: "${jsEscape(item.title || '')}", body: "${jsEscape(item.body || '')}", desc: "${jsEscape(item.desc || '')}" }${comma}\n`;
+    } else {
+      out += `  { name: "${jsEscape(item.name || '')}", preview: "${jsEscape(item.preview || '')}", desc: "${jsEscape(item.desc || '')}" }${comma}\n`;
+    }
+  });
+  out += '];\n';
+  return out;
+}
+
+/**
+ * Validates items[] and returns an array of violation objects for items with URL issues.
+ * Checks media entries for missing or incorrectly formatted Google Drive preview URLs.
+ * Text block entries are skipped.
+ * @returns {Array<{index: number, message: string}>} Violations array; empty when all items are valid.
+ */
+function validate() {
+  // Expected format: https://drive.google.com/file/d/<id>/preview
+  const DRIVE_PREVIEW_PATTERN = /^https:\/\/drive\.google\.com\/file\/d\/[a-zA-Z0-9_-]+\/preview$/;
+  const violations = [];
+  items.forEach((item, i) => {
+    if (item.type === 'text') return;
+    if (!item.preview || item.preview.trim() === '') {
+      violations.push({ index: i, message: 'Missing preview URL' });
+    } else if (!DRIVE_PREVIEW_PATTERN.test(item.preview)) {
+      violations.push({ index: i, message: 'Invalid Google Drive URL format' });
+    }
+  });
+  return violations;
+}
+
+/**
+ * Handles the dismiss button click in the validation warning area.
+ * Hides the area and resolves the pending save promise so the save can continue.
+ * @returns {void}
+ */
+function handleDismissValidation() {
+  elValidationArea.style.display = 'none';
+  if (pendingValidationResolve) {
+    pendingValidationResolve();
+    pendingValidationResolve = null;
+  }
+}
+
+/**
+ * Handles the Save button click.
+ * Runs validation; if violations are found, shows a dismissible warning and awaits user
+ * confirmation before proceeding. Serializes items[], writes the event file in place,
+ * and shows a temporary saved notification on success.
+ * @returns {Promise<void>}
+ */
+async function handleSave() {
+  if (currentEventIndex === -1 || !currentEventHandle) return;
+
+  const violations = validate();
+  if (violations.length > 0) {
+    // Populate and show the validation warning area
+    elValidationList.innerHTML = '';
+    violations.forEach((v) => {
+      const li = document.createElement('li');
+      li.textContent = `Item ${v.index + 1}: ${v.message}`;
+      elValidationList.appendChild(li);
+    });
+    elValidationArea.style.display = 'block';
+
+    // Pause execution until the user dismisses the warning
+    await new Promise((resolve) => {
+      pendingValidationResolve = resolve;
+    });
+  }
+
+  const output = buildOutput();
+  try {
+    const writable = await currentEventHandle.createWritable();
+    await writable.write(output);
+    await writable.close();
+
+    dirty = false;
+    elUnsavedBadge.style.display = 'none';
+
+    // Brief success notification — auto-hides after 2 seconds
+    elSaveNotification.style.display = '';
+    setTimeout(() => { elSaveNotification.style.display = 'none'; }, 2000);
+  } catch (err) {
+    alert(`Save failed: ${err.message}`);
+  }
+}
+</script>
+
+</body>
+</html>
