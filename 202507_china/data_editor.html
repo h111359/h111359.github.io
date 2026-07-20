@@ -721,7 +721,13 @@ async function handleEventSelectChange() {
       return;
     }
   }
-  await loadEvent(selectedIdx);
+  try {
+    await loadEvent(selectedIdx);
+  } catch (err) {
+    alert(`Failed to load event: ${err.message}`);
+    // Restore dropdown to the previously loaded event on failure
+    elEventSelect.value = currentEventIndex === -1 ? '' : String(currentEventIndex);
+  }
 }
 
 /**
@@ -1122,7 +1128,8 @@ function makeInputField(fieldName, labelText, value, cardIndex, withUrlValidatio
 
     input.addEventListener('blur', () => {
       // Google Drive preview URL pattern: https://drive.google.com/file/d/<id>/preview
-      const DRIVE_PREVIEW_PATTERN = /^https:\/\/drive\.google\.com\/file\/d\/[a-zA-Z0-9_-]+\/preview$/;
+      // An optional query string (e.g. ?authuser=0) is accepted.
+      const DRIVE_PREVIEW_PATTERN = /^https:\/\/drive\.google\.com\/file\/d\/[a-zA-Z0-9_-]+\/preview(?:\?.*)?$/;
       const val = input.value;
       if (val.length > 0 && !DRIVE_PREVIEW_PATTERN.test(val)) {
         warning.textContent = '⚠ Invalid Google Drive preview URL';
@@ -1317,8 +1324,9 @@ function buildOutput() {
  * @returns {Array<{index: number, message: string}>} Violations array; empty when all items are valid.
  */
 function validate() {
-  // Expected format: https://drive.google.com/file/d/<id>/preview
-  const DRIVE_PREVIEW_PATTERN = /^https:\/\/drive\.google\.com\/file\/d\/[a-zA-Z0-9_-]+\/preview$/;
+  // Expected base format: https://drive.google.com/file/d/<id>/preview
+  // An optional query string (e.g. ?authuser=0 added by Google Drive share links) is allowed.
+  const DRIVE_PREVIEW_PATTERN = /^https:\/\/drive\.google\.com\/file\/d\/[a-zA-Z0-9_-]+\/preview(?:\?.*)?$/;
   const violations = [];
   items.forEach((item, i) => {
     if (item.type === 'text') return;
@@ -1346,13 +1354,28 @@ function handleDismissValidation() {
 
 /**
  * Handles the Save button click.
- * Runs validation; if violations are found, shows a dismissible warning and awaits user
+ * Acquires a writable stream first (while the user gesture is active), then runs
+ * validation. If violations are found, shows a dismissible warning and awaits user
  * confirmation before proceeding. Serializes items[], writes the event file in place,
  * and shows a temporary saved notification on success.
+ *
+ * createWritable() is called before the validation await because Chrome's File System
+ * Access API requires transient user activation at the time of the call; waiting for
+ * the async validation-dismiss flow would expire the activation and block the write.
  * @returns {Promise<void>}
  */
 async function handleSave() {
   if (currentEventIndex === -1 || !currentEventHandle) return;
+
+  // Acquire the writable stream while the user gesture is still active.
+  // Must be called before any async UI waits to keep transient activation valid.
+  let writable;
+  try {
+    writable = await currentEventHandle.createWritable();
+  } catch (err) {
+    alert(`Save failed: ${err.message}`);
+    return;
+  }
 
   const violations = validate();
   if (violations.length > 0) {
@@ -1364,6 +1387,8 @@ async function handleSave() {
       elValidationList.appendChild(li);
     });
     elValidationArea.style.display = 'block';
+    // Ensure the warning is visible even when the user has scrolled down
+    elValidationArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
     // Pause execution until the user dismisses the warning
     await new Promise((resolve) => {
@@ -1373,7 +1398,6 @@ async function handleSave() {
 
   const output = buildOutput();
   try {
-    const writable = await currentEventHandle.createWritable();
     await writable.write(output);
     await writable.close();
 
@@ -1384,6 +1408,7 @@ async function handleSave() {
     elSaveNotification.style.display = '';
     setTimeout(() => { elSaveNotification.style.display = 'none'; }, 2000);
   } catch (err) {
+    try { await writable.abort(); } catch (_) { /* best-effort abort on write failure */ }
     alert(`Save failed: ${err.message}`);
   }
 }
