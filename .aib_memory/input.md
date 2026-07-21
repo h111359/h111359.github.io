@@ -13,3 +13,4 @@ options:
 
 ## Input
 
+Make a wholistic review of the whole workspace. Having in mind this is a personal web page - analyze and create a file ai-critique.md where you shall make a review and propose improvements.
