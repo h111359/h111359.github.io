@@ -1,8 +1,7 @@
-/* app.js — Multi-event gallery
-   Expects:
-   - window.GALLERY_EVENT_INDEX from data/events.js
-   - Per-event files (data/event-*.js) defining window.GALLERY_ITEMS = [...]
-*/
+/**
+ * app.js: Multi-event China gallery controller and renderer.
+ * Loads registered GALLERY_ITEMS files, normalizes visible content, and manages gallery navigation.
+ */
 
 (function () {
   // ---------- Utilities ----------
@@ -94,6 +93,9 @@
         };
       }
 
+      // Visibility is media-only and intentionally strict for backward compatibility.
+      if (it.visible === false) return null;
+
       const id = extractId(it.preview || '');
       if(!id) return null;
       const lower = String(it.name||'').toLowerCase();
@@ -116,7 +118,7 @@
       s.async = true;
       s.onload = ()=>{
         const raw = window.GALLERY_ITEMS;
-        if (!Array.isArray(raw) || raw.length === 0){
+        if (!Array.isArray(raw)){
           reject(new Error('No items found in ' + ev.data));
           return;
         }
@@ -222,6 +224,10 @@ function renderGrid(list){
     return;
   }
   refs.grid.innerHTML = '';
+  if (list.length === 0) {
+    refs.grid.textContent = 'No items';
+    return;
+  }
   for (const m of list) {
     if ((m.kind === 'image' || m.kind === 'video') && (m.desc || '').trim().length > 0) {
       // Render description as a separate text card before the media card

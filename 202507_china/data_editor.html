@@ -2,7 +2,7 @@
 <!--
   data_editor.html: Standalone full-featured local editor for 202507_china/data/ event JS files and events.js.
   Component: Data Editor — full CRUD for window.GALLERY_ITEMS arrays and window.GALLERY_EVENT_INDEX registry.
-  Request: R-20260719-1206
+  Request: R-20260720-0731
   Requires a Chromium-based browser (Chrome 86+ or Edge 86+) for File System Access API.
 -->
 <html lang="en">
@@ -135,6 +135,20 @@
     }
     #btn-save:hover { background: #15803d; }
     #btn-save:disabled { background: #9ca3af; cursor: default; }
+    #btn-refresh {
+      background: #0369a1;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    /* Disabled state: muted styling communicates that no event is selected. */
+    #btn-refresh:disabled { background: #9ca3af; cursor: default; }
+    /* Status region gives non-blocking refresh and recovery feedback. */
+    #refresh-status { width: 100%; min-height: 16px; color: #bfdbfe; font-size: 12px; }
+    #refresh-status.is-error { color: #fecaca; }
 
     /* ============================================================
        Formatting Toolbar — operates on the last focused rich text field
@@ -263,6 +277,14 @@
       display: flex;
       gap: 4px;
       margin-left: auto;
+    }
+    .visibility-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: #374151;
+      padding: 2px 4px;
     }
     .btn-move, .btn-delete {
       border: none;
@@ -442,7 +464,10 @@
   <span id="unsaved-badge" aria-live="polite">● Unsaved changes</span>
   <span id="save-notification" aria-live="polite">Saved ✓</span>
   <button id="btn-toggle-registry" type="button">events.js registry ▾</button>
+  <!-- Refresh button: native button supports keyboard activation; status is announced separately. -->
+  <button id="btn-refresh" type="button" disabled>Refresh</button>
   <button id="btn-save" type="button" disabled>Save</button>
+  <span id="refresh-status" role="status" aria-live="polite"></span>
 
   <!-- ============================================================
        Formatting Toolbar — applies rich text commands to last focused field
@@ -509,7 +534,7 @@
 <script>
 /**
  * data_editor.html — Inline script: standalone event data editor for 202507_china/data/.
- * Part of request R-20260719-1206.
+ * Part of request R-20260720-0731.
  * Responsibilities: folder open via File System Access API, events.js loading and registry editing,
  *   per-event GALLERY_ITEMS CRUD (add, edit, delete, reorder), rich text toolbar,
  *   pre-save validation, serialization, in-place file write, and events.js registry save.
@@ -545,12 +570,31 @@ let lastFocusedEditable = null;
 /** @type {Function|null} Promise resolve callback awaited during the save-validation flow. */
 let pendingValidationResolve = null;
 
+/** @type {string|null} Complete source text from the last accepted selected-event read. */
+let acceptedSourceText = null;
+
+/** @type {string|null} Changed disk source deferred while local edits are dirty. */
+let pendingExternalText = null;
+
+/** @type {boolean} Prevents overlapping selected-file reads. */
+let refreshInProgress = false;
+
+/** @type {number|null} Active foreground polling interval identifier. */
+let refreshIntervalId = null;
+
+const REFRESH_INTERVAL_MS = 5000;
+const EDITOR_DB_NAME = 'china-gallery-data-editor';
+const EDITOR_STORE_NAME = 'session';
+const DIRECTORY_HANDLE_KEY = 'directory-handle';
+const LAST_EVENT_KEY = 'last-event-data';
+
 // ============================================================
 // Cached DOM references — populated in DOMContentLoaded
 // ============================================================
 let elEventSelect, elUnsavedBadge, elSaveNotification, elSaveBtn,
     elItemList, elRegistrySection, elRegistryList,
-    elValidationArea, elValidationList, elBtnDismissValidation;
+    elValidationArea, elValidationList, elBtnDismissValidation,
+    elRefreshBtn, elRefreshStatus;
 
 // ============================================================
 // Initialization
@@ -567,12 +611,15 @@ document.addEventListener('DOMContentLoaded', () => {
   elValidationArea       = document.getElementById('validation-area');
   elValidationList       = document.getElementById('validation-list');
   elBtnDismissValidation = document.getElementById('btn-dismiss-validation');
+  elRefreshBtn           = document.getElementById('btn-refresh');
+  elRefreshStatus        = document.getElementById('refresh-status');
 
   document.getElementById('btn-open-folder').addEventListener('click', openFolder);
   document.getElementById('btn-toggle-registry').addEventListener('click', toggleRegistryPanel);
   document.getElementById('btn-add-registry-entry').addEventListener('click', handleAddRegistryEntry);
   document.getElementById('btn-save-events-js').addEventListener('click', saveEventsJs);
   elSaveBtn.addEventListener('click', handleSave);
+  elRefreshBtn.addEventListener('click', handleManualRefresh);
   elEventSelect.addEventListener('change', handleEventSelectChange);
   elBtnDismissValidation.addEventListener('click', handleDismissValidation);
 
@@ -590,6 +637,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   bindFormattingToolbar();
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+  restoreSession();
 });
 
 // ============================================================
@@ -632,6 +681,59 @@ function bindFormattingToolbar() {
 // Folder and Event Loading (Task 2)
 // ============================================================
 
+/** @returns {Promise<IDBDatabase>} Editor session database. */
+function openSessionDatabase() {
+  return new Promise((resolve, reject) => {
+    if (!window.indexedDB) { reject(new Error('IndexedDB is unavailable.')); return; }
+    const request = window.indexedDB.open(EDITOR_DB_NAME, 1);
+    request.onupgradeneeded = () => request.result.createObjectStore(EDITOR_STORE_NAME);
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error || new Error('Could not open session storage.'));
+  });
+}
+
+/** @param {string} key - Session key. @param {*} value - Persisted value. @returns {Promise<void>} */
+async function storeSessionValue(key, value) {
+  const database = await openSessionDatabase();
+  await new Promise((resolve, reject) => {
+    const transaction = database.transaction(EDITOR_STORE_NAME, 'readwrite');
+    transaction.objectStore(EDITOR_STORE_NAME).put(value, key);
+    transaction.oncomplete = resolve;
+    transaction.onerror = () => reject(transaction.error || new Error('Could not save session value.'));
+  });
+  database.close();
+}
+
+/** @param {string} key - Session key. @returns {Promise<*>} Stored value or undefined. */
+async function readSessionValue(key) {
+  const database = await openSessionDatabase();
+  const value = await new Promise((resolve, reject) => {
+    const request = database.transaction(EDITOR_STORE_NAME, 'readonly').objectStore(EDITOR_STORE_NAME).get(key);
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error || new Error('Could not read session value.'));
+  });
+  database.close();
+  return value;
+}
+
+/** Restores a previously authorized folder and event without requesting permission. @returns {Promise<void>} */
+async function restoreSession() {
+  if (!window.showDirectoryPicker) return;
+  try {
+    const storedHandle = await readSessionValue(DIRECTORY_HANDLE_KEY);
+    if (!storedHandle || typeof storedHandle.queryPermission !== 'function') return;
+    if (await storedHandle.queryPermission({ mode: 'readwrite' }) !== 'granted') return;
+    directoryHandle = storedHandle;
+    await loadEventsJs();
+    const lastEventData = await readSessionValue(LAST_EVENT_KEY);
+    const restoredIndex = eventRegistry.findIndex((entry) => entry.data === lastEventData);
+    if (restoredIndex >= 0) await loadEvent(restoredIndex);
+  } catch (err) {
+    // Restoration is opportunistic; the folder picker remains available as recovery.
+    showRefreshStatus(`Session restore unavailable: ${err.message}`, true);
+  }
+}
+
 /**
  * Opens a directory picker targeting the data/ folder and loads events.js.
  * Requires File System Access API (Chromium 86+); non-Abort errors are surfaced to the user.
@@ -642,6 +744,11 @@ async function openFolder() {
     // readwrite mode is required so the same handle can be used for in-place saves
     directoryHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
     await loadEventsJs();
+    try {
+      await storeSessionValue(DIRECTORY_HANDLE_KEY, directoryHandle);
+    } catch (storageError) {
+      showRefreshStatus(`Folder opened; session could not be remembered: ${storageError.message}`, true);
+    }
   } catch (err) {
     // AbortError means the user dismissed the picker — no action needed
     if (err.name !== 'AbortError') {
@@ -742,29 +849,53 @@ async function loadEvent(index) {
   const filename = entry.data.replace(/^.*\//, '');
 
   const fileHandle = await directoryHandle.getFileHandle(filename);
-  const file = await fileHandle.getFile();
-  const text = await file.text();
-
-  const evalFn = new Function(`
-    let window = {};
-    ${text}
-    return window.GALLERY_ITEMS;
-  `);
-  const result = evalFn();
-
-  if (!Array.isArray(result)) {
-    alert(`${filename} does not define window.GALLERY_ITEMS as an array.`);
-    return;
-  }
-
-  // Shallow-copy each item so edits do not affect the evaluated source objects
-  items = result.map(it => Object.assign({}, it));
+  const text = await readFileHandleText(fileHandle);
+  items = normalizeEditorItems(parseEventSource(text, filename));
   currentEventHandle = fileHandle;
   currentEventIndex = index;
+  acceptedSourceText = text;
+  pendingExternalText = null;
   dirty = false;
   elUnsavedBadge.style.display = 'none';
   elSaveBtn.disabled = false;
+  elRefreshBtn.disabled = false;
   renderItems();
+  startRefreshPolling();
+  showRefreshStatus('Event loaded.', false);
+  storeSessionValue(LAST_EVENT_KEY, entry.data).catch((err) => {
+    showRefreshStatus(`Event loaded; selection could not be remembered: ${err.message}`, true);
+  });
+}
+
+/** @param {Object[]} sourceItems - Parsed records. @returns {Object[]} Normalized editable records. */
+function normalizeEditorItems(sourceItems) {
+  return sourceItems.map((sourceItem) => {
+    const item = Object.assign({}, sourceItem);
+    if (item.type === 'text') { delete item.visible; return item; }
+    item.visible = item.visible !== false;
+    return item;
+  });
+}
+
+/** @param {FileSystemFileHandle} fileHandle - Event handle. @returns {Promise<string>} Complete source. */
+async function readFileHandleText(fileHandle) {
+  const file = await fileHandle.getFile();
+  return file.text();
+}
+
+/**
+ * Parses complete event source without changing current editor state.
+ * @param {string} sourceText - Complete JavaScript source.
+ * @param {string} filename - Filename for diagnostics.
+ * @returns {Object[]} Parsed records.
+ * @throws {Error} If source is empty, malformed, or lacks an array.
+ */
+function parseEventSource(sourceText, filename) {
+  if (!sourceText.trim()) throw new Error(`${filename} is empty.`);
+  const evaluateSource = new Function(`let window = {};\n${sourceText}\nreturn window.GALLERY_ITEMS;`);
+  const result = evaluateSource();
+  if (!Array.isArray(result)) throw new Error(`${filename} does not define window.GALLERY_ITEMS as an array.`);
+  return result;
 }
 
 // ============================================================
@@ -978,7 +1109,7 @@ function createMediaCard(item, i) {
   card.dataset.index = String(i);
   card.dataset.cardType = 'media';
 
-  card.appendChild(makeCardHeader('📷 Media', i));
+  card.appendChild(makeCardHeader('📷 Media', i, item));
 
   // Extract the Drive file ID to construct a thumbnail URL
   // Pattern: /d/<id>/preview where id is 20+ alphanumeric chars, hyphens, or underscores
@@ -1019,7 +1150,7 @@ function createTextBlockCard(item, i) {
   card.dataset.index = String(i);
   card.dataset.cardType = 'text';
 
-  card.appendChild(makeCardHeader('📝 Text block', i));
+  card.appendChild(makeCardHeader('📝 Text block', i, null));
   card.appendChild(makeInputField('title', 'Title', item.title || '', i, false));
   card.appendChild(makeRichTextField('body', 'Body',        item.body || '', i));
   card.appendChild(makeRichTextField('desc', 'Description', item.desc || '', i));
@@ -1031,9 +1162,10 @@ function createTextBlockCard(item, i) {
  * Creates the card header containing the type label and Move-up, Move-down, Delete buttons.
  * @param {string} typeLabel - Human-readable item type label.
  * @param {number} i - Zero-based index used for button enable/disable logic.
+ * @param {Object|null} mediaItem - Media record, or null for a text block.
  * @returns {HTMLElement}
  */
-function makeCardHeader(typeLabel, i) {
+function makeCardHeader(typeLabel, i, mediaItem) {
   const header = document.createElement('div');
   header.className = 'item-card-header';
 
@@ -1044,6 +1176,22 @@ function makeCardHeader(typeLabel, i) {
 
   const actions = document.createElement('div');
   actions.className = 'item-actions';
+
+  if (mediaItem) {
+    const visibleLabel = document.createElement('label');
+    visibleLabel.className = 'visibility-control';
+    const visibleInput = document.createElement('input');
+    visibleInput.type = 'checkbox';
+    visibleInput.dataset.field = 'visible';
+    visibleInput.checked = mediaItem.visible !== false;
+    visibleInput.addEventListener('change', () => {
+      syncItemsFromDOM();
+      setDirty();
+    });
+    visibleLabel.appendChild(visibleInput);
+    visibleLabel.appendChild(document.createTextNode('Visible'));
+    actions.appendChild(visibleLabel);
+  }
 
   const btnUp = document.createElement('button');
   btnUp.type = 'button';
@@ -1193,7 +1341,7 @@ function makeInsertRow(insertAtIndex) {
   btnPhoto.textContent = '＋ Photo';
   btnPhoto.addEventListener('click', () => {
     syncItemsFromDOM();
-    items.splice(insertAtIndex, 0, { name: '', preview: '', desc: '' });
+    items.splice(insertAtIndex, 0, { name: '', preview: '', desc: '', visible: true });
     setDirty();
     renderItems();
   });
@@ -1223,7 +1371,7 @@ function handleGlobalAdd(type, position) {
   syncItemsFromDOM();
   const newItem = type === 'text'
     ? { type: 'text', title: '', body: '', desc: '' }
-    : { name: '', preview: '', desc: '' };
+    : { name: '', preview: '', desc: '', visible: true };
 
   if (position === 'top') {
     items.unshift(newItem);
@@ -1250,10 +1398,12 @@ function syncItemsFromDOM() {
       const nameInput    = card.querySelector('input[data-field="name"]');
       const previewInput = card.querySelector('input[data-field="preview"]');
       const descField    = card.querySelector('[data-field="desc"]');
+      const visibleInput = card.querySelector('input[data-field="visible"]');
       if (nameInput)    items[idx].name    = nameInput.value;
       if (previewInput) items[idx].preview = previewInput.value;
       // innerHTML captures HTML formatting applied by the toolbar
       if (descField)    items[idx].desc    = descField.innerHTML;
+      if (visibleInput) items[idx].visible = visibleInput.checked;
     } else if (card.dataset.cardType === 'text') {
       const titleInput = card.querySelector('input[data-field="title"]');
       const bodyField  = card.querySelector('[data-field="body"]');
@@ -1272,6 +1422,101 @@ function syncItemsFromDOM() {
 function setDirty() {
   dirty = true;
   elUnsavedBadge.style.display = '';
+}
+
+// ============================================================
+// Selected-file refresh and foreground polling
+// ============================================================
+
+/**
+ * Displays non-blocking refresh feedback.
+ * @param {string} message - User-facing status message.
+ * @param {boolean} isError - Whether to apply error styling.
+ * @returns {void}
+ */
+function showRefreshStatus(message, isError) {
+  if (!elRefreshStatus) return;
+  elRefreshStatus.textContent = message;
+  elRefreshStatus.classList.toggle('is-error', isError);
+}
+
+/**
+ * Commits validated external source as the current clean editor state.
+ * @param {string} sourceText - Complete validated event source.
+ * @returns {void}
+ */
+function commitExternalSource(sourceText) {
+  const entry = eventRegistry[currentEventIndex];
+  const filename = entry.data.replace(/^.*\//, '');
+  items = normalizeEditorItems(parseEventSource(sourceText, filename));
+  acceptedSourceText = sourceText;
+  pendingExternalText = null;
+  dirty = false;
+  elUnsavedBadge.style.display = 'none';
+  renderItems();
+}
+
+/**
+ * Checks the selected file for complete-source changes without overlapping reads.
+ * @param {boolean} forceCommit - Whether a valid read must replace state even when unchanged.
+ * @returns {Promise<void>}
+ */
+async function refreshSelectedEvent(forceCommit) {
+  if (!currentEventHandle || currentEventIndex < 0 || refreshInProgress) return;
+  refreshInProgress = true;
+  try {
+    const sourceText = await readFileHandleText(currentEventHandle);
+    const entry = eventRegistry[currentEventIndex];
+    const filename = entry.data.replace(/^.*\//, '');
+    // Validate before comparison so an invalid external file never replaces last-good state.
+    parseEventSource(sourceText, filename);
+    if (!forceCommit && sourceText === acceptedSourceText) {
+      pendingExternalText = null;
+      showRefreshStatus('Up to date.', false);
+      return;
+    }
+    if (dirty && !forceCommit) {
+      pendingExternalText = sourceText;
+      showRefreshStatus('Disk changes detected; refresh deferred until local changes are saved.', false);
+      return;
+    }
+    commitExternalSource(sourceText);
+    showRefreshStatus('Reloaded changed event file.', false);
+  } catch (err) {
+    showRefreshStatus(`Refresh failed; keeping last valid editor state: ${err.message}`, true);
+  } finally {
+    refreshInProgress = false;
+  }
+}
+
+/** Confirms dirty-state discard and reloads the selected event from disk. @returns {Promise<void>} */
+async function handleManualRefresh() {
+  if (dirty && !window.confirm('Refresh from disk? Unsaved changes will be lost.')) return;
+  await refreshSelectedEvent(true);
+}
+
+/** Starts one five-second interval only while the page is visible. @returns {void} */
+function startRefreshPolling() {
+  stopRefreshPolling();
+  if (document.hidden || !currentEventHandle) return;
+  refreshIntervalId = window.setInterval(() => refreshSelectedEvent(false), REFRESH_INTERVAL_MS);
+}
+
+/** Stops the active refresh interval. @returns {void} */
+function stopRefreshPolling() {
+  if (refreshIntervalId !== null) {
+    window.clearInterval(refreshIntervalId);
+    refreshIntervalId = null;
+  }
+}
+
+/** Pauses hidden-tab polling and checks immediately when foregrounded. @returns {void} */
+function handleVisibilityChange() {
+  if (document.hidden) {
+    stopRefreshPolling();
+    return;
+  }
+  refreshSelectedEvent(false).finally(startRefreshPolling);
 }
 
 // ============================================================
@@ -1310,7 +1555,7 @@ function buildOutput() {
     if (item.type === 'text') {
       out += `  { type: "text", title: "${jsEscape(item.title || '')}", body: "${jsEscape(item.body || '')}", desc: "${jsEscape(item.desc || '')}" }${comma}\n`;
     } else {
-      out += `  { name: "${jsEscape(item.name || '')}", preview: "${jsEscape(item.preview || '')}", desc: "${jsEscape(item.desc || '')}" }${comma}\n`;
+      out += `  { name: "${jsEscape(item.name || '')}", preview: "${jsEscape(item.preview || '')}", desc: "${jsEscape(item.desc || '')}", visible: ${item.visible !== false} }${comma}\n`;
     }
   });
   out += '];\n';
@@ -1401,12 +1646,17 @@ async function handleSave() {
     await writable.write(output);
     await writable.close();
 
+    acceptedSourceText = output;
     dirty = false;
     elUnsavedBadge.style.display = 'none';
 
     // Brief success notification — auto-hides after 2 seconds
     elSaveNotification.style.display = '';
     setTimeout(() => { elSaveNotification.style.display = 'none'; }, 2000);
+    if (pendingExternalText !== null) {
+      // Re-read after Save: the write may have superseded the deferred disk version.
+      await refreshSelectedEvent(false);
+    }
   } catch (err) {
     try { await writable.abort(); } catch (_) { /* best-effort abort on write failure */ }
     alert(`Save failed: ${err.message}`);

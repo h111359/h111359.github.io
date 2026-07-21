@@ -24,12 +24,12 @@
 ## Requirements
 
 - MUST: All pages and features must operate as static files with no server-side code.
-- MUST: Each gallery event data file must define window.GALLERY_ITEMS array with items containing name, preview, and desc fields.
 - MUST: events.js must define window.GALLERY_EVENT_INDEX array with entries containing slug, title, and data fields.
 - MUST NOT: No server-side dependencies or build tools may be introduced.
 - OPTIONAL: Gallery events may include text block items (type: text) with title and body fields in addition to image and video items.
 - OPTIONAL: Comments utility app may be used to upload, preview, and download event data JS files.
 - MUST: app.js MUST render body and desc fields of gallery items via innerHTML to support stored HTML rich text formatting.
+- MUST: Each gallery event data file must define window.GALLERY_ITEMS array with media items containing name, preview, and desc fields; media may additionally contain an optional boolean visible field, and only visible: false hides media so legacy records remain visible.
 
 ## Solution
 
@@ -45,6 +45,8 @@
 - sidebar-toggle.js handles mobile responsive sidebar toggle for the gallery page.
 - art/ directory holds static JPG art/drawing images displayed via art_drawing.html.
 - data_editor.html is a standalone full-featured local editor for 202507_china/data/ event JS files; uses File System Access API for in-place read/write of event JS files and events.js; supports HTML rich text in desc/body fields via contentEditable toolbar, full item CRUD, move-up/down reorder, and events.js registry editing; runs fully offline in Chromium-based browsers.
+- The public China gallery filters image and video records whose optional visible field is exactly false, leaves text blocks unaffected, and displays No items when successful filtering produces no displayable entries.
+- data_editor.html retains item deletion and adds media visibility editing; it persists a user-authorized directory handle and last event for startup restoration, and refreshes only the selected event manually or every five seconds while visible with full-text comparison, dirty-state deferral, and last-valid-state error recovery.
 
 ## Issues
 - events.js contains a duplicate entry for event-20250724-tudja; the gallery dropdown shows this event twice.
@@ -54,6 +56,9 @@
 - comments_app.js jsStringEscape(): does not handle Unicode surrogate pairs, null bytes, or non-breaking spaces that may appear in text copied from external sources.
 - app.js makeImageCard(): onerror fallback silently swallows the error when extractId() returns null for an already-invalid preview URL.
 - comments_app.js render(): direct textarea edits may trigger autoLoadItems() on intermediate invalid parse states, clearing the rendered grid unexpectedly.
+- Editor session restoration remains origin- and browser-permission-dependent; revoked or unavailable directory access requires the user to reopen the data folder.
+- Selected-file polling correctness depends on retaining the non-overlapping read guard around manual, interval, and visibility-resume refreshes.
+- Dirty external-change deferral depends on explicit pending-change state and a post-save disk retry to avoid silently replacing local edits.
 
 ## File Structure
 
