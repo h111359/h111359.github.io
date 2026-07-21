@@ -1,16 +1,15 @@
 ---
 state:
-  request_id: ~
-  title: ~
-  status: idle
+  request_id: R-20260721-2058
+  title: Holistic strategic review of the personal website
+  status: analysis_ready
   input_verification_result: null
   context_verification_result: null
 options:
-  minimum_questions: 13
+  minimum_questions: 23
   input_verification_enabled: true
   context_verification_enabled: true
 ---
 
 ## Input
 
-Make a wholistic review of the whole workspace. Having in mind this is a personal web page - analyze and create a file ai-critique.md where you shall make a review and propose improvements.
