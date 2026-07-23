@@ -1,215 +1,171 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
-    <head>
-        <title>Hristo M. Hristov public web space</title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="description" content="Web space of Hristo M. Hristov">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="keywords" content="Hristo, Hristov, Data, Analytics">
-        <link rel="stylesheet" href="css/main.css">
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+<!--
+  cv.html: Concise one-page executive profile for Hristo M. Hristov.
+  Component: Professional — presents leadership, capability, education, and credentials.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Professional Profile | Hristo M. Hristov</title>
+  <meta name="description" content="Executive profile of Hristo M. Hristov covering data and analytics leadership, delivery, architecture, team growth, skills, education, and credentials.">
+  <link rel="canonical" href="https://hmhristov.com/cv.html">
+  <meta property="og:title" content="Professional Profile | Hristo M. Hristov">
+  <meta property="og:description" content="A concise executive profile spanning data and analytics leadership, transformation delivery, architecture, and team growth.">
+  <meta property="og:url" content="https://hmhristov.com/cv.html">
+  <meta property="og:type" content="profile">
+  <meta property="og:image" content="https://hmhristov.com/images/social/professional-preview.jpg">
+  <meta property="og:image:alt" content="Professional portrait of Hristo M. Hristov with an executive-profile editorial treatment.">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/site.js" defer></script>
+</head>
+<body class="site-page site-page--professional">
+  <!-- Skip link: ordinary anchor; Enter moves keyboard focus to the main content landmark. -->
+  <a class="site-skip-link" href="#main-content">Skip to main content</a>
 
-        <div class="pagemenu">
-            <div class="pagemenuitem">
-              <a href="index.html" class="menulink">Home</a>
+  <!--
+    Header and Primary Navigation
+    Design intent: Keep the four career pillars visible and identify Professional in source.
+    Target: All viewports; the complete navigation survives script failure.
+  -->
+  <header class="site-header">
+    <div class="site-shell site-header__inner">
+      <!-- Brand link: ordinary anchor; Enter returns to Home. -->
+      <a class="site-brand" href="index.html">Hristo M. Hristov</a>
+      <!-- Navigation links: ordinary anchors; Tab moves in document order and Enter opens each page. -->
+      <nav class="site-nav" aria-label="Primary" data-site-nav>
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="index.html">Home</a></li>
+          <li><a class="site-nav__link" href="cv.html" aria-current="page">Professional</a></li>
+          <li><a class="site-nav__link" href="apps.html">Projects</a></li>
+          <li><a class="site-nav__link" href="art_drawing.html">Creative</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!--
+    Professional Profile
+    Design intent: Replace chronology with an evidence-led executive summary that scans quickly and prints on one page.
+    Target: Two-column screen layout with a purpose-built condensed A4 print treatment.
+  -->
+  <main class="site-main" id="main-content">
+    <div class="site-shell">
+      <!--
+        Executive Introduction
+        Design intent: Establish leadership proposition and preserve the published current role and dates.
+        Target: Split desktop header that stacks naturally on compact screens.
+      -->
+      <section class="profile-intro" aria-labelledby="professional-title">
+        <div data-reveal>
+          <p class="site-eyebrow">Executive profile</p>
+          <h1 id="professional-title">Hristo M. Hristov</h1>
+          <p class="site-lede">
+            Hristo is a data and analytics leader with more than 25 years of experience across team leadership, solution architecture, data engineering, business intelligence, and database development.
+          </p>
+          <!-- Contact links: Enter activates each path; LinkedIn leads, email supports, and GitHub is tertiary. -->
+          <div class="site-actions profile-contact" aria-label="Professional contact options">
+            <a class="site-button" href="https://www.linkedin.com/in/hristomhristov/" target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a>
+            <a class="site-button site-button--secondary" href="mailto:christo_christov@yahoo.com">Send an email</a>
+            <a class="site-text-link" href="https://github.com/hmhristov/" target="_blank" rel="noopener noreferrer">View GitHub</a>
+          </div>
+        </div>
+        <aside class="profile-role" aria-label="Current role" data-reveal>
+          <p class="site-eyebrow">May 2021–Present</p>
+          <h2>Global Data and Analytics Technology Delivery Team Lead</h2>
+          <p>Coca-Cola Bulgaria · Sofia, Bulgaria</p>
+        </aside>
+      </section>
+
+      <!--
+        Capability Evidence
+        Design intent: Organize facts by executive value rather than employer chronology.
+        Target: Two compact columns on screen and print; one reading column on narrow phones.
+      -->
+      <section class="site-section--compact" aria-label="Professional capability and evidence">
+        <div class="profile-grid">
+          <article class="profile-panel" data-reveal>
+            <h2>Leadership &amp; delivery</h2>
+            <ul class="profile-list">
+              <li>Leads data and analytics teams while remaining connected to solution architecture.</li>
+              <li>Led a major analytical-product transformation from legacy technology to Microsoft Azure Synapse.</li>
+              <li>Managed multinational business-intelligence projects and technical delivery.</li>
+            </ul>
+          </article>
+
+          <article class="profile-panel" data-reveal>
+            <h2>Data &amp; architecture</h2>
+            <ul class="profile-list">
+              <li>Architected data and analytics solutions with Microsoft Azure data services.</li>
+              <li>Developed reporting solutions using Azure Cosmos DB and Power BI.</li>
+              <li>Designed corporate data warehouses, data models, processing pipelines, and reports.</li>
+            </ul>
+          </article>
+
+          <article class="profile-panel" data-reveal>
+            <h2>Organizational development</h2>
+            <ul class="profile-list">
+              <li>Grew a data and analytics team to three times its previous headcount.</li>
+              <li>Created internal growth paths, onboarding, training curriculum, and DevOps practices.</li>
+              <li>Established a Customer &amp; Commercial Data and Analytics Center of Excellence team, including hiring, processes, and ceremonies.</li>
+            </ul>
+          </article>
+
+          <article class="profile-panel" data-reveal>
+            <h2>Hands-on depth</h2>
+            <ul class="profile-list">
+              <li>Built an external-provider marketing analytics system and modernized an internal web interface with Django and React.</li>
+              <li>Applied Python, Git, Databricks, Azure SQL Database, and Azure Analysis Services.</li>
+              <li>Worked across Oracle, PL/SQL, SQL Server, MicroStrategy, APEX, Perl, SPSS, InfoBright, and AWS.</li>
+            </ul>
+          </article>
+
+          <article class="profile-panel profile-panel--wide" data-reveal>
+            <h2>Selected experience evidence</h2>
+            <ul class="profile-list">
+              <li>At Telenor Bulgaria, provided technical leadership for multinational BI projects and corporate data-warehouse architecture and development.</li>
+              <li>At Cosmo Bulgaria Mobile, led the section responsible for corporate data-warehouse design, development, and maintenance.</li>
+              <li>Earlier software-engineering and programming work at Rila Solutions and Progress CAD R&amp;D Centre centered on business information systems, web development, and Oracle database programming and administration.</li>
+            </ul>
+          </article>
+
+          <article class="profile-panel profile-panel--wide" data-reveal>
+            <h2>Education, skills &amp; credentials</h2>
+            <div class="profile-meta">
+              <div class="profile-meta__group">
+                <h3>Education</h3>
+                <ul class="profile-facts">
+                  <li>Sofia University St. Kliment Ohridski — PhD student, 2006–2009; dissertation pending completion. Topic: Integration of information; courses in databases, data integration, and data mining.</li>
+                  <li>Sofia University St. Kliment Ohridski — Master of Science in Informatics, 1996–2001.</li>
+                  <li>High School of Mathematics and Natural Science “Vasil Drumev” — Mathematics and Informatics, 1990–1996.</li>
+                </ul>
+              </div>
+              <div class="profile-meta__group">
+                <h3>IT expertise</h3>
+                <p>Microsoft Azure — advanced; Python — intermediate; SQL — advanced; DAX — intermediate; Microsoft Power BI — intermediate; Scrum — advanced; Oracle — intermediate.</p>
+                <h3>Languages</h3>
+                <p>Bulgarian — mother tongue; English — excellent; Russian — intermediate; German — basic.</p>
+                <h3>Certifications</h3>
+                <p>Microsoft Certified: Azure Solutions Architect Expert; Oracle 8 Database Administrator.</p>
+              </div>
             </div>
-            <div class="pagemenuitem">
-              <a href="./cv.html" class="menulink"> CV </a>
-            </div>     
-              <div class="pagemenuitem">
-                <a href="./apps.html" class="menulink">Apps</a>
-              </div>          
-            <div class="pagemenuitem">
-              <a href="./art_drawing.html" class="menulink">My art</a>
-            </div>
-        </div>        
+          </article>
+        </div>
+      </section>
+    </div>
+  </main>
 
-        <h1>Curriculum Vitae</h1>
-
-        <table>
-            <tr>
-            <td class="outlying-table">
-
-            <h2>Experience</h2>
-
-                <table>
-                    <tr>
-                        <td class="cv-table-cell-period"><span >May 2021 -<br> Present</span></td>
-                        <td><span class="cv-employer-name">COCA-COLA BULGARIA</span> 
-                            <div class="cv-location">Sofia, Bulgaria</div><br>
-                            <span class="cv-job-title">Global Data and Analytics Technology Delivery Team Lead</span>
-                            <ul>
-                                <li>Data and Analytics team management, D&A Solution Architect </li>
-                                <li>Delivery lead for a major technical transformation of a main analytical product replacing the legacy technologies with Microsoft Azure Synapse</li> 
-                                <li>Growth of the data and analytics team increasing the headcount 3 times. Creation of internal growth path upskilling and promoting junior people.</li>                                  
-                                <li>Establishment of way of work, onboarding programm, internal training curriculum and DevOps principles</li> 
-                                <li>Adapting the Scrum processes and practices to the Data & Analytics team</li>
-                                <li>Architecture and implementation of marketing analytical system based on data from an external provider.</li>
-                                <li>Replacement of obsolete web interface of internal analytical product with a modern web UI based on Django and React</li>
-                                <li>Establishment of Customer & Commercial Data and Anaytics Center of Excellence team, hiring and setup of team processes and ceremonies.</li>                               
-                            </ul>    
-                        </td>
-                    </tr>    
-
-                    <tr>
-                        <td class="cv-table-cell-period"><span >July 2018 -<br> April 2021</span></td>
-                        <td><span class="cv-employer-name">COCA-COLA BULGARIA</span>
-                            <div class="cv-location">Sofia, Bulgaria</div><br>
-                            <span class="cv-job-title">BI&A Solution Architect</span>
-                            <ul>
-                                <li>Management of a team of data engineers and data scientists</li>
-                                <li>Architecture of Data and Analytics solutions based on Microsoft Azure data services</li>
-                                <li>Development of reporting solutions based on Azure Cosmos DB and Power BI
-                                <li>Experience with Python, Git, Databricks, Azure SQL DB, Azure Analysis Services</li>
-                            </ul>    
-                        </td>
-                    </tr>    
- 
-                    <tr>
-                        <td class="cv-table-cell-period"><span >July 2014 -<br> July 2018</span></td>
-                        <td><span class="cv-employer-name">TELENOR BULGARIA EAD</span>
-                            <div class="cv-location">Sofia, Bulgaria</div><br>
-                            <span class="cv-job-title">BI Expert</span>
-                            <ul>
-                                <li>Technical leadership and Project Management in Business Intelligence multinational projects</li>
-                                <li>Architecture and development of the corporate Data Warehouse, data modeling and report development</li>
-                                <li>Management and support of BI solutions, member of BI Governance and Architectural forums</li>
-                                <li>Practical experience with Oracle DB, Oracle APEX, SQL, PL/SQL, Perl, SPSS, InfoBright, AWS</li>
-                            </ul>    
-                        </td>
-                    </tr>    
-
-                    <tr>
-                        <td class="cv-table-cell-period"><span >June 2003 -<br> June 2014</span></td>
-                        <td><span class="cv-employer-name">COSMO BULGARIA MOBILE EAD</span>
-                            <div class="cv-location">Sofia, Bulgaria</div><br>
-                            <span class="cv-job-title">Head of Business Intelligence Section</span>
-                            <ul>
-                                <li>Managing a team responsible for design, development and maintenance of the corporate Data Warehouse</li>
-                                <li>Development of BI applications with MicroStrategy, Oracle database and Microsoft SQL Server</li>
-                                <li>Creation of data processing pipelines with PL/SQL and reports with Microstrategy</li>
-                            </ul>    
-                        </td>
-                    </tr>    
-
-                    <tr>
-                        <td class="cv-table-cell-period"><span >October 2002 -<br> June 2003</span></td>
-                        <td><span class="cv-employer-name">COSMO BULGARIA MOBILE EAD</span>
-                            <div class="cv-location">Sofia, Bulgaria</div><br>
-                            <span class="cv-job-title">Software engineer</span>
-                            <ul>
-                                <li>Design and development of business information systems</li>
-                            </ul>    
-                        </td>
-                    </tr>    
-
-                    <tr>
-                        <td class="cv-table-cell-period"><span >July 2000 -<br> September 2002</span></td>
-                        <td><span class="cv-employer-name">RILA SOLUTIONS AD</span>
-                            <div class="cv-location">Sofia, Bulgaria</div><br>
-                            <span class="cv-job-title">Programmer</span>
-                            <ul>
-                                <li>Oracle development and administration, WEB development</li>
-                            </ul>    
-                        </td>
-                    </tr>    
-
-                    <tr>
-                        <td class="cv-table-cell-period"><span >March 1999 -<br> June 2000</span></td>
-                        <td><span class="cv-employer-name">PROGRESS CAD R&D CENTRE</span>
-                            <div class="cv-location">Sofia, Bulgaria</div><br>
-                            <span class="cv-job-title">Oracle Developer</span>
-                            <ul>
-                                <li>Oracle database programming and administration</li>
-                            </ul>    
-                        </td>
-                    </tr>    
-                </table>
- 
-        
-            <h2>Education</h2>
-
-                <table class="cv-inner-table">
-                    <tr>
-                        <td class="cv-table-cell-period"><span >February 2006 -<br> 2009</span></td>
-                        <td><span class="cv-employer-name">SOFIA UNIVERSITY ST. KLIMENT OHRIDSKI</span>
-                            <div class="cv-location">Sofia, Bulgaria</div><br>
-                            <span class="cv-job-title">PhD student (pending dissertation completion)</span>
-                            <ul>
-                                <li>Topic: Integration of information</li>
-                                <li>Courses: Data Bases, Data Integration, Data Mining</li>
-                            </ul>    
-                        </td>
-                    </tr>
- 
-                    <tr>
-                        <td class="cv-table-cell-period"><span >October 1996 -<br> July 2001</span></td>
-                        <td><span class="cv-employer-name">SOFIA UNIVERSITY ST. KLIMENT OHRIDSKI</span>
-                            <div class="cv-location">Sofia, Bulgaria</div><br>
-                            <span class="cv-job-title">Master of Science in Informatics</span>
-                            <ul>
-                                <li>MSc Thesis Topic: Internet system for job application</li>
-                            </ul>    
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="cv-table-cell-period"><span >September 1990 -<br> May 1996</span></td>
-                        <td><span class="cv-employer-name">HIGH SCHOOL OF MATHEMATICS AND NATURAL SCIENCE ”VASIL DRUMEV”</span>
-                            <div class="cv-location">Veliko Tarnovo, Bulgaria</div><br>
-                            <span class="cv-job-title">Secondary Education</span>
-                            <ul>
-                                <li>Majors: Mathematics, Informatics</li>
-                            </ul>    
-                        </td>
-                    </tr>                               
-
-                </table>
-      
-
-            <h2>Skills and Competencies</h2>
-
-                <table>
-                    <tr>
-                        <td class="cv-table-cell-period">Languages</td>
-                        <td>
-                            Bulgarian - mother tongue, English - Excellent, Russian - Intermediate level, German - basic
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="cv-table-cell-period">IT Expertise</td>
-                        <td>
-                            Microsoft Azure - advanced, 
-                            Python - intermediate, 
-                            SQL - advanced, DAX - intermediate,
-                            Microsoft Power BI - intermediate,
-                            Scrum - advanced,
-                            Oracle - intermediate
-                        </td>
-                    </tr>    
-                    <tr>
-                        <td>Certificates</td>
-                        <td>
-                            Microsoft Certified: Azure Solutions Architect Expert,
-                            Oracle 8 Database Administrator
-
-                        </td>
-                    </tr> 
-                </table>
-       
-        </td>
-        </tr>
-        </table>
-        <script src="" async defer></script>
-    </body>
+  <!--
+    Footer
+    Design intent: Preserve a quiet tertiary GitHub contact on screen and omit it from print.
+    Target: Horizontal desktop layout that stacks without crowding on mobile.
+  -->
+  <footer class="site-footer">
+    <div class="site-shell site-footer__inner">
+      <p>Professional profile · Hristo M. Hristov</p>
+      <!-- Footer link: ordinary anchor; Enter opens GitHub in a safely isolated browsing context. -->
+      <a class="site-text-link" href="https://github.com/hmhristov/" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </footer>
+</body>
 </html>

@@ -1,41 +1,95 @@
 <!DOCTYPE html>
-<html>
+<!--
+  apps.html: Projects page presenting the two supported vocabulary tools.
+  Component: Projects — describes and links directly to both unchanged static applications.
+-->
+<html lang="en">
 <head>
-    <title>Hristo M. Hristov public web space</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Web space of Hristo M. Hristov">
-    <meta name="keywords" content="Hristo, Hristov, Data, Analytics">        
-    <link rel="stylesheet" href="css/main.css">
-</head> 
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vocabulary Projects | Hristo M. Hristov</title>
+  <meta name="description" content="Explore two static English–Bulgarian vocabulary projects by Hristo M. Hristov: the inline-data PUK quiz and dataset-backed HH Words practice tool.">
+  <link rel="canonical" href="https://hmhristov.com/apps.html">
+  <meta property="og:title" content="Vocabulary Projects | Hristo M. Hristov">
+  <meta property="og:description" content="Two focused English–Bulgarian vocabulary tools: a compact inline-data quiz and a dataset-backed practice experience.">
+  <meta property="og:url" content="https://hmhristov.com/apps.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://hmhristov.com/images/social/projects-preview.jpg">
+  <meta property="og:image:alt" content="Warm editorial project preview with Hristo M. Hristov and two vocabulary-tool motifs.">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/site.js" defer></script>
+</head>
+<body class="site-page site-page--projects">
+  <!-- Skip link: ordinary anchor; Enter moves keyboard focus to the main content landmark. -->
+  <a class="site-skip-link" href="#main-content">Skip to main content</a>
 
-<body>
-    <div class="pagemenu">
-        <div class="pagemenuitem">
-            <a href="index.html" class="menulink">Home</a>
-        </div>
-        <div class="pagemenuitem">
-            <a href="./cv.html" class="menulink"> CV </a>
-        </div>
-        <div class="pagemenuitem">
-          <a href="./apps.html" class="menulink">Apps</a>
-        </div> 
-        <div class="pagemenuitem">
-            <a href="./art_drawing.html" class="menulink">My art</a>
-        </div>
-    </div> 
-
-    <h3>Applications</h3>
-
-    <div class="links_list">
-        <div class="links_list_element">
-            <a href="https://hmhristov.com/apps/PUK_English_Words.html" class="link_button">Думи на английски за ПУК</a>
-        </div>  
-        <div class="links_list_element">
-            <a href="https://hmhristov.com/apps/hhwords/index.html" class="link_button">English Words</a>
-        </div>
+  <!--
+    Header and Primary Navigation
+    Design intent: Keep the four career pillars visible and identify Projects in source.
+    Target: All viewports; the complete navigation remains available without JavaScript.
+  -->
+  <header class="site-header">
+    <div class="site-shell site-header__inner">
+      <!-- Brand link: ordinary anchor; Enter returns to Home. -->
+      <a class="site-brand" href="index.html">Hristo M. Hristov</a>
+      <!-- Navigation links: ordinary anchors; Tab moves in document order and Enter opens each page. -->
+      <nav class="site-nav" aria-label="Primary" data-site-nav>
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="index.html">Home</a></li>
+          <li><a class="site-nav__link" href="cv.html">Professional</a></li>
+          <li><a class="site-nav__link" href="apps.html" aria-current="page">Projects</a></li>
+          <li><a class="site-nav__link" href="art_drawing.html">Creative</a></li>
+        </ul>
+      </nav>
     </div>
-       
+  </header>
+
+  <!--
+    Projects Content
+    Design intent: Give the two supported tools equal credibility with evidence-bound descriptions.
+    Target: Two desktop columns that become a single reading column on narrow screens.
+  -->
+  <main class="site-main" id="main-content">
+    <section class="site-section" aria-labelledby="projects-title">
+      <div class="site-shell">
+        <div class="site-section-heading" data-reveal>
+          <p class="site-eyebrow">Projects</p>
+          <h1 id="projects-title">Small tools for active vocabulary practice</h1>
+          <p class="site-lede">Two browser-based English–Bulgarian quizzes turn a word list into quick, repeatable translation choices. Both run as static pages.</p>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card" data-reveal>
+            <span class="project-card__marker">Inline word set</span>
+            <h2>English Words for PUK</h2>
+            <p>A compact quiz with its English and Bulgarian vocabulary stored directly in the page. Each question randomly changes translation direction and presents a multiple-choice answer set.</p>
+            <!-- Project link: ordinary anchor; Enter launches the unchanged PUK vocabulary application. -->
+            <a class="site-button" href="apps/PUK_English_Words.html">Launch English Words for PUK</a>
+          </article>
+
+          <article class="project-card" data-reveal>
+            <span class="project-card__marker">Dataset-backed</span>
+            <h2>HH Words</h2>
+            <p>A larger English–Bulgarian quiz that loads its vocabulary from a separate dataset, varies translation direction, and continues through the remaining words as correct answers are given.</p>
+            <!-- Project link: ordinary anchor; Enter launches the unchanged HH Words application. -->
+            <a class="site-button" href="apps/hhwords/index.html">Launch HH Words</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!--
+    Footer
+    Design intent: End with a quiet page label and the shared tertiary GitHub contact.
+    Target: Horizontal desktop layout that stacks without crowding on mobile.
+  -->
+  <footer class="site-footer">
+    <div class="site-shell site-footer__inner">
+      <p>Two static vocabulary projects · Hristo M. Hristov</p>
+      <!-- Footer link: ordinary anchor; Enter opens GitHub in a safely isolated browsing context. -->
+      <a class="site-text-link" href="https://github.com/hmhristov/" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </footer>
 </body>
 </html>

@@ -1,4 +1,10 @@
-/* Color scheme: https://colorhunt.co/palette/fdf7e4faeed1ded0b6bbab8c */
+/*
+ * main.css: Shared legacy styles plus the scoped four-page career-site design system.
+ * Context: AIB request R-20260722-2343.
+ * Sections: Legacy Rules, Career Tokens, Layout, Components, Motion, Responsive, Print.
+ */
+
+/* Legacy Rules — retained for root pages outside the four-page career presentation. */
 
 body {
   background-color: #FDF7E4;
@@ -137,4 +143,816 @@ h4 {
 
 .cv-inner-table {
   width: 100%;
+}
+
+/* ============================================================
+   Career-Site Tokens and Base
+   Design intent: Warm editorial paper surfaces frame a confident,
+   readable professional presentation without affecting legacy pages.
+   ============================================================ */
+
+body.site-page {
+  /* Paper base — cream background for the complete editorial canvas. */
+  --site-color-paper: #f4efe4;
+  /* Raised paper — lighter cream for cards and prominent content. */
+  --site-color-paper-raised: #fffaf0;
+  /* Ink — charcoal body copy with strong contrast on paper surfaces. */
+  --site-color-ink: #292622;
+  /* Muted ink — secondary copy that remains legible on cream. */
+  --site-color-ink-muted: #625d55;
+  /* Rust — primary action and identity accent. */
+  --site-color-rust: #8e3f2a;
+  /* Dark rust — hover and active action state. */
+  --site-color-rust-dark: #652c1d;
+  /* Pale rust — restrained accent surface and section marker. */
+  --site-color-rust-pale: #ead4c8;
+  /* Sage — secondary editorial surface. */
+  --site-color-sage: #cfd6c2;
+  /* Dark sage — quiet rule and border color. */
+  --site-color-sage-dark: #7c8773;
+  /* Focus — high-contrast keyboard focus ring. */
+  --site-color-focus: #174d6d;
+  /* Transparent ink — soft shadow for paper elevation. */
+  --site-color-shadow: rgba(41, 38, 34, 0.14);
+  /* Print paper — pure white used only for the named Professional print page. */
+  --site-color-print-paper: #ffffff;
+  /* Print ink — pure black used only for the named Professional print page. */
+  --site-color-print-ink: #000000;
+
+  /* Compact text — metadata, eyebrow labels, and small support copy. */
+  --site-font-size-xs: 0.78rem;
+  /* Small text — labels, captions, and footer copy. */
+  --site-font-size-sm: 0.9rem;
+  /* Reading text — body copy sized for comfortable scanning. */
+  --site-font-size-base: clamp(1rem, 0.96rem + 0.18vw, 1.12rem);
+  /* Section heading — responsive editorial subheading scale. */
+  --site-font-size-lg: clamp(1.35rem, 1.1rem + 0.9vw, 2rem);
+  /* Page heading — responsive title scale for supporting pages. */
+  --site-font-size-xl: clamp(2.15rem, 1.7rem + 2.25vw, 4.4rem);
+  /* Display heading — responsive scale for the Home identity. */
+  --site-font-size-display: clamp(2.8rem, 2rem + 4vw, 6.4rem);
+
+  /* Hairline spacing — tight label and rule separation. */
+  --site-space-1: 0.35rem;
+  /* Compact spacing — related inline elements. */
+  --site-space-2: 0.65rem;
+  /* Control spacing — buttons, nav links, and card internals. */
+  --site-space-3: 1rem;
+  /* Component spacing — compact section and card gaps. */
+  --site-space-4: 1.5rem;
+  /* Section spacing — primary rhythm between content regions. */
+  --site-space-5: 2.25rem;
+  /* Large section spacing — desktop editorial breathing room. */
+  --site-space-6: 3.5rem;
+  /* Page spacing — major breaks in the reading journey. */
+  --site-space-7: clamp(4.5rem, 8vw, 8rem);
+
+  /* Small radius — chips and compact controls. */
+  --site-radius-sm: 0.35rem;
+  /* Medium radius — cards and media frames. */
+  --site-radius-md: 0.8rem;
+  /* Large radius — prominent portrait frame. */
+  --site-radius-lg: 1.5rem;
+  /* Reading width — optimum measure for long-form text. */
+  --site-reading-width: 68ch;
+  /* Content width — maximum shared page canvas. */
+  --site-content-width: 76rem;
+  /* Header height — skip-link and anchor offset reference. */
+  --site-header-height: 5.5rem;
+
+  margin: 0;
+  min-width: 0;
+  background: var(--site-color-paper);
+  color: var(--site-color-ink);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: var(--site-font-size-base);
+  line-height: 1.65;
+  text-rendering: optimizeLegibility;
+}
+
+body.site-page *,
+body.site-page *::before,
+body.site-page *::after {
+  box-sizing: border-box;
+}
+
+body.site-page img {
+  display: block;
+  max-width: 100%;
+}
+
+body.site-page a {
+  color: var(--site-color-rust-dark);
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 0.08em;
+}
+
+/* Hover state: deepen action color without making meaning hover-dependent. */
+body.site-page a:hover {
+  color: var(--site-color-rust);
+}
+
+/* Keyboard focus state: strong offset ring remains visible on every surface. */
+body.site-page :focus-visible {
+  outline: 0.2rem solid var(--site-color-focus);
+  outline-offset: 0.2rem;
+}
+
+body.site-page h1,
+body.site-page h2,
+body.site-page h3,
+body.site-page p,
+body.site-page ul {
+  margin-top: 0;
+}
+
+body.site-page h1,
+body.site-page h2,
+body.site-page h3 {
+  margin-left: 0;
+  color: var(--site-color-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+body.site-page h1 {
+  margin-bottom: var(--site-space-4);
+  font-size: var(--site-font-size-xl);
+  text-align: left;
+}
+
+body.site-page h2 {
+  margin-bottom: var(--site-space-4);
+  font-size: var(--site-font-size-lg);
+}
+
+body.site-page h3 {
+  margin-bottom: var(--site-space-2);
+  font-size: 1.2rem;
+  letter-spacing: -0.01em;
+}
+
+body.site-page p {
+  max-width: var(--site-reading-width);
+}
+
+/* Scoped reset: prevent the retained legacy list-item surface from entering site cards. */
+body.site-page li {
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* ============================================================
+   Accessibility and Shared Layout
+   Design intent: Landmarks stay easy to reach and reading width
+   remains comfortable from narrow phones through wide desktops.
+   ============================================================ */
+
+body.site-page .site-skip-link {
+  position: fixed;
+  /* Skip link sits above the sticky header layer while focused. */
+  z-index: 20;
+  top: var(--site-space-2);
+  left: var(--site-space-2);
+  padding: var(--site-space-2) var(--site-space-3);
+  border-radius: var(--site-radius-sm);
+  background: var(--site-color-ink);
+  color: var(--site-color-paper-raised);
+  transform: translateY(-180%);
+}
+
+/* Focus state: bring the skip link into view for keyboard users. */
+body.site-page .site-skip-link:focus {
+  color: var(--site-color-paper-raised);
+  transform: translateY(0);
+}
+
+body.site-page .site-shell {
+  width: min(calc(100% - (2 * var(--site-space-4))), var(--site-content-width));
+  margin-inline: auto;
+}
+
+body.site-page .site-main {
+  min-height: 65vh;
+}
+
+body.site-page [id] {
+  scroll-margin-top: calc(var(--site-header-height) + var(--site-space-3));
+}
+
+body.site-page .site-section {
+  padding-block: var(--site-space-7);
+}
+
+body.site-page .site-section--compact {
+  padding-block: var(--site-space-6);
+}
+
+body.site-page .site-section--sage {
+  background: var(--site-color-sage);
+}
+
+body.site-page .site-section-heading {
+  display: grid;
+  max-width: var(--site-reading-width);
+  margin-bottom: var(--site-space-5);
+  gap: var(--site-space-2);
+}
+
+body.site-page .site-eyebrow {
+  margin-bottom: var(--site-space-2);
+  color: var(--site-color-rust);
+  font-size: var(--site-font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+body.site-page .site-lede {
+  max-width: 52ch;
+  margin-bottom: var(--site-space-5);
+  color: var(--site-color-ink-muted);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.25rem, 1.08rem + 0.7vw, 1.75rem);
+  line-height: 1.45;
+}
+
+/* ============================================================
+   Header and Navigation
+   Design intent: A compact persistent route map makes the four
+   pillars visible without turning the page into an app shell.
+   ============================================================ */
+
+body.site-page .site-header {
+  position: sticky;
+  /* Header sits above reading content but below the focused skip link. */
+  z-index: 10;
+  top: 0;
+  border-bottom: 0.08rem solid var(--site-color-sage-dark);
+  background: var(--site-color-paper);
+}
+
+body.site-page .site-header__inner {
+  display: flex;
+  min-height: var(--site-header-height);
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--site-space-4);
+}
+
+body.site-page .site-brand {
+  flex: 0 0 auto;
+  color: var(--site-color-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+body.site-page .site-nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--site-space-1) var(--site-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body.site-page .site-nav__link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  padding-inline: var(--site-space-3);
+  border-radius: var(--site-radius-sm);
+  color: var(--site-color-ink-muted);
+  font-size: var(--site-font-size-sm);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Hover state: a pale paper shift gives pointer feedback without movement. */
+body.site-page .site-nav__link:hover {
+  background: var(--site-color-paper-raised);
+  color: var(--site-color-rust-dark);
+}
+
+/* Current state: source aria-current and enhanced class share one treatment. */
+body.site-page .site-nav__link[aria-current="page"],
+body.site-page .site-nav__link.is-current {
+  background: var(--site-color-rust-pale);
+  color: var(--site-color-rust-dark);
+}
+
+/* ============================================================
+   Buttons and Contact Hierarchy
+   Design intent: LinkedIn leads, email supports, and GitHub remains
+   available as a deliberately quieter third contact path.
+   ============================================================ */
+
+body.site-page .site-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--site-space-3);
+}
+
+body.site-page .site-button {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  padding: var(--site-space-2) var(--site-space-4);
+  border: 0.1rem solid var(--site-color-rust);
+  border-radius: var(--site-radius-sm);
+  background: var(--site-color-rust);
+  color: var(--site-color-paper-raised);
+  font-weight: 700;
+  text-decoration: none;
+  /* 160ms gives immediate feedback while keeping the interaction restrained. */
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+/* Hover state: darken the filled primary action without shifting its geometry. */
+body.site-page .site-button:hover {
+  border-color: var(--site-color-rust-dark);
+  background: var(--site-color-rust-dark);
+  color: var(--site-color-paper-raised);
+}
+
+body.site-page .site-button--secondary {
+  background: transparent;
+  color: var(--site-color-rust-dark);
+}
+
+/* Secondary hover state: pale rust confirms activation while preserving hierarchy. */
+body.site-page .site-button--secondary:hover {
+  background: var(--site-color-rust-pale);
+  color: var(--site-color-rust-dark);
+}
+
+body.site-page .site-text-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  font-weight: 700;
+}
+
+/* ============================================================
+   Home Hero and Pillars
+   Design intent: Pair a direct first-person proposition with the
+   current portrait, then give all three supporting pillars equal weight.
+   ============================================================ */
+
+body.site-page .home-hero {
+  display: grid;
+  min-height: calc(100vh - var(--site-header-height));
+  grid-template-columns: minmax(0, 1.25fr) minmax(17rem, 0.75fr);
+  align-items: center;
+  gap: clamp(var(--site-space-5), 7vw, var(--site-space-7));
+  padding-block: var(--site-space-6);
+}
+
+body.site-page .home-hero__title {
+  margin-bottom: var(--site-space-4);
+  font-size: var(--site-font-size-display);
+}
+
+body.site-page .home-hero__portrait {
+  overflow: hidden;
+  border-radius: var(--site-radius-lg) var(--site-radius-lg) 7rem var(--site-radius-lg);
+  background: var(--site-color-sage);
+  box-shadow: 0 1.4rem 3.5rem var(--site-color-shadow);
+}
+
+body.site-page .home-hero__portrait img {
+  width: 100%;
+  height: auto;
+}
+
+body.site-page .pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--site-space-4);
+}
+
+body.site-page .pillar-card,
+body.site-page .project-card,
+body.site-page .profile-panel,
+body.site-page .art-card {
+  border: 0.08rem solid var(--site-color-sage-dark);
+  border-radius: var(--site-radius-md);
+  background: var(--site-color-paper-raised);
+  box-shadow: 0 0.65rem 1.7rem var(--site-color-shadow);
+}
+
+body.site-page .pillar-card {
+  display: flex;
+  min-height: 20rem;
+  flex-direction: column;
+  padding: var(--site-space-5);
+}
+
+body.site-page .pillar-card p {
+  color: var(--site-color-ink-muted);
+}
+
+body.site-page .pillar-card .site-text-link {
+  margin-top: auto;
+}
+
+/* ============================================================
+   Professional Profile
+   Design intent: Evidence-led thematic sections replace chronology,
+   supporting quick executive scanning and a compact one-page print.
+   ============================================================ */
+
+body.site-page .profile-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(15rem, 0.65fr);
+  align-items: end;
+  gap: var(--site-space-6);
+  padding-block: var(--site-space-7) var(--site-space-5);
+}
+
+body.site-page .profile-role {
+  padding: var(--site-space-4);
+  border-left: 0.3rem solid var(--site-color-rust);
+  background: var(--site-color-rust-pale);
+}
+
+body.site-page .profile-role p:last-child {
+  margin-bottom: 0;
+}
+
+body.site-page .profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--site-space-4);
+}
+
+body.site-page .profile-panel {
+  padding: var(--site-space-4);
+}
+
+body.site-page .profile-panel--wide {
+  grid-column: 1 / -1;
+}
+
+body.site-page .profile-list,
+body.site-page .profile-facts {
+  margin-bottom: 0;
+  padding-left: var(--site-space-4);
+}
+
+body.site-page .profile-list li + li,
+body.site-page .profile-facts li + li {
+  margin-top: var(--site-space-2);
+}
+
+body.site-page .profile-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--site-space-4);
+}
+
+body.site-page .profile-meta__group {
+  padding-top: var(--site-space-3);
+  border-top: 0.08rem solid var(--site-color-sage-dark);
+}
+
+/* ============================================================
+   Project Cards
+   Design intent: Two equally credible, evidence-bound summaries route
+   directly to the unchanged vocabulary tools.
+   ============================================================ */
+
+body.site-page .project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--site-space-5);
+}
+
+body.site-page .project-card {
+  display: flex;
+  min-height: 25rem;
+  flex-direction: column;
+  padding: var(--site-space-5);
+}
+
+body.site-page .project-card__marker {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: var(--site-space-5);
+  padding: var(--site-space-1) var(--site-space-2);
+  border-radius: var(--site-radius-sm);
+  background: var(--site-color-sage);
+  color: var(--site-color-ink);
+  font-size: var(--site-font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+body.site-page .project-card p {
+  color: var(--site-color-ink-muted);
+}
+
+body.site-page .project-card .site-button {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+/* ============================================================
+   Artwork Gallery
+   Design intent: Natural-ratio cards preserve each complete work and
+   captions distinguish subject and medium without interpretive claims.
+   ============================================================ */
+
+body.site-page .art-group + .art-group {
+  margin-top: var(--site-space-7);
+}
+
+body.site-page .art-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: var(--site-space-5) var(--site-space-4);
+}
+
+body.site-page .art-card {
+  overflow: hidden;
+  margin: 0;
+}
+
+body.site-page .art-card__image {
+  width: 100%;
+  height: auto;
+  background: var(--site-color-sage);
+}
+
+body.site-page .art-card figcaption {
+  padding: var(--site-space-3) var(--site-space-4) var(--site-space-4);
+}
+
+body.site-page .art-card__title {
+  display: block;
+  margin-bottom: var(--site-space-1);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.08rem;
+  font-weight: 700;
+}
+
+body.site-page .art-card__detail {
+  color: var(--site-color-ink-muted);
+  font-size: var(--site-font-size-sm);
+}
+
+/* ============================================================
+   Footer
+   Design intent: Close every page with a quiet identity line and a
+   consistent tertiary GitHub route.
+   ============================================================ */
+
+body.site-page .site-footer {
+  border-top: 0.08rem solid var(--site-color-sage-dark);
+  padding-block: var(--site-space-5);
+}
+
+body.site-page .site-footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--site-space-4);
+}
+
+body.site-page .site-footer p {
+  margin-bottom: 0;
+  color: var(--site-color-ink-muted);
+  font-size: var(--site-font-size-sm);
+}
+
+/* ============================================================
+   Progressive Reveal Enhancement
+   Design intent: A one-time short rise supports reading rhythm; content
+   remains visible unless JavaScript confirms observer support.
+   ============================================================ */
+
+body.site-page.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(var(--site-space-3));
+  /* 420ms is calm but remains brief enough to avoid delaying reading. */
+  transition: opacity 420ms ease, transform 420ms ease;
+}
+
+body.site-page.reveal-ready [data-reveal].reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reduced motion: remove non-essential transitions and reveal transforms. */
+@media (prefers-reduced-motion: reduce) {
+  body.site-page *,
+  body.site-page *::before,
+  body.site-page *::after {
+    scroll-behavior: auto;
+    transition-duration: 0.01ms;
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+  }
+
+  body.site-page.reveal-ready [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Tablet and below (max 860px): stack key grids to preserve reading order. */
+@media (max-width: 53.75rem) {
+  body.site-page .home-hero,
+  body.site-page .profile-intro {
+    grid-template-columns: 1fr;
+  }
+
+  body.site-page .home-hero {
+    min-height: auto;
+  }
+
+  body.site-page .home-hero__portrait {
+    width: min(100%, 28rem);
+    justify-self: center;
+  }
+
+  body.site-page .pillar-grid,
+  body.site-page .art-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Narrow phones (max 640px): wrap navigation and use single-column cards. */
+@media (max-width: 40rem) {
+  body.site-page {
+    --site-header-height: auto;
+    --site-space-7: 4rem;
+  }
+
+  body.site-page .site-shell {
+    width: min(calc(100% - (2 * var(--site-space-3))), var(--site-content-width));
+  }
+
+  body.site-page .site-header__inner,
+  body.site-page .site-footer__inner {
+    align-items: flex-start;
+    flex-direction: column;
+    padding-block: var(--site-space-2);
+    gap: var(--site-space-2);
+  }
+
+  body.site-page .site-nav,
+  body.site-page .site-nav__list {
+    width: 100%;
+  }
+
+  body.site-page .site-nav__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body.site-page .site-nav__link {
+    justify-content: center;
+    padding-inline: var(--site-space-2);
+  }
+
+  body.site-page .pillar-grid,
+  body.site-page .profile-grid,
+  body.site-page .profile-meta,
+  body.site-page .project-grid,
+  body.site-page .art-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.site-page .profile-panel--wide {
+    grid-column: auto;
+  }
+
+  body.site-page .pillar-card,
+  body.site-page .project-card {
+    min-height: 0;
+  }
+
+  body.site-page .site-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  body.site-page .site-button {
+    width: 100%;
+  }
+}
+
+/* Professional print: condense the thematic profile to one clean A4 page. */
+@media print {
+  /* Named page limits page-box changes to the Professional document only. */
+  @page professional-profile {
+    size: A4;
+    margin: 0.36in 0.42in;
+  }
+
+  body.site-page.site-page--professional {
+    --site-font-size-base: 8.2pt;
+    --site-font-size-lg: 12.5pt;
+    --site-font-size-xl: 22pt;
+    --site-space-1: 0.08rem;
+    --site-space-2: 0.18rem;
+    --site-space-3: 0.28rem;
+    --site-space-4: 0.42rem;
+    --site-space-5: 0.65rem;
+    --site-space-6: 0.85rem;
+    --site-space-7: 1rem;
+
+    page: professional-profile;
+    background: var(--site-color-print-paper);
+    color: var(--site-color-print-ink);
+    font-size: var(--site-font-size-base);
+    line-height: 1.25;
+  }
+
+  body.site-page.site-page--professional .site-header,
+  body.site-page.site-page--professional .site-footer,
+  body.site-page.site-page--professional .site-skip-link,
+  body.site-page.site-page--professional .profile-contact {
+    display: none;
+  }
+
+  body.site-page.site-page--professional .site-shell {
+    width: 100%;
+  }
+
+  /* Chrome applies named page boxes reliably to the printable content fragment. */
+  body.site-page.site-page--professional .site-main {
+    page: professional-profile;
+  }
+
+  body.site-page.site-page--professional .profile-intro {
+    grid-template-columns: 1.35fr 0.65fr;
+    padding-block: 0 0.45rem;
+    gap: 0.45rem;
+  }
+
+  body.site-page.site-page--professional .site-lede {
+    margin-bottom: 0;
+    font-size: 10.2pt;
+    line-height: 1.25;
+  }
+
+  body.site-page.site-page--professional .profile-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.3rem;
+  }
+
+  body.site-page.site-page--professional .profile-panel {
+    break-inside: avoid;
+    padding: 0.3rem;
+    border-color: var(--site-color-ink-muted);
+    box-shadow: none;
+  }
+
+  body.site-page.site-page--professional .profile-panel--wide {
+    grid-column: 1 / -1;
+  }
+
+  body.site-page.site-page--professional .profile-role {
+    padding: 0.3rem;
+    border-left-width: 0.16rem;
+  }
+
+  body.site-page.site-page--professional h1 {
+    margin-bottom: 0.18rem;
+  }
+
+  body.site-page.site-page--professional h2,
+  body.site-page.site-page--professional h3 {
+    margin-bottom: 0.16rem;
+  }
+
+  body.site-page.site-page--professional p,
+  body.site-page.site-page--professional ul {
+    margin-bottom: 0.2rem;
+  }
+
+  body.site-page.site-page--professional a {
+    color: var(--site-color-print-ink);
+    text-decoration: none;
+  }
+
+  body.site-page.site-page--professional.reveal-ready [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
 }

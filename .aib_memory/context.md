@@ -4,9 +4,9 @@
 
 - Personal public website for Hristo M. Hristov, data and analytics professional.
 - Hosted as a GitHub Pages site with custom domain hmhristov.com (CNAME record).
-- Primary audience is the owner and public visitors.
-- Site sections: personal homepage, CV, mini web apps, art gallery, China travel photo gallery, checklist page, GitHub markdown reader.
 - No commercial scope; purely personal/portfolio use.
+- Primary audience for the four-page career presentation is professional visitors; the owner and general public remain audiences for the broader personal site.
+- Primary career-site pages are Home (index.html), Professional (cv.html), Projects (apps.html), and Creative (art_drawing.html); the China gallery, checklist, Markdown reader, and other utilities remain deployed as auxiliary features outside this primary navigation.
 
 ## Concepts
 
@@ -17,9 +17,10 @@
 - Gallery media items referenced by Google Drive file preview URLs; thumbnails and view URLs derived from extracted file IDs.
 - English/Bulgarian word learning game mechanic: displays a word, user selects correct translation from multiple options.
 - Markdown reader app fetches raw files from configured GitHub repos and renders them in-browser.
-- Site-wide shared stylesheet at css/main.css used by all root-level pages.
 - No build toolchain, transpiler, or package manager; pure static HTML, CSS, and vanilla JavaScript.
 - HTML markup stored directly in body and desc string fields of gallery event data files; rendered via innerHTML in app.js gallery viewer; authored only through the trusted local data_editor.html editor.
+- css/main.css remains shared by root-level pages, while the modern four-page design system is scoped to body.site-page so excluded legacy consumers retain their prior presentation.
+- The four primary pages contain complete semantic navigation in source HTML; js/site.js enhances those nodes in place for active-location and reveal behavior, and essential content remains independent of JavaScript.
 
 ## Requirements
 
@@ -30,6 +31,11 @@
 - OPTIONAL: Comments utility app may be used to upload, preview, and download event data JS files.
 - MUST: app.js MUST render body and desc fields of gallery items via innerHTML to support stored HTML rich text formatting.
 - MUST: Each gallery event data file must define window.GALLERY_ITEMS array with media items containing name, preview, and desc fields; media may additionally contain an optional boolean visible field, and only visible: false hides media so legacy records remain visible.
+- MUST: The four primary pages must expose visible Home, Professional, Projects, and Creative navigation mapped to index.html, cv.html, apps.html, and art_drawing.html, with a source-level current-page indication and functional no-JavaScript fallback.
+- MUST: The four primary pages must reflow at 320 CSS pixels, provide visible keyboard focus and practical target sizes, preserve content under reduced motion or script failure, and use natural-ratio images with intrinsic dimensions.
+- MUST: Each primary page must include unique source-level title, description, canonical URL, Open Graph metadata, and accurate page-specific social-preview image metadata.
+- MUST: Professional copy must use only facts published in the repository, preserve the developer-selected legacy status wording without stronger currency claims, and keep LinkedIn primary, email secondary, and GitHub tertiary.
+- MUST NOT: Original portrait and artwork files must not be modified or replaced when optimized derivatives are created.
 
 ## Solution
 
@@ -47,6 +53,10 @@
 - data_editor.html is a standalone full-featured local editor for 202507_china/data/ event JS files; uses File System Access API for in-place read/write of event JS files and events.js; supports HTML rich text in desc/body fields via contentEditable toolbar, full item CRUD, move-up/down reorder, and events.js registry editing; runs fully offline in Chromium-based browsers.
 - The public China gallery filters image and video records whose optional visible field is exactly false, leaves text blocks unaffected, and displays No items when successful filtering produces no displayable entries.
 - data_editor.html retains item deletion and adds media visibility editing; it persists a user-authorized directory handle and last event for startup restoration, and refreshes only the selected event manually or every five seconds while visible with full-text comparison, dirty-state deferral, and last-valid-state error recovery.
+- The four-page career site uses a scoped cream, charcoal, deep-rust, and muted-sage editorial component system with responsive, focus, reduced-motion, natural-image, and print treatments.
+- The Professional page is a one-page executive profile; the Projects page contains exactly the two vocabulary tools; and the Creative page contains all 13 works in a natural-ratio captioned grid grouped as ten oils and three watercolors.
+- js/site.js provides dependency-free in-place navigation and subtle opacity-and-short-rise reveal enhancement without generating essential markup.
+- Four optimized 1200 by 630 page-specific sharing images live under images/social and are derived without modifying the original portrait or artwork.
 
 ## Issues
 - events.js contains a duplicate entry for event-20250724-tudja; the gallery dropdown shows this event twice.
@@ -59,21 +69,27 @@
 - Editor session restoration remains origin- and browser-permission-dependent; revoked or unavailable directory access requires the user to reopen the data folder.
 - Selected-file polling correctness depends on retaining the non-overlapping read guard around manual, interval, and visibility-resume refreshes.
 - Dirty external-change deferral depends on explicit pending-change state and a post-save disk retry to avoid silently replacing local edits.
+- Published current-role, Present-date, skill-level, and certification wording is intentionally preserved and may become stale without periodic owner review.
+- The vocabulary applications retain out-of-scope inline styling, inline event assignment, debug logging, and innerHTML fallbacks identified during the main-page redesign.
+- aib-analyze.md duplicates question variables, declares an impossible three-subsection Proposed Solution count while naming two, skips S05.7, and conflicts with itself about input-reset timing.
+- AIB conventions conflict over a prohibited plan Decisions section and over neutral Decision Register choices versus recommended Q-block choices; the requirements gate priority item also fits already-authorized requests poorly.
 
 ## File Structure
 
-index.html - personal homepage with profile summary, interests, and contacts
-cv.html - curriculum vitae page
-apps.html - listing page linking to mini web apps
-art_drawing.html - art/drawing gallery page
+index.html - editorial Home page with first-person leadership proposition, portrait, contact hierarchy, and three career-pillar previews
+cv.html - one-page third-person Professional executive profile for screen and print
+apps.html - two-card Projects page linking directly to the supported vocabulary tools
+art_drawing.html - Creative gallery containing all 13 works as ten oils and three watercolors
 cl.html - checklists page; renders markdown via external marked.js CDN
 links_backup.html - backup links listing page
 html_template.html - reusable blank HTML page template
 CNAME - GitHub Pages custom domain (hmhristov.com)
 notes.md - scratch notes file
 css/
-  main.css - shared site-wide stylesheet for root-level pages
-images/ - 2 profile photo files
+  main.css - legacy-compatible shared stylesheet with four-page presentation rules scoped to body.site-page
+js/
+  site.js - dependency-free in-place navigation-state and reveal enhancement script
+images/ - 2 original profile photos plus 4 page-specific 1200 by 630 sharing derivatives under images/social/
 art/ - 13 art/drawing image files matching 20XXXX_*.JPG
 202507_china/
   index.html - gallery app entry point

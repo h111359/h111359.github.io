@@ -1,52 +1,207 @@
 <!DOCTYPE html>
-<html>
-  <head>
-     <title>Hristo M. Hristov public web space</title>
-     <meta charset="utf-8">
-     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-     <meta name="viewport" content="width=device-width, initial-scale=1">
-     <meta name="description" content="Web space of Hristo M. Hristov">
-     <meta name="keywords" content="Hristo, Hristov, Data, Analytics">     
-     <link rel="stylesheet" href="css/main.css">    
-  </head>  
-  <body>
-    <div class="pagemenu">
-      <div class="pagemenuitem">
-        <a href="index.html" class="menulink">Home</a>
-      </div>
-      <div class="pagemenuitem">
-        <a href="./cv.html" class="menulink"> CV </a>
-      </div> 
-      <div class="pagemenuitem">
-        <a href="./apps.html" class="menulink">Apps</a>
-      </div>       
-      <div class="pagemenuitem">
-        <a href="./art_drawing.html" class="menulink">My art</a>
-      </div>
+<!--
+  art_drawing.html: Complete Creative gallery of thirteen original artworks.
+  Component: Creative — presents ten oils and three watercolors at natural image ratios.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Creative Work | Hristo M. Hristov</title>
+  <meta name="description" content="View thirteen original works by Hristo M. Hristov: ten oil paintings and three watercolors spanning landscapes, figures, flowers, horses, and street scenes.">
+  <link rel="canonical" href="https://hmhristov.com/art_drawing.html">
+  <meta property="og:title" content="Creative Work | Hristo M. Hristov">
+  <meta property="og:description" content="A complete selection of ten oil paintings and three watercolors by Hristo M. Hristov.">
+  <meta property="og:url" content="https://hmhristov.com/art_drawing.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://hmhristov.com/images/social/creative-preview.jpg">
+  <meta property="og:image:alt" content="Colorful floral painting in a warm editorial preview for Hristo M. Hristov's creative work.">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/site.js" defer></script>
+</head>
+<body class="site-page site-page--creative">
+  <!-- Skip link: ordinary anchor; Enter moves keyboard focus to the main content landmark. -->
+  <a class="site-skip-link" href="#main-content">Skip to main content</a>
+
+  <!--
+    Header and Primary Navigation
+    Design intent: Keep the four career pillars visible and identify Creative in source.
+    Target: All viewports; the complete navigation remains available without JavaScript.
+  -->
+  <header class="site-header">
+    <div class="site-shell site-header__inner">
+      <!-- Brand link: ordinary anchor; Enter returns to Home. -->
+      <a class="site-brand" href="index.html">Hristo M. Hristov</a>
+      <!-- Navigation links: ordinary anchors; Tab moves in document order and Enter opens each page. -->
+      <nav class="site-nav" aria-label="Primary" data-site-nav>
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="index.html">Home</a></li>
+          <li><a class="site-nav__link" href="cv.html">Professional</a></li>
+          <li><a class="site-nav__link" href="apps.html">Projects</a></li>
+          <li><a class="site-nav__link" href="art_drawing.html" aria-current="page">Creative</a></li>
+        </ul>
+      </nav>
     </div>
-    
-        <h2> Oil</h2>
+  </header>
 
-        <img src="art/201501_IMG_6502_23.JPG" class="myartimg" alt="Vase with flowers">
-        <img src="art/201503_IMG_6503_23.JPG" class="myartimg" alt="Winter river">
-        <img src="art/201505_DSC06570_23.JPG" class="myartimg" alt="House in the mountain">
-        <img src="art/201506_IMG_7038_23.JPG" class="myartimg" alt="Bezbog">
-        <img src="art/201506_IMG_7088_23.JPG" class="myartimg" alt="Bezbog">
-        <img src="art/201506_IMG_7093_23.JPG" class="myartimg" alt="Lady with book">
-        <img src="art/201507_IMG_7084_23.JPG" class="myartimg" alt="Makove">
-        <img src="art/201507_IMG_7101_23.JPG" class="myartimg" alt="Boat">
-        <img src="art/201508_IMG_7202_23.JPG" class="myartimg" alt="Boat">
-        <img src="art/201602_IMG_9755_23.JPG" class="myartimg" alt="River">
+  <!--
+    Creative Gallery
+    Design intent: Present every original work without cropping while concise captions distinguish the subjects.
+    Target: Three desktop columns, two tablet columns, and one natural-ratio mobile column.
+  -->
+  <main class="site-main" id="main-content">
+    <section class="site-section" aria-labelledby="creative-title">
+      <div class="site-shell">
+        <div class="site-section-heading" data-reveal>
+          <p class="site-eyebrow">Creative</p>
+          <h1 id="creative-title">Painting as a way of looking</h1>
+          <p class="site-lede">This page gathers my complete selection of thirteen works—ten oils and three watercolors—kept at their natural proportions.</p>
+        </div>
 
+        <!--
+          Oil Paintings
+          Design intent: Group ten varied subjects as complete, uncropped works with factual captions.
+          Target: Responsive natural-ratio card grid across all viewports.
+        -->
+        <section class="art-group" aria-labelledby="oils-title">
+          <div class="site-section-heading" data-reveal>
+            <p class="site-eyebrow">Ten works</p>
+            <h2 id="oils-title">Oil paintings</h2>
+          </div>
+          <div class="art-grid">
+            <figure class="art-card" data-reveal>
+              <img class="art-card__image" src="art/201501_IMG_6502_23.JPG" alt="Oil painting of a teal vase filled with red, pink, white, and yellow flowers." width="250" height="339" loading="lazy">
+              <figcaption>
+                <span class="art-card__title">Flowers in a teal vase</span>
+                <span class="art-card__detail">Oil · Floral still life in saturated reds and greens.</span>
+              </figcaption>
+            </figure>
 
-        <h2> Watercollor</h2>
+            <figure class="art-card" data-reveal>
+              <img class="art-card__image" src="art/201503_IMG_6503_23.JPG" alt="Oil painting of a dark river curving through a snow-covered winter landscape." width="276" height="279" loading="lazy">
+              <figcaption>
+                <span class="art-card__title">Winter river</span>
+                <span class="art-card__detail">Oil · Snowy banks, bare trees, and a dark bend of water.</span>
+              </figcaption>
+            </figure>
 
-        <img src="art/201507_IMG_7149_23.JPG" class="myartimg" alt="Flowers">
-        <img src="art/201508_IMG_7480_23.JPG" class="myartimg" alt="A street">
-        <img src="art/201604_DSC01268_23.JPG" class="myartimg" alt="A tree">  
-              
-  <body>
+            <figure class="art-card" data-reveal>
+              <img class="art-card__image" src="art/201505_DSC06570_23.JPG" alt="Oil painting of a rustic house among warm autumn hills." width="545" height="412" loading="lazy">
+              <figcaption>
+                <span class="art-card__title">House in the mountains</span>
+                <span class="art-card__detail">Oil · A small hillside home in ochre autumn light.</span>
+              </figcaption>
+            </figure>
+
+            <figure class="art-card" data-reveal>
+              <img class="art-card__image" src="art/201506_IMG_7038_23.JPG" alt="Oil painting of a reflective mountain lake near Bezbog with two buildings beneath a blue sky." width="401" height="325" loading="lazy">
+              <figcaption>
+                <span class="art-card__title">Bezbog mountain lake</span>
+                <span class="art-card__detail">Oil · Mountain slopes and buildings reflected in still water.</span>
+              </figcaption>
+            </figure>
+
+            <figure class="art-card" data-reveal>
+              <img class="art-card__image" src="art/201506_IMG_7088_23.JPG" alt="Oil portrait of a dark-haired woman looking down against a green background." width="270" height="381" loading="lazy">
+              <figcaption>
+                <span class="art-card__title">Quiet portrait</span>
+                <span class="art-card__detail">Oil · A close study of a woman in a reflective pose.</span>
+              </figcaption>
+            </figure>
+
+            <figure class="art-card" data-reveal>
+              <img class="art-card__image" src="art/201506_IMG_7093_23.JPG" alt="Oil painting of a seated woman in an orange dress reading a book." width="347" height="462" loading="lazy">
+              <figcaption>
+                <span class="art-card__title">Lady with a book</span>
+                <span class="art-card__detail">Oil · A seated reader framed by warm interior color.</span>
+              </figcaption>
+            </figure>
+
+            <figure class="art-card" data-reveal>
+              <img class="art-card__image" src="art/201507_IMG_7084_23.JPG" alt="Oil painting of red poppies beneath a large setting sun and purple hills." width="292" height="391" loading="lazy">
+              <figcaption>
+                <span class="art-card__title">Poppies at sunset</span>
+                <span class="art-card__detail">Oil · Red flowers silhouetted against a low white sun.</span>
+              </figcaption>
+            </figure>
+
+            <figure class="art-card" data-reveal>
+              <img class="art-card__image" src="art/201507_IMG_7101_23.JPG" alt="Oil painting of a sailboat on dark water beneath an orange sunset." width="289" height="362" loading="lazy">
+              <figcaption>
+                <span class="art-card__title">Sailboat at sunset</span>
+                <span class="art-card__detail">Oil · A single mast against an intense orange horizon.</span>
+              </figcaption>
+            </figure>
+
+            <figure class="art-card" data-reveal>
+              <img class="art-card__image" src="art/201508_IMG_7202_23.JPG" alt="Oil painting of two horses running together through a misty landscape." width="435" height="320" loading="lazy">
+              <figcaption>
+                <span class="art-card__title">Running horses</span>
+                <span class="art-card__detail">Oil · Two horses in motion through soft blue-violet ground.</span>
+              </figcaption>
+            </figure>
+
+            <figure class="art-card" data-reveal>
+              <img class="art-card__image" src="art/201602_IMG_9755_23.JPG" alt="Oil painting of a bright stream flowing between dense green trees." width="357" height="445" loading="lazy">
+              <figcaption>
+                <span class="art-card__title">Forest stream</span>
+                <span class="art-card__detail">Oil · Moving water catches light beneath a green canopy.</span>
+              </figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <!--
+          Watercolors
+          Design intent: Close with three lighter works while preserving each original image ratio.
+          Target: Responsive natural-ratio card grid across all viewports.
+        -->
+        <section class="art-group" aria-labelledby="watercolors-title">
+          <div class="site-section-heading" data-reveal>
+            <p class="site-eyebrow">Three works</p>
+            <h2 id="watercolors-title">Watercolors</h2>
+          </div>
+          <div class="art-grid">
+            <figure class="art-card" data-reveal>
+              <img class="art-card__image" src="art/201507_IMG_7149_23.JPG" alt="Watercolor of large red, pink, orange, and white flowers on a dark background." width="437" height="307" loading="lazy">
+              <figcaption>
+                <span class="art-card__title">Flower study</span>
+                <span class="art-card__detail">Watercolor · Layered petals in red, pink, orange, and white.</span>
+              </figcaption>
+            </figure>
+
+            <figure class="art-card" data-reveal>
+              <img class="art-card__image" src="art/201508_IMG_7480_23.JPG" alt="Watercolor of a narrow sunlit street between old stone buildings." width="355" height="495" loading="lazy">
+              <figcaption>
+                <span class="art-card__title">Old street</span>
+                <span class="art-card__detail">Watercolor · Warm façades and steps along a narrow lane.</span>
+              </figcaption>
+            </figure>
+
+            <figure class="art-card" data-reveal>
+              <img class="art-card__image" src="art/201604_DSC01268_23.JPG" alt="Watercolor of a red-leaved tree leaning above blue-green grass." width="507" height="410" loading="lazy">
+              <figcaption>
+                <span class="art-card__title">Autumn tree</span>
+                <span class="art-card__detail">Watercolor · A wind-shaped crown in rust red and soft green.</span>
+              </figcaption>
+            </figure>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <!--
+    Footer
+    Design intent: End with a quiet collection note and the shared tertiary GitHub contact.
+    Target: Horizontal desktop layout that stacks without crowding on mobile.
+  -->
+  <footer class="site-footer">
+    <div class="site-shell site-footer__inner">
+      <p>Thirteen original works · Hristo M. Hristov</p>
+      <!-- Footer link: ordinary anchor; Enter opens GitHub in a safely isolated browsing context. -->
+      <a class="site-text-link" href="https://github.com/hmhristov/" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </footer>
+</body>
 </html>
-
-
-

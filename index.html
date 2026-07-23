@@ -1,85 +1,132 @@
 <!DOCTYPE html>
-<html>
-  <head>
-     <title>Hristo M. Hristov public web space</title>
-     <meta charset="utf-8">
-     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-     <meta name="viewport" content="width=device-width, initial-scale=1">
-     <meta name="description" content="Web space of Hristo M. Hristov">
-     <meta name="keywords" content="Hristo, Hristov, Data, Analytics">
-     <link rel="stylesheet" href="css/main.css">
-  </head>  
-  <body>
-    <div class="pagemenu">
-      <div class="pagemenuitem">
-        <a href="index.html" class="menulink">Home</a>
-      </div>
-      <div class="pagemenuitem">
-        <a href="./cv.html" class="menulink"> CV </a>
-      </div>   
-      <div class="pagemenuitem">
-        <a href="./apps.html" class="menulink">Apps</a>
-      </div>  
-      <div class="pagemenuitem">
-        <a href="./art_drawing.html" class="menulink">My art</a>
-      </div>
+<!--
+  index.html: Editorial Home page for the four-page career presentation.
+  Component: Home — introduces leadership profile, projects, creative work, and contacts.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hristo M. Hristov | Data &amp; Analytics Leadership</title>
+  <meta name="description" content="Hristo M. Hristov presents a senior data and analytics leadership profile, vocabulary projects, selected artwork, and direct contact paths.">
+  <link rel="canonical" href="https://hmhristov.com/index.html">
+  <meta property="og:title" content="Hristo M. Hristov | Data &amp; Analytics Leadership">
+  <meta property="og:description" content="Senior data and analytics leadership, practical technology depth, vocabulary projects, and selected artwork.">
+  <meta property="og:url" content="https://hmhristov.com/index.html">
+  <meta property="og:type" content="profile">
+  <meta property="og:image" content="https://hmhristov.com/images/social/home-preview.jpg">
+  <meta property="og:image:alt" content="Portrait of Hristo M. Hristov beside a warm editorial introduction.">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/site.js" defer></script>
+</head>
+<body class="site-page site-page--home">
+  <!-- Skip link: ordinary anchor; Enter moves keyboard focus to the main content landmark. -->
+  <a class="site-skip-link" href="#main-content">Skip to main content</a>
+
+  <!--
+    Header and Primary Navigation
+    Design intent: Keep the four career pillars visible and name the current Home route in source.
+    Target: All viewports; the link list wraps into a two-column mobile grid.
+  -->
+  <header class="site-header">
+    <div class="site-shell site-header__inner">
+      <!-- Brand link: ordinary anchor; Enter returns to Home. -->
+      <a class="site-brand" href="index.html">Hristo M. Hristov</a>
+      <!-- Navigation links: ordinary anchors; Tab moves in document order and Enter opens each page. -->
+      <nav class="site-nav" aria-label="Primary" data-site-nav>
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="index.html" aria-current="page">Home</a></li>
+          <li><a class="site-nav__link" href="cv.html">Professional</a></li>
+          <li><a class="site-nav__link" href="apps.html">Projects</a></li>
+          <li><a class="site-nav__link" href="art_drawing.html">Creative</a></li>
+        </ul>
+      </nav>
     </div>
-    
-    <h1>Hristo M. Hristov</h1>
+  </header>
 
- 
+  <!--
+    Main Content
+    Design intent: Establish identity, proposition, portrait, and contact hierarchy before the supporting pillars.
+    Target: Two-column desktop hero that becomes a single reading column on compact screens.
+  -->
+  <main class="site-main" id="main-content">
+    <!--
+      Hero
+      Design intent: Pair a factual first-person proposition with the current professional portrait.
+      Target: First desktop viewport; natural stacked flow on tablet and mobile.
+    -->
+    <section class="site-shell home-hero" aria-labelledby="home-title">
+      <div class="home-hero__copy" data-reveal>
+        <p class="site-eyebrow">Data &amp; analytics leadership</p>
+        <h1 class="home-hero__title" id="home-title">Hristo M.<br>Hristov</h1>
+        <p class="site-lede">
+          I bring more than 25 years of data and analytics experience to the work of building capable teams, durable delivery practices, and well-architected solutions.
+        </p>
+        <p>
+          I currently lead the global data and analytics team at Coca-Cola Bulgaria. My focus is leadership, talent growth, and people management, while I stay connected to solution architecture and data engineering. I am a Certified Microsoft Azure Solutions Architect and Scrum Master.
+        </p>
+        <!-- Contact links: Enter activates each path; LinkedIn leads, email supports, and GitHub is tertiary. -->
+        <div class="site-actions" aria-label="Contact Hristo M. Hristov">
+          <a class="site-button" href="https://www.linkedin.com/in/hristomhristov/" target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a>
+          <a class="site-button site-button--secondary" href="mailto:christo_christov@yahoo.com">Send an email</a>
+          <a class="site-text-link" href="https://github.com/hmhristov/" target="_blank" rel="noopener noreferrer">View GitHub</a>
+        </div>
+      </div>
+      <figure class="home-hero__portrait" data-reveal>
+        <img src="images/HHristov_20240407_110742.jpg" alt="Head-and-shoulders portrait of Hristo M. Hristov wearing glasses and a grey jacket." width="600" height="800" loading="eager" fetchpriority="high">
+      </figure>
+    </section>
 
-    <div>
-      <img id="hhimage" src="images/HHristov_20240407_110742.jpg">
+    <!--
+      Pillar Preview
+      Design intent: Give Professional, Projects, and Creative equal visual and editorial weight.
+      Target: Three desktop columns, two tablet columns, and one mobile column.
+    -->
+    <section class="site-section site-section--sage" aria-labelledby="explore-title">
+      <div class="site-shell">
+        <div class="site-section-heading" data-reveal>
+          <p class="site-eyebrow">Explore the work</p>
+          <h2 id="explore-title">Three views of a practical career</h2>
+          <p>Leadership, hands-on learning tools, and visual practice each show a different part of how I think and make.</p>
+        </div>
+        <div class="pillar-grid">
+          <article class="pillar-card" data-reveal>
+            <p class="site-eyebrow">Professional</p>
+            <h3>Leadership grounded in delivery</h3>
+            <p>A concise executive profile spanning team growth, data architecture, transformation delivery, and the technical foundations behind that work.</p>
+            <!-- Pillar link: ordinary anchor; Enter opens the Professional page. -->
+            <a class="site-text-link" href="cv.html">Read the professional profile</a>
+          </article>
+          <article class="pillar-card" data-reveal>
+            <p class="site-eyebrow">Projects</p>
+            <h3>Vocabulary tools built to be used</h3>
+            <p>Two static English–Bulgarian learning projects: a compact inline-data quiz and a larger dataset-backed word practice experience.</p>
+            <!-- Pillar link: ordinary anchor; Enter opens the Projects page. -->
+            <a class="site-text-link" href="apps.html">Explore the two projects</a>
+          </article>
+          <article class="pillar-card" data-reveal>
+            <p class="site-eyebrow">Creative</p>
+            <h3>Observation through paint</h3>
+            <p>A complete selection of thirteen oil and watercolor works, from landscapes and figures to flowers, horses, and quiet street scenes.</p>
+            <!-- Pillar link: ordinary anchor; Enter opens the Creative page. -->
+            <a class="site-text-link" href="art_drawing.html">View the artwork</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!--
+    Footer
+    Design intent: End with a quiet identity note and the tertiary GitHub contact.
+    Target: Horizontal desktop layout that stacks without crowding on mobile.
+  -->
+  <footer class="site-footer">
+    <div class="site-shell site-footer__inner">
+      <p>Wisdom is the goal.</p>
+      <!-- Footer link: ordinary anchor; Enter opens GitHub in a safely isolated browsing context. -->
+      <a class="site-text-link" href="https://github.com/hmhristov/" target="_blank" rel="noopener noreferrer">GitHub</a>
     </div>
-
-    <h2>Summary</h2>
-    
-    <p>
-      Hristo Hristov brings with him over 25 years of experience in the field of data and analytics. 
-      He began his career as a software engineer, delving into business information systems and 
-      Oracle database development and administration. Alongside his team, he played a key role in building 
-      the Data Warehouse for a major Bulgarian telecom operator.
-    </p>
-    <p>
-      Currently, Hristo leads the global data and analytics team at Coca-Cola Bulgaria.
-      Although his current duties are focused more on leadership, talent growth, and people management,
-      he stays connected to solution architecture and data engineering. 
-      Hristo is a Certified Microsoft Azure Solution Architect and Scrum Master. 
-    </p>
-
-    <h2>Interests</h2>
-    
-    <div>
-      <ul>
-        <li>Data and Analytics</li>
-        <li>Scrum</li>
-        <li>Microsoft Azure</li>
-        <li>Power BI</li>
-        <li>Python</li>
-        <li>HTML, CSS</li>      
-      </ul>
-    </div>
-
-    <h2>Contacts</h2>
-
-    <p>
-      <div>
-        christo_christov@yahoo.com
-      </div>
-      <div>
-        <a href="https://www.linkedin.com/in/hristomhristov/">LinkedIn</a>
-      </div>
-      <div>
-        <a href="https://github.com/hmhristov/">GitHub</a>
-      </div>
-    </p>
-
-    <p>
-      <div id="moto">
-        Wisdom is the goal
-      </div>    
-    </p>
-
-  <body>
+  </footer>
+</body>
 </html>
