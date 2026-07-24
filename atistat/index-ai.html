@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <!--
-  ai-critique.html: Standalone Bulgarian ATISTAT site-quality audit report.
-  Component: ATISTAT AI Critique — summarizes findings and implementation prompts.
+  index-ai.html: Standalone Bulgarian page presenting 13 user-perspective enhancement ideas for the ATISTAT site.
+  Component: ATISTAT AI Ideas — content and UX suggestions from a visitor's point of view.
 -->
 <html lang="bg">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="robots" content="noindex, nofollow">
-	<title>АИ Оценка | АТИСТАТ</title>
+	<title>АИ Идеи | АТИСТАТ</title>
 	<link rel="stylesheet" href="wp-content/themes/atistat/assets/css/main.css">
 	<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%22-2%201%2062%2062%22%3E%3Crect%20x%3D%22-2%22%20y%3D%221%22%20width%3D%2262%22%20height%3D%2262%22%20rx%3D%2210%22%20fill%3D%22%23f5f2ea%22%2F%3E%3Cg%20transform%3D%22translate%28-20.3850958%2C-59.8246754%29%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20fill%3D%22%23538135%22%20d%3D%22m%2048.121068%2C64.332595%20h%2012.400623%20l%2016.600195%2C42.669235%20q%201.347033%2C3.4072%202.377117%2C4.19957%201.069702%2C0.79238%203.882623%2C0.75276%20v%207.64639%20H%2057.233347%20v%20-7.64639%20l%201.584744%2C-0.0396%20q%202.179024%2C0%203.050633%2C-0.55466%200.871609%2C-0.59428%200.871609%2C-1.42627%200%2C-0.71314%20-0.752753%2C-2.93178%20l%20-1.624363%2C-5.03156%20H%2043.52531%20l%20-2.060167%2C5.58622%20q%20-0.633898%2C1.78284%20-0.633898%2C2.3375%200%2C0.6339%200.435805%2C1.14894%200.475423%2C0.51504%201.505507%2C0.75275%200.673516%2C0.15848%203.724149%2C0.15848%20v%207.64639%20H%2025.102659%20v%20-7.64639%20q%202.060168%2C0%203.011014%2C-0.35657%200.950847%2C-0.35657%201.545126%2C-1.0697%200.633898%2C-0.71314%201.386651%2C-2.65445%20z%20m%20-1.7036%2C29.753572%20H%2057.471059%20L%2052.082929%2C78.872623%20Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
 	<!--
@@ -90,8 +90,8 @@
 			outline-offset: var(--audit-focus-offset);
 		}
 
-		/* Section spacing override: reduce the theme default by 50% for this compact audit page. */
-		.at-section { padding-block: clamp(28px, 4vw, 55px); }
+		/* Section spacing override: reduce the theme default by 50% for this compact suggestions page. */
+		.at-section { padding-block: clamp(5px, 4vw, 5px); }
 	</style>
 </head>
 <body class="home blog wp-embed-responsive wp-theme-atistat">
@@ -101,8 +101,8 @@
 
 <!--
   Header and navigation
-  Design intent: Retain the ATISTAT identity while providing one clear route back to the main site.
-  Accessibility: Logo and back link use native link behavior; the mobile menu button toggles with Enter or Space.
+  Design intent: Retain the ATISTAT identity while providing navigation back to the main site and to the AI critique.
+  Accessibility: Logo and nav links use native link behavior; the mobile menu button toggles with Enter or Space.
 -->
 <header class="at-header" id="top">
 	<div class="at-container at-header__inner">
@@ -170,210 +170,120 @@
 
 		<nav class="at-nav" id="at-nav" aria-label="Меню">
 			<ul class="at-nav__list">
-				<li><a href="index.html">← Обратно към АТИСТАТ</a></li>
-				<li><a href="index-ai.html">АИ Идеи →</a></li>
-			</ul>
-
-		</nav>
-	</div>
-</header>
-
+					<li><a href="index-ai.html" aria-current="page">АИ Идеи</a></li>
+					<li><a href="index-ai-critique.html">АИ Оценка</a></li>
+					<li><a href="index-ai-ux.html">АИ UX/UI</a></li>
+					<li><a href="index-ai-marketing.html">АИ Маркетинг</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
 <!-- ============================================================
-     Main content — Bulgarian audit findings and implementation tasks
+     Main content — 13 user-perspective enhancement ideas for the ATISTAT site
      ============================================================ -->
 <main id="main" class="at-main">
+
 	<!--
-	  Executive summary
-	  Design intent: Give the owner a concise, decision-oriented overview before the detailed evidence.
+	  Introduction
+	  Design intent: Give the reader context for the suggestions before the detail list.
 	-->
-	<section class="at-section" id="executive-summary">
+	<section class="at-section" id="introduction">
 		<div class="at-container at-audit-copy">
-			<h2 class="at-h2">Резюме</h2>
+			<h2 class="at-h2">Идеи за подобрение</h2>
 			<span class="at-rule" aria-hidden="true"></span>
-			<p class="at-lead">Сайтът е функционален, визуално последователен и представя услугите на АТИСТАТ разбираемо. Въпреки това той все още не достига стандарта на професионален инструмент за привличане на запитвания. Липсващите метаданни ограничават представянето в търсачки и социални мрежи, част от основното съдържание зависи от успешно изпълнение на JavaScript, мобилното оформление създава проблем с главното заглавие, а портфолиото не дава достатъчно доказателства за реализираните проекти.</p>
-
-			<h3 class="at-h3">Предимства</h3>
-			<ul>
-				<li><strong>Ясна визуална идентичност.</strong> Последователната серифна типография, отличителната зелено-кремава палитра и архитектурните изображения изграждат разпознаваем, спокоен и професионален характер. Единният стил помага на посетителя да възприеме отделните секции като части от една цялостна марка.</li>
-				<li><strong>Разбираемо описание на услугите.</strong> Проектирането, строителството, инвестиционното управление и свързаните дейности са представени с достъпен език. Посетителят може бързо да разбере какво предлага компанията, без да преминава през прекалено технически или рекламни формулировки.</li>
-				<li><strong>Логична структура на началната страница.</strong> Последователността от представяне, опит, услуги и контакти намалява умственото натоварване за нов посетител. Българската и английската версия следват сходен модел, което създава предвидимо преживяване за различните аудитории.</li>
-			</ul>
-
-			<h3 class="at-h3">Спешни проблеми</h3>
-			<ul>
-				<li><strong>Невидимо основно съдържание при проблем със скрипта.</strong> Елементи с клас <code>.at-fade</code> започват скрити. Ако JavaScript файлът не се зареди или прекъсне преди активиране на анимацията, важни текстове могат да останат недостъпни, въпреки че самият HTML е наличен.</li>
-				<li><strong>Отрязано заглавие на тесни екрани.</strong> Ограничението в ширината на колоната на главната секция кара заглавието да излиза извън видимата област при малки мобилни устройства. Това засяга първото и най-важно послание на страницата.</li>
-				<li><strong>Липсваща основа за откриваемост и споделяне.</strong> Страниците нямат уникални описания, Open Graph данни, Twitter Card данни и структурирана информация за организацията. В резултат търсачките и социалните платформи не получават достатъчно контекст за качествено представяне.</li>
-			</ul>
+			<p class="at-lead">Следните 13 предложения разглеждат сайта на АТИСТАТ от гледна точка на посетителя. Всяка идея е насочена към подобряване на съдържанието, удобството за ползване или добавяне на нова стойност за потенциалните и настоящите клиенти.</p>
 		</div>
 	</section>
 
 	<!--
-	  Detailed analysis
-	  Design intent: Separate validated strengths from concrete weaknesses for quick owner review.
+	  Suggestions list
+	  Design intent: Number each idea clearly so the owner can prioritise and track progress.
 	-->
-	<section class="at-section" id="pros-cons">
+	<section class="at-section" id="suggestions">
 		<div class="at-container at-audit-copy">
-			<h2 class="at-h2">Детайлен анализ</h2>
-			<span class="at-rule" aria-hidden="true"></span>
-
-			<h3 class="at-h3">Предимства</h3>
-			<ul>
-				<li>Професионална визуална идентичност с последователни цветове, типография и архитектурна образност.</li>
-				<li>Четима структура на услугите, която позволява бързо ориентиране в обхвата на работа.</li>
-				<li>Работеща двойка от българска и английска версия с ясно превключване между езиците.</li>
-				<li>Фотографиите са предоставени във формат WebP и са с разумни файлови размери за статичен сайт.</li>
-				<li>Достъпна семантична структура на страниците с логична йерархия от H1, H2 и H3 заглавия.</li>
-			</ul>
-
-			<h3 class="at-h3">Недостатъци</h3>
-			<ul>
-				<li>Видимостта на част от съдържанието зависи от JavaScript, защото елементите за плавна поява са скрити по подразбиране.</li>
-				<li>Главното заглавие излиза извън екрана и се отрязва при тесни мобилни ширини.</li>
-				<li>На страниците липсват мета описания и данни за качествено споделяне в социални мрежи.</li>
-				<li>Няма структурирани данни, чрез които търсачките да разпознаят организацията и контактната информация.</li>
-				<li>Страниците на проектите съдържат само заглавие и един ред за услугата, без снимки, контекст, резултати или доказателства за изпълнение.</li>
-				<li>Картите в хронологията на секция „Опит“ не водят към съответните подробни страници на проектите.</li>
-				<li>В основния поток липсва ясен призив за действие, видим бутон за запитване или директни връзки за телефон и имейл.</li>
-				<li>Вградените SVG логотипи в хедъра и футъра използват повтарящи се идентификатори, което нарушава уникалността на HTML идентификаторите.</li>
-				<li>Главното изображение се зарежда отложено, въпреки че е ключово за първия екран, и така забавя първоначалното визуализиране на мобилни устройства.</li>
-				<li>Пренасочването от HTTP към HTTPS и защитата на транспорта са сървърни въпроси извън обхвата на статичните файлови промени, описани по-долу.</li>
-			</ul>
-		</div>
-	</section>
-
-	<!--
-	  Improvement tasks
-	  Design intent: Turn the audit into an implementation-ready sequence of high-priority actions.
-	-->
-	<section class="at-section" id="improvements">
-		<div class="at-container at-audit-copy">
-			<h2 class="at-h2">Препоръки за подобрение</h2>
-			<span class="at-rule" aria-hidden="true"></span>
-			<p class="at-lead">Всяка задача по-долу включва промпт за AIB brain, който може да бъде подаден директно на AI агента за изпълнение на промяната.</p>
-
 			<ol class="at-audit-tasks">
-				<li class="at-audit-task">
-					<h3 class="at-h3">[Важно] Оптимизация на зареждането на главното изображение</h3>
-					<p>Главното изображение се зарежда с атрибут за отложено зареждане, което причинява забавяне от около четири секунди при мобилни устройства. Замяната му с незабавно зареждане и приоритизиране на ресурса значително ще подобри показателя LCP.</p>
-					<!-- Native disclosure: summary toggles the prompt with Enter or Space and exposes its open state. -->
-					<details>
-						<summary>Виж промпт</summary>
-						<pre><code>## Input
-In file &#96;atistat/index.html&#96;, the hero image in the &#96;#hero&#96; section currently has &#96;loading="lazy"&#96;. Change the attribute to &#96;loading="eager"&#96; and add &#96;fetchpriority="high"&#96; to the same &#96;&lt;img&gt;&#96; element. Do not change any other attributes or surrounding HTML.
 
-## Goal
-The hero image loads immediately on page load without browser-imposed deferral, reducing mobile LCP from the current ~3.86 s.</code></pre>
-					</details>
+				<li class="at-audit-task">
+					<h3 class="at-h3">Богато фотопортфолио на реализираните обекти</h3>
+					<p>Потенциалните клиенти вземат решения най-лесно, когато виждат конкретни примери. Страниците на проектите сега съдържат само кратко описание — добавянето на фотогалерия за всеки обект би показало мащаба, качеството и разнообразието на работата на АТИСТАТ по убедителен и нагледен начин.</p>
 				</li>
 
 				<li class="at-audit-task">
-					<h3 class="at-h3">[Важно] Видимост на съдържанието при изключен JavaScript</h3>
-					<p>CSS класът <code>.at-fade</code> скрива елементи по подразбиране. Ако JavaScript не се зареди или срещне грешка, важно съдържание остава невидимо. Видимостта трябва да е базовото поведение, а анимацията — прогресивно подобрение.</p>
-					<!-- Native disclosure: summary toggles the prompt with Enter or Space and exposes its open state. -->
-					<details>
-						<summary>Виж промпт</summary>
-						<pre><code>## Input
-In &#96;atistat/wp-content/themes/atistat/assets/css/main.css&#96;, the &#96;.at-fade&#96; rule sets &#96;opacity: 0&#96;. Change the default state so &#96;.at-fade&#96; elements are visible (&#96;opacity: 1&#96;) when no JavaScript class is applied. In &#96;atistat/wp-content/themes/atistat/assets/js/main.js&#96;, add a class (e.g. &#96;js-enabled&#96;) to &#96;&lt;html&gt;&#96; on script initialization, and scope the hide-then-reveal animation to &#96;.js-enabled .at-fade&#96; so the animation only runs when JavaScript is confirmed active.
-
-## Goal
-Core page content is visible to all users regardless of JavaScript availability; the fade-in animation is a progressive enhancement applied only when the script executes successfully.</code></pre>
-					</details>
+					<h3 class="at-h3">Препоръки и отзиви от доволни клиенти</h3>
+					<p>Думите на реални клиенти са едно от най-силните средства за изграждане на доверие. Раздел с кратки цитати, имена (с разрешение) и описание на реализирания проект би помогнал на новите посетители да се чувстват по-уверени при избора на АТИСТАТ за своя обект.</p>
 				</li>
 
 				<li class="at-audit-task">
-					<h3 class="at-h3">[Важно] Мобилна четливост на главното заглавие</h3>
-					<p>Главното заглавие на страницата се отрязва вдясно при ширина на екрана 390 px. Причината е минимална ширина на grid елемента, която е по-голяма от наличното пространство.</p>
-					<!-- Native disclosure: summary toggles the prompt with Enter or Space and exposes its open state. -->
-					<details>
-						<summary>Виж промпт</summary>
-						<pre><code>## Input
-In &#96;atistat/wp-content/themes/atistat/assets/css/main.css&#96;, locate the CSS rule that sets a &#96;min-width&#96; or a fixed width on the hero grid column containing the H1 element. Change or remove the min-width constraint so the heading wraps correctly at 320–390 px viewport widths. Test the result at 320 px to confirm no horizontal overflow.
-
-## Goal
-The hero H1 text wraps and remains fully readable at 390 px viewport width with no horizontal clipping or overflow.</code></pre>
-					</details>
+					<h3 class="at-h3">Представяне на екипа — хора зад компанията</h3>
+					<p>Клиентите искат да знаят с кого работят. Страница с кратко представяне на ключовите специалисти — архитекти, проектанти, ръководители на обекти — прави компанията по-достъпна и лична, а сътрудничеството изглежда по-малко анонимно.</p>
 				</li>
 
 				<li class="at-audit-task">
-					<h3 class="at-h3">[Важно] Метаданни за търсачки и социални мрежи</h3>
-					<p>Нито една страница на сайта няма мета описание, Open Graph тагове или Twitter Card метаданни. Без тях търсачките показват непривлекателни фрагменти, а споделянето в социални мрежи не включва описание или изображение.</p>
-					<!-- Native disclosure: summary toggles the prompt with Enter or Space and exposes its open state. -->
-					<details>
-						<summary>Виж промпт</summary>
-						<pre><code>## Input
-In &#96;atistat/index.html&#96; and &#96;atistat/index-en.html&#96;, add to the &#96;&lt;head&gt;&#96; section: (1) a &#96;&lt;meta name="description"&gt;&#96; tag with a concise Bulgarian description for index.html and an English description for index-en.html; (2) Open Graph tags — &#96;og:title&#96;, &#96;og:description&#96;, &#96;og:type&#96; set to "website", &#96;og:url&#96;, and &#96;og:image&#96; pointing to the site logo or a representative photo; (3) Twitter Card tags — &#96;twitter:card&#96; set to "summary_large_image", &#96;twitter:title&#96;, &#96;twitter:description&#96;. Also add a JSON-LD &#96;&lt;script type="application/ld+json"&gt;&#96; block with Organization schema containing the company name, URL, and contact information.
-
-## Goal
-Each page has a unique meta description and social sharing metadata; search engine result snippets show a meaningful description; sharing links on social platforms display a title, description, and image.</code></pre>
-					</details>
+					<h3 class="at-h3">Обяснение на процеса стъпка по стъпка</h3>
+					<p>За клиент, който за пръв път работи с компания от този профил, е важно да разбере как протича съвместната работа — от първата консултация до предаването на обекта. Визуална схема или кратко описание на всяка фаза намалява несигурността и улеснява решението за контакт.</p>
 				</li>
 
 				<li class="at-audit-task">
-					<h3 class="at-h3">[Важно] Навигация към страниците на проектите</h3>
-					<p>Картите на проектите в секция „Опит“ отварят разгъващ се панел, но не съдържат връзка към детайлната страница на проекта. Потребителят попада в задънена улица без достъп до пълната информация.</p>
-					<!-- Native disclosure: summary toggles the prompt with Enter or Space and exposes its open state. -->
-					<details>
-						<summary>Виж промпт</summary>
-						<pre><code>## Input
-In &#96;atistat/index.html&#96;, locate the project timeline cards in the &#96;#opit&#96; section. Each card currently uses a &#96;data-href&#96; attribute or a toggle button to expand a panel. Add a real &#96;&lt;a&gt;&#96; link element to each card pointing to the corresponding project page inside &#96;atistat/proekti/&#96; (e.g., &#96;proekti/project-name/&#96;). The link should be visually styled as a "Виж проект →" button using the existing &#96;.at-btn&#96; class and placed at the bottom of the expanded panel.
-
-## Goal
-Every project timeline card contains a working link to its detail page; keyboard and screen-reader users can navigate to project details without using JavaScript-only interactions.</code></pre>
-					</details>
+					<h3 class="at-h3">Видимо и лесно достъпно средство за контакт</h3>
+					<p>В момента контактната информация се намира само в долния край на страницата. Бутон или блок с телефон и имейл, видим непосредствено след представянето на услугите, би намалил трудността посетителят да направи следващата стъпка и да се свърже с компанията.</p>
 				</li>
 
 				<li class="at-audit-task">
-					<h3 class="at-h3">[Важно] Призив за действие и форма за запитване</h3>
-					<p>Сайтът не съдържа ясен призив за действие — няма бутон за запитване, форма за контакт или видим телефонен номер в критичните секции. Потенциалните клиенти нямат очевидна следваща стъпка.</p>
-					<!-- Native disclosure: summary toggles the prompt with Enter or Space and exposes its open state. -->
-					<details>
-						<summary>Виж промпт</summary>
-						<pre><code>## Input
-In &#96;atistat/index.html&#96;, add a prominent CTA section after the &#96;#services&#96; section and before &#96;#contacts&#96;. The section should contain a short Bulgarian heading (e.g., "Свържете се с нас"), a one-sentence value proposition, and two call-to-action buttons using the &#96;.at-btn&#96; class: one &#96;&lt;a href="mailto:..."&gt;&#96; for email and one &#96;&lt;a href="tel:..."&gt;&#96; for phone, with the contact details taken from the existing &#96;#contacts&#96; section of the same page.
-
-## Goal
-A visible, keyboard-accessible CTA with email and phone links appears between the services and contacts sections, giving visitors a clear next step without scrolling to the bottom of the page.</code></pre>
-					</details>
+					<h3 class="at-h3">Раздел с въпроси и отговори (FAQ)</h3>
+					<p>Много потенциални клиенти имат сходни въпроси — за срокове, за начина на ценообразуване, за документацията или за видовете услуги. Събирането на тези въпроси в един организиран раздел спестява времето на посетителя и намалява броя на предварителните запитвания за информация.</p>
 				</li>
 
 				<li class="at-audit-task">
-					<h3 class="at-h3">[Важно] Съдържание на страниците за проекти</h3>
-					<p>Шестте страници за проекти съдържат само заглавие и един ред с описание на услуга. Те не демонстрират реална работа и не удовлетворяват очакванията на потенциалния клиент, дошъл от портфолиото.</p>
-					<!-- Native disclosure: summary toggles the prompt with Enter or Space and exposes its open state. -->
-					<details>
-						<summary>Виж промпт</summary>
-						<pre><code>## Input
-For each project page in &#96;atistat/proekti/&#96; (there are six pages, each at &#96;atistat/proekti/&lt;project-name&gt;/index.html&#96;): add an &#96;&lt;article&gt;&#96; element with the following structure — a &#96;&lt;h1&gt;&#96; project name, a &#96;&lt;p&gt;&#96; service category, a placeholder &#96;&lt;figure&gt;&#96; with an &#96;&lt;img&gt;&#96; pointing to a representative image (use an existing image from the site if available, or a placeholder path), a &#96;&lt;section&gt;&#96; with a &#96;&lt;h2&gt;&#96; "За проекта" and a &#96;&lt;p&gt;&#96; placeholder for project description text (mark with a HTML comment &#96;&lt;!-- TODO: owner to provide project description --&gt;&#96;), a &#96;&lt;section&gt;&#96; with a &#96;&lt;h2&gt;&#96; "Детайли" and a bullet list of project facts (location, area, year — mark with TODO comments for owner to fill), and a &#96;&lt;a href="../"&gt;← Обратно към портфолиото&lt;/a&gt;&#96; back link. Reuse the ATISTAT theme CSS and header/footer from &#96;atistat/index.html&#96;.
-
-## Goal
-Each project page contains a structured layout ready for the owner to fill with real project facts, images, and descriptions; the page no longer appears as a placeholder; a back-to-portfolio link is present.</code></pre>
-					</details>
+					<h3 class="at-h3">Видеосъдържание за проектите и екипа</h3>
+					<p>Кратко видео — обход на завършен обект, интервю с ключов специалист или заснет процес на изпълнение — предоставя усещане за мащаб и атмосфера, което снимките не могат да предадат напълно. То задържа посетителя по-дълго и създава по-силна емоционална връзка с работата на компанията.</p>
 				</li>
 
 				<li class="at-audit-task">
-					<h3 class="at-h3">[Важно] Уникални идентификатори на SVG елементите</h3>
-					<p>Хедърът и футърът на сайта съдържат два идентични SVG логотипа с еднакви ID атрибути. Повтарящите се ID стойности нарушават HTML стандарта и могат да причинят проблеми при екранни четци и автоматизирани инструменти.</p>
-					<!-- Native disclosure: summary toggles the prompt with Enter or Space and exposes its open state. -->
-					<details>
-						<summary>Виж промпт</summary>
-						<pre><code>## Input
-In &#96;atistat/index.html&#96; and &#96;atistat/index-en.html&#96;, the &#96;&lt;header&gt;&#96; and &#96;&lt;footer&gt;&#96; each contain an inline SVG with the same ID values (&#96;svg1&#96;, &#96;defs1&#96;, &#96;g1&#96;, &#96;layer2&#96;, &#96;layer3&#96;, &#96;namedview1&#96;, &#96;text1&#96;, &#96;text2&#96;). Rename the IDs in the footer SVG by appending &#96;-footer&#96; to each ID and updating any internal &#96;href&#96; or &#96;url()&#96; references within the same SVG element. Do not change the header SVG IDs.
-
-## Goal
-All element IDs in the document are unique; HTML validation passes without duplicate-ID errors; assistive technologies can unambiguously reference each SVG element.</code></pre>
-					</details>
+					<h3 class="at-h3">Интерактивна карта с местоположенията на обектите</h3>
+					<p>Карта, показваща реализираните проекти по местоположение, помага на потенциалния клиент да види дали АТИСТАТ работи в неговия район. Тя също така нагледно демонстрира географския обхват и опита на компанията по убедителен и лесен за разбиране начин.</p>
 				</li>
+
+				<li class="at-audit-task">
+					<h3 class="at-h3">Раздел с награди, сертификати и членства</h3>
+					<p>Акредитациите, лицензите и членствата в браншови организации са сигнал за качество и надеждност. Показването им на видно място — с лого и кратко описание — увеличава доверието на клиента, особено при сравняване с конкуренти.</p>
+				</li>
+
+				<li class="at-audit-task">
+					<h3 class="at-h3">Новини и актуална информация за компанията</h3>
+					<p>Раздел с новини или блог, в който се публикуват обновления за текущи проекти, отраслови тенденции или полезни съвети, показва на посетителите, че компанията е активна и ангажирана. Редовното съдържание дава и повод посетителят да се върне на сайта.</p>
+				</li>
+
+				<li class="at-audit-task">
+					<h3 class="at-h3">Онлайн форма за запитване или оферта</h3>
+					<p>Не всеки посетител иска да се обади по телефона при първи контакт. Проста форма с полета за описание на нуждата, местоположение и предпочитан начин за обратна връзка дава алтернативен, по-малко натоварващ начин за стартиране на разговор с компанията.</p>
+				</li>
+
+				<li class="at-audit-task">
+					<h3 class="at-h3">Сравнение на предлаганите услуги</h3>
+					<p>АТИСТАТ предлага различни по вид услуги — проектиране, строителство, инвестиционно управление и свързани дейности. Нагледно сравнение или ясно структурирано описание помага на потенциалния клиент да разбере кое предложение отговаря на неговата ситуация, преди да се свърже за консултация.</p>
+				</li>
+
+				<li class="at-audit-task">
+					<h3 class="at-h3">По-ясен и достъпен превключвател между езиците</h3>
+					<p>Сайтът предлага съдържание на български и английски, но превключването между езиците не е очевидно за новите посетители. По-видим бутон или меню за избор на език — поставен на постоянно видно място — улеснява международните клиенти и партньори да намерят версията на своя език без затруднения.</p>
+				</li>
+
 			</ol>
 		</div>
 	</section>
+
+	<!--
+	  Navigation link to the AI critique page
+	  Design intent: Let the owner navigate directly to the technical audit companion page.
+	-->
+	<section class="at-section" id="related">
+		<div class="at-container at-audit-copy">
+			<p><a href="index-ai-critique.html">→ Виж техническата АИ оценка на сайта</a></p>
+		</div>
+	</section>
+
 </main><!-- #main -->
 
-<!--
-  Footer
-  Design intent: Reuse the established ATISTAT sign-off and provide a native back-to-top link.
-  Accessibility: Footer links activate with Enter; the arrow icon is hidden from assistive technology.
--->
 <footer class="at-footer">
 	<div class="at-container at-footer__inner">
 		<a class="at-footer__logo" href="" aria-label="ATISTAT">
