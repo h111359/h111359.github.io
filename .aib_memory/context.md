@@ -57,6 +57,7 @@
 - The Professional page is a one-page executive profile; the Projects page contains exactly the two vocabulary tools; and the Creative page contains all 13 works in a natural-ratio captioned grid grouped as ten oils and three watercolors.
 - js/site.js provides dependency-free in-place navigation and subtle opacity-and-short-rise reveal enhancement without generating essential markup.
 - Four optimized 1200 by 630 page-specific sharing images live under images/social and are derived without modifying the original portrait or artwork.
+- atistat/ai-critique.html is a standalone static audit-report page presenting the ATISTAT site quality evaluation in Bulgarian for the site owner, using the theme CSS and header/footer from atistat/index.html; accessible by direct URL only (no nav link); excluded from search indexing via noindex meta.
 
 ## Issues
 - events.js contains a duplicate entry for event-20250724-tudja; the gallery dropdown shows this event twice.
@@ -73,6 +74,10 @@
 - The vocabulary applications retain out-of-scope inline styling, inline event assignment, debug logging, and innerHTML fallbacks identified during the main-page redesign.
 - aib-analyze.md duplicates question variables, declares an impossible three-subsection Proposed Solution count while naming two, skips S05.7, and conflicts with itself about input-reset timing.
 - AIB conventions conflict over a prohibited plan Decisions section and over neutral Decision Register choices versus recommended Q-block choices; the requirements gate priority item also fits already-authorized requests poorly.
+- atistat/index.html and atistat/index-en.html header and footer SVG elements share duplicate IDs (svg1, defs1, g1, layer2, layer3, namedview1, text1, text2); violates HTML uniqueness requirements and can cause assistive-technology ambiguity.
+- atistat/wp-content/themes/atistat/assets/css/main.css hides .at-fade elements by default; atistat/wp-content/themes/atistat/assets/js/main.js must execute successfully to reveal them; content remains invisible if the script is blocked or throws before reveal initialization.
+- atistat/index.html: hero LCP image uses loading=lazy causing a measured 3.86 s mobile LCP; should use loading=eager with fetchpriority=high.
+- atistat/index.html: empty link rel=preconnect href= on line 6 provides no benefit and should be removed or replaced with a valid origin.
 
 ## File Structure
 
