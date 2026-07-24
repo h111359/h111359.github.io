@@ -1,9 +1,13 @@
 <!DOCTYPE html>
+<!--
+  index.html: ATISTAT homepage — main Bulgarian entry point for the company website.
+  Component: ATISTAT Homepage — hero, trust metrics, about, experience timeline,
+             testimonials, services, why ATISTAT, FAQ, and contacts sections.
+-->
 <html lang="bg">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="preconnect" href="">
 	<title>ATISTAT &#8211; Construction &amp; Investment</title>
 <meta name='robots' content='max-image-preview:large' />
 <style id="wp-img-auto-sizes-contain-inline-css">
@@ -28,6 +32,215 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 
 <link rel='stylesheet' id='atistat-main-css' href='wp-content/themes/atistat/assets/css/main.css' media='all' />
 <link rel="https://api.w.org/" href="wp-json/" /><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%22-2%201%2062%2062%22%3E%3Crect%20x%3D%22-2%22%20y%3D%221%22%20width%3D%2262%22%20height%3D%2262%22%20rx%3D%2210%22%20fill%3D%22%23f5f2ea%22%2F%3E%3Cg%20transform%3D%22translate%28-20.3850958%2C-59.8246754%29%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20fill%3D%22%23538135%22%20d%3D%22m%2048.121068%2C64.332595%20h%2012.400623%20l%2016.600195%2C42.669235%20q%201.347033%2C3.4072%202.377117%2C4.19957%201.069702%2C0.79238%203.882623%2C0.75276%20v%207.64639%20H%2057.233347%20v%20-7.64639%20l%201.584744%2C-0.0396%20q%202.179024%2C0%203.050633%2C-0.55466%200.871609%2C-0.59428%200.871609%2C-1.42627%200%2C-0.71314%20-0.752753%2C-2.93178%20l%20-1.624363%2C-5.03156%20H%2043.52531%20l%20-2.060167%2C5.58622%20q%20-0.633898%2C1.78284%20-0.633898%2C2.3375%200%2C0.6339%200.435805%2C1.14894%200.475423%2C0.51504%201.505507%2C0.75275%200.673516%2C0.15848%203.724149%2C0.15848%20v%207.64639%20H%2025.102659%20v%20-7.64639%20q%202.060168%2C0%203.011014%2C-0.35657%200.950847%2C-0.35657%201.545126%2C-1.0697%200.633898%2C-0.71314%201.386651%2C-2.65445%20z%20m%20-1.7036%2C29.753572%20H%2057.471059%20L%2052.082929%2C78.872623%20Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
+<style>
+/*
+  index.html: Additional styles for AI-proposals sections.
+  Covers: hero sub-text/CTA, trust stats, testimonials, why-atistat, faq,
+          social links, whatsapp floating button.
+*/
+
+/* ===== Hero sub-text and CTA row ===== */
+.at-hero__sub {
+	margin: 1em 0 1.4em;
+	font-size: clamp(.95rem, 1.4vw, 1.05rem);
+	line-height: 1.6;
+	color: var(--ink);
+	max-width: 48ch;
+	opacity: .82;
+}
+.at-hero__ctas {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	align-items: center;
+}
+
+/* ===== Trust Stats strip ===== */
+.at-stats {
+	background: var(--green);
+	padding-block: clamp(24px, 4vw, 44px);
+}
+.at-stats__list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: clamp(24px, 4vw, 60px);
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+.at-stats__num {
+	display: block;
+	font-size: clamp(2rem, 4vw, 2.8rem);
+	font-weight: 700;
+	color: #fff;
+	line-height: 1;
+}
+.at-stats__label {
+	font-size: clamp(.78rem, 1.2vw, .9rem);
+	color: rgba(255,255,255,.82);
+	text-transform: uppercase;
+	letter-spacing: .06em;
+	max-width: 14ch;
+}
+
+/* ===== Testimonials ===== */
+.at-testimonials { background: var(--cream); }
+.at-testimonials__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: clamp(16px, 2.4vw, 28px);
+	margin-top: clamp(20px, 3vw, 36px);
+}
+.at-testi {
+	background: var(--paper);
+	border: 1px solid var(--line);
+	border-radius: 12px;
+	padding: clamp(18px, 2.4vw, 28px);
+}
+.at-testi__quote {
+	font-size: 1.02em;
+	line-height: 1.65;
+	color: var(--ink);
+	margin: 0 0 1.1em;
+}
+.at-testi__quote::before {
+	content: '\201C';
+	display: block;
+	font-size: 2.4em;
+	color: var(--green);
+	line-height: .7;
+	margin-bottom: .3em;
+}
+.at-testi__author {
+	font-weight: 700;
+	color: var(--green);
+	font-size: .92em;
+}
+.at-testi__role {
+	display: block;
+	font-size: .84em;
+	color: var(--ink);
+	opacity: .7;
+	margin-top: 2px;
+}
+
+/* ===== Why ATISTAT ===== */
+.at-why { background: var(--paper); }
+.at-why__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: clamp(14px, 2vw, 24px);
+	margin-top: clamp(20px, 3vw, 36px);
+}
+.at-why__card {
+	border-left: 3px solid var(--green);
+	padding: clamp(14px, 1.8vw, 20px) clamp(16px, 2vw, 22px);
+	background: var(--cream);
+	border-radius: 0 8px 8px 0;
+}
+.at-why__card h3 {
+	color: var(--green);
+	font-size: .98rem;
+	font-weight: 700;
+	margin: 0 0 .5em;
+}
+.at-why__card p {
+	margin: 0;
+	font-size: .93em;
+	line-height: 1.62;
+	color: var(--ink);
+}
+
+/* ===== FAQ ===== */
+.at-faq__list {
+	list-style: none;
+	padding: 0;
+	margin: clamp(20px, 3vw, 36px) 0 0;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	max-width: 72ch;
+}
+.at-faq__item { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.at-faq__item summary {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 16px;
+	padding: clamp(12px, 1.6vw, 18px) clamp(14px, 2vw, 22px);
+	font-weight: 700;
+	color: var(--ink);
+	cursor: pointer;
+	list-style: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+.at-faq__item summary::-webkit-details-marker { display: none; }
+.at-faq__item summary::after {
+	content: '+';
+	flex-shrink: 0;
+	font-size: 1.35em;
+	color: var(--green);
+	transition: transform .22s ease;
+}
+.at-faq__item[open] > summary::after { transform: rotate(45deg); }
+.at-faq__item summary:hover,
+.at-faq__item summary:focus-visible { color: var(--green); }
+.at-faq__item summary:focus-visible { outline: 2px solid var(--green); outline-offset: -2px; }
+.at-faq__answer {
+	padding: 0 clamp(14px, 2vw, 22px) clamp(12px, 1.6vw, 18px);
+	line-height: 1.65;
+	color: var(--ink);
+}
+
+/* ===== Social links in contacts ===== */
+.at-social-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: 6px;
+}
+.at-social-link {
+	display: inline-flex;
+	align-items: center;
+	color: var(--green);
+	font-size: .88em;
+	font-weight: 700;
+	text-decoration: none;
+	padding: 5px 12px;
+	border: 1.5px solid var(--green);
+	border-radius: 4px;
+	transition: background .18s, color .18s;
+}
+.at-social-link:hover,
+.at-social-link:focus-visible { background: var(--green); color: #fff; }
+.at-social-link:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+
+/* ===== Floating WhatsApp button ===== */
+.at-whatsapp-fab {
+	position: fixed;
+	bottom: clamp(18px, 3vw, 28px);
+	right: clamp(18px, 3vw, 28px);
+	z-index: 999;
+}
+.at-whatsapp-fab a {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+	background: #25D366;
+	color: #fff;
+	text-decoration: none;
+	box-shadow: 0 4px 16px rgba(0,0,0,.22);
+	transition: transform .2s, box-shadow .2s;
+}
+.at-whatsapp-fab a:hover { transform: scale(1.1); box-shadow: 0 6px 22px rgba(0,0,0,.3); }
+.at-whatsapp-fab a:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+</style>
 </head>
 <body class="home blog wp-embed-responsive wp-theme-atistat">
 
@@ -132,9 +345,41 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 				<span>Строителство с професионализъм,</span>
 				<span class="at-accent">Инвестиции с визия.</span>
 			</h1>
+			<!-- Hero sub-text and primary CTA per UX proposal #2 and AI ideas proposal #5 -->
+			<p class="at-hero__sub">Строително-инвестиционна компания с 26 години опит. Реализираме проекти с отговорност, качество и дългосрочна визия — от идея до ключ.</p>
+			<div class="at-hero__ctas">
+				<a class="at-btn" href="#contacts">Свържете се с нас</a>
+				<a class="at-btn at-btn--ghost" href="#services">Нашите услуги</a>
+			</div>
 		</div>
 		<div class="at-hero__art at-fade" data-fade>
 			<a class="at-sketch at-sketch--hero" data-sketch href="#opit">  <span class="at-sketch__frame">    <img class="at-sketch__img" src="wp-content/themes/atistat/assets/images/elemag.webp" alt="Елемаг" loading="eager" decoding="async" fetchpriority="high">  </span>  <span class="at-sketch__cap"><span class="at-sketch__caplabel">Проект:</span> Елемаг</span></a>		</div>
+	</div>
+</section>
+
+<!-- ============================================================
+     Trust Metrics — key indicators per marketing proposal #1
+     ============================================================ -->
+<section class="at-stats" id="stats" aria-label="Ключови показатели">
+	<div class="at-container">
+		<ul class="at-stats__list" role="list">
+			<li class="at-stats__item">
+				<strong class="at-stats__num">26</strong>
+				<span class="at-stats__label">години опит</span>
+			</li>
+			<li class="at-stats__item">
+				<strong class="at-stats__num">8+</strong>
+				<span class="at-stats__label">реализирани проекта</span>
+			</li>
+			<li class="at-stats__item">
+				<strong class="at-stats__num">2</strong>
+				<span class="at-stats__label">награди „Сграда на годината"</span>
+			</li>
+			<li class="at-stats__item">
+				<strong class="at-stats__num">3</strong>
+				<span class="at-stats__label">компании в групата</span>
+			</li>
+		</ul>
 	</div>
 </section>
 
@@ -346,6 +591,35 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 	</div>
 </section>
 
+<!-- ============================================================
+     Testimonials — fabricated per user request; demonstrates AI ideas proposal #2
+     ============================================================ -->
+<section class="at-section at-testimonials" id="testimonials">
+	<div class="at-container">
+		<div class="at-fade" data-fade>
+			<h2 class="at-h2">КАЗВАТ ЗА НАС</h2>
+			<span class="at-rule" aria-hidden="true"></span>
+		</div>
+		<div class="at-testimonials__grid">
+			<article class="at-testi at-fade" data-fade>
+				<p class="at-testi__quote">Работим с АТИСТАТ от 2022 г. Всеки проект е изпълнен в срок и в рамките на договорения бюджет. Екипът е изключително комуникативен и отговорен.</p>
+				<span class="at-testi__author">Г-н Иванов</span>
+				<span class="at-testi__role">Управител, частен инвеститор — жилищна сграда в кв. Лозенец</span>
+			</article>
+			<article class="at-testi at-fade" data-fade>
+				<p class="at-testi__quote">Ремонтът на офис сградата беше завършен с месец по-рано от предвиденото. АТИСТАТ показаха, че качество и бързина могат да вървят заедно — нещо рядко срещано в бранша.</p>
+				<span class="at-testi__author">Г-жа Петкова</span>
+				<span class="at-testi__role">Директор Оперативни дейности, корпоративен клиент</span>
+			</article>
+			<article class="at-testi at-fade" data-fade>
+				<p class="at-testi__quote">Инженерният екип на АТИСТАТ предложи решения, за които нашите архитекти не бяха помислили. Тяхната техническа компетентност добавя реална стойност още на фаза проектиране.</p>
+				<span class="at-testi__author">арх. Тодоров</span>
+				<span class="at-testi__role">Главен проектант, архитектурно бюро</span>
+			</article>
+		</div>
+	</div>
+</section>
+
 <!-- ===================== УСЛУГИ ===================== -->
 <section class="at-section at-services" id="services">
 	<div class="at-container at-services__inner">
@@ -412,6 +686,92 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 	</div>
 </section>
 
+<!-- ============================================================
+     Why ATISTAT — differentiators per marketing proposal #19
+     ============================================================ -->
+<section class="at-section at-why" id="why">
+	<div class="at-container">
+		<div class="at-fade" data-fade>
+			<h2 class="at-h2">ЗАЩО АТИСТАТ</h2>
+			<span class="at-rule" aria-hidden="true"></span>
+			<p class="at-lead">Строителните компании са много. Ето защо все повече клиенти избират нас.</p>
+		</div>
+		<div class="at-why__grid">
+			<div class="at-why__card at-fade" data-fade>
+				<h3>Интегриран подход</h3>
+				<p>Ние не сме само строители. Комбинираме управление на проекти, строителна експертиза и инвестиционна перспектива — обслужваме проекта от идея до ключ.</p>
+			</div>
+			<div class="at-why__card at-fade" data-fade>
+				<h3>Доказан опит</h3>
+				<p>26 години в бранша, над 8 реализирани проекта от различен мащаб и тип — жилищни сгради, офиси, логистика, образование. Знаем как изглежда всеки тип предизвикателство.</p>
+			</div>
+			<div class="at-why__card at-fade" data-fade>
+				<h3>Отговорност към бюджета и срока</h3>
+				<p>Работим с реалистични оферти и спазваме ангажиментите си. Нашите клиенти планират инвестициите си с увереност, защото ние изпълняваме каквото сме обещали.</p>
+			</div>
+			<div class="at-why__card at-fade" data-fade>
+				<h3>Признат от индустрията</h3>
+				<p>„Инженерни Системи" — партньорската ни компания — получи две награди „Сграда на годината" 2025. Стандартите, заложени там, важат и тук.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ============================================================
+     FAQ — frequently asked questions per AI ideas proposal #6
+     ============================================================ -->
+<section class="at-section at-faq" id="faq">
+	<div class="at-container">
+		<div class="at-fade" data-fade>
+			<h2 class="at-h2">ВЪПРОСИ И ОТГОВОРИ</h2>
+			<span class="at-rule" aria-hidden="true"></span>
+			<p class="at-lead">Отговори на най-честите въпроси, с които ни се обаждат потенциалните клиенти.</p>
+		</div>
+		<ul class="at-faq__list at-fade" data-fade role="list">
+			<li class="at-faq__item">
+				<details>
+					<summary>Каква е минималната стойност на проект, с който работите?</summary>
+					<div class="at-faq__answer">
+						<p>Нямаме фиксиран минимален праг. Оценяваме всяко запитване индивидуално — ключовото за нас е яснотата на техническото задание и готовността на клиента да работи партньорски. Свържете се с нас за предварителна консултация.</p>
+					</div>
+				</details>
+			</li>
+			<li class="at-faq__item">
+				<details>
+					<summary>Колко отнема изготвянето на оферта?</summary>
+					<div class="at-faq__answer">
+						<p>При наличие на проектна документация и технически спецификации — от 3 до 7 работни дни. В рамките на 24 часа от вашето запитване ще потвърдим получаването му и ще предложим удобен час за начален разговор.</p>
+					</div>
+				</details>
+			</li>
+			<li class="at-faq__item">
+				<details>
+					<summary>Работите ли само в София или и в страната?</summary>
+					<div class="at-faq__answer">
+						<p>Основната ни дейност е съсредоточена в София и Софийска област, но работим и с проекти в страната при подходящ мащаб и условия. Свържете се с нас, за да обсъдим конкретния обект.</p>
+					</div>
+				</details>
+			</li>
+			<li class="at-faq__item">
+				<details>
+					<summary>Предлагате ли само строителство или и проектиране?</summary>
+					<div class="at-faq__answer">
+						<p>Ние координираме и управляваме целия инвестиционно-строителен процес. При необходимост от проектиране работим с доверени архитектурни и инженерни бюра. Можем да влезем в проекта на всеки негов етап.</p>
+					</div>
+				</details>
+			</li>
+			<li class="at-faq__item">
+				<details>
+					<summary>Как ще проследявам напредъка на строежа?</summary>
+					<div class="at-faq__answer">
+						<p>Провеждаме редовни работни срещи с клиента и осигуряваме достъп до обекта. При поискване предоставяме и периодични доклади за напредъка. Прозрачността в комуникацията е ценност, не просто задължение.</p>
+					</div>
+				</details>
+			</li>
+		</ul>
+	</div>
+</section>
+
 <!-- ===================== КОНТАКТИ ===================== -->
 <section class="at-section at-contacts" id="contacts">
 	<div class="at-container at-contacts__inner">
@@ -436,6 +796,22 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 				</li>
 				<li class="at-contact">
 					<svg class="at-contact__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>					<div><a class="at-contact__val" href="mailto:office@atistat.com">office@atistat.com</a></div>
+				</li>
+				<!-- WhatsApp quick contact per marketing proposal #16 -->
+				<li class="at-contact">
+					<svg class="at-contact__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" style="stroke:none"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>					<div>
+						<a class="at-contact__val" href="https://wa.me/359884074048" target="_blank" rel="noopener noreferrer">WhatsApp: +359 884 074 048</a>
+					</div>
+				</li>
+				<!-- Social media links per marketing proposal #10 -->
+				<li class="at-contact">
+					<svg class="at-contact__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>					<div>
+						<span class="at-contact__title">Следете ни</span>
+						<div class="at-social-links">
+							<a class="at-social-link" href="https://www.facebook.com/atistat" target="_blank" rel="noopener noreferrer" aria-label="АТИСТАТ в Facebook">Facebook</a>
+							<a class="at-social-link" href="https://www.linkedin.com/company/atistat" target="_blank" rel="noopener noreferrer" aria-label="АТИСТАТ в LinkedIn">LinkedIn</a>
+						</div>
+					</div>
 				</li>
 			</ul>
 		</div>
@@ -509,6 +885,16 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 		<a class="at-footer__totop" href="#top" aria-label="Нагоре"><svg class="at-footer__totop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
 	</div>
 </footer>
+
+<!-- ============================================================
+     WhatsApp floating button — per marketing proposal #16
+     ============================================================ -->
+<div class="at-whatsapp-fab" role="complementary" aria-label="Бърз контакт в WhatsApp">
+	<a href="https://wa.me/359884074048" target="_blank" rel="noopener noreferrer" aria-label="Пишете ни в WhatsApp" title="WhatsApp: +359 884 074 048">
+		<!-- WhatsApp brand icon -->
+		<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" width="26" height="26"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+	</a>
+</div>
 
 <script type="speculationrules">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
