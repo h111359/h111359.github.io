@@ -1,60 +1,166 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<!--
+  index.html: Public entry point for the Hristov family China travel journal.
+  Component: China Trip Gallery — provides event navigation, gallery content, and a basic media dialog.
+-->
+<html lang="bg">
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Gallery — Multiple Events</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4efe5">
+  <meta
+    name="description"
+    content="Пътуване до Китай през юли 2025 — снимки, видеа и разкази на семейство Христови."
+  >
+  <title>Пътуване до Китай - юли 2025</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <header class="hdr">
+  <!-- Skip link: becomes visible on keyboard focus and moves directly to the current event content. -->
+  <a class="skip-link" href="#main-content">Към съдържанието</a>
+
+  <!-- ============================================================
+       Introductory Header
+       Design intent: A restrained editorial cover establishes the trip before navigation and media.
+       ============================================================ -->
+  <header class="hero" id="siteHeader">
+    <div class="hero__inner">
+      <p class="hero__eyebrow">Семеен пътепис</p>
       <h1>Пътуване до Китай - юли 2025</h1>
-      <div class="meta">Едно пътешествие на семейство Христови</div>
-      <nav class="topnav" id="topnav">
-  <select id="eventSelect" class="event-select"></select>
-      </nav>
-    </header>
+      <p class="hero__subtitle">Едно пътешествие на семейство Христови</p>
+      <p class="hero__facts" id="tripFacts" hidden></p>
 
+      <!--
+        Drawer trigger: a native button supports Enter/Space; aria-expanded communicates the mobile
+        drawer state, while aria-controls identifies the event navigator it opens.
+      -->
+      <button
+        class="navigator-trigger"
+        id="openNavigator"
+        type="button"
+        aria-controls="eventNavigator"
+        aria-expanded="false"
+        aria-label="Отвори избора на събитие"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+        <span>Събития</span>
+      </button>
+    </div>
+  </header>
 
-    <main class="grid" id="grid" aria-live="polite"></main>
+  <!--
+    Drawer scrim: visually separates the compact navigator; it is mouse/touch-only because the
+    drawer also contains an explicit keyboard-accessible close button.
+  -->
+  <div class="drawer-scrim" id="drawerScrim" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       Journal Layout
+       Design intent: A date-grouped itinerary anchors a spacious, media-first reading column.
+       ============================================================ -->
+  <div class="journal-layout">
+    <!--
+      Event navigator: a landmark on wide screens and an aria-modal dialog on compact screens.
+      The script traps Tab focus while modal and closes it with Escape.
+    -->
+    <aside class="navigator" id="eventNavigator" aria-label="Събития от пътуването">
+      <div class="navigator__header">
+        <div>
+          <p class="section-kicker">Маршрут</p>
+          <h2>Дневник на пътуването</h2>
+        </div>
+
+        <!-- Drawer close: a native button supports Enter/Space; its Bulgarian label names the action. -->
+        <button
+          class="navigator__close"
+          id="closeNavigator"
+          type="button"
+          aria-label="Затвори избора на събитие"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Search: the visible label names the field; results are announced through navSummary. -->
+      <form class="event-search" role="search">
+        <label for="eventSearch">Търсене в събитията</label>
+        <div class="event-search__field">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="6"></circle>
+            <path d="m16 16 4 4"></path>
+          </svg>
+          <input
+            id="eventSearch"
+            type="search"
+            inputmode="search"
+            autocomplete="off"
+            placeholder="Място или преживяване"
+          >
+        </div>
+      </form>
+
+      <p class="navigator__summary" id="navSummary" role="status" aria-live="polite"></p>
+
+      <!-- Event buttons are generated from the protected registry and grouped by its date values. -->
+      <nav class="event-groups" id="eventGroups" aria-label="Събития по дата"></nav>
+    </aside>
+
+    <!-- ============================================================
+         Current Event
+         Design intent: Event context remains quiet so authored photography and stories lead.
+         ============================================================ -->
+    <main class="journal" id="main-content" tabindex="-1">
+      <header class="event-heading">
+        <p class="event-heading__date" id="eventDate"></p>
+        <h2 id="eventTitle">Зареждане на пътуването…</h2>
+        <p class="event-heading__status" id="eventStatus" role="status" aria-live="polite"></p>
+      </header>
+
+      <div class="gallery" id="gallery" aria-busy="true"></div>
+    </main>
   </div>
 
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Viewer">
-    <button class="close" id="closeBtn" title="Close (Esc)">Close</button>
-    <div class="lb-body" id="lbBody"></div>
-    <div class="lb-caption" id="lbCaption"></div>
+  <!-- ============================================================
+       Basic Media Lightbox
+       Design intent: A calm full-screen viewing surface with no carousel or browsing controls.
+       ============================================================ -->
+  <!--
+    Media dialog: aria-modal identifies modal behavior; Tab is contained, Escape closes, and focus
+    returns to the media button that opened it.
+  -->
+  <div
+    class="lightbox"
+    id="lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="lightboxTitle"
+    hidden
+  >
+    <h2 class="visually-hidden" id="lightboxTitle">Преглед на медия</h2>
+
+    <!-- Lightbox close: a native button supports Enter/Space and Escape is handled by the dialog. -->
+    <button class="lightbox__close" id="closeLightbox" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18"></path>
+      </svg>
+      <span>Затвори</span>
+    </button>
+    <div class="lightbox__body" id="lightboxBody"></div>
   </div>
 
+  <!-- No-script state: essential gallery data needs JavaScript, so the limitation is stated in Bulgarian. -->
   <noscript>
-    <div style="padding:12px;margin:16px;background:#fee2e2;color:#991b1b;border-radius:8px">
-      JavaScript is required to show the gallery. Please enable it.
+    <div class="noscript-message" role="status">
+      За да разгледате снимките и видеата, включете JavaScript в браузъра.
     </div>
   </noscript>
 
-  <!-- 1) event registry, 2) app logic -->
-  <script src="data/events.js" charset="utf-8" defer></script>
-  <script src="app.js" charset="utf-8" defer></script>
-
-  <!-- Fallback message if app.js isn’t present yet -->
-  <script>
-    window.addEventListener('DOMContentLoaded', function(){
-      setTimeout(function(){
-        var topnav = document.getElementById('topnav');
-        var mobileSelect = document.getElementById('eventSelectMobile');
-        var hasTabs = topnav && topnav.querySelectorAll('.tab').length > 0;
-        var hasDropdown = mobileSelect && mobileSelect.options.length > 0;
-        if (!hasTabs && !hasDropdown) {
-          const grid = document.getElementById('grid');
-          const msg = document.createElement('div');
-          msg.style.cssText = 'padding:12px;border:1px solid #374151;border-radius:12px;background:#111827;color:#e5e7eb';
-          msg.innerHTML = 'App script not loaded yet. Continue to Step 3 to add <code>app.js</code>.';
-          grid.appendChild(msg);
-        }
-      }, 300);
-    });
-  </script>
+  <!-- Event registry loads first; the dependency-free controller enhances the source HTML afterward. -->
+  <script src="data/events.js" charset="utf-8"></script>
+  <script src="app.js" charset="utf-8"></script>
 </body>
 </html>

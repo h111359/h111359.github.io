@@ -1,407 +1,1155 @@
-/* =========================================
-   Peach Light Theme — site stylesheet
-   ========================================= */
+/*
+ * style.css: Warm editorial design system for the public China travel journal.
+ * Sections: Design Tokens, Foundations, Hero, Navigator, Event Header, Gallery, Lightbox, Responsive States.
+ */
 
-:root{
-  --bg: #FFF6F0;          /* page background */
-  --card: #FFF9F5;        /* card background */
-  --media-bg: #FFEDE3;    /* letterbox behind contain images/videos */
-  --border: #F7D6C7;      /* card borders */
-  --borderHover: #F3C1AE; /* hover border */
-  --text: #3A2E2A;        /* primary text */
-  --muted: #6B5B53;       /* secondary text */
-  --accent: #FF8A5B;      /* buttons/highlights */
+/* ============================================================
+   Design Tokens
+   Design intent: Warm paper, lacquer, jade, and ink tones reference place without decorative clichés.
+   ============================================================ */
+:root {
+  /* Paper canvas — the warm neutral used behind the complete journal. */
+  --color-canvas: #f4efe5;
+  /* Quiet paper surface — separates content regions without stark white panels. */
+  --color-surface: #fbf8f1;
+  /* Elevated paper surface — gives media cards and controls a clean reading layer. */
+  --color-surface-raised: #fffdf8;
+  /* Primary ink — body text with WCAG AA contrast on every paper surface. */
+  --color-ink: #27231e;
+  /* Secondary ink — supporting labels with WCAG AA contrast on the canvas. */
+  --color-ink-soft: #665f55;
+  /* Muted ink — non-essential decorative details and inactive icons. */
+  --color-ink-muted: #7a7268;
+  /* Lacquer red — primary interactive accent and selected itinerary state. */
+  --color-lacquer: #9f2f2a;
+  /* Deep lacquer — hover and pressed state for primary interactive controls. */
+  --color-lacquer-deep: #74201e;
+  /* Pale lacquer — quiet selected-state background behind dark text. */
+  --color-lacquer-pale: #f2dfd8;
+  /* Dark jade — secondary accent for dates, play controls, and editorial rules. */
+  --color-jade: #315e54;
+  /* Pale jade — subtle backdrop for media placeholders. */
+  --color-jade-pale: #dce7df;
+  /* Hairline border — defines controls and cards against warm surfaces. */
+  --color-border: #d8d0c2;
+  /* Strong border — visible hover separation and quiet dividers. */
+  --color-border-strong: #b8ad9d;
+  /* Control border — exceeds 3:1 against raised paper for non-text control contrast. */
+  --color-control-border: #8f8679;
+  /* Inverse ink — text and icons shown on lacquer or dark overlays. */
+  --color-inverse: #fffdf8;
+  /* Error ink — Bulgarian failure messages with AA contrast on pale error. */
+  --color-error: #84261f;
+  /* Error surface — calm but visible failure-state background. */
+  --color-error-surface: #f8e4df;
+  /* Focus ring — high-contrast keyboard indicator shared by all controls. */
+  --color-focus: #166b9a;
+  /* Modal backdrop — separates focused media from the page beneath. */
+  --color-scrim: rgb(31 27 23 / 82%);
+  /* Drawer backdrop — keeps mobile context visible while emphasizing navigation. */
+  --color-drawer-scrim: rgb(39 35 30 / 46%);
+  /* Hero accent wash — an extremely quiet lacquer diagonal behind the cover title. */
+  --color-hero-wash: rgb(159 47 42 / 6%);
+  /* Focus halo — translucent blue reinforces the solid keyboard focus color. */
+  --color-focus-halo: rgb(22 107 154 / 16%);
+  /* Media veil — darkens thumbnail edges slightly when the open action is indicated. */
+  --color-media-veil: rgb(39 35 30 / 15%);
+  /* Strong inverse border — separates the play control from photography. */
+  --color-inverse-border-strong: rgb(255 253 248 / 62%);
+  /* Soft inverse border — separates the close control from the modal backdrop. */
+  --color-inverse-border-soft: rgb(255 253 248 / 45%);
 
-  --radius: 16px;
-  --gap: 16px;
+  /* Editorial serif — system-resident display face with no external font request. */
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  /* Interface sans — native system stack optimized for controls and body copy. */
+  --font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* Compact label size — metadata, dates, and navigation summaries. */
+  --font-size-label: 0.78rem;
+  /* Small interface size — buttons and supporting content. */
+  --font-size-small: 0.9rem;
+  /* Base reading size — gallery descriptions and controls. */
+  --font-size-base: 1rem;
+  /* Lead size — supporting headings and short story introductions. */
+  --font-size-lead: clamp(1.06rem, 1.6vw, 1.24rem);
+  /* Event title size — responsive hierarchy within the reading column. */
+  --font-size-heading: clamp(1.8rem, 4vw, 3.4rem);
+  /* Cover title size — primary travel-journal identity. */
+  --font-size-hero: clamp(2.45rem, 7.6vw, 6.8rem);
+
+  /* Base spacing unit — compact internal gaps and control padding. */
+  --space-1: 0.25rem;
+  /* Small spacing — related labels and icon gaps. */
+  --space-2: 0.5rem;
+  /* Control spacing — button padding and close relationships. */
+  --space-3: 0.75rem;
+  /* Component spacing — card padding and form rhythm. */
+  --space-4: 1rem;
+  /* Comfortable spacing — grouped controls and text blocks. */
+  --space-5: 1.5rem;
+  /* Section spacing — separation between interface regions. */
+  --space-6: 2rem;
+  /* Editorial spacing — event and gallery breathing room. */
+  --space-7: 3rem;
+  /* Large section spacing — desktop cover and page rhythm. */
+  --space-8: 4.5rem;
+  /* Hero spacing — cinematic vertical breathing room. */
+  --space-9: clamp(5.5rem, 11vw, 9.5rem);
+
+  /* Compact radius — search field and smaller component corners. */
+  --radius-small: 0.5rem;
+  /* Card radius — softens media and story surfaces. */
+  --radius-medium: 0.9rem;
+  /* Pill radius — circular and capsule-shaped controls. */
+  --radius-pill: 999px;
+
+  /* Hairline shadow — subtle lift for controls on paper. */
+  --shadow-small: 0 0.4rem 1.4rem rgb(48 39 31 / 8%);
+  /* Media shadow — editorial depth beneath photography. */
+  --shadow-media: 0 1rem 3rem rgb(48 39 31 / 12%);
+  /* Drawer shadow — separates the compact itinerary from page content. */
+  --shadow-drawer: 1rem 0 3rem rgb(35 29 24 / 18%);
+  /* Dialog shadow — gives embedded media a single elevated plane over the dark scrim. */
+  --shadow-dialog: 0 1.5rem 5rem rgb(0 0 0 / 32%);
+
+  /* Quick motion — responsive control feedback that stays below perceptible delay. */
+  --motion-quick: 160ms;
+  /* Calm motion — drawer and media transitions without theatrical animation. */
+  --motion-calm: 240ms;
+  /* Standard easing — gentle deceleration for all interface motion. */
+  --ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  /* Reading measure — prevents long story lines from becoming tiring. */
+  --measure-reading: 72ch;
+  /* Site measure — contains the complete editorial composition on wide screens. */
+  --measure-site: 100rem;
+  /* Navigator width — keeps dates readable without crowding the gallery. */
+  --width-navigator: clamp(17rem, 23vw, 22rem);
+  /* Touch target — practical minimum size for pointer and keyboard controls. */
+  --target-size: 2.75rem;
 }
 
-*{ box-sizing: border-box; }
-
-body{
-  margin: 0;
-  color: var(--text);
-  font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial;
-  background: var(--bg);
+/* ============================================================
+   Foundations
+   Design intent: Predictable sizing, readable typography, and strong focus treatment at every width.
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
-body.no-scroll{ overflow: hidden; }
 
-/* =========================
-   Layout frame
-   ========================= */
-.container{
-  width: 100vw;
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 20rem;
   margin: 0;
-  padding: 0;
+  overflow-x: hidden;
+  color: var(--color-ink);
+  background: var(--color-canvas);
+  font-family: var(--font-ui);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+}
+
+body.drawer-open,
+body.lightbox-open {
+  overflow: hidden;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+img,
+iframe {
   display: block;
+  max-width: 100%;
 }
 
-header.hdr{
-  grid-column: 1 / -1; /* span both columns */
-  display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap;
+svg {
+  display: block;
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
-.hdr h1{ margin: 0; font-size: 1.15rem; }
-.meta{ color: var(--muted); font-size: .9rem; }
 
-/* =========================
+/* Keyboard state: a two-tone offset ring remains visible on every paper and accent surface. */
+:where(a, button, input):focus-visible {
+  outline: 0.19rem solid var(--color-focus);
+  outline-offset: 0.19rem;
+}
 
-/* Top navigation dropdown menu */
-.topnav {
+/* Mouse focus state: removes the default outline only where focus-visible support identifies pointer use. */
+:where(a, button, input):focus:not(:focus-visible) {
+  outline: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip-link transition: a quick vertical reveal helps keyboard users orient without delaying access. */
+.skip-link {
+  position: fixed;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: 400; /* Skip-link layer: above drawer (200) and lightbox (300). */
+  min-height: var(--target-size);
+  padding: var(--space-2) var(--space-4);
+  color: var(--color-inverse);
+  background: var(--color-ink);
+  border-radius: var(--radius-small);
+  text-decoration: none;
+  transform: translateY(calc(-100% - var(--space-6)));
+  transition: transform var(--motion-quick) var(--ease-standard);
+}
+
+/* Keyboard state: moves the skip link into the viewport when it receives focus. */
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* ============================================================
+   Introductory Header
+   Design intent: A cinematic cover uses type, negative space, and a single rule instead of decoration.
+   ============================================================ */
+.hero {
+  position: relative;
+  min-height: min(44rem, 82svh);
+  display: grid;
+  align-items: end;
+  overflow: hidden;
+  color: var(--color-ink);
+  background:
+    linear-gradient(120deg, transparent 0 64%, var(--color-hero-wash) 64% 65%, transparent 65%),
+    linear-gradient(135deg, var(--color-surface-raised), var(--color-canvas));
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: clamp(1rem, 8vw, 8rem);
+  width: 1px;
+  height: 42%;
+  background: var(--color-lacquer);
+  opacity: 0.55;
+}
+
+.hero__inner {
+  width: min(100%, var(--measure-site));
+  margin-inline: auto;
+  padding: var(--space-9) clamp(var(--space-4), 5vw, var(--space-8)) var(--space-8);
+}
+
+.hero__eyebrow,
+.section-kicker,
+.event-heading__date {
+  margin: 0;
+  color: var(--color-lacquer);
+  font-size: var(--font-size-label);
+  font-weight: 750;
+  letter-spacing: 0.16em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  max-width: 13ch;
+  margin: var(--space-3) 0 var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--font-size-hero);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.94;
+  text-wrap: balance;
+}
+
+.hero__subtitle {
+  max-width: 40ch;
+  margin: 0;
+  color: var(--color-ink-soft);
+  font-family: var(--font-display);
+  font-size: var(--font-size-lead);
+  font-style: italic;
+}
+
+.hero__facts {
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin: 24px 0;
-}
-.event-select {
-  padding: 8px 18px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  font-size: 1rem;
-  background: var(--card);
-  color: var(--text);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  gap: var(--space-3);
+  margin: var(--space-5) 0 0;
+  color: var(--color-ink-soft);
+  font-size: var(--font-size-small);
+  font-weight: 650;
 }
 
-/* Responsive: on small screens we already switch to the dropdown, so no sidebar scroll there */
-@media (max-width: 700px){
-  .container{ display: block; }
-  #sidebar {
-    position: fixed;
-    left: 0; top: 0; bottom: 0;
-    width: 80vw;
-    max-width: 320px;
-    height: 100vh;
-    z-index: 100;
-    background: #fff;
-    transform: translateX(-100%);
-      display: grid;
-      grid-template-columns: 240px 1fr;
-      grid-template-rows: auto 1fr;
-      gap: 0 0;
-    }
-
-    .container.sidebar-collapsed {
-      grid-template-columns: 1fr;
-    }
-
-    .container.sidebar-collapsed #sidebar {
-      display: none;
-    }
-    .container.sidebar-collapsed main.grid {
-      grid-column: 1 / -1;
-      width: 100vw;
-      max-width: 100vw;
-      margin-left: 0 !important;
-      padding-left: 0 !important;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 24px;
-      position: relative;
-      left: 0;
-      right: 0;
-      min-height: 80vh;
-    }
-    .container.sidebar-collapsed .thumb,
-    .container.sidebar-collapsed .poster {
-      width: auto !important;
-      max-width: 100vw !important;
-      height: auto !important;
-      max-height: 80vh !important;
-      object-fit: contain !important;
-      display: block !important;
-      margin: 0 auto !important;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.10);
-      border-radius: 12px;
-      background: #fff;
-      position: relative;
-      left: 0;
-      right: 0;
-    }
-    #sidebar {
-      transform: translateX(0);
-    }
-    .sidebar-toggle {
-      position: fixed;
-      left: 12px;
-      top: 12px;
-      z-index: 101;
-      display: block;
-    }
-    .tabs{ display: none; }
-    .select-wrap{ display: block; margin-bottom: 10px; }
-    .grid {
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-    .thumb, .poster {
-      max-height: 50vh;
-    }
+.hero__facts[hidden] {
+  display: none;
 }
 
-/* =========================
-   Toolbar / search
-   ========================= */
-.toolbar{ grid-column: 2; margin: 12px 0 10px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-.search{
-  flex: 1 1 260px;
+.hero__facts::before {
+  content: "";
+  width: 2.5rem;
+  height: 1px;
+  background: var(--color-jade);
+}
+
+.navigator-trigger {
+  display: none;
+}
+
+/* ============================================================
+   Journal Layout
+   Design intent: A sticky itinerary and fluid reading column keep a long trip navigable.
+   ============================================================ */
+.journal-layout {
+  width: min(100%, var(--measure-site));
+  display: grid;
+  grid-template-columns: var(--width-navigator) minmax(0, 1fr);
+  margin-inline: auto;
+}
+
+.drawer-scrim {
+  display: none;
+}
+
+/* ============================================================
+   Event Navigator
+   Design intent: Date chapters resemble a book index while remaining compact and searchable.
+   ============================================================ */
+.navigator {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  padding: var(--space-7) var(--space-5);
+  overflow-y: auto;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-strong) transparent;
+}
+
+.navigator__header {
   display: flex;
-  background: var(--card);
-  border-radius: 999px;
-  padding: 8px 12px;
-  border: 1px solid var(--border);
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
 }
-.search input{
-  flex: 1; background: transparent; border: 0; outline: none; color: var(--text); font-size: .95rem;
-}
-.counts,.hint{ color: var(--muted); font-size: .85rem; }
 
-/* =========================
-   Grid / cards
-   ========================= */
-.grid{
+.navigator__header h2 {
+  margin: var(--space-2) 0 0;
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.navigator__close {
+  display: none;
+}
+
+.event-search {
+  margin-top: var(--space-6);
+}
+
+.event-search label {
+  display: block;
+  margin-bottom: var(--space-2);
+  color: var(--color-ink-soft);
+  font-size: var(--font-size-label);
+  font-weight: 700;
+}
+
+/* Search transition: the border shifts quickly to confirm hover/focus without moving the layout. */
+.event-search__field {
+  min-height: var(--target-size);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+  color: var(--color-ink-muted);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-control-border);
+  border-radius: var(--radius-small);
+  box-shadow: var(--shadow-small);
+  transition:
+    border-color var(--motion-quick) var(--ease-standard),
+    box-shadow var(--motion-quick) var(--ease-standard);
+}
+
+/* Search hover state: a stronger border signals that the complete field is interactive. */
+.event-search__field:hover {
+  border-color: var(--color-lacquer);
+}
+
+/* Search focus state: focus-within keeps the field boundary visible while the input owns keyboard focus. */
+.event-search__field:focus-within {
+  border-color: var(--color-focus);
+  box-shadow: 0 0 0 0.13rem var(--color-focus-halo);
+}
+
+.event-search__field svg {
+  flex: 0 0 auto;
+}
+
+.event-search input {
+  min-width: 0;
+  width: 100%;
+  padding: var(--space-2) 0;
+  color: var(--color-ink);
+  background: transparent;
+  border: 0;
+  outline: 0;
+}
+
+.event-search input::placeholder {
+  color: var(--color-ink-muted);
+  opacity: 1;
+}
+
+.navigator__summary {
+  min-height: 1.4em;
+  margin: var(--space-4) 0 var(--space-5);
+  color: var(--color-ink-soft);
+  font-size: var(--font-size-label);
+}
+
+.event-groups {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.event-group h3 {
+  position: relative;
+  margin: 0 0 var(--space-2);
+  padding-left: var(--space-4);
+  color: var(--color-jade);
+  font-size: var(--font-size-label);
+  font-weight: 750;
+  letter-spacing: 0.07em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.event-group h3::before {
+  content: "";
+  position: absolute;
+  top: 0.45em;
+  left: 0;
+  width: 0.45rem;
+  height: 0.45rem;
+  background: var(--color-jade);
+  border-radius: var(--radius-pill);
+}
+
+.event-group__list {
+  display: grid;
+  gap: var(--space-1);
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+  list-style: none;
 }
 
-.card{
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  overflow: clip;
-  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-  width: 100vw;
-}
-.card:hover{
-  border-color: var(--borderHover);
-  box-shadow: 0 6px 24px rgba(255,138,91,.12);
-}
-
-/* Media button wrapper (for images/videos) */
-.media-btn{ all: unset; display: block; width: 100%; cursor: pointer; outline-offset: 2px; }
-
-/* Posters: show entire media with a light letterbox */
-.thumb, .poster{
-  width: auto;
-  max-width: 100vw;
-  height: auto;
-  max-height: 100vh;
-  display: block;
-  object-fit: contain;
-  background: var(--media-bg);
-  filter: saturate(1.02);
-  transition: transform .25s ease, box-shadow .25s ease;
-  border-radius: 18px;
-}
-.video-wrap{ position: relative; }
-.video-wrap .poster{ aspect-ratio: 16 / 9; }
-.card:hover .thumb, .card:hover .poster{ transform: scale(1.01); box-shadow: 0 6px 20px rgba(255,138,91,0.12); }
-
-/* Captions */
-.caption{ padding: 10px 12px; font-size: .85rem; color: var(--muted); display: flex; flex-direction: column; gap: 6px; }
-.cap-top{ display: flex; justify-content: space-between; gap: 8px; align-items: center; }
-.name{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.caption .desc{ color: var(--text); opacity: .85; line-height: 1.3; }
-
-/* Play badge on videos */
-.play{
-  position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none;
-}
-.play svg{
-  width: 56px; height: 56px;
-  background: rgba(255,138,91,.45);
-  border-radius: 999px; padding: 10px;
-}
-
-
-/* === Image-with-description: full row, image left · text right === */
-.grid > .card.has-desc { grid-column: 1 / -1; }
-
-.card.has-desc{
-  display: grid;
-  grid-template-columns: minmax(340px, 1.2fr) 1fr; /* image | text */
-  gap: 20px;
-  align-items: start;
-  padding: 12px; /* optional: card padding to breathe */
-}
-
-/* Left pane (the existing image button) */
-.card.has-desc .media-btn{ align-self: stretch; }
-.card.has-desc .thumb{
+/* Event transition: a quick color and inset shift gives clear feedback without animating content. */
+.event-button {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: contain;            /* keep entire photo visible */
-  background: var(--media-bg);
-  border-radius: 8px;
-}
-
-/* Right pane (your existing caption) */
-.card.has-desc .caption{
-  padding: 0;                     /* remove bottom-card padding; now it's a side panel */
-  display: grid;
-  gap: 10px;
-  align-content: start;
-}
-.card.has-desc .cap-top{ justify-content: flex-start; }
-.card.has-desc .name{ white-space: normal; font-weight: 600; color: var(--text); }
-.card.has-desc .desc{ color: var(--text); line-height: 1.55; white-space: pre-wrap; }
-
-/* Hover effect consistent with other media */
-.card.has-desc:hover .thumb{
-  transform: scale(1.01);
-  box-shadow: 0 6px 20px rgba(255,138,91,0.12);
-  transition: transform .25s ease, box-shadow .25s ease;
-}
-
-/* Stack on narrow screens */
-@media (max-width: 800px){
-  .card.has-desc{
-    grid-template-columns: 1fr;
-  }
-  .card.has-desc .caption{ padding: 10px 12px; } /* restore padding when stacked */
-}
-
-
-/* =========================
-   Lightbox (images/videos)
-   ========================= */
-.lightbox{
-  position: fixed; inset: 0;
-  display: none;
-  align-items: center; justify-content: center;
-  background: rgba(255,138,91,.08); /* soft peach veil */
-  z-index: 9999;
-}
-.lightbox.open{ display: flex; }
-.lb-body{ width: 96vw; height: 90vh; display: grid; place-items: center; }
-.lightbox .frame, .lightbox img, .lightbox video{
-  width: 96vw; height: 90vh; max-width: 96vw; max-height: 90vh;
-  object-fit: contain;
-  border: 0; border-radius: 10px;
-  box-shadow: 0 20px 60px rgba(58,46,42,0.25);
-  background: var(--media-bg);
-}
-.lb-caption{
-  position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
-  max-width: min(96vw,1100px);
-  color: var(--text);
-  font-size: .95rem; line-height: 1.35; text-align: center;
-  text-shadow: 0 2px 6px rgba(255,181,153,.5);
-}
-.lb-meta{ color: var(--muted); font-size: .85rem; margin-top: 4px; }
-.close{
-  position: fixed; top: 16px; right: 16px;
-  background: rgba(255,138,91,.9); color: #fff;
-  border: 0; border-radius: 999px; padding: 8px 12px;
-  cursor: pointer; font-size: .9rem;
-}
-
-/* =========================
-   Text cards (full-row notes)
-   ========================= */
-.text-card{ grid-column: 1 / -1; }           /* take entire row */
-.text-card .text-wrap{
-  display: grid;
-  gap: 8px;
-  padding: 16px;
+  min-height: var(--target-size);
+  padding: var(--space-2) var(--space-3) var(--space-2) var(--space-4);
+  color: var(--color-ink-soft);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-small);
+  cursor: pointer;
+  font-size: var(--font-size-small);
+  line-height: 1.35;
   text-align: left;
-  max-width: 1100px;                         /* keep paragraphs readable */
-  margin: 0 auto;                            /* center within full row */
-}
-.text-title{
-  color: var(--text);
-  font-weight: 600;
-  font-size: 1.05rem;
-}
-.text-sub{
-  color: var(--muted);
-  font-size: .95rem;
-}
-.text-body{
-  color: var(--text);
-  font-size: 1rem;
-  line-height: 1.55;
-  white-space: pre-wrap;  /* preserve newlines */
-  overflow: visible;      /* no clipping */
+  transition:
+    color var(--motion-quick) var(--ease-standard),
+    background-color var(--motion-quick) var(--ease-standard),
+    box-shadow var(--motion-quick) var(--ease-standard);
 }
 
-/* =========================
-   Responsive
-   ========================= */
-@media (max-width: 700px){
-  .container{ display: block; }
-  .nav{ position: static; margin-top: 14px; }
-  .tabs{ display: none; }
-  .select-wrap{ display: block; margin-bottom: 10px; }
-    .container.sidebar-collapsed {
-      display: block;
-    }
-    .container.sidebar-collapsed #sidebar {
-      display: none;
-    }
-    .container.sidebar-collapsed main.grid {
-      width: 100vw;
-      max-width: 100vw;
-      margin-left: 0;
-    }
-    .container.sidebar-collapsed .thumb,
-    .container.sidebar-collapsed .poster {
-      width: 100%;
-      max-width: 100vw;
-      height: auto;
-      object-fit: contain;
-    }
+/* Event hover state: dark ink and pale lacquer distinguish the row under the pointer. */
+.event-button:hover {
+  color: var(--color-ink);
+  background: var(--color-lacquer-pale);
 }
 
+/* Selected state: a lacquer inset rule and stronger type identify the event exposed in the gallery. */
+.event-button[aria-current="page"] {
+  color: var(--color-lacquer-deep);
+  background: var(--color-lacquer-pale);
+  box-shadow: inset 0.19rem 0 0 var(--color-lacquer);
+  font-weight: 750;
+}
 
-.media-card.has-desc .media-split{
+.event-groups__empty {
+  margin: 0;
+  padding: var(--space-5);
+  color: var(--color-ink-soft);
+  background: var(--color-surface-raised);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-small);
+  font-size: var(--font-size-small);
+}
+
+/* ============================================================
+   Current Event Header
+   Design intent: A quiet chapter opening gives each registry event a readable visitor-facing identity.
+   ============================================================ */
+.journal {
+  min-width: 0;
+  padding: var(--space-8) clamp(var(--space-4), 4vw, var(--space-8)) var(--space-9);
+}
+
+.event-heading {
+  max-width: var(--measure-reading);
+  margin-bottom: var(--space-7);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.event-heading h2 {
+  max-width: 20ch;
+  margin: var(--space-2) 0 0;
+  font-family: var(--font-display);
+  font-size: var(--font-size-heading);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+
+.event-heading__status {
+  min-height: 1.5em;
+  margin: var(--space-3) 0 0;
+  color: var(--color-ink-soft);
+  font-size: var(--font-size-small);
+}
+
+/* ============================================================
+   Gallery and Story Cards
+   Design intent: A twelve-column editorial rhythm varies scale while preserving registry order.
+   ============================================================ */
+.gallery {
   display: grid;
-  grid-template-columns: minmax(340px, 1.2fr) 1fr; /* image | text */
-  gap: 20px;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(var(--space-4), 2.6vw, var(--space-7));
   align-items: start;
-  padding: 12px;
 }
 
-/* Left image */
-.media-card.has-desc .poster{
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: contain;
-  background: var(--media-bg);
-  border-radius: 8px;
+.gallery[aria-busy="true"] {
+  min-height: 18rem;
 }
 
-/* Right text panel */
-.media-card.has-desc .media-side{
+.media-card {
+  grid-column: span 6;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-media);
+}
+
+.media-card--wide {
+  grid-column: span 8;
+}
+
+.media-card--portrait {
+  grid-column: span 4;
+}
+
+.media-card--panorama {
+  grid-column: 1 / -1;
+}
+
+.media-card--story {
+  grid-column: 1 / -1;
   display: grid;
-  align-content: start;
-  gap: 10px;
+  grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr);
 }
-.media-card.has-desc .side-title{
-  color: var(--text);
-  font-weight: 600;
-  font-size: 1.05rem;
-  word-break: break-word;
+
+/* Media transition: 240ms scale and veil changes make selection feel responsive but restrained. */
+.media-button {
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  min-height: var(--target-size);
+  display: block;
+  padding: 0;
+  overflow: hidden;
+  background: var(--color-jade-pale);
+  border: 0;
+  cursor: zoom-in;
 }
-.media-card.has-desc .side-desc{
-  color: var(--text);
-  line-height: 1.55;
+
+.media-card:not(.media-card--story) .media-button {
+  aspect-ratio: 4 / 3;
+}
+
+.media-card--wide:not(.media-card--story) .media-button,
+.media-card--panorama:not(.media-card--story) .media-button {
+  aspect-ratio: 16 / 9;
+}
+
+.media-card--portrait:not(.media-card--story) .media-button {
+  aspect-ratio: 4 / 5;
+}
+
+.media-card--story .media-button {
+  min-height: 25rem;
+}
+
+.media-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, var(--color-media-veil), transparent 34%);
+  opacity: 0;
+  transition: opacity var(--motion-calm) var(--ease-standard);
+}
+
+.media-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--motion-calm) var(--ease-standard);
+}
+
+/* Media hover state: a restrained zoom and veil show that the thumbnail opens a focused view. */
+.media-button:hover::after {
+  opacity: 1;
+}
+
+/* Media hover state: scale is limited to avoid hiding meaningful photographic detail. */
+.media-button:hover img {
+  transform: scale(1.018);
+}
+
+/* Media focus state: the veil also appears for keyboard users before opening the dialog. */
+.media-button:focus-visible::after {
+  opacity: 1;
+}
+
+.media-placeholder {
+  position: absolute;
+  inset: 0;
+  display: none;
+  place-items: center;
+  padding: var(--space-5);
+  color: var(--color-ink-soft);
+  background: var(--color-jade-pale);
+  font-size: var(--font-size-small);
+  text-align: center;
+}
+
+/* Missing-thumbnail state: a Bulgarian message replaces the failed image without disabling its preview action. */
+.media-button.has-image-error .media-placeholder {
+  display: grid;
+}
+
+.media-button.has-image-error img {
+  visibility: hidden;
+}
+
+.play-mark {
+  position: absolute;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 1; /* Media-control layer: above thumbnail and veil, below page overlays. */
+  width: 3.25rem;
+  height: 3.25rem;
+  display: grid;
+  place-items: center;
+  color: var(--color-inverse);
+  background: var(--color-jade);
+  border: 1px solid var(--color-inverse-border-strong);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-small);
+}
+
+.play-mark svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-left: var(--space-1);
+  fill: currentcolor;
+  stroke: none;
+}
+
+.media-caption {
+  display: grid;
+  align-content: center;
+  padding: clamp(var(--space-5), 4vw, var(--space-7));
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: var(--font-size-lead);
+  line-height: 1.65;
   white-space: pre-wrap;
 }
 
-/* Hover (optional, consistent) */
-.media-card.has-desc:hover .poster{
-  transform: scale(1.01);
-  box-shadow: 0 6px 20px rgba(255,138,91,0.12);
-  transition: transform .25s ease, box-shadow .25s ease;
+.media-caption > :first-child,
+.story-body > :first-child {
+  margin-top: 0;
 }
 
-/* Stack on narrow screens */
-@media (max-width: 800px){
-  .media-card.has-desc .media-split{ grid-template-columns: 1fr; }
+.media-caption > :last-child,
+.story-body > :last-child {
+  margin-bottom: 0;
+}
+
+.story-card {
+  grid-column: 1 / -1;
+  position: relative;
+  padding: clamp(var(--space-6), 5vw, var(--space-8));
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.story-card::before {
+  content: "";
+  position: absolute;
+  top: var(--space-6);
+  left: clamp(var(--space-6), 5vw, var(--space-8));
+  width: 2.75rem;
+  height: 0.19rem;
+  background: var(--color-lacquer);
+}
+
+.story-card__inner {
+  max-width: var(--measure-reading);
+  margin-inline: auto;
+}
+
+.story-card h3 {
+  margin: var(--space-4) 0 var(--space-4);
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 3vw, 2.15rem);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.story-card__note {
+  margin: 0 0 var(--space-3);
+  color: var(--color-jade);
+  font-size: var(--font-size-small);
+  font-weight: 700;
+}
+
+.story-body {
+  font-family: var(--font-display);
+  font-size: var(--font-size-lead);
+  line-height: 1.72;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.story-body p {
+  margin-block: 0 var(--space-4);
+}
+
+.state-card {
+  grid-column: 1 / -1;
+  min-height: 15rem;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: var(--space-4);
+  padding: var(--space-7);
+  color: var(--color-ink-soft);
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-medium);
+  text-align: center;
+}
+
+.state-card--error {
+  color: var(--color-error);
+  background: var(--color-error-surface);
+  border-color: var(--color-error);
+}
+
+/* Retry transition: quick background feedback confirms the recovery action. */
+.state-card__action {
+  min-height: var(--target-size);
+  padding: var(--space-2) var(--space-5);
+  color: var(--color-inverse);
+  background: var(--color-lacquer);
+  border: 1px solid var(--color-lacquer);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-weight: 750;
+  transition: background-color var(--motion-quick) var(--ease-standard);
+}
+
+/* Retry hover state: deep lacquer signals the button is ready to activate. */
+.state-card__action:hover {
+  background: var(--color-lacquer-deep);
+}
+
+/* ============================================================
+   Basic Lightbox
+   Design intent: Full-screen media focus with one obvious exit and no carousel controls.
+   ============================================================ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 300; /* Lightbox layer: above page and drawer, below the emergency skip link. */
+  display: grid;
+  place-items: center;
+  padding: clamp(var(--space-4), 4vw, var(--space-7));
+  background: var(--color-scrim);
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox__body {
+  width: min(90rem, 94vw);
+  height: min(82vh, 56rem);
+  height: min(82dvh, 56rem);
+  display: grid;
+  place-items: center;
+}
+
+.lightbox__frame {
+  width: 100%;
+  height: 100%;
+  background: var(--color-ink);
+  border: 0;
+  border-radius: var(--radius-small);
+  box-shadow: var(--shadow-dialog);
+}
+
+/* Close transition: quick color changes keep dismissal immediate and legible. */
+.lightbox__close {
+  position: fixed;
+  top: var(--space-4);
+  right: var(--space-4);
+  z-index: 1; /* Dialog-control layer: above the embedded media inside the lightbox. */
+  min-height: var(--target-size);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  color: var(--color-inverse);
+  background: var(--color-lacquer);
+  border: 1px solid var(--color-inverse-border-soft);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-weight: 750;
+  transition: background-color var(--motion-quick) var(--ease-standard);
+}
+
+/* Close hover state: deeper lacquer reinforces the only lightbox action. */
+.lightbox__close:hover {
+  background: var(--color-lacquer-deep);
+}
+
+.noscript-message {
+  width: min(calc(100% - var(--space-6)), var(--measure-reading));
+  margin: var(--space-6) auto;
+  padding: var(--space-5);
+  color: var(--color-error);
+  background: var(--color-error-surface);
+  border: 1px solid var(--color-error);
+  border-radius: var(--radius-small);
+}
+
+/* ============================================================
+   Tablet Layout
+   Target: 1180px and below — narrows the itinerary and reduces cover height for laptop/tablet use.
+   ============================================================ */
+@media (max-width: 73.75rem) {
+  .hero {
+    min-height: min(39rem, 75svh);
+  }
+
+  .journal-layout {
+    grid-template-columns: minmax(15.5rem, 18rem) minmax(0, 1fr);
+  }
+
+  .navigator {
+    padding-inline: var(--space-4);
+  }
+
+  .media-card--story {
+    grid-template-columns: minmax(0, 1.1fr) minmax(14rem, 0.9fr);
+  }
+}
+
+/* ============================================================
+   Compact Drawer Layout
+   Target: 860px and below — itinerary becomes an accessible drawer to preserve gallery width.
+   ============================================================ */
+@media (max-width: 53.75rem) {
+  .hero {
+    min-height: auto;
+  }
+
+  .hero__inner {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-7);
+  }
+
+  .hero h1 {
+    max-width: 12ch;
+  }
+
+  /* Drawer trigger transition: quick background feedback clarifies the mobile navigation affordance. */
+  .navigator-trigger {
+    position: fixed;
+    right: var(--space-4);
+    bottom: max(var(--space-4), env(safe-area-inset-bottom));
+    z-index: 180; /* Mobile trigger layer: above journal content and below the open drawer scrim. */
+    max-width: calc(100vw - (2 * var(--space-4)));
+    min-height: var(--target-size);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    padding: var(--space-2) var(--space-4);
+    color: var(--color-inverse);
+    background: var(--color-lacquer);
+    border: 1px solid var(--color-lacquer);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-small);
+    cursor: pointer;
+    font-weight: 750;
+    transition: background-color var(--motion-quick) var(--ease-standard);
+  }
+
+  /* Drawer trigger hover state: deep lacquer gives clear pointer feedback. */
+  .navigator-trigger:hover {
+    background: var(--color-lacquer-deep);
+  }
+
+  .journal-layout {
+    display: block;
+  }
+
+  /* Drawer motion: 240ms slide preserves spatial context without delaying navigation. */
+  .navigator {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 200; /* Drawer layer: above page content and scrim, below media lightbox. */
+    width: min(88vw, 23rem);
+    height: 100vh;
+    height: 100dvh;
+    padding: var(--space-6) var(--space-4);
+    border-right: 0;
+    box-shadow: var(--shadow-drawer);
+    transform: translateX(-105%);
+    visibility: hidden;
+    transition:
+      transform var(--motion-calm) var(--ease-standard),
+      visibility 0s linear var(--motion-calm);
+  }
+
+  /* Open drawer state: returns the itinerary onscreen and makes it available for interaction. */
+  .navigator.is-open {
+    transform: translateX(0);
+    visibility: visible;
+    transition:
+      transform var(--motion-calm) var(--ease-standard),
+      visibility 0s linear 0s;
+  }
+
+  /* Drawer close transition: a quick color shift confirms the compact dismiss action. */
+  .navigator__close {
+    min-width: var(--target-size);
+    min-height: var(--target-size);
+    display: grid;
+    place-items: center;
+    padding: 0;
+    color: var(--color-ink);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-control-border);
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition:
+      color var(--motion-quick) var(--ease-standard),
+      border-color var(--motion-quick) var(--ease-standard);
+  }
+
+  /* Drawer close hover state: lacquer color identifies the dismiss control under the pointer. */
+  .navigator__close:hover {
+    color: var(--color-lacquer);
+    border-color: var(--color-lacquer);
+  }
+
+  .drawer-scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 190; /* Scrim layer: above content and immediately below the drawer. */
+    display: block;
+    background: var(--color-drawer-scrim);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--motion-calm) var(--ease-standard);
+  }
+
+  /* Open scrim state: catches pointer dismissal while the drawer owns keyboard focus. */
+  .drawer-scrim.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .journal {
+    padding-top: var(--space-7);
+  }
+
+  .media-card--story {
+    display: block;
+  }
+
+  .media-card--story .media-button {
+    min-height: auto;
+    aspect-ratio: 16 / 10;
+  }
+}
+
+/* ============================================================
+   Small-Screen Gallery
+   Target: 620px and below — one-column media preserves source order and eliminates horizontal loss.
+   ============================================================ */
+@media (max-width: 38.75rem) {
+  .hero__inner {
+    padding-inline: var(--space-4);
+  }
+
+  .hero h1 {
+    letter-spacing: -0.035em;
+  }
+
+  .journal {
+    padding: var(--space-7) var(--space-4) var(--space-8);
+  }
+
+  .event-heading {
+    margin-bottom: var(--space-6);
+  }
+
+  .gallery {
+    display: block;
+  }
+
+  .media-card,
+  .story-card,
+  .state-card {
+    width: 100%;
+    margin-bottom: var(--space-5);
+  }
+
+  .media-card:not(.media-card--story) .media-button,
+  .media-card--wide:not(.media-card--story) .media-button,
+  .media-card--panorama:not(.media-card--story) .media-button {
+    aspect-ratio: 4 / 3;
+  }
+
+  .media-card--portrait:not(.media-card--story) .media-button {
+    aspect-ratio: 4 / 5;
+  }
+
+  .media-caption,
+  .story-card {
+    padding: var(--space-5);
+  }
+
+  .story-card::before {
+    top: var(--space-5);
+    left: var(--space-5);
+  }
+
+  .lightbox {
+    padding: var(--space-3);
+  }
+
+  .lightbox__body {
+    width: 100%;
+    height: 78vh;
+    height: 78dvh;
+  }
+
+  .lightbox__close {
+    top: var(--space-3);
+    right: var(--space-3);
+  }
+}
+
+/* ============================================================
+   Narrow Mobile Controls
+   Target: 380px and below — icon-only dialog close avoids crowding at the minimum 320px viewport.
+   ============================================================ */
+@media (max-width: 23.75rem) {
+  .lightbox__close {
+    width: var(--target-size);
+    justify-content: center;
+    padding-inline: 0;
+  }
+
+  .lightbox__close span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+/* ============================================================
+   Reduced Motion
+   Accessibility: removes non-essential smooth scrolling, sliding, zooming, and fades on request.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto;
+    transition-duration: 0.01ms;
+    transition-delay: 0s;
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+  }
+
+  .media-button:hover img {
+    transform: none;
+  }
 }
