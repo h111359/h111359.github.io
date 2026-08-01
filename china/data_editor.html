@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <!--
-  data_editor.html: Standalone full-featured local editor for 202507_china/data/ event JS files and events.js.
+  data_editor.html: Standalone full-featured local editor for china/data/ event JS files and events.js.
   Component: Data Editor — full CRUD for window.GALLERY_ITEMS arrays and window.GALLERY_EVENT_INDEX registry.
-  Request: R-20260720-0731
+  Request: R-20260801-2152
   Requires a Chromium-based browser (Chrome 86+ or Edge 86+) for File System Access API.
 -->
 <html lang="en">
@@ -533,8 +533,8 @@
      ============================================================ -->
 <script>
 /**
- * data_editor.html — Inline script: standalone event data editor for 202507_china/data/.
- * Part of request R-20260720-0731.
+ * data_editor.html — Inline script: standalone event data editor for china/data/.
+ * Part of request R-20260801-2152.
  * Responsibilities: folder open via File System Access API, events.js loading and registry editing,
  *   per-event GALLERY_ITEMS CRUD (add, edit, delete, reorder), rich text toolbar,
  *   pre-save validation, serialization, in-place file write, and events.js registry save.
@@ -976,7 +976,8 @@ function makeTextInput(className, value, ariaLabel) {
   const input = document.createElement('input');
   input.type = 'text';
   input.className = className;
-  input.value = value;
+  // Single-line inputs can silently discard newlines, so normalize before DOM assignment.
+  input.value = normalizePlainTextLineBreaks(value);
   input.setAttribute('aria-label', ariaLabel);
   return input;
 }
@@ -1037,7 +1038,7 @@ async function saveEventsJs() {
   let output = 'window.GALLERY_EVENT_INDEX = [\n';
   eventRegistry.forEach((entry, i) => {
     const comma = i < eventRegistry.length - 1 ? ',' : '';
-    output += `  { slug: "${jsEscape(entry.slug)}", title: "${jsEscape(entry.title)}", data: "${jsEscape(entry.data)}" }${comma}\n`;
+    output += `  { slug: "${serializePlainText(entry.slug)}", title: "${serializePlainText(entry.title)}", data: "${serializePlainText(entry.data)}" }${comma}\n`;
   });
   output += '];\n';
 
@@ -1263,7 +1264,8 @@ function makeInputField(fieldName, labelText, value, cardIndex, withUrlValidatio
   const input = document.createElement('input');
   input.type = 'text';
   input.id = inputId;
-  input.value = value;
+  // Single-line inputs can silently discard newlines, so normalize before DOM assignment.
+  input.value = normalizePlainTextLineBreaks(value);
   input.dataset.field = fieldName;
   input.addEventListener('input', setDirty);
   group.appendChild(input);
@@ -1314,8 +1316,8 @@ function makeRichTextField(fieldName, labelText, htmlValue, cardIndex) {
   field.contentEditable = 'true';
   field.setAttribute('aria-label', `${labelText} rich text editor for item ${cardIndex + 1}`);
   field.dataset.field = fieldName;
-  // Assign innerHTML directly so stored HTML markup renders as formatted text
-  field.innerHTML = htmlValue;
+  // Normalize literal lines before DOM parsing while preserving all existing HTML markup.
+  field.innerHTML = normalizeRichTextLineBreaks(htmlValue);
   field.addEventListener('input', setDirty);
   group.appendChild(field);
 
@@ -1525,8 +1527,8 @@ function handleVisibilityChange() {
 
 /**
  * Escapes a string for safe embedding inside a JavaScript double-quoted string literal.
- * Replaces backslash, double-quote, and C0 control characters (excluding \n U+000A and \t U+0009).
- * Does NOT escape characters above U+007F; Unicode content is preserved as-is.
+ * Replaces backslash, double-quote, C0 control characters, and Unicode line separators.
+ * Other Unicode content above U+007F is preserved as-is.
  * Does NOT HTML-encode < > & because the output is a JS file, not HTML.
  * @param {string} str - Raw string value to escape.
  * @returns {string} Escaped string safe for use inside "...".
@@ -1535,11 +1537,50 @@ function jsEscape(str) {
   return String(str)
     .replace(/\\/g, '\\\\')
     .replace(/"/g, '\\"')
-    // Escape C0 control characters except tab (0x09) and newline (0x0A)
-    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, (c) => {
-      const hex = c.charCodeAt(0).toString(16).padStart(4, '0');
+    // JavaScript string literals cannot safely contain raw controls or line separators.
+    .replace(/[\x00-\x1F\u2028\u2029]/g, (character) => {
+      const hex = character.charCodeAt(0).toString(16).padStart(4, '0');
       return `\\u${hex}`;
     });
+}
+
+/**
+ * Replaces each literal rich-text line break with one HTML break element.
+ * Existing HTML is left untouched, including pre-existing break and block elements.
+ * @param {*} value - Rich-text value to normalize.
+ * @returns {string} Rich text without literal CR or LF characters.
+ */
+function normalizeRichTextLineBreaks(value) {
+  // Treat CRLF as one line break while also supporting isolated CR and LF characters.
+  return String(value ?? '').replace(/\r\n|\r|\n/g, '<br>');
+}
+
+/**
+ * Replaces each literal plain-text line break with one space.
+ * @param {*} value - Plain-text or structural value to normalize.
+ * @returns {string} Plain text without literal CR or LF characters.
+ */
+function normalizePlainTextLineBreaks(value) {
+  // Treat CRLF as one line break while also supporting isolated CR and LF characters.
+  return String(value ?? '').replace(/\r\n|\r|\n/g, ' ');
+}
+
+/**
+ * Normalizes and escapes a plain-text value for JavaScript serialization.
+ * @param {*} value - Plain-text or structural value to serialize.
+ * @returns {string} Escaped JavaScript string contents.
+ */
+function serializePlainText(value) {
+  return jsEscape(normalizePlainTextLineBreaks(value));
+}
+
+/**
+ * Normalizes and escapes a rich-text value for JavaScript serialization.
+ * @param {*} value - Rich-text value to serialize.
+ * @returns {string} Escaped JavaScript string contents with HTML line breaks.
+ */
+function serializeRichText(value) {
+  return jsEscape(normalizeRichTextLineBreaks(value));
 }
 
 /**
@@ -1553,9 +1594,9 @@ function buildOutput() {
   items.forEach((item, i) => {
     const comma = i < items.length - 1 ? ',' : '';
     if (item.type === 'text') {
-      out += `  { type: "text", title: "${jsEscape(item.title || '')}", body: "${jsEscape(item.body || '')}", desc: "${jsEscape(item.desc || '')}" }${comma}\n`;
+      out += `  { type: "text", title: "${serializePlainText(item.title)}", body: "${serializeRichText(item.body)}", desc: "${serializeRichText(item.desc)}" }${comma}\n`;
     } else {
-      out += `  { name: "${jsEscape(item.name || '')}", preview: "${jsEscape(item.preview || '')}", desc: "${jsEscape(item.desc || '')}", visible: ${item.visible !== false} }${comma}\n`;
+      out += `  { name: "${serializePlainText(item.name)}", preview: "${serializePlainText(item.preview)}", desc: "${serializeRichText(item.desc)}", visible: ${item.visible !== false} }${comma}\n`;
     }
   });
   out += '];\n';
