@@ -7,10 +7,10 @@ window.GALLERY_TRIP_CONFIG = {
   // Use a BCP 47 language tag for the document and a supported Intl locale for date formatting.
   language: "en",
   locale: "en-US",
-  pageTitle: "Пътуване до Кюстендил 7 до 9 август 2026 г.",
-  heroEyebrow: "Family travel journal",
-  heading: "202608 Кюстендил",
-  subtitle: "Басейн, секвои, Хисарлък, Майстора, хапване, и още",
+  pageTitle: "Събития през 202608",
+  heroEyebrow: "2026 година",
+  heading: "Пътувания и събития на семейството през 2026 година",
+  subtitle: "Какво ни се случи през 2026 година",
   // Leave empty to derive a date range and event count from the event registry.
   tripFacts: "",
   pageDescription: "A family trip journal with photos, videos, and stories.",
