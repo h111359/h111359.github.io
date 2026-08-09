@@ -14,6 +14,13 @@
   const EVENT_DATA_SCRIPT_ID = "eventDataScript";
   const THUMBNAIL_WIDTH = 1600;
   const ICON_VIEW_BOX = "0 0 24 24";
+  const PORTRAIT_MAX_ASPECT_RATIO = 0.9;
+  const SQUARE_MAX_ASPECT_RATIO = 1.1;
+  const MEDIA_ORIENTATION_CLASSES = Object.freeze([
+    "media-card--portrait",
+    "media-card--square",
+    "media-card--landscape"
+  ]);
   const DRAWER_MEDIA_QUERY = window.matchMedia("(max-width: 53.75rem)");
   const DEFAULT_LABELS = Object.freeze({
     skipLink: "Skip to content",
@@ -80,15 +87,6 @@
     focus: "--color-focus",
     heroWash: "--color-hero-wash"
   });
-  const GALLERY_VARIANTS = [
-    "media-card--wide",
-    "media-card--portrait",
-    "",
-    "",
-    "media-card--portrait",
-    "media-card--wide",
-    "media-card--panorama"
-  ];
   const FOCUSABLE_SELECTOR = [
     "a[href]",
     "button:not([disabled])",
@@ -883,13 +881,60 @@
      ============================================================ */
 
   /**
-   * Returns the varied media-card class assigned by source media position.
+   * Classifies a loaded thumbnail from its intrinsic dimensions.
    *
-   * @param {number} mediaIndex - Zero-based media position excluding story blocks.
-   * @returns {string} Editorial layout variant that never changes DOM order.
+   * @param {number} width - Intrinsic thumbnail width in pixels.
+   * @param {number} height - Intrinsic thumbnail height in pixels.
+   * @returns {"portrait"|"square"|"landscape"|null} Orientation category, or null for invalid dimensions.
    */
-  function getGalleryVariant(mediaIndex) {
-    return GALLERY_VARIANTS[mediaIndex % GALLERY_VARIANTS.length];
+  function classifyMediaOrientation(width, height) {
+    if (!Number.isFinite(width) || !Number.isFinite(height) || width <= 0 || height <= 0) {
+      return null;
+    }
+
+    const aspectRatio = width / height;
+    if (aspectRatio < PORTRAIT_MAX_ASPECT_RATIO) {
+      return "portrait";
+    }
+    if (aspectRatio <= SQUARE_MAX_ASPECT_RATIO) {
+      return "square";
+    }
+    return "landscape";
+  }
+
+  /**
+   * Applies the loaded thumbnail orientation without changing the media's source position.
+   *
+   * @param {HTMLElement} card - Media card whose layout follows the thumbnail orientation.
+   * @param {HTMLImageElement} image - Loaded thumbnail exposing intrinsic dimensions.
+   * @returns {void}
+   */
+  function applyMediaOrientation(card, image) {
+    const orientation = classifyMediaOrientation(image.naturalWidth, image.naturalHeight);
+    if (!orientation) {
+      return;
+    }
+
+    card.classList.remove("media-card--orientation-pending", ...MEDIA_ORIENTATION_CLASSES);
+    card.classList.add(`media-card--${orientation}`);
+  }
+
+  /**
+   * Creates the persistent visual action cue for an image or video thumbnail.
+   *
+   * @param {"image"|"video"} mediaKind - Normalized media category controlling icon shape and color.
+   * @returns {HTMLSpanElement} Decorative icon mark represented accessibly by the parent button label.
+   */
+  function createMediaActionMark(mediaKind) {
+    const isVideo = mediaKind === "video";
+    const modifier = isVideo ? "media-action-mark--video" : "media-action-mark--image";
+    const pathData = isVideo
+      ? "M9 7l8 5-8 5z"
+      : "M11 4a7 7 0 1 0 4.9 12L21 21M11 8v6M8 11h6";
+    const mark = createElement("span", `media-action-mark ${modifier}`);
+    mark.setAttribute("aria-hidden", "true");
+    mark.appendChild(createIcon(pathData));
+    return mark;
   }
 
   /**
@@ -919,10 +964,13 @@
    */
   function createMediaCard(item, mediaIndex) {
     const hasDescription = item.desc.trim().length > 0;
-    const variant = hasDescription ? "media-card--story" : getGalleryVariant(mediaIndex);
-    const cardClasses = ["media-card", variant].filter(Boolean).join(" ");
+    const cardClasses = [
+      "media-card",
+      "media-card--orientation-pending",
+      hasDescription ? "media-card--story" : ""
+    ].filter(Boolean).join(" ");
     const card = createElement("article", cardClasses);
-    const button = createElement("button", "media-button");
+    const button = createElement("button", `media-button media-button--${item.kind}`);
     const image = createElement("img");
     const placeholder = createElement("span", "media-placeholder");
     const mediaNumber = mediaIndex + 1;
@@ -944,21 +992,18 @@
       number: mediaNumber,
       event: eventLabel
     });
-    image.src = buildThumbnailUrl(item.driveId, item.resourceKey);
+    image.addEventListener("load", () => {
+      applyMediaOrientation(card, image);
+    });
     image.addEventListener("error", () => {
       handleThumbnailError(image, button, item.driveId, item.resourceKey);
     });
+    image.src = buildThumbnailUrl(item.driveId, item.resourceKey);
     placeholder.textContent = item.kind === "video"
       ? formatLabel("videoUnavailable")
       : formatLabel("imageUnavailable");
 
-    button.append(image, placeholder);
-
-    if (item.kind === "video") {
-      const playMark = createElement("span", "play-mark");
-      playMark.appendChild(createIcon("M9 7l8 5-8 5z"));
-      button.appendChild(playMark);
-    }
+    button.append(image, placeholder, createMediaActionMark(item.kind));
 
     button.addEventListener("click", () => {
       openLightbox(item, button);

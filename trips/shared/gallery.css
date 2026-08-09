@@ -554,7 +554,7 @@ svg {
 
 /* ============================================================
    Gallery and Story Cards
-   Design intent: A twelve-column editorial rhythm varies scale while preserving registry order.
+   Design intent: Intrinsic media orientation shapes the editorial rhythm while source order remains unchanged.
    ============================================================ */
 .gallery {
   display: grid;
@@ -577,25 +577,30 @@ svg {
   box-shadow: var(--shadow-media);
 }
 
-.media-card--wide {
-  grid-column: span 8;
-}
-
 .media-card--portrait {
   grid-column: span 4;
 }
 
-.media-card--panorama {
-  grid-column: 1 / -1;
+.media-card--square {
+  grid-column: span 6;
+}
+
+.media-card--landscape {
+  grid-column: span 8;
 }
 
 .media-card--story {
   grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr);
 }
 
-/* Media transition: 240ms scale and veil changes make selection feel responsive but restrained. */
+/* Wide-screen portrait story: adjacent text keeps the photograph prominent without stretching its frame. */
+.media-card--story.media-card--portrait {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr);
+  align-items: start;
+}
+
+/* Media transition: a 240ms veil change gives feedback without scaling or cropping the photograph. */
 .media-button {
   position: relative;
   min-width: 0;
@@ -613,17 +618,26 @@ svg {
   aspect-ratio: 4 / 3;
 }
 
-.media-card--wide:not(.media-card--story) .media-button,
-.media-card--panorama:not(.media-card--story) .media-button {
-  aspect-ratio: 16 / 9;
+/* Pending and failed thumbnail state: a bounded frame prevents layout collapse before dimensions are available. */
+.media-card--orientation-pending .media-button {
+  aspect-ratio: 4 / 3;
 }
 
-.media-card--portrait:not(.media-card--story) .media-button {
+.media-card--portrait .media-button {
   aspect-ratio: 4 / 5;
 }
 
-.media-card--story .media-button {
-  min-height: 25rem;
+.media-card--square .media-button {
+  aspect-ratio: 1;
+}
+
+.media-card--landscape .media-button {
+  aspect-ratio: 16 / 10;
+}
+
+/* Video media opens a player rather than a zoomed still, so it uses a neutral pointer cursor. */
+.media-button--video {
+  cursor: pointer;
 }
 
 .media-button::after {
@@ -639,18 +653,13 @@ svg {
 .media-button img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transition: transform var(--motion-calm) var(--ease-standard);
+  object-fit: contain;
+  object-position: center;
 }
 
-/* Media hover state: a restrained zoom and veil show that the thumbnail opens a focused view. */
+/* Media hover state: a restrained veil shows that the thumbnail opens a focused view. */
 .media-button:hover::after {
   opacity: 1;
-}
-
-/* Media hover state: scale is limited to avoid hiding meaningful photographic detail. */
-.media-button:hover img {
-  transform: scale(1.018);
 }
 
 /* Media focus state: the veil also appears for keyboard users before opening the dialog. */
@@ -679,7 +688,7 @@ svg {
   visibility: hidden;
 }
 
-.play-mark {
+.media-action-mark {
   position: absolute;
   right: var(--space-4);
   bottom: var(--space-4);
@@ -689,15 +698,27 @@ svg {
   display: grid;
   place-items: center;
   color: var(--color-inverse);
-  background: var(--color-jade);
   border: 1px solid var(--color-inverse-border-strong);
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-small);
 }
 
-.play-mark svg {
+/* Image action cue: lacquer magnifier makes the persistent open/zoom behavior unmistakable. */
+.media-action-mark--image {
+  background: var(--color-lacquer);
+}
+
+/* Video action cue: jade play mark distinguishes moving media from image thumbnails. */
+.media-action-mark--video {
+  background: var(--color-jade);
+}
+
+.media-action-mark svg {
   width: 1.35rem;
   height: 1.35rem;
+}
+
+.media-action-mark--video svg {
   margin-left: var(--space-1);
   fill: currentcolor;
   stroke: none;
@@ -902,7 +923,7 @@ svg {
     padding-inline: var(--space-4);
   }
 
-  .media-card--story {
+  .media-card--story.media-card--portrait {
     grid-template-columns: minmax(0, 1.1fr) minmax(14rem, 0.9fr);
   }
 }
@@ -1028,13 +1049,8 @@ svg {
     padding-top: var(--space-7);
   }
 
-  .media-card--story {
+  .media-card--story.media-card--portrait {
     display: block;
-  }
-
-  .media-card--story .media-button {
-    min-height: auto;
-    aspect-ratio: 16 / 10;
   }
 }
 
@@ -1068,16 +1084,6 @@ svg {
   .state-card {
     width: 100%;
     margin-bottom: var(--space-5);
-  }
-
-  .media-card:not(.media-card--story) .media-button,
-  .media-card--wide:not(.media-card--story) .media-button,
-  .media-card--panorama:not(.media-card--story) .media-button {
-    aspect-ratio: 4 / 3;
-  }
-
-  .media-card--portrait:not(.media-card--story) .media-button {
-    aspect-ratio: 4 / 5;
   }
 
   .media-caption,
@@ -1147,9 +1153,5 @@ svg {
     transition-delay: 0s;
     animation-duration: 0.01ms;
     animation-iteration-count: 1;
-  }
-
-  .media-button:hover img {
-    transform: none;
   }
 }
