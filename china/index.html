@@ -7,17 +7,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f4efe5">
+  <meta id="themeColor" name="theme-color" content="#f4efe5">
   <meta
+    id="pageDescription"
     name="description"
     content="Пътуване до Китай през юли 2025 — снимки, видеа и разкази на семейство Христови."
   >
   <title>Пътуване до Китай - юли 2025</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../trips/shared/gallery.css">
 </head>
 <body>
   <!-- Skip link: becomes visible on keyboard focus and moves directly to the current event content. -->
-  <a class="skip-link" href="#main-content">Към съдържанието</a>
+  <a class="skip-link" id="skipLink" href="#main-content">Към съдържанието</a>
 
   <!-- ============================================================
        Introductory Header
@@ -25,9 +26,9 @@
        ============================================================ -->
   <header class="hero" id="siteHeader">
     <div class="hero__inner">
-      <p class="hero__eyebrow">Семеен пътепис</p>
-      <h1>Пътуване до Китай - юли 2025</h1>
-      <p class="hero__subtitle">Едно пътешествие на семейство Христови</p>
+      <p class="hero__eyebrow" id="heroEyebrow">Семеен пътепис</p>
+      <h1 id="heroHeading">Пътуване до Китай - юли 2025</h1>
+      <p class="hero__subtitle" id="heroSubtitle">Едно пътешествие на семейство Христови</p>
       <p class="hero__facts" id="tripFacts" hidden></p>
 
       <!--
@@ -45,7 +46,7 @@
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M4 7h16M4 12h16M4 17h16"></path>
         </svg>
-        <span>Събития</span>
+        <span id="navigatorTriggerLabel">Събития</span>
       </button>
     </div>
   </header>
@@ -68,8 +69,8 @@
     <aside class="navigator" id="eventNavigator" aria-label="Събития от пътуването">
       <div class="navigator__header">
         <div>
-          <p class="section-kicker">Маршрут</p>
-          <h2>Дневник на пътуването</h2>
+          <p class="section-kicker" id="routeKicker">Маршрут</p>
+          <h2 id="journalHeading">Дневник на пътуването</h2>
         </div>
 
         <!-- Drawer close: a native button supports Enter/Space; its Bulgarian label names the action. -->
@@ -87,7 +88,7 @@
 
       <!-- Search: the visible label names the field; results are announced through navSummary. -->
       <form class="event-search" role="search">
-        <label for="eventSearch">Търсене в събитията</label>
+        <label id="eventSearchLabel" for="eventSearch">Търсене в събитията</label>
         <div class="event-search__field">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="11" cy="11" r="6"></circle>
@@ -147,7 +148,7 @@
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M6 6l12 12M18 6L6 18"></path>
       </svg>
-      <span>Затвори</span>
+      <span id="lightboxCloseLabel">Затвори</span>
     </button>
     <div class="lightbox__body" id="lightboxBody"></div>
   </div>
@@ -159,8 +160,9 @@
     </div>
   </noscript>
 
-  <!-- Event registry loads first; the dependency-free controller enhances the source HTML afterward. -->
+  <!-- Trip configuration and event registry load before the dependency-free shared controller. -->
+  <script src="trip-config.js" charset="utf-8"></script>
   <script src="data/events.js" charset="utf-8"></script>
-  <script src="app.js" charset="utf-8"></script>
+  <script src="../trips/shared/gallery.js" charset="utf-8"></script>
 </body>
 </html>

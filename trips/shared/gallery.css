@@ -1,11 +1,11 @@
 /*
- * style.css: Warm editorial design system for the public China travel journal.
+ * gallery.css: Reusable editorial design system for static trip journals.
  * Sections: Design Tokens, Foundations, Hero, Navigator, Event Header, Gallery, Lightbox, Responsive States.
  */
 
 /* ============================================================
    Design Tokens
-   Design intent: Warm paper, lacquer, jade, and ink tones reference place without decorative clichés.
+   Design intent: Warm paper, primary accent, secondary accent, and ink form a configurable editorial base.
    ============================================================ */
 :root {
   /* Paper canvas — the warm neutral used behind the complete journal. */
@@ -38,7 +38,7 @@
   --color-control-border: #8f8679;
   /* Inverse ink — text and icons shown on lacquer or dark overlays. */
   --color-inverse: #fffdf8;
-  /* Error ink — Bulgarian failure messages with AA contrast on pale error. */
+  /* Error ink — localized failure messages with AA contrast on pale error. */
   --color-error: #84261f;
   /* Error surface — calm but visible failure-state background. */
   --color-error-surface: #f8e4df;
@@ -670,7 +670,7 @@ svg {
   text-align: center;
 }
 
-/* Missing-thumbnail state: a Bulgarian message replaces the failed image without disabling its preview action. */
+/* Missing-thumbnail state: a localized message replaces the failed image without disabling its preview action. */
 .media-button.has-image-error .media-placeholder {
   display: grid;
 }

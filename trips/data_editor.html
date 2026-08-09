@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <!--
-  data_editor.html: Standalone full-featured local editor for china/data/ event JS files and events.js.
+  data_editor.html: Standalone local editor for any trip data directory and its events.js registry.
   Component: Data Editor — full CRUD for window.GALLERY_ITEMS arrays and window.GALLERY_EVENT_INDEX registry.
-  Request: R-20260801-2152
+  Context: Shared multi-trip publishing tools.
   Requires a Chromium-based browser (Chrome 86+ or Edge 86+) for File System Access API.
 -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>China 2025 Gallery — Data Editor</title>
+  <title>Trip Gallery — Data Editor</title>
   <style>
     /*
      * data_editor.html — Inline styles for the standalone event data editor.
@@ -456,7 +456,7 @@
   <span class="header-title">📂 Gallery Data Editor</span>
   <!-- Chromium requirement notice — File System Access API is Chromium-only -->
   <span id="browser-note">⚠ Requires Chrome or Edge (Chromium 86+)</span>
-  <button id="btn-open-folder" type="button">Open data/ folder</button>
+  <button id="btn-open-folder" type="button">Open a trip data/ folder</button>
   <label id="event-select-label" for="event-select">Event:</label>
   <select id="event-select" aria-label="Select event to edit">
     <option disabled selected value="">— open folder first —</option>
@@ -533,8 +533,8 @@
      ============================================================ -->
 <script>
 /**
- * data_editor.html — Inline script: standalone event data editor for china/data/.
- * Part of request R-20260801-2152.
+ * data_editor.html — Inline script: standalone event data editor for any trip data/ directory.
+ * Part of the shared multi-trip publishing workflow.
  * Responsibilities: folder open via File System Access API, events.js loading and registry editing,
  *   per-event GALLERY_ITEMS CRUD (add, edit, delete, reorder), rich text toolbar,
  *   pre-save validation, serialization, in-place file write, and events.js registry save.
@@ -583,7 +583,7 @@ let refreshInProgress = false;
 let refreshIntervalId = null;
 
 const REFRESH_INTERVAL_MS = 5000;
-const EDITOR_DB_NAME = 'china-gallery-data-editor';
+const EDITOR_DB_NAME = 'trip-gallery-data-editor';
 const EDITOR_STORE_NAME = 'session';
 const DIRECTORY_HANDLE_KEY = 'directory-handle';
 const LAST_EVENT_KEY = 'last-event-data';

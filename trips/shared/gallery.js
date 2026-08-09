@@ -1,6 +1,6 @@
 /**
- * app.js: Accessible controller for the public China travel journal.
- * Provides registry normalization, date-grouped navigation, event loading, editorial rendering, and modal focus handling.
+ * gallery.js: Reusable accessible controller for static trip journals.
+ * Provides trip configuration, registry navigation, event loading, editorial rendering, and modal focus handling.
  */
 
 (function () {
@@ -15,6 +15,80 @@
   const THUMBNAIL_WIDTH = 1600;
   const ICON_VIEW_BOX = "0 0 24 24";
   const DRAWER_MEDIA_QUERY = window.matchMedia("(max-width: 53.75rem)");
+  const DEFAULT_LABELS = Object.freeze({
+    skipLink: "Skip to content",
+    openNavigator: "Open event navigator",
+    events: "Events",
+    navigatorAria: "Trip events",
+    routeKicker: "Route",
+    journalHeading: "Trip journal",
+    closeNavigator: "Close event navigator",
+    searchLabel: "Search events",
+    searchPlaceholder: "Place or experience",
+    eventsByDate: "Events by date",
+    loadingTrip: "Loading the trip…",
+    lightboxTitle: "Media preview",
+    close: "Close",
+    missingElementsLog: "Required gallery elements are missing:",
+    eventCountSingular: "{count} event",
+    eventCountPlural: "{count} events",
+    eventFallbackPrefix: "Event",
+    untitledEvent: "Untitled event",
+    unknownDate: "Date not specified",
+    noSearchResults: "No events match the search.",
+    filteredSummary: "Showing {visible} of {total}",
+    staleLoad: "The event load is no longer current.",
+    missingEventData: "No data was defined for event {event}.",
+    eventLoadFailed: "Failed to load {path}.",
+    imageNoun: "image",
+    videoNoun: "video",
+    currentEventFallback: "the event",
+    openMedia: "Open {media} {number}: {event}",
+    imageAlt: "Image {number} — {event}",
+    videoAlt: "Video frame {number} — {event}",
+    imageUnavailable: "The image could not be loaded. Try opening it.",
+    videoUnavailable: "The frame could not be loaded. The video can still be opened.",
+    retry: "Try again",
+    emptyEvent: "This event has no content to display.",
+    loadingContent: "Loading photos and stories…",
+    contentLoading: "Content is loading.",
+    contentLoadFailed: "The content could not be loaded.",
+    eventFailure: "There was a problem loading this event. Check the connection and try again.",
+    videoUrlErrorLog: "The video URL could not be processed:",
+    mediaPreview: "Preview of {media}: {event}",
+    eventErrorLog: "The event could not be loaded:",
+    tripUnavailable: "The trip could not be loaded",
+    registryMissing: "The event registry is empty.",
+    noTripEvents: "No trip events are currently available.",
+    noEvents: "No events"
+  });
+  const DEFAULT_TRIP_CONFIG = Object.freeze({
+    language: "en",
+    locale: "en-US",
+    pageTitle: "Trip journal",
+    heroEyebrow: "Travel journal",
+    heading: "Trip journal",
+    subtitle: "Photos, videos, and stories",
+    tripFacts: "",
+    pageDescription: "A static family trip journal with photos, videos, and stories.",
+    theme: Object.freeze({}),
+    labels: DEFAULT_LABELS
+  });
+  const THEME_PROPERTY_MAP = Object.freeze({
+    canvas: "--color-canvas",
+    surface: "--color-surface",
+    surfaceRaised: "--color-surface-raised",
+    ink: "--color-ink",
+    inkSoft: "--color-ink-soft",
+    inkMuted: "--color-ink-muted",
+    accent: "--color-lacquer",
+    accentStrong: "--color-lacquer-deep",
+    accentSoft: "--color-lacquer-pale",
+    secondary: "--color-jade",
+    secondarySoft: "--color-jade-pale",
+    focus: "--color-focus",
+    heroWash: "--color-hero-wash"
+  });
   const GALLERY_VARIANTS = [
     "media-card--wide",
     "media-card--portrait",
@@ -45,19 +119,51 @@
   // Splits a Latin letter followed by a digit when a compact fallback slug uses both character groups.
   const LETTER_DIGIT_PATTERN = /([a-z])(\d)/gi;
 
-  const DATE_GROUP_FORMATTER = new Intl.DateTimeFormat("bg-BG", {
+  /**
+   * Normalizes the optional trip-level global into safe reusable application settings.
+   *
+   * @param {unknown} candidate - Value supplied as window.GALLERY_TRIP_CONFIG by a trip folder.
+   * @returns {Object} Complete configuration merged with the shared English defaults.
+   */
+  function normalizeTripConfig(candidate) {
+    const source = candidate && typeof candidate === "object" ? candidate : {};
+    const labels = source.labels && typeof source.labels === "object" ? source.labels : {};
+    const theme = source.theme && typeof source.theme === "object" ? source.theme : {};
+    const stringValue = (key) => (
+      typeof source[key] === "string" && source[key].trim()
+        ? source[key].trim()
+        : DEFAULT_TRIP_CONFIG[key]
+    );
+
+    return {
+      language: stringValue("language"),
+      locale: stringValue("locale"),
+      pageTitle: stringValue("pageTitle"),
+      heroEyebrow: stringValue("heroEyebrow"),
+      heading: stringValue("heading"),
+      subtitle: stringValue("subtitle"),
+      tripFacts: typeof source.tripFacts === "string" ? source.tripFacts.trim() : "",
+      pageDescription: stringValue("pageDescription"),
+      theme,
+      labels: { ...DEFAULT_LABELS, ...labels }
+    };
+  }
+
+  const TRIP_CONFIG = normalizeTripConfig(window.GALLERY_TRIP_CONFIG);
+
+  const DATE_GROUP_FORMATTER = new Intl.DateTimeFormat(TRIP_CONFIG.locale, {
     weekday: "long",
     day: "numeric",
     month: "long",
     timeZone: "UTC"
   });
-  const DATE_HEADING_FORMATTER = new Intl.DateTimeFormat("bg-BG", {
+  const DATE_HEADING_FORMATTER = new Intl.DateTimeFormat(TRIP_CONFIG.locale, {
     day: "numeric",
     month: "long",
     year: "numeric",
     timeZone: "UTC"
   });
-  const MONTH_YEAR_FORMATTER = new Intl.DateTimeFormat("bg-BG", {
+  const MONTH_YEAR_FORMATTER = new Intl.DateTimeFormat(TRIP_CONFIG.locale, {
     month: "long",
     year: "numeric",
     timeZone: "UTC"
@@ -77,13 +183,22 @@
   };
 
   const DOM = {
+    pageDescription: null,
+    themeColor: null,
+    skipLink: null,
     siteHeader: null,
+    heroEyebrow: null,
+    heroHeading: null,
+    heroSubtitle: null,
     tripFacts: null,
     openNavigator: null,
     closeNavigator: null,
     drawerScrim: null,
     navigator: null,
+    routeKicker: null,
+    journalHeading: null,
     eventSearchForm: null,
+    eventSearchLabel: null,
     eventSearch: null,
     navSummary: null,
     eventGroups: null,
@@ -93,8 +208,11 @@
     eventStatus: null,
     gallery: null,
     lightbox: null,
+    lightboxTitle: null,
     closeLightbox: null,
-    lightboxBody: null
+    lightboxCloseLabel: null,
+    lightboxBody: null,
+    navigatorTriggerLabel: null
   };
 
   /* ============================================================
@@ -138,18 +256,43 @@
   }
 
   /**
+   * Formats a configured interface label by replacing named brace tokens.
+   *
+   * @param {string} key - Label key from the normalized trip configuration.
+   * @param {Object} [values] - Token names and values inserted into the configured template.
+   * @returns {string} Localized interface copy ready for display.
+   */
+  function formatLabel(key, values) {
+    const template = String(TRIP_CONFIG.labels[key] || DEFAULT_LABELS[key] || "");
+    return Object.entries(values || {}).reduce(
+      (result, [token, value]) => result.replaceAll(`{${token}}`, String(value)),
+      template
+    );
+  }
+
+  /**
    * Resolves and validates all source-level interface elements.
    *
    * @returns {boolean} True when every required element exists and initialization can continue.
    */
   function cacheDomReferences() {
     const idBindings = {
+      pageDescription: "pageDescription",
+      themeColor: "themeColor",
+      skipLink: "skipLink",
       siteHeader: "siteHeader",
+      heroEyebrow: "heroEyebrow",
+      heroHeading: "heroHeading",
+      heroSubtitle: "heroSubtitle",
       tripFacts: "tripFacts",
       openNavigator: "openNavigator",
+      navigatorTriggerLabel: "navigatorTriggerLabel",
       closeNavigator: "closeNavigator",
       drawerScrim: "drawerScrim",
       navigator: "eventNavigator",
+      routeKicker: "routeKicker",
+      journalHeading: "journalHeading",
+      eventSearchLabel: "eventSearchLabel",
       eventSearch: "eventSearch",
       navSummary: "navSummary",
       eventGroups: "eventGroups",
@@ -159,7 +302,9 @@
       eventStatus: "eventStatus",
       gallery: "gallery",
       lightbox: "lightbox",
+      lightboxTitle: "lightboxTitle",
       closeLightbox: "closeLightbox",
+      lightboxCloseLabel: "lightboxCloseLabel",
       lightboxBody: "lightboxBody"
     };
 
@@ -173,14 +318,51 @@
       .map(([referenceName]) => referenceName);
 
     if (missingReferences.length > 0) {
-      console.error("Липсват задължителни елементи на галерията:", missingReferences.join(", "));
+      console.error(formatLabel("missingElementsLog"), missingReferences.join(", "));
       return false;
     }
     return true;
   }
 
   /**
-   * Uppercases only the first visible character of a generated Bulgarian label.
+   * Applies document identity, visitor copy, accessibility labels, and whitelisted theme values.
+   *
+   * @returns {void}
+   */
+  function applyTripConfig() {
+    document.documentElement.lang = TRIP_CONFIG.language;
+    document.title = TRIP_CONFIG.pageTitle;
+    DOM.pageDescription.setAttribute("content", TRIP_CONFIG.pageDescription);
+    DOM.skipLink.textContent = formatLabel("skipLink");
+    DOM.heroEyebrow.textContent = TRIP_CONFIG.heroEyebrow;
+    DOM.heroHeading.textContent = TRIP_CONFIG.heading;
+    DOM.heroSubtitle.textContent = TRIP_CONFIG.subtitle;
+    DOM.openNavigator.setAttribute("aria-label", formatLabel("openNavigator"));
+    DOM.navigatorTriggerLabel.textContent = formatLabel("events");
+    DOM.navigator.setAttribute("aria-label", formatLabel("navigatorAria"));
+    DOM.routeKicker.textContent = formatLabel("routeKicker");
+    DOM.journalHeading.textContent = formatLabel("journalHeading");
+    DOM.closeNavigator.setAttribute("aria-label", formatLabel("closeNavigator"));
+    DOM.eventSearchLabel.textContent = formatLabel("searchLabel");
+    DOM.eventSearch.setAttribute("placeholder", formatLabel("searchPlaceholder"));
+    DOM.eventGroups.setAttribute("aria-label", formatLabel("eventsByDate"));
+    DOM.eventTitle.textContent = formatLabel("loadingTrip");
+    DOM.lightboxTitle.textContent = formatLabel("lightboxTitle");
+    DOM.lightboxCloseLabel.textContent = formatLabel("close");
+
+    Object.entries(THEME_PROPERTY_MAP).forEach(([configKey, cssProperty]) => {
+      const value = TRIP_CONFIG.theme[configKey];
+      if (typeof value === "string" && value.trim()) {
+        document.documentElement.style.setProperty(cssProperty, value.trim());
+      }
+    });
+    if (typeof TRIP_CONFIG.theme.canvas === "string" && TRIP_CONFIG.theme.canvas.trim()) {
+      DOM.themeColor.setAttribute("content", TRIP_CONFIG.theme.canvas.trim());
+    }
+  }
+
+  /**
+   * Uppercases only the first visible character of a generated localized label.
    *
    * @param {string} value - Text that may begin with a lowercase character.
    * @returns {string} Text with a locale-aware uppercase first character.
@@ -189,17 +371,17 @@
     if (!value) {
       return "";
     }
-    return value.charAt(0).toLocaleUpperCase("bg-BG") + value.slice(1);
+    return value.charAt(0).toLocaleUpperCase(TRIP_CONFIG.locale) + value.slice(1);
   }
 
   /**
-   * Returns a Bulgarian event-count phrase.
+   * Returns a localized event-count phrase.
    *
    * @param {number} count - Deduplicated number of registry events.
    * @returns {string} A visitor-facing singular or plural count.
    */
   function formatEventCount(count) {
-    return count === 1 ? "1 събитие" : `${count} събития`;
+    return formatLabel(count === 1 ? "eventCountSingular" : "eventCountPlural", { count });
   }
 
   /**
@@ -230,8 +412,8 @@
       .trim();
 
     return fallbackPhrase
-      ? `Събитие: ${capitalizeFirst(fallbackPhrase)}`
-      : "Събитие без заглавие";
+      ? `${formatLabel("eventFallbackPrefix")}: ${capitalizeFirst(fallbackPhrase)}`
+      : formatLabel("untitledEvent");
   }
 
   /**
@@ -308,6 +490,12 @@
    * @returns {void}
    */
   function renderTripFacts() {
+    if (TRIP_CONFIG.tripFacts) {
+      DOM.tripFacts.textContent = TRIP_CONFIG.tripFacts;
+      DOM.tripFacts.hidden = false;
+      return;
+    }
+
     const datedEvents = APP_STATE.events
       .filter((eventEntry) => eventEntry.date)
       .map((eventEntry) => eventEntry.date.value)
@@ -354,7 +542,7 @@
       const groupKey = eventEntry.date ? eventEntry.date.key : "unknown";
       const groupLabel = eventEntry.date
         ? capitalizeFirst(DATE_GROUP_FORMATTER.format(eventEntry.date.value))
-        : "Без посочена дата";
+        : formatLabel("unknownDate");
 
       if (!groups.has(groupKey)) {
         groups.set(groupKey, {
@@ -396,10 +584,10 @@
    * @returns {void}
    */
   function renderEventNavigator() {
-    const normalizedTerm = APP_STATE.searchTerm.toLocaleLowerCase("bg-BG");
+    const normalizedTerm = APP_STATE.searchTerm.toLocaleLowerCase(TRIP_CONFIG.locale);
     const visibleEvents = normalizedTerm
       ? APP_STATE.events.filter((eventEntry) => (
-        eventEntry.label.toLocaleLowerCase("bg-BG").includes(normalizedTerm)
+        eventEntry.label.toLocaleLowerCase(TRIP_CONFIG.locale).includes(normalizedTerm)
       ))
       : APP_STATE.events;
 
@@ -407,7 +595,7 @@
 
     if (visibleEvents.length === 0) {
       const emptyMessage = createElement("p", "event-groups__empty");
-      emptyMessage.textContent = "Няма събития, които отговарят на търсенето.";
+      emptyMessage.textContent = formatLabel("noSearchResults");
       DOM.eventGroups.appendChild(emptyMessage);
     } else {
       const groupedEvents = groupEventsByDate(visibleEvents);
@@ -425,7 +613,10 @@
     }
 
     DOM.navSummary.textContent = normalizedTerm
-      ? `Показани ${visibleEvents.length} от ${formatEventCount(APP_STATE.events.length)}`
+      ? formatLabel("filteredSummary", {
+        visible: visibleEvents.length,
+        total: formatEventCount(APP_STATE.events.length)
+      })
       : formatEventCount(APP_STATE.events.length);
   }
 
@@ -550,23 +741,51 @@
   }
 
   /**
+   * Extracts an optional Google Drive resource key from a stored preview URL.
+   *
+   * @param {string} previewUrl - Stored Drive preview address from an event data file.
+   * @returns {string} Resource key required for some link-shared files, or an empty string.
+   */
+  function extractDriveResourceKey(previewUrl) {
+    try {
+      return new URL(previewUrl).searchParams.get("resourcekey") || "";
+    } catch (error) {
+      console.debug("Ignoring an invalid optional Drive resource key URL.", error);
+      return "";
+    }
+  }
+
+  /**
    * Builds a lazy gallery thumbnail URL from an existing Drive identifier.
    *
    * @param {string} driveId - File identifier extracted from the stored preview URL.
+   * @param {string} [resourceKey] - Optional link-sharing resource key retained from the preview URL.
    * @returns {string} Google Drive thumbnail address.
    */
-  function buildThumbnailUrl(driveId) {
-    return `https://drive.google.com/thumbnail?id=${encodeURIComponent(driveId)}&sz=w${THUMBNAIL_WIDTH}`;
+  function buildThumbnailUrl(driveId, resourceKey) {
+    const parameters = new URLSearchParams({
+      id: driveId,
+      sz: `w${THUMBNAIL_WIDTH}`
+    });
+    if (resourceKey) {
+      parameters.set("resourcekey", resourceKey);
+    }
+    return `https://drive.google.com/thumbnail?${parameters.toString()}`;
   }
 
   /**
    * Builds a direct-view fallback URL from an existing Drive identifier.
    *
    * @param {string} driveId - File identifier extracted from the stored preview URL.
+   * @param {string} [resourceKey] - Optional link-sharing resource key retained from the preview URL.
    * @returns {string} Google Drive view address used only after thumbnail failure.
    */
-  function buildViewUrl(driveId) {
-    return `https://drive.google.com/uc?export=view&id=${encodeURIComponent(driveId)}`;
+  function buildViewUrl(driveId, resourceKey) {
+    const parameters = new URLSearchParams({ export: "view", id: driveId });
+    if (resourceKey) {
+      parameters.set("resourcekey", resourceKey);
+    }
+    return `https://drive.google.com/uc?${parameters.toString()}`;
   }
 
   /**
@@ -582,7 +801,7 @@
 
     return rawItems.map((rawItem) => {
       const item = rawItem && typeof rawItem === "object" ? rawItem : {};
-      const rawType = String(item.type || "").toLocaleLowerCase("bg-BG");
+      const rawType = String(item.type || "").toLocaleLowerCase(TRIP_CONFIG.locale);
 
       // Text blocks remain visible regardless of the media-only optional visibility field.
       if (rawType === "text") {
@@ -610,7 +829,8 @@
         kind: VIDEO_NAME_PATTERN.test(name) ? "video" : "image",
         preview,
         desc: String(item.desc || ""),
-        driveId
+        driveId,
+        resourceKey: extractDriveResourceKey(preview)
       };
     }).filter(Boolean);
   }
@@ -636,7 +856,7 @@
 
       script.addEventListener("load", () => {
         if (APP_STATE.activeDataScript !== script) {
-          reject(new Error("Остаряло зареждане на събитие."));
+          reject(new Error(formatLabel("staleLoad")));
           return;
         }
 
@@ -646,7 +866,7 @@
         APP_STATE.activeDataScript = null;
 
         if (!Array.isArray(rawItems)) {
-          reject(new Error(`Липсват данни за събитието ${eventEntry.slug}.`));
+          reject(new Error(formatLabel("missingEventData", { event: eventEntry.slug })));
           return;
         }
 
@@ -660,7 +880,7 @@
           APP_STATE.activeDataScript = null;
         }
         script.remove();
-        reject(new Error(`Неуспешно зареждане на ${eventEntry.data}.`));
+        reject(new Error(formatLabel("eventLoadFailed", { path: eventEntry.data })));
       });
 
       document.head.appendChild(script);
@@ -682,17 +902,18 @@
   }
 
   /**
-   * Replaces a failed thumbnail with its direct-view fallback and then a Bulgarian placeholder.
+   * Replaces a failed thumbnail with its direct-view fallback and then a localized placeholder.
    *
    * @param {HTMLImageElement} image - Thumbnail that emitted the error.
    * @param {HTMLButtonElement} mediaButton - Parent action receiving the final error state.
    * @param {string} driveId - Existing Google Drive file identifier.
+   * @param {string} resourceKey - Optional Drive key needed by link-shared media.
    * @returns {void}
    */
-  function handleThumbnailError(image, mediaButton, driveId) {
+  function handleThumbnailError(image, mediaButton, driveId, resourceKey) {
     if (!image.dataset.fallbackAttempted) {
       image.dataset.fallbackAttempted = "true";
-      image.src = buildViewUrl(driveId);
+      image.src = buildViewUrl(driveId, resourceKey);
       return;
     }
     mediaButton.classList.add("has-image-error");
@@ -714,24 +935,31 @@
     const image = createElement("img");
     const placeholder = createElement("span", "media-placeholder");
     const mediaNumber = mediaIndex + 1;
-    const mediaNoun = item.kind === "video" ? "видео" : "снимка";
-    const eventLabel = APP_STATE.activeEvent ? APP_STATE.activeEvent.label : "събитието";
+    const mediaNoun = formatLabel(item.kind === "video" ? "videoNoun" : "imageNoun");
+    const eventLabel = APP_STATE.activeEvent
+      ? APP_STATE.activeEvent.label
+      : formatLabel("currentEventFallback");
 
     button.type = "button";
-    button.setAttribute("aria-label", `Отвори ${mediaNoun} ${mediaNumber}: ${eventLabel}`);
+    button.setAttribute("aria-label", formatLabel("openMedia", {
+      media: mediaNoun,
+      number: mediaNumber,
+      event: eventLabel
+    }));
     image.loading = "lazy";
     image.decoding = "async";
     image.referrerPolicy = "no-referrer";
-    image.alt = item.kind === "video"
-      ? `Кадър от видео ${mediaNumber} — ${eventLabel}`
-      : `Снимка ${mediaNumber} — ${eventLabel}`;
-    image.src = buildThumbnailUrl(item.driveId);
+    image.alt = formatLabel(item.kind === "video" ? "videoAlt" : "imageAlt", {
+      number: mediaNumber,
+      event: eventLabel
+    });
+    image.src = buildThumbnailUrl(item.driveId, item.resourceKey);
     image.addEventListener("error", () => {
-      handleThumbnailError(image, button, item.driveId);
+      handleThumbnailError(image, button, item.driveId, item.resourceKey);
     });
     placeholder.textContent = item.kind === "video"
-      ? "Кадърът не може да се зареди. Видеото може да се отвори."
-      : "Снимката не може да се зареди. Опитайте да я отворите.";
+      ? formatLabel("videoUnavailable")
+      : formatLabel("imageUnavailable");
 
     button.append(image, placeholder);
 
@@ -790,7 +1018,7 @@
   /**
    * Creates a full-width loading, empty, or error state.
    *
-   * @param {string} message - Bulgarian explanation shown to visitors.
+   * @param {string} message - Localized explanation shown to visitors.
    * @param {"loading"|"empty"|"error"} stateType - Visual state category.
    * @param {Function|null} [retryAction] - Optional retry callback for recoverable failures.
    * @returns {HTMLElement} Status article ready for the gallery.
@@ -805,7 +1033,7 @@
     if (typeof retryAction === "function") {
       const retryButton = createElement("button", "state-card__action");
       retryButton.type = "button";
-      retryButton.textContent = "Опитайте отново";
+      retryButton.textContent = formatLabel("retry");
       retryButton.addEventListener("click", retryAction);
       card.appendChild(retryButton);
     }
@@ -823,9 +1051,9 @@
     DOM.gallery.setAttribute("aria-busy", "false");
 
     if (items.length === 0) {
-      DOM.eventStatus.textContent = "За това събитие няма съдържание за показване.";
+      DOM.eventStatus.textContent = formatLabel("emptyEvent");
       DOM.gallery.appendChild(
-        createStateCard("За това събитие няма съдържание за показване.", "empty")
+        createStateCard(formatLabel("emptyEvent"), "empty")
       );
       return;
     }
@@ -850,22 +1078,22 @@
   function renderLoadingState() {
     DOM.gallery.setAttribute("aria-busy", "true");
     DOM.gallery.replaceChildren(
-      createStateCard("Зареждане на снимките и разказите…", "loading")
+      createStateCard(formatLabel("loadingContent"), "loading")
     );
-    DOM.eventStatus.textContent = "Съдържанието се зарежда.";
+    DOM.eventStatus.textContent = formatLabel("contentLoading");
   }
 
   /**
-   * Displays a recoverable Bulgarian failure state for the selected event.
+   * Displays a recoverable localized failure state for the selected event.
    *
    * @returns {void}
    */
   function renderEventFailure() {
     DOM.gallery.setAttribute("aria-busy", "false");
-    DOM.eventStatus.textContent = "Съдържанието не можа да се зареди.";
+    DOM.eventStatus.textContent = formatLabel("contentLoadFailed");
     DOM.gallery.replaceChildren(
       createStateCard(
-        "Възникна проблем при зареждането на това събитие. Проверете връзката и опитайте отново.",
+        formatLabel("eventFailure"),
         "error",
         () => {
           navigateToEvent(APP_STATE.activeSlug, {
@@ -950,7 +1178,7 @@
       previewUrl.searchParams.set("autoplay", "1");
       return previewUrl.toString();
     } catch (error) {
-      console.error("Адресът за видеото не може да бъде обработен:", error);
+      console.error(formatLabel("videoUrlErrorLog"), error);
       return item.preview;
     }
   }
@@ -964,9 +1192,11 @@
    */
   function openLightbox(item, trigger) {
     const frame = createElement("iframe", "lightbox__frame");
-    const mediaNoun = item.kind === "video" ? "видео" : "снимка";
-    const eventLabel = APP_STATE.activeEvent ? APP_STATE.activeEvent.label : "събитието";
-    frame.title = `Преглед на ${mediaNoun}: ${eventLabel}`;
+    const mediaNoun = formatLabel(item.kind === "video" ? "videoNoun" : "imageNoun");
+    const eventLabel = APP_STATE.activeEvent
+      ? APP_STATE.activeEvent.label
+      : formatLabel("currentEventFallback");
+    frame.title = formatLabel("mediaPreview", { media: mediaNoun, event: eventLabel });
     frame.referrerPolicy = "no-referrer";
     frame.allow = item.kind === "video"
       ? "autoplay; fullscreen; picture-in-picture"
@@ -1108,7 +1338,7 @@
       if (currentLoadSequence !== APP_STATE.loadSequence) {
         return;
       }
-      console.error("Събитието не можа да се зареди:", error);
+      console.error(formatLabel("eventErrorLog"), error);
       APP_STATE.media = [];
       renderEventFailure();
     }
@@ -1215,6 +1445,7 @@
       return;
     }
 
+    applyTripConfig();
     APP_STATE.events = normalizeEventRegistry(window.GALLERY_EVENT_INDEX);
     APP_STATE.eventBySlug = new Map(
       APP_STATE.events.map((eventEntry) => [eventEntry.slug, eventEntry])
@@ -1223,16 +1454,16 @@
     synchronizeDrawerMode();
 
     if (APP_STATE.events.length === 0) {
-      DOM.eventTitle.textContent = "Пътуването не може да бъде заредено";
-      DOM.eventStatus.textContent = "Липсва списък със събития.";
+      DOM.eventTitle.textContent = formatLabel("tripUnavailable");
+      DOM.eventStatus.textContent = formatLabel("registryMissing");
       DOM.gallery.setAttribute("aria-busy", "false");
       DOM.gallery.replaceChildren(
         createStateCard(
-          "В момента няма достъпни събития от пътуването.",
+          formatLabel("noTripEvents"),
           "error"
         )
       );
-      DOM.navSummary.textContent = "Няма събития";
+      DOM.navSummary.textContent = formatLabel("noEvents");
       return;
     }
 
