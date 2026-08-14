@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDF Splitter + Markdown Export</title>
+  <meta name="description" content="Локално разделяне на PDF на части и извличане на текста в отделни Markdown файлове." />
+
+  <!--
+    Приложението е един HTML файл. Самият PDF не се качва на сървър.
+    За PDF обработката се зареждат три фиксирани JavaScript библиотеки от CDN:
+    pdf-lib 1.17.1, PDF.js 3.11.174 и JSZip 3.10.1.
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --panel-2: #f8fafc;
+      --text: #172033;
+      --muted: #667085;
+      --border: #d9e0ea;
+      --primary: #2457d6;
+      --primary-hover: #1d46ad;
+      --primary-soft: #eef4ff;
+      --success: #117a4b;
+      --success-soft: #eaf8f1;
+      --danger: #b42318;
+      --danger-soft: #fff0ee;
+      --warning: #8a5b00;
+      --warning-soft: #fff7df;
+      --shadow: 0 18px 50px rgba(30, 49, 88, 0.10);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(36, 87, 214, 0.08), transparent 32%),
+        radial-gradient(circle at 100% 10%, rgba(17, 122, 75, 0.06), transparent 30%),
+        var(--bg);
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 42px 0 64px;
+    }
+
+    .hero {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 48px);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 820px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 20px 22px 0;
+    }
+
+    .card-header h2 {
+      margin: 0 0 6px;
+      font-size: 19px;
+      letter-spacing: -0.01em;
+    }
+
+    .card-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .card-body { padding: 20px 22px 22px; }
+
+    .dropzone {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 205px;
+      border: 2px dashed #b8c5db;
+      border-radius: 15px;
+      background: linear-gradient(180deg, #fbfdff, #f6f9ff);
+      text-align: center;
+      padding: 28px;
+      transition: 0.18s ease;
+      outline: none;
+    }
+
+    .dropzone:hover,
+    .dropzone.is-dragging,
+    .dropzone:focus-visible {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+      transform: translateY(-1px);
+    }
+
+    .dropzone input {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .drop-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 14px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 24px rgba(36, 87, 214, 0.10);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .dropzone strong { display: block; font-size: 16px; margin-bottom: 4px; }
+    .dropzone span { color: var(--muted); font-size: 13px; }
+
+    .file-meta {
+      display: none;
+      margin-top: 14px;
+      padding: 13px 14px;
+      border-radius: 12px;
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .file-meta.is-visible { display: flex; }
+
+    .file-meta-main { min-width: 0; }
+    .file-name {
+      font-weight: 700;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 520px;
+    }
+    .file-stats { color: var(--muted); font-size: 13px; margin-top: 3px; }
+
+    .pill {
+      flex: 0 0 auto;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--success-soft);
+      color: var(--success);
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .field { margin-top: 18px; }
+    .field label {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: baseline;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .field label small { color: var(--muted); font-weight: 500; }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      border: 1px solid #c8d2e2;
+      border-radius: 11px;
+      background: #fff;
+      color: var(--text);
+      padding: 12px 13px;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(36, 87, 214, 0.10);
+    }
+
+    input:disabled { background: #f2f4f7; cursor: not-allowed; }
+
+    .helper {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .example {
+      padding: 10px 12px;
+      margin-top: 10px;
+      background: var(--primary-soft);
+      border: 1px solid #d6e3ff;
+      border-radius: 10px;
+      font-size: 13px;
+      color: #33456b;
+    }
+
+    .quick-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .btn {
+      border: 1px solid transparent;
+      border-radius: 11px;
+      padding: 11px 14px;
+      font-weight: 700;
+      transition: 0.15s ease;
+    }
+
+    .btn:hover:not(:disabled) { transform: translateY(-1px); }
+    .btn:disabled { opacity: 0.48; cursor: not-allowed; transform: none; }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .btn-primary:hover:not(:disabled) { background: var(--primary-hover); }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--text);
+      border-color: var(--border);
+    }
+    .btn-secondary:hover:not(:disabled) { background: #f8fafc; }
+
+    .btn-success {
+      background: var(--success);
+      color: #fff;
+      border-color: var(--success);
+    }
+
+    .btn-sm { padding: 8px 10px; border-radius: 9px; font-size: 13px; }
+
+    .ranges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+      min-height: 31px;
+    }
+
+    .range-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f4f6fa;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 9px;
+      font-size: 12px;
+      color: #475467;
+      font-weight: 650;
+    }
+
+    .notice {
+      display: flex;
+      gap: 10px;
+      padding: 12px 13px;
+      border-radius: 11px;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-top: 14px;
+    }
+
+    .notice-info { background: #f3f6fb; color: #475467; border: 1px solid #e1e6ef; }
+    .notice-warning { background: var(--warning-soft); color: var(--warning); border: 1px solid #f0dfae; }
+    .notice-error { background: var(--danger-soft); color: var(--danger); border: 1px solid #f6c9c3; }
+
+    .primary-action {
+      width: 100%;
+      margin-top: 18px;
+      padding: 13px 16px;
+      font-size: 15px;
+    }
+
+    .status-box {
+      display: grid;
+      gap: 10px;
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 14px;
+    }
+
+    .status-label { color: var(--muted); }
+    .status-value { font-weight: 750; text-align: right; }
+
+    .progress-wrap {
+      margin-top: 14px;
+      display: none;
+    }
+    .progress-wrap.is-visible { display: block; }
+
+    .progress-track {
+      width: 100%;
+      height: 9px;
+      border-radius: 999px;
+      background: #e9eef6;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #2457d6, #3f7df5);
+      transition: width 0.2s ease;
+    }
+
+    .progress-text { margin-top: 8px; color: var(--muted); font-size: 13px; }
+
+    .results-card {
+      grid-column: 1 / -1;
+      display: none;
+    }
+    .results-card.is-visible { display: block; }
+
+    .results-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 22px 18px;
+      flex-wrap: wrap;
+    }
+
+    .results-list {
+      border-top: 1px solid var(--border);
+    }
+
+    .result-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+      padding: 16px 22px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .result-item:last-child { border-bottom: 0; }
+    .result-title { font-weight: 800; }
+    .result-sub { margin-top: 4px; color: var(--muted); font-size: 13px; }
+    .result-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+
+    .footer-note {
+      margin-top: 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: rgba(36, 87, 214, 0.08);
+      color: #274a9f;
+    }
+
+    @media (max-width: 820px) {
+      .page { width: min(100% - 20px, 1120px); padding-top: 24px; }
+      .grid { grid-template-columns: 1fr; }
+      .results-card { grid-column: auto; }
+      .result-item { grid-template-columns: 1fr; }
+      .result-actions { justify-content: flex-start; }
+      .file-name { max-width: 65vw; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="eyebrow">PDF → части + Markdown</div>
+      <h1>Разделяне на PDF и експорт на текста</h1>
+      <p>
+        Изберете PDF от компютъра си, задайте страниците, от които да започват нови части,
+        и генерирайте отделен PDF и Markdown файл за всяка част. Обработката на документа е локална в браузъра.
+      </p>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="card-header">
+          <h2>1. Изберете PDF</h2>
+          <p>Плъзнете файл в полето или натиснете, за да го изберете.</p>
+        </div>
+        <div class="card-body">
+          <div id="dropzone" class="dropzone" tabindex="0" role="button" aria-label="Изберете PDF файл">
+            <input id="fileInput" type="file" accept="application/pdf,.pdf" />
+            <div>
+              <div class="drop-icon">PDF</div>
+              <strong>Пуснете PDF файла тук</strong>
+              <span>или натиснете, за да изберете файл</span>
+            </div>
+          </div>
+
+          <div id="fileMeta" class="file-meta" aria-live="polite">
+            <div class="file-meta-main">
+              <div id="fileName" class="file-name"></div>
+              <div id="fileStats" class="file-stats"></div>
+            </div>
+            <div id="fileBadge" class="pill">Готов</div>
+          </div>
+
+          <div id="loadError" class="notice notice-error" style="display:none"></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-header">
+          <h2>2. Задайте разделянето</h2>
+          <p>Всяко число означава: „от тази страница започва нова PDF част“.</p>
+        </div>
+        <div class="card-body">
+          <div class="field" style="margin-top:0">
+            <label for="splitInput">
+              <span>Начални страници на новите части</span>
+              <small id="pageLimitLabel">Първо изберете PDF</small>
+            </label>
+            <input id="splitInput" type="text" placeholder="Напр. 4, 8, 15" disabled inputmode="numeric" autocomplete="off" />
+            <div class="helper">Разделяйте числата със запетая, интервал или точка и запетая.</div>
+            <div id="splitExample" class="example">Пример: при 10 страници и <code>4, 8</code> ще получите части <strong>1–3</strong>, <strong>4–7</strong> и <strong>8–10</strong>.</div>
+
+            <div class="quick-actions">
+              <button id="eachPageBtn" class="btn btn-secondary btn-sm" type="button" disabled>Всяка страница отделно</button>
+              <button id="clearSplitsBtn" class="btn btn-secondary btn-sm" type="button" disabled>Без разделяне</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label><span>Предварителни части</span><small id="partsCount">0 части</small></label>
+            <div id="ranges" class="ranges"><span class="helper">Няма зареден PDF.</span></div>
+          </div>
+
+          <div class="notice notice-warning">
+            <div>
+              Markdown експортът извлича наличния текстов слой. При сканиран PDF без разпознаваем текст
+              Markdown файлът може да е празен за съответните страници, тъй като тук не се изпълнява OCR.
+            </div>
+          </div>
+
+          <button id="processBtn" class="btn btn-primary primary-action" type="button" disabled>Раздели PDF и извлечи Markdown</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-header">
+          <h2>Статус</h2>
+          <p>Текущо състояние на зареждането и обработката.</p>
+        </div>
+        <div class="card-body">
+          <div class="status-box">
+            <div class="status-row"><span class="status-label">Документ</span><span id="statusDocument" class="status-value">Няма</span></div>
+            <div class="status-row"><span class="status-label">Страници</span><span id="statusPages" class="status-value">—</span></div>
+            <div class="status-row"><span class="status-label">Части</span><span id="statusParts" class="status-value">—</span></div>
+            <div class="status-row"><span class="status-label">Състояние</span><span id="statusState" class="status-value">Очаква файл</span></div>
+          </div>
+
+          <div id="progressWrap" class="progress-wrap">
+            <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+            <div id="progressText" class="progress-text">0%</div>
+          </div>
+
+          <div class="notice notice-info">
+            PDF файлът се чете от браузъра ви и не се изпраща към сървър от този инструмент.
+            За работата на приложението обаче са нужни заредените JavaScript библиотеки.
+          </div>
+        </div>
+      </article>
+
+      <article id="resultsCard" class="card results-card">
+        <div class="card-header">
+          <h2>3. Резултати</h2>
+          <p>Изтеглете отделни файлове или всички резултати наведнъж като ZIP.</p>
+        </div>
+        <div class="results-toolbar">
+          <div id="resultsSummary" class="helper"></div>
+          <button id="downloadZipBtn" class="btn btn-success" type="button" disabled>Изтегли всичко като ZIP</button>
+        </div>
+        <div id="resultsList" class="results-list"></div>
+      </article>
+    </section>
+
+    <div class="footer-note">
+      PDF разделяне: <strong>pdf-lib 1.17.1</strong> · извличане на текст: <strong>PDF.js 3.11.174</strong> · ZIP: <strong>JSZip 3.10.1</strong>.
+      За много големи PDF файлове е възможно браузърът да използва значително количество памет.
+    </div>
+  </main>
+
+  <script id="app-script">
+    (() => {
+      'use strict';
+
+      const els = {
+        dropzone: document.getElementById('dropzone'),
+        fileInput: document.getElementById('fileInput'),
+        fileMeta: document.getElementById('fileMeta'),
+        fileName: document.getElementById('fileName'),
+        fileStats: document.getElementById('fileStats'),
+        fileBadge: document.getElementById('fileBadge'),
+        loadError: document.getElementById('loadError'),
+        splitInput: document.getElementById('splitInput'),
+        pageLimitLabel: document.getElementById('pageLimitLabel'),
+        splitExample: document.getElementById('splitExample'),
+        eachPageBtn: document.getElementById('eachPageBtn'),
+        clearSplitsBtn: document.getElementById('clearSplitsBtn'),
+        ranges: document.getElementById('ranges'),
+        partsCount: document.getElementById('partsCount'),
+        processBtn: document.getElementById('processBtn'),
+        statusDocument: document.getElementById('statusDocument'),
+        statusPages: document.getElementById('statusPages'),
+        statusParts: document.getElementById('statusParts'),
+        statusState: document.getElementById('statusState'),
+        progressWrap: document.getElementById('progressWrap'),
+        progressBar: document.getElementById('progressBar'),
+        progressText: document.getElementById('progressText'),
+        resultsCard: document.getElementById('resultsCard'),
+        resultsSummary: document.getElementById('resultsSummary'),
+        resultsList: document.getElementById('resultsList'),
+        downloadZipBtn: document.getElementById('downloadZipBtn')
+      };
+
+      const state = {
+        file: null,
+        buffer: null,
+        pdfJsDoc: null,
+        numPages: 0,
+        ranges: [],
+        results: [],
+        busy: false
+      };
+
+      function librariesReady() {
+        return Boolean(window.PDFLib && window.pdfjsLib && window.JSZip);
+      }
+
+      if (window.pdfjsLib) {
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      }
+
+      function formatBytes(bytes) {
+        if (!Number.isFinite(bytes) || bytes <= 0) return '0 B';
+        const units = ['B', 'KB', 'MB', 'GB'];
+        const i = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
+        const value = bytes / Math.pow(1024, i);
+        return `${value.toFixed(value >= 10 || i === 0 ? 0 : 1)} ${units[i]}`;
+      }
+
+      function sanitizeBaseName(name) {
+        return name
+          .replace(/\.pdf$/i, '')
+          .replace(/[\\/:*?"<>|]+/g, '_')
+          .replace(/\s+/g, ' ')
+          .trim() || 'document';
+      }
+
+      function parseSplitPoints(raw, numPages) {
+        const text = String(raw || '').trim();
+        if (!text) return [];
+
+        const tokens = text.split(/[\s,;]+/).filter(Boolean);
+        const invalidTokens = tokens.filter(token => !/^\d+$/.test(token));
+        if (invalidTokens.length) {
+          throw new Error(`Невалидна стойност: ${invalidTokens.join(', ')}. Използвайте само номера на страници.`);
+        }
+
+        const values = [...new Set(tokens.map(Number))].sort((a, b) => a - b);
+        const invalidPages = values.filter(page => page < 2 || page > numPages);
+        if (invalidPages.length) {
+          throw new Error(`Точките на разделяне трябва да са между страница 2 и ${numPages}. Невалидни: ${invalidPages.join(', ')}.`);
+        }
+
+        return values;
+      }
+
+      function makeRanges(numPages, splitPoints) {
+        if (!numPages) return [];
+        const starts = [1, ...splitPoints];
+        return starts.map((start, index) => ({
+          part: index + 1,
+          start,
+          end: index + 1 < starts.length ? starts[index + 1] - 1 : numPages
+        }));
+      }
+
+      function updateRangePreview() {
+        if (!state.numPages) {
+          state.ranges = [];
+          els.ranges.innerHTML = '<span class="helper">Няма зареден PDF.</span>';
+          els.partsCount.textContent = '0 части';
+          els.statusParts.textContent = '—';
+          return;
+        }
+
+        try {
+          const points = parseSplitPoints(els.splitInput.value, state.numPages);
+          const ranges = makeRanges(state.numPages, points);
+          state.ranges = ranges;
+          els.ranges.innerHTML = ranges.map(range => {
+            const pageLabel = range.start === range.end ? `стр. ${range.start}` : `стр. ${range.start}–${range.end}`;
+            return `<span class="range-chip">Част ${range.part} · ${pageLabel}</span>`;
+          }).join('');
+          els.partsCount.textContent = `${ranges.length} ${ranges.length === 1 ? 'част' : 'части'}`;
+          els.statusParts.textContent = String(ranges.length);
+          els.splitInput.removeAttribute('aria-invalid');
+          els.processBtn.disabled = state.busy || !state.file;
+          hideError();
+        } catch (error) {
+          state.ranges = [];
+          els.ranges.innerHTML = `<span class="helper" style="color:var(--danger)">${escapeHtml(error.message)}</span>`;
+          els.partsCount.textContent = 'Невалидни граници';
+          els.statusParts.textContent = '—';
+          els.splitInput.setAttribute('aria-invalid', 'true');
+          els.processBtn.disabled = true;
+        }
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      function showError(message) {
+        els.loadError.textContent = message;
+        els.loadError.style.display = 'flex';
+      }
+
+      function hideError() {
+        els.loadError.style.display = 'none';
+        els.loadError.textContent = '';
+      }
+
+      function setBusy(isBusy) {
+        state.busy = isBusy;
+        els.fileInput.disabled = isBusy;
+        els.splitInput.disabled = isBusy || !state.file;
+        els.eachPageBtn.disabled = isBusy || !state.file || state.numPages <= 1;
+        els.clearSplitsBtn.disabled = isBusy || !state.file;
+        els.processBtn.disabled = isBusy || !state.file || state.ranges.length === 0;
+        els.downloadZipBtn.disabled = isBusy || state.results.length === 0;
+      }
+
+      function setProgress(percent, text) {
+        els.progressWrap.classList.add('is-visible');
+        const p = Math.max(0, Math.min(100, percent));
+        els.progressBar.style.width = `${p}%`;
+        els.progressText.textContent = text || `${Math.round(p)}%`;
+      }
+
+      function resetProgress() {
+        els.progressWrap.classList.remove('is-visible');
+        els.progressBar.style.width = '0%';
+        els.progressText.textContent = '0%';
+      }
+
+      function clearResults() {
+        for (const result of state.results) {
+          if (result.pdfUrl) URL.revokeObjectURL(result.pdfUrl);
+          if (result.mdUrl) URL.revokeObjectURL(result.mdUrl);
+        }
+        state.results = [];
+        els.resultsList.innerHTML = '';
+        els.resultsSummary.textContent = '';
+        els.resultsCard.classList.remove('is-visible');
+        els.downloadZipBtn.disabled = true;
+      }
+
+      async function loadPdfFile(file) {
+        if (!file) return;
+        hideError();
+        clearResults();
+        resetProgress();
+
+        if (!librariesReady()) {
+          showError('Неуспешно зареждане на необходимите JavaScript библиотеки. Проверете интернет връзката и презаредете страницата.');
+          return;
+        }
+
+        const looksLikePdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
+        if (!looksLikePdf) {
+          showError('Моля, изберете PDF файл.');
+          return;
+        }
+
+        try {
+          setBusy(true);
+          els.statusState.textContent = 'Зареждане…';
+          els.fileBadge.textContent = 'Чете се…';
+          els.fileMeta.classList.add('is-visible');
+          els.fileName.textContent = file.name;
+          els.fileStats.textContent = `${formatBytes(file.size)} · проверка на документа…`;
+
+          if (state.pdfJsDoc) {
+            try { await state.pdfJsDoc.destroy(); } catch (_) {}
+          }
+
+          const buffer = await file.arrayBuffer();
+          const loadingTask = window.pdfjsLib.getDocument({ data: new Uint8Array(buffer.slice(0)) });
+          const pdfJsDoc = await loadingTask.promise;
+
+          state.file = file;
+          state.buffer = buffer;
+          state.pdfJsDoc = pdfJsDoc;
+          state.numPages = pdfJsDoc.numPages;
+
+          els.fileName.textContent = file.name;
+          els.fileStats.textContent = `${formatBytes(file.size)} · ${state.numPages} ${state.numPages === 1 ? 'страница' : 'страници'}`;
+          els.fileBadge.textContent = 'Готов';
+          els.pageLimitLabel.textContent = state.numPages > 1 ? `Разрешени: 2–${state.numPages}` : 'Документът е 1 страница';
+          els.splitInput.disabled = false;
+          els.splitInput.value = '';
+          els.eachPageBtn.disabled = state.numPages <= 1;
+          els.clearSplitsBtn.disabled = false;
+          els.processBtn.disabled = false;
+          els.statusDocument.textContent = file.name;
+          els.statusPages.textContent = String(state.numPages);
+          els.statusState.textContent = 'Готов за обработка';
+          els.splitExample.innerHTML = state.numPages >= 8
+            ? 'Пример: ако въведете <code>4, 8</code>, нови части ще започнат от стр. 4 и стр. 8.'
+            : 'Оставете полето празно, ако искате един резултат с целия PDF.';
+
+          updateRangePreview();
+        } catch (error) {
+          state.file = null;
+          state.buffer = null;
+          state.numPages = 0;
+          state.pdfJsDoc = null;
+          els.fileBadge.textContent = 'Грешка';
+          els.fileStats.textContent = 'Файлът не беше прочетен.';
+          els.statusDocument.textContent = 'Няма';
+          els.statusPages.textContent = '—';
+          els.statusParts.textContent = '—';
+          els.statusState.textContent = 'Грешка';
+          els.splitInput.disabled = true;
+          els.eachPageBtn.disabled = true;
+          els.clearSplitsBtn.disabled = true;
+          els.processBtn.disabled = true;
+          showError('PDF файлът не може да бъде отворен. Възможно е да е повреден или защитен с парола.');
+          console.error(error);
+          updateRangePreview();
+        } finally {
+          setBusy(false);
+        }
+      }
+
+      function cleanJoinedLine(text) {
+        return text
+          .replace(/\s+([,.;:!?%])/g, '$1')
+          .replace(/([([{])\s+/g, '$1')
+          .replace(/\s+([)\]}])/g, '$1')
+          .replace(/[ \t]{2,}/g, ' ')
+          .trim();
+      }
+
+      function textItemsToLines(items) {
+        const textItems = items.filter(item => item && typeof item.str === 'string' && item.str.trim());
+        if (!textItems.length) return [];
+
+        const rows = [];
+        const tolerance = 2.6;
+
+        for (const item of textItems) {
+          const transform = item.transform || [1, 0, 0, 1, 0, 0];
+          const x = Number(transform[4]) || 0;
+          const y = Number(transform[5]) || 0;
+          let row = rows.find(candidate => Math.abs(candidate.y - y) <= tolerance);
+          if (!row) {
+            row = { y, items: [] };
+            rows.push(row);
+          }
+          row.items.push({ x, str: item.str, hasEOL: Boolean(item.hasEOL) });
+        }
+
+        rows.sort((a, b) => b.y - a.y);
+
+        return rows
+          .map(row => {
+            row.items.sort((a, b) => a.x - b.x);
+            return cleanJoinedLine(row.items.map(item => item.str.trim()).filter(Boolean).join(' '));
+          })
+          .filter(Boolean);
+      }
+
+      async function extractMarkdownForRange(pdfJsDoc, range, sourceName, baseName, onPageProgress) {
+        const pageBlocks = [];
+        let extractedCharacters = 0;
+
+        for (let pageNumber = range.start; pageNumber <= range.end; pageNumber++) {
+          const page = await pdfJsDoc.getPage(pageNumber);
+          const content = await page.getTextContent();
+          const lines = textItemsToLines(content.items || []);
+          const pageText = lines.join('\n').trim();
+          extractedCharacters += pageText.length;
+
+          pageBlocks.push(
+            `## Страница ${pageNumber}\n\n` +
+            (pageText || '_Няма извлечим текст на тази страница._')
+          );
+
+          try { page.cleanup(); } catch (_) {}
+          if (onPageProgress) onPageProgress(pageNumber);
+        }
+
+        const rangeLabel = range.start === range.end ? `${range.start}` : `${range.start}–${range.end}`;
+        const title = `${baseName} — част ${String(range.part).padStart(2, '0')}`;
+        const markdown = [
+          `# ${title}`,
+          '',
+          `- Източник: ${sourceName}`,
+          `- Страници: ${rangeLabel}`,
+          '',
+          '---',
+          '',
+          ...pageBlocks,
+          ''
+        ].join('\n');
+
+        return { markdown, extractedCharacters };
+      }
+
+      async function buildPdfPart(sourcePdf, range) {
+        const { PDFDocument } = window.PDFLib;
+        const partPdf = await PDFDocument.create();
+        const indices = [];
+        for (let pageIndex = range.start - 1; pageIndex <= range.end - 1; pageIndex++) {
+          indices.push(pageIndex);
+        }
+        const copiedPages = await partPdf.copyPages(sourcePdf, indices);
+        copiedPages.forEach(page => partPdf.addPage(page));
+        const bytes = await partPdf.save();
+        return new Blob([bytes], { type: 'application/pdf' });
+      }
+
+      function makePartStem(baseName, range) {
+        const p = String(range.part).padStart(2, '0');
+        const pages = range.start === range.end ? `page-${range.start}` : `pages-${range.start}-${range.end}`;
+        return `${baseName}-part-${p}-${pages}`;
+      }
+
+      async function processPdf() {
+        hideError();
+        clearResults();
+
+        if (!state.file || !state.buffer || !state.pdfJsDoc) {
+          showError('Първо изберете PDF файл.');
+          return;
+        }
+
+        updateRangePreview();
+        if (!state.ranges.length) {
+          showError('Проверете точките на разделяне.');
+          return;
+        }
+
+        if (!librariesReady()) {
+          showError('Необходимите JavaScript библиотеки не са заредени.');
+          return;
+        }
+
+        const totalPagesToExtract = state.ranges.reduce((sum, range) => sum + (range.end - range.start + 1), 0);
+        let completedPageExtractions = 0;
+        const totalUnits = state.ranges.length + totalPagesToExtract;
+        let completedUnits = 0;
+
+        try {
+          setBusy(true);
+          els.statusState.textContent = 'Обработка…';
+          setProgress(1, 'Подготовка на PDF…');
+
+          const { PDFDocument } = window.PDFLib;
+          let sourcePdf;
+          try {
+            sourcePdf = await PDFDocument.load(new Uint8Array(state.buffer.slice(0)));
+          } catch (error) {
+            throw new Error('PDF файлът не може да бъде разделен. pdf-lib не поддържа някои криптирани/защитени PDF документи.');
+          }
+
+          const baseName = sanitizeBaseName(state.file.name);
+          const results = [];
+
+          for (const range of state.ranges) {
+            setProgress((completedUnits / totalUnits) * 100, `Създаване на PDF част ${range.part} от ${state.ranges.length}…`);
+            const pdfBlob = await buildPdfPart(sourcePdf, range);
+            completedUnits += 1;
+
+            const mdData = await extractMarkdownForRange(
+              state.pdfJsDoc,
+              range,
+              state.file.name,
+              baseName,
+              () => {
+                completedPageExtractions += 1;
+                completedUnits += 1;
+                setProgress(
+                  (completedUnits / totalUnits) * 100,
+                  `Извличане на текст: ${completedPageExtractions} от ${totalPagesToExtract} страници…`
+                );
+              }
+            );
+
+            const stem = makePartStem(baseName, range);
+            const mdBlob = new Blob([mdData.markdown], { type: 'text/markdown;charset=utf-8' });
+
+            results.push({
+              range,
+              stem,
+              pdfName: `${stem}.pdf`,
+              mdName: `${stem}.md`,
+              pdfBlob,
+              mdBlob,
+              pdfUrl: URL.createObjectURL(pdfBlob),
+              mdUrl: URL.createObjectURL(mdBlob),
+              extractedCharacters: mdData.extractedCharacters
+            });
+          }
+
+          state.results = results;
+          renderResults();
+          setProgress(100, 'Готово.');
+          els.statusState.textContent = 'Готово';
+        } catch (error) {
+          console.error(error);
+          els.statusState.textContent = 'Грешка';
+          showError(error && error.message ? error.message : 'Възникна грешка при обработката.');
+          setProgress(0, 'Обработката е прекъсната.');
+        } finally {
+          setBusy(false);
+        }
+      }
+
+      function renderResults() {
+        const emptyTextParts = state.results.filter(result => result.extractedCharacters === 0).length;
+        els.resultsList.innerHTML = '';
+
+        for (const result of state.results) {
+          const item = document.createElement('div');
+          item.className = 'result-item';
+          const rangeText = result.range.start === result.range.end
+            ? `страница ${result.range.start}`
+            : `страници ${result.range.start}–${result.range.end}`;
+
+          item.innerHTML = `
+            <div>
+              <div class="result-title">Част ${result.range.part} · ${escapeHtml(rangeText)}</div>
+              <div class="result-sub">PDF: ${formatBytes(result.pdfBlob.size)} · Markdown: ${formatBytes(result.mdBlob.size)}${result.extractedCharacters === 0 ? ' · без извлечен текст' : ''}</div>
+            </div>
+            <div class="result-actions">
+              <a class="btn btn-secondary btn-sm" href="${result.pdfUrl}" download="${escapeHtml(result.pdfName)}">PDF</a>
+              <a class="btn btn-secondary btn-sm" href="${result.mdUrl}" download="${escapeHtml(result.mdName)}">Markdown</a>
+            </div>
+          `;
+          els.resultsList.appendChild(item);
+        }
+
+        els.resultsSummary.textContent = `${state.results.length} ${state.results.length === 1 ? 'част' : 'части'} · ${state.results.length * 2} файла` +
+          (emptyTextParts ? ` · ${emptyTextParts} Markdown ${emptyTextParts === 1 ? 'файл е' : 'файла са'} без извлечен текст` : '');
+        els.resultsCard.classList.add('is-visible');
+        els.downloadZipBtn.disabled = false;
+      }
+
+      function triggerBlobDownload(blob, filename) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 2000);
+      }
+
+      async function downloadZip() {
+        if (!state.results.length) return;
+        try {
+          setBusy(true);
+          els.statusState.textContent = 'Създаване на ZIP…';
+          setProgress(10, 'Подготовка на ZIP архив…');
+
+          const zip = new window.JSZip();
+          for (const result of state.results) {
+            zip.file(result.pdfName, result.pdfBlob, { binary: true, compression: 'STORE' });
+            zip.file(result.mdName, result.mdBlob, { binary: true, compression: 'DEFLATE' });
+          }
+
+          const zipBlob = await zip.generateAsync(
+            { type: 'blob', compression: 'DEFLATE', compressionOptions: { level: 6 } },
+            metadata => setProgress(10 + metadata.percent * 0.9, `Създаване на ZIP: ${metadata.percent.toFixed(0)}%`)
+          );
+
+          const baseName = sanitizeBaseName(state.file ? state.file.name : 'document');
+          triggerBlobDownload(zipBlob, `${baseName}-split.zip`);
+          setProgress(100, 'ZIP архивът е готов.');
+          els.statusState.textContent = 'ZIP готов';
+        } catch (error) {
+          console.error(error);
+          showError('Неуспешно създаване на ZIP архива. Можете да изтеглите файловете поотделно.');
+          els.statusState.textContent = 'Грешка при ZIP';
+        } finally {
+          setBusy(false);
+        }
+      }
+
+      els.fileInput.addEventListener('change', event => {
+        const file = event.target.files && event.target.files[0];
+        if (file) loadPdfFile(file);
+      });
+
+      ['dragenter', 'dragover'].forEach(type => {
+        els.dropzone.addEventListener(type, event => {
+          event.preventDefault();
+          event.stopPropagation();
+          els.dropzone.classList.add('is-dragging');
+        });
+      });
+
+      ['dragleave', 'drop'].forEach(type => {
+        els.dropzone.addEventListener(type, event => {
+          event.preventDefault();
+          event.stopPropagation();
+          els.dropzone.classList.remove('is-dragging');
+        });
+      });
+
+      els.dropzone.addEventListener('drop', event => {
+        const files = event.dataTransfer && event.dataTransfer.files;
+        if (files && files[0]) loadPdfFile(files[0]);
+      });
+
+      els.dropzone.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          els.fileInput.click();
+        }
+      });
+
+      els.splitInput.addEventListener('input', () => {
+        clearResults();
+        updateRangePreview();
+        els.statusState.textContent = 'Готов за обработка';
+      });
+
+      els.eachPageBtn.addEventListener('click', () => {
+        if (!state.numPages || state.numPages < 2) return;
+        els.splitInput.value = Array.from({ length: state.numPages - 1 }, (_, i) => i + 2).join(', ');
+        clearResults();
+        updateRangePreview();
+      });
+
+      els.clearSplitsBtn.addEventListener('click', () => {
+        els.splitInput.value = '';
+        clearResults();
+        updateRangePreview();
+      });
+
+      els.processBtn.addEventListener('click', processPdf);
+      els.downloadZipBtn.addEventListener('click', downloadZip);
+
+      window.addEventListener('beforeunload', () => {
+        for (const result of state.results) {
+          if (result.pdfUrl) URL.revokeObjectURL(result.pdfUrl);
+          if (result.mdUrl) URL.revokeObjectURL(result.mdUrl);
+        }
+        if (state.pdfJsDoc) {
+          try { state.pdfJsDoc.destroy(); } catch (_) {}
+        }
+      });
+
+      if (!librariesReady()) {
+        els.statusState.textContent = 'Липсват библиотеки';
+        showError('Необходимите JavaScript библиотеки не са заредени. Нужна е интернет връзка при отваряне на този HTML файл.');
+      }
+    })();
+  </script>
+</body>
+</html>
