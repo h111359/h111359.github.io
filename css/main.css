@@ -629,13 +629,13 @@ body.site-page .profile-meta__group {
 
 /* ============================================================
    Project Cards
-   Design intent: Two equally credible, evidence-bound summaries route
-   directly to the unchanged vocabulary tools.
+   Design intent: Three equally credible, evidence-bound summaries route
+   directly to the supported browser tools.
    ============================================================ */
 
 body.site-page .project-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--site-space-5);
 }
 

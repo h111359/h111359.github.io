@@ -27,3 +27,4 @@
 - [20260809-082940-R-20260809-0822] [A] Apply the presentation globally through trips/shared/gallery.css and trips/shared/gallery.js for china/, trips/2026/, and current and future consumers copied from trips/template/ without adding dependencies, frameworks, build tooling, or server-side code.
 - [20260809-082940-R-20260809-0822] [A] Keep every shared trip gallery usable without horizontal overflow at the existing minimum viewport width of 320 CSS pixels.
 - [20260809-082940-R-20260809-0822] [A] Do not modify trips/data_editor.html, individual event data or caption content, the existing lightbox design, or unrelated legacy galleries outside the shared trip-gallery system.
+- [20260814-201323-R-20260814-2010] [A] Add apps/pdf_splitter/index.html as a new application in the main site's Projects section.
