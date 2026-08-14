@@ -28,3 +28,8 @@
 - [20260809-082940-R-20260809-0822] [A] Keep every shared trip gallery usable without horizontal overflow at the existing minimum viewport width of 320 CSS pixels.
 - [20260809-082940-R-20260809-0822] [A] Do not modify trips/data_editor.html, individual event data or caption content, the existing lightbox design, or unrelated legacy galleries outside the shared trip-gallery system.
 - [20260814-201323-R-20260814-2010] [A] Add apps/pdf_splitter/index.html as a new application in the main site's Projects section.
+- [20260814-203716-R-20260814-2033] [A] Remove all Professional-page references to Azure Cosmos DB and Azure Analysis Services.
+- [20260814-203716-R-20260814-2033] [A] Include Python experience in the Professional profile.
+- [20260814-203716-R-20260814-2033] [A] Eliminate repeated information from the Professional profile.
+- [20260814-203716-R-20260814-2033] [A] Replace "dissertation pending completion" with subtle wording that does not imply a PhD degree was acquired.
+- [20260814-203716-R-20260814-2033] [A] Shorten the Professional page for faster reading.
