@@ -1,6 +1,6 @@
 /**
  * gallery.js: Reusable accessible controller for static trip journals.
- * Provides trip configuration, registry navigation, event loading, editorial rendering, and modal focus handling.
+ * Provides trip configuration, event loading, corrected-media rendering, navigation, and modal focus handling.
  */
 
 (function () {
@@ -16,10 +16,18 @@
   const ICON_VIEW_BOX = "0 0 24 24";
   const PORTRAIT_MAX_ASPECT_RATIO = 0.9;
   const SQUARE_MAX_ASPECT_RATIO = 1.1;
+  const QUARTER_TURN_DEGREES = 90;
+  const HALF_ROTATION_DEGREES = 180;
+  const FULL_ROTATION_DEGREES = 360;
   const MEDIA_ORIENTATION_CLASSES = Object.freeze([
     "media-card--portrait",
     "media-card--square",
     "media-card--landscape"
+  ]);
+  const LIGHTBOX_ORIENTATION_CLASSES = Object.freeze([
+    "lightbox__body--portrait",
+    "lightbox__body--square",
+    "lightbox__body--landscape"
   ]);
   const DRAWER_MEDIA_QUERY = window.matchMedia("(max-width: 53.75rem)");
   const DEFAULT_LABELS = Object.freeze({
@@ -168,6 +176,7 @@
     loadSequence: 0,
     activeDataScript: null,
     lightboxTrigger: null,
+    lightboxItem: null,
     drawerOpen: false
   };
 
@@ -778,6 +787,37 @@
   }
 
   /**
+   * Normalizes an optional stored media rotation to a clockwise quarter turn.
+   *
+   * @param {unknown} value - Rotation value supplied by an event data record.
+   * @returns {number} One of 0, 90, 180, or 270 degrees.
+   */
+  function normalizeMediaRotation(value) {
+    const rotation = Number(value);
+    if (!Number.isFinite(rotation) || rotation % QUARTER_TURN_DEGREES !== 0) {
+      return 0;
+    }
+    return ((rotation % FULL_ROTATION_DEGREES) + FULL_ROTATION_DEGREES) % FULL_ROTATION_DEGREES;
+  }
+
+  /**
+   * Applies normalized correction properties to one displayed media element.
+   *
+   * @param {HTMLElement} element - Thumbnail, full image, or preview frame to correct.
+   * @param {Object} item - Normalized media record containing correction state.
+   * @returns {void}
+   */
+  function applyMediaTransform(element, item) {
+    element.style.setProperty("--media-flip-x", item.flipHorizontal ? "-1" : "1");
+    element.style.setProperty("--media-flip-y", item.flipVertical ? "-1" : "1");
+    element.style.setProperty("--media-rotation", `${item.rotation}deg`);
+    element.classList.toggle(
+      "media-transform--quarter-turn",
+      item.rotation % HALF_ROTATION_DEGREES !== 0
+    );
+  }
+
+  /**
    * Normalizes protected event records while preserving their source order and trusted rich text.
    *
    * @param {unknown} rawItems - GALLERY_ITEMS value loaded from an event data script.
@@ -819,7 +859,11 @@
         preview,
         desc: String(item.desc || ""),
         driveId,
-        resourceKey: extractDriveResourceKey(preview)
+        resourceKey: extractDriveResourceKey(preview),
+        flipHorizontal: item.flipHorizontal === true,
+        flipVertical: item.flipVertical === true,
+        rotation: normalizeMediaRotation(item.rotation),
+        orientation: null
       };
     }).filter(Boolean);
   }
@@ -885,14 +929,18 @@
    *
    * @param {number} width - Intrinsic thumbnail width in pixels.
    * @param {number} height - Intrinsic thumbnail height in pixels.
-   * @returns {"portrait"|"square"|"landscape"|null} Orientation category, or null for invalid dimensions.
+   * @param {number} rotation - Normalized clockwise rotation applied to the source.
+   * @returns {"portrait"|"square"|"landscape"|null} Corrected orientation category, or null for invalid dimensions.
    */
-  function classifyMediaOrientation(width, height) {
+  function classifyMediaOrientation(width, height, rotation) {
     if (!Number.isFinite(width) || !Number.isFinite(height) || width <= 0 || height <= 0) {
       return null;
     }
 
-    const aspectRatio = width / height;
+    const isQuarterTurn = normalizeMediaRotation(rotation) % HALF_ROTATION_DEGREES !== 0;
+    const correctedWidth = isQuarterTurn ? height : width;
+    const correctedHeight = isQuarterTurn ? width : height;
+    const aspectRatio = correctedWidth / correctedHeight;
     if (aspectRatio < PORTRAIT_MAX_ASPECT_RATIO) {
       return "portrait";
     }
@@ -907,16 +955,21 @@
    *
    * @param {HTMLElement} card - Media card whose layout follows the thumbnail orientation.
    * @param {HTMLImageElement} image - Loaded thumbnail exposing intrinsic dimensions.
+   * @param {Object} item - Normalized media record whose rotation affects orientation.
    * @returns {void}
    */
-  function applyMediaOrientation(card, image) {
-    const orientation = classifyMediaOrientation(image.naturalWidth, image.naturalHeight);
+  function applyMediaOrientation(card, image, item) {
+    const orientation = classifyMediaOrientation(image.naturalWidth, image.naturalHeight, item.rotation);
     if (!orientation) {
       return;
     }
 
+    item.orientation = orientation;
     card.classList.remove("media-card--orientation-pending", ...MEDIA_ORIENTATION_CLASSES);
     card.classList.add(`media-card--${orientation}`);
+    if (APP_STATE.lightboxItem === item && !DOM.lightbox.hidden) {
+      applyLightboxOrientation(item);
+    }
   }
 
   /**
@@ -993,11 +1046,12 @@
       event: eventLabel
     });
     image.addEventListener("load", () => {
-      applyMediaOrientation(card, image);
+      applyMediaOrientation(card, image, item);
     });
     image.addEventListener("error", () => {
       handleThumbnailError(image, button, item.driveId, item.resourceKey);
     });
+    applyMediaTransform(image, item);
     image.src = buildThumbnailUrl(item.driveId, item.resourceKey);
     placeholder.textContent = item.kind === "video"
       ? formatLabel("videoUnavailable")
@@ -1220,6 +1274,76 @@
   }
 
   /**
+   * Matches the lightbox viewport to the corrected media orientation.
+   *
+   * @param {Object} item - Normalized media record with a detected orientation.
+   * @returns {void}
+   */
+  function applyLightboxOrientation(item) {
+    DOM.lightboxBody.classList.remove(...LIGHTBOX_ORIENTATION_CLASSES);
+    if (item.orientation) {
+      DOM.lightboxBody.classList.add(`lightbox__body--${item.orientation}`);
+    }
+  }
+
+  /**
+   * Replaces a failed full-size thumbnail with a direct Drive response, then a local message.
+   *
+   * @param {HTMLImageElement} image - Full-size lightbox image that emitted an error.
+   * @param {Object} item - Normalized image record holding the Drive identifiers.
+   * @returns {void}
+   */
+  function handleLightboxImageError(image, item) {
+    if (!image.dataset.fallbackAttempted) {
+      image.dataset.fallbackAttempted = "true";
+      image.src = buildViewUrl(item.driveId, item.resourceKey);
+      return;
+    }
+
+    const message = createElement("p", "lightbox__message");
+    message.textContent = formatLabel("imageUnavailable");
+    image.replaceWith(message);
+  }
+
+  /**
+   * Creates corrected image or video content for the lightbox.
+   *
+   * @param {Object} item - Normalized media record selected by the visitor.
+   * @param {string} accessibleTitle - Localized description for the enlarged media.
+   * @returns {HTMLElement} Corrected image element or Drive video frame.
+   */
+  function createLightboxMedia(item, accessibleTitle) {
+    if (item.kind === "image") {
+      const image = createElement("img", "lightbox__image");
+      image.alt = accessibleTitle;
+      image.decoding = "async";
+      image.referrerPolicy = "no-referrer";
+      image.addEventListener("load", () => {
+        item.orientation = classifyMediaOrientation(
+          image.naturalWidth,
+          image.naturalHeight,
+          item.rotation
+        );
+        applyLightboxOrientation(item);
+      });
+      image.addEventListener("error", () => {
+        handleLightboxImageError(image, item);
+      });
+      applyMediaTransform(image, item);
+      image.src = buildThumbnailUrl(item.driveId, item.resourceKey);
+      return image;
+    }
+
+    const frame = createElement("iframe", "lightbox__frame");
+    frame.title = accessibleTitle;
+    frame.referrerPolicy = "no-referrer";
+    frame.allow = "autoplay; fullscreen; picture-in-picture";
+    frame.src = buildLightboxUrl(item);
+    applyMediaTransform(frame, item);
+    return frame;
+  }
+
+  /**
    * Opens the selected Drive media in the basic modal and transfers focus to Close.
    *
    * @param {Object} item - Normalized image or video item selected by the visitor.
@@ -1227,20 +1351,17 @@
    * @returns {void}
    */
   function openLightbox(item, trigger) {
-    const frame = createElement("iframe", "lightbox__frame");
     const mediaNoun = formatLabel(item.kind === "video" ? "videoNoun" : "imageNoun");
     const eventLabel = APP_STATE.activeEvent
       ? APP_STATE.activeEvent.label
       : formatLabel("currentEventFallback");
-    frame.title = formatLabel("mediaPreview", { media: mediaNoun, event: eventLabel });
-    frame.referrerPolicy = "no-referrer";
-    frame.allow = item.kind === "video"
-      ? "autoplay; fullscreen; picture-in-picture"
-      : "fullscreen; picture-in-picture";
-    frame.src = buildLightboxUrl(item);
+    const accessibleTitle = formatLabel("mediaPreview", { media: mediaNoun, event: eventLabel });
+    const media = createLightboxMedia(item, accessibleTitle);
 
     APP_STATE.lightboxTrigger = trigger;
-    DOM.lightboxBody.replaceChildren(frame);
+    APP_STATE.lightboxItem = item;
+    applyLightboxOrientation(item);
+    DOM.lightboxBody.replaceChildren(media);
     DOM.lightbox.hidden = false;
     document.body.classList.add("lightbox-open");
     setLightboxBackgroundInert(true);
@@ -1262,6 +1383,7 @@
       frame.src = "about:blank";
     }
     DOM.lightboxBody.replaceChildren();
+    DOM.lightboxBody.classList.remove(...LIGHTBOX_ORIENTATION_CLASSES);
     DOM.lightbox.hidden = true;
     document.body.classList.remove("lightbox-open");
     setLightboxBackgroundInert(false);
@@ -1270,6 +1392,7 @@
       APP_STATE.lightboxTrigger.focus();
     }
     APP_STATE.lightboxTrigger = null;
+    APP_STATE.lightboxItem = null;
   }
 
   /* ============================================================

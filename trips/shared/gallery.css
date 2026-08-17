@@ -1,6 +1,6 @@
 /*
  * gallery.css: Reusable editorial design system for static trip journals.
- * Sections: Design Tokens, Foundations, Hero, Navigator, Event Header, Gallery, Lightbox, Responsive States.
+ * Sections: Design Tokens, Foundations, Hero, Navigator, Event Header, Corrected Gallery, Lightbox, Responsive States.
  */
 
 /* ============================================================
@@ -655,6 +655,8 @@ svg {
   height: 100%;
   object-fit: contain;
   object-position: center;
+  transform: scaleX(var(--media-flip-x, 1)) scaleY(var(--media-flip-y, 1)) rotate(var(--media-rotation, 0deg));
+  transform-origin: center;
 }
 
 /* Media hover state: a restrained veil shows that the thumbnail opens a focused view. */
@@ -862,13 +864,73 @@ svg {
   place-items: center;
 }
 
-.lightbox__frame {
+/* Corrected portrait media uses a tall viewport so a quarter turn remains fully visible. */
+.lightbox__body--portrait {
+  width: min(64vw, 65.6vh, 44rem);
+  /* Dynamic viewport fallback follows the legacy viewport unit for mobile browser chrome changes. */
+  width: min(64vw, 65.6dvh, 44rem);
+  height: auto;
+  aspect-ratio: 4 / 5;
+}
+
+/* Corrected square media uses the shorter viewport edge for an unclipped balanced frame. */
+.lightbox__body--square {
+  width: min(82vw, 82vh, 56rem);
+  /* Dynamic viewport fallback follows the legacy viewport unit for mobile browser chrome changes. */
+  width: min(82vw, 82dvh, 56rem);
+  height: auto;
+  aspect-ratio: 1;
+}
+
+/* Corrected landscape media retains a wide editorial lightbox while respecting viewport height. */
+.lightbox__body--landscape {
+  width: min(94vw, 131.2vh, 90rem);
+  /* Dynamic viewport fallback follows the legacy viewport unit for mobile browser chrome changes. */
+  width: min(94vw, 131.2dvh, 90rem);
+  height: auto;
+  aspect-ratio: 16 / 10;
+}
+
+.lightbox__frame,
+.lightbox__image {
   width: 100%;
   height: 100%;
+  transform: scaleX(var(--media-flip-x, 1)) scaleY(var(--media-flip-y, 1)) rotate(var(--media-rotation, 0deg));
+  transform-origin: center;
+}
+
+.lightbox__frame {
   background: var(--color-ink);
   border: 0;
   border-radius: var(--radius-small);
   box-shadow: var(--shadow-dialog);
+}
+
+/* Quarter-turned video frame: pre-swaps a portrait box so rotation fills the corrected viewport. */
+.lightbox__body--portrait .lightbox__frame.media-transform--quarter-turn {
+  width: 125%;
+  height: 80%;
+}
+
+/* Quarter-turned video frame: pre-swaps a landscape box so rotation stays within the dialog. */
+.lightbox__body--landscape .lightbox__frame.media-transform--quarter-turn {
+  width: 62.5%;
+  height: 160%;
+}
+
+.lightbox__image {
+  display: block;
+  object-fit: contain;
+  object-position: center;
+  border-radius: var(--radius-small);
+  box-shadow: var(--shadow-dialog);
+}
+
+.lightbox__message {
+  max-width: var(--measure-reading);
+  padding: var(--space-5);
+  color: var(--color-inverse);
+  text-align: center;
 }
 
 /* Close transition: quick color changes keep dismissal immediate and legible. */
@@ -1104,6 +1166,28 @@ svg {
     width: 100%;
     height: 78vh;
     height: 78dvh;
+  }
+
+  /* Compact portrait dialog: a narrow 4:5 frame keeps corrected media clear of viewport edges. */
+  .lightbox__body--portrait {
+    width: min(72vw, 62.4vh);
+    /* Dynamic viewport fallback follows the legacy viewport unit for mobile browser chrome changes. */
+    width: min(72vw, 62.4dvh);
+    height: auto;
+  }
+
+  /* Compact square dialog: the shorter viewport edge bounds corrected square media. */
+  .lightbox__body--square {
+    width: min(90vw, 78vh);
+    /* Dynamic viewport fallback follows the legacy viewport unit for mobile browser chrome changes. */
+    width: min(90vw, 78dvh);
+    height: auto;
+  }
+
+  /* Compact landscape dialog: the available content width preserves the corrected wide frame. */
+  .lightbox__body--landscape {
+    width: 100%;
+    height: auto;
   }
 
   .lightbox__close {

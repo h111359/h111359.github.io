@@ -33,3 +33,6 @@
 - [20260814-203716-R-20260814-2033] [A] Eliminate repeated information from the Professional profile.
 - [20260814-203716-R-20260814-2033] [A] Replace "dissertation pending completion" with subtle wording that does not imply a PhD degree was acquired.
 - [20260814-203716-R-20260814-2033] [A] Shorten the Professional page for faster reading.
+- [20260817-112412-R-20260817-1111] [A] Add controls in trips/data_editor.html to flip trip media horizontally or vertically and rotate it.
+- [20260817-112412-R-20260817-1111] [A] Persist media corrections as optional event-data attributes so existing event records require no changes.
+- [20260817-112412-R-20260817-1111] [A] Update the trip gallery HTML, CSS, and JavaScript presentation to apply saved flip and rotation settings.

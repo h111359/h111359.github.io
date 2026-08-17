@@ -48,5 +48,5 @@ window.GALLERY_ITEMS = [
   { name: "20250724_214346.jpg", preview: "https://drive.google.com/file/d/1capkDlHjIjNy4iVobDYZtdtGZ2c7Obb9/preview?authuser=0", desc: "", visible: false },
   { name: "20250724_214348.jpg", preview: "https://drive.google.com/file/d/1gm4J4zJLNc1gNXN8A-Utf7Y9aqBuHXBM/preview?authuser=0", desc: "", visible: false },
   { name: "20250724_214351.jpg", preview: "https://drive.google.com/file/d/10ZrE2ZlV8GBmheCrjV8bzz57zJvSzp82/preview?authuser=0", desc: "", visible: true },
-  { name: "20250724_234710.jpg", preview: "https://drive.google.com/file/d/1VbYm-6jLOIRw-ilrc-H68vEvyTRW3OPI/preview?authuser=0", desc: "", visible: false }
+  { name: "20250724_234710.jpg", preview: "https://drive.google.com/file/d/1VbYm-6jLOIRw-ilrc-H68vEvyTRW3OPI/preview?authuser=0", desc: "", visible: true }
 ];

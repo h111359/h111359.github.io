@@ -77,12 +77,14 @@ Each event data file defines:
 
 ```js
 window.GALLERY_ITEMS = [
-  { name: "photo.jpg", preview: "https://drive.google.com/file/d/FILE_ID/preview?authuser=0", desc: "", visible: true },
+  { name: "photo.jpg", preview: "https://drive.google.com/file/d/FILE_ID/preview?authuser=0", desc: "", visible: true, flipHorizontal: true, rotation: 90 },
   { type: "text", title: "Story heading", body: "<p>Trusted authored HTML.</p>", desc: "" }
 ];
 ```
 
 Media can be images or videos. Only `visible: false` hides a media record, so legacy items without the field remain visible. Text blocks are unaffected by media visibility. The shared application intentionally renders locally authored `body` and `desc` HTML as rich text.
+
+Media records may also include `flipHorizontal: true`, `flipVertical: true`, and `rotation: 90`, `180`, or `270`. These correction fields are optional: omitted flips default to `false`, and an omitted rotation defaults to `0`, so existing event records render unchanged. The data editor writes only active corrections and previews them before save.
 
 ## Generate an event from Google Drive
 
@@ -100,7 +102,7 @@ python scripts/generate_trip_event.py FOLDER_ID \
   --overwrite
 ```
 
-Without `--overwrite`, an existing file is replaced only after an explicit interactive confirmation. Regeneration replaces the entire file; it does not preserve descriptions, text blocks, visibility settings, or custom ordering. Declining replacement leaves the original bytes unchanged.
+Without `--overwrite`, an existing file is replaced only after an explicit interactive confirmation. Regeneration replaces the entire file; it does not preserve descriptions, text blocks, visibility settings, image correction settings, or custom ordering. Declining replacement leaves the original bytes unchanged.
 
 The generator:
 
@@ -129,7 +131,7 @@ Open `trips/data_editor.html` directly in Chrome 86+ or Edge 86+. The File Syste
 
 1. Choose **Open a trip data/ folder** and select the `data/` directory inside any trip.
 2. Select an event from the loaded `events.js` registry.
-3. Add, remove, reorder, or edit media and text blocks; update descriptions, rich text, and visibility as needed.
+3. Add, remove, reorder, or edit media and text blocks; update descriptions, rich text, visibility, flips, and quarter-turn rotation as needed.
 4. Use **Refresh** to compare the selected file with disk or rely on the five-second foreground poll.
 5. Save the current event in place. Dirty-state protection defers external changes and warns before local edits are discarded.
 6. Expand **events.js registry** to add, remove, reorder, or update event registrations, then save the registry separately.

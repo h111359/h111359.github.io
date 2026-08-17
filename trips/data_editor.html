@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
   data_editor.html: Standalone local editor for any trip data directory and its events.js registry.
-  Component: Data Editor — full CRUD for window.GALLERY_ITEMS arrays and window.GALLERY_EVENT_INDEX registry.
+  Component: Data Editor — full CRUD and media correction for GALLERY_ITEMS plus GALLERY_EVENT_INDEX editing.
   Context: Shared multi-trip publishing tools.
   Requires a Chromium-based browser (Chrome 86+ or Edge 86+) for File System Access API.
 -->
@@ -14,7 +14,7 @@
     /*
      * data_editor.html — Inline styles for the standalone event data editor.
      * Sections: Reset & Base, Layout, Header Bar, Formatting Toolbar,
-     *           Validation Area, Global Add Buttons, Item Cards,
+     *           Validation Area, Global Add Buttons, Item Cards, Media Correction Controls,
      *           Between-item Insert Controls, Registry Panel.
      */
 
@@ -286,6 +286,44 @@
       color: #374151;
       padding: 2px 4px;
     }
+
+    /* Media correction controls keep reversible image adjustments beside the affected preview. */
+    .media-transform-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      padding: 8px;
+      background: #f3f4f6;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+    }
+    .media-transform-controls button {
+      min-height: 32px;
+      padding: 4px 9px;
+      color: #374151;
+      background: #fff;
+      border: 1px solid #9ca3af;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    /* Hover state: a quiet gray surface identifies the available correction action. */
+    .media-transform-controls button:hover { background: #e5e7eb; }
+    /* Keyboard state: the editor accent remains visible around every correction control. */
+    .media-transform-controls button:focus-visible { outline: 2px solid #4f46e5; outline-offset: 2px; }
+    /* Pressed state: indigo communicates that the corresponding mirror correction is active. */
+    .media-transform-controls button[aria-pressed="true"] {
+      color: #fff;
+      background: #4f46e5;
+      border-color: #4338ca;
+    }
+    .media-transform-status {
+      margin-left: auto;
+      color: #374151;
+      font-size: 12px;
+      font-weight: 600;
+    }
     .btn-move, .btn-delete {
       border: none;
       border-radius: 3px;
@@ -298,14 +336,26 @@
     .btn-move:disabled { background: #f3f4f6; color: #9ca3af; cursor: default; }
     .btn-delete { background: #fee2e2; color: #dc2626; }
     .btn-delete:hover { background: #fecaca; }
-    /* Drive thumbnail — capped at 400 px tall to keep cards manageable */
-    .card-thumb {
-      max-height: 400px;
-      max-width: 100%;
-      display: block;
-      border-radius: 4px;
+    /* Drive thumbnail frame — 400 px keeps cards manageable while a square prevents rotated clipping. */
+    .card-thumb-frame {
+      width: min(100%, 400px);
+      height: auto;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      margin-inline: auto;
       background: #e5e7eb;
+      border-radius: 4px;
+    }
+    /* Drive thumbnail — fills its correction frame while retaining every source pixel. */
+    .card-thumb {
+      width: 100%;
+      height: 100%;
+      display: block;
       object-fit: contain;
+      transform: scaleX(var(--media-flip-x, 1)) scaleY(var(--media-flip-y, 1)) rotate(var(--media-rotation, 0deg));
+      transform-origin: center;
     }
     .thumb-placeholder {
       height: 80px;
@@ -536,7 +586,7 @@
  * data_editor.html — Inline script: standalone event data editor for any trip data/ directory.
  * Part of the shared multi-trip publishing workflow.
  * Responsibilities: folder open via File System Access API, events.js loading and registry editing,
- *   per-event GALLERY_ITEMS CRUD (add, edit, delete, reorder), rich text toolbar,
+ *   per-event GALLERY_ITEMS CRUD and media correction, rich text toolbar,
  *   pre-save validation, serialization, in-place file write, and events.js registry save.
  */
 
@@ -583,6 +633,8 @@ let refreshInProgress = false;
 let refreshIntervalId = null;
 
 const REFRESH_INTERVAL_MS = 5000;
+const QUARTER_TURN_DEGREES = 90;
+const FULL_ROTATION_DEGREES = 360;
 const EDITOR_DB_NAME = 'trip-gallery-data-editor';
 const EDITOR_STORE_NAME = 'session';
 const DIRECTORY_HANDLE_KEY = 'directory-handle';
@@ -867,12 +919,32 @@ async function loadEvent(index) {
   });
 }
 
+/**
+ * Normalizes a stored rotation to a clockwise quarter-turn value.
+ * @param {*} value - Optional rotation value read from an event record.
+ * @returns {number} One of 0, 90, 180, or 270 degrees.
+ */
+function normalizeMediaRotation(value) {
+  const rotation = Number(value);
+  if (!Number.isFinite(rotation) || rotation % QUARTER_TURN_DEGREES !== 0) return 0;
+  return ((rotation % FULL_ROTATION_DEGREES) + FULL_ROTATION_DEGREES) % FULL_ROTATION_DEGREES;
+}
+
 /** @param {Object[]} sourceItems - Parsed records. @returns {Object[]} Normalized editable records. */
 function normalizeEditorItems(sourceItems) {
   return sourceItems.map((sourceItem) => {
     const item = Object.assign({}, sourceItem);
-    if (item.type === 'text') { delete item.visible; return item; }
+    if (item.type === 'text') {
+      delete item.visible;
+      delete item.flipHorizontal;
+      delete item.flipVertical;
+      delete item.rotation;
+      return item;
+    }
     item.visible = item.visible !== false;
+    item.flipHorizontal = item.flipHorizontal === true;
+    item.flipVertical = item.flipVertical === true;
+    item.rotation = normalizeMediaRotation(item.rotation);
     return item;
   });
 }
@@ -1116,14 +1188,18 @@ function createMediaCard(item, i) {
   // Pattern: /d/<id>/preview where id is 20+ alphanumeric chars, hyphens, or underscores
   const idMatch = String(item.preview || '').match(/\/d\/([a-zA-Z0-9_-]{20,})\/preview/);
   if (idMatch) {
+    const thumbFrame = document.createElement('div');
+    thumbFrame.className = 'card-thumb-frame';
     const img = document.createElement('img');
     img.className = 'card-thumb';
-    // sz=w400 requests a 400-px-wide thumbnail; max-height CSS caps the card height
+    // sz=w400 requests a 400-px-wide thumbnail; the surrounding frame caps the preview height.
     img.src = `https://drive.google.com/thumbnail?id=${idMatch[1]}&sz=w400`;
     img.alt = item.name || 'Media thumbnail';
     img.loading = 'lazy';
     img.referrerPolicy = 'no-referrer';
-    card.appendChild(img);
+    applyMediaTransform(img, item);
+    thumbFrame.appendChild(img);
+    card.appendChild(thumbFrame);
   } else {
     const placeholder = document.createElement('div');
     placeholder.className = 'thumb-placeholder';
@@ -1131,11 +1207,111 @@ function createMediaCard(item, i) {
     card.appendChild(placeholder);
   }
 
+  card.appendChild(makeMediaTransformControls(item, i, card));
+
   card.appendChild(makeInputField('name',    'Name',                           item.name    || '', i, false));
   card.appendChild(makeInputField('preview', 'Preview URL (Google Drive)',     item.preview || '', i, true));
   card.appendChild(makeRichTextField('desc', 'Description', item.desc || '', i));
 
   return card;
+}
+
+/**
+ * Applies one media record's correction as CSS custom properties on a preview element.
+ * @param {HTMLElement} element - Thumbnail or other media element to correct.
+ * @param {Object} item - Media record containing optional correction properties.
+ * @returns {void}
+ */
+function applyMediaTransform(element, item) {
+  element.style.setProperty('--media-flip-x', item.flipHorizontal === true ? '-1' : '1');
+  element.style.setProperty('--media-flip-y', item.flipVertical === true ? '-1' : '1');
+  element.style.setProperty('--media-rotation', `${normalizeMediaRotation(item.rotation)}deg`);
+}
+
+/**
+ * Creates a native keyboard-operable button for a media correction action.
+ * @param {string} label - Visible control text.
+ * @param {string} action - Stable action name used to refresh button state.
+ * @param {Function} onActivate - Callback invoked by native button activation.
+ * @returns {HTMLButtonElement} Configured media correction button.
+ */
+function makeMediaTransformButton(label, action, onActivate) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.dataset.transformAction = action;
+  button.textContent = label;
+  button.addEventListener('click', onActivate);
+  return button;
+}
+
+/**
+ * Refreshes a card preview and its accessible correction-state indicators.
+ * @param {HTMLElement} card - Media card containing the preview and controls.
+ * @param {Object} item - Updated media record.
+ * @returns {void}
+ */
+function updateMediaTransformCard(card, item) {
+  const image = card.querySelector('.card-thumb');
+  if (image) applyMediaTransform(image, item);
+
+  const horizontalButton = card.querySelector('[data-transform-action="flip-horizontal"]');
+  const verticalButton = card.querySelector('[data-transform-action="flip-vertical"]');
+  const status = card.querySelector('.media-transform-status');
+  if (horizontalButton) horizontalButton.setAttribute('aria-pressed', String(item.flipHorizontal === true));
+  if (verticalButton) verticalButton.setAttribute('aria-pressed', String(item.flipVertical === true));
+  if (status) status.textContent = `Rotation: ${normalizeMediaRotation(item.rotation)}°`;
+}
+
+/**
+ * Creates flip and quarter-turn controls for one media record.
+ * Native buttons support Enter and Space; pressed states expose active flips to assistive technology.
+ * @param {Object} item - Editable media record.
+ * @param {number} itemIndex - Zero-based position in items[].
+ * @param {HTMLElement} card - Owning media card whose preview is updated in place.
+ * @returns {HTMLElement} Accessible correction control group.
+ */
+function makeMediaTransformControls(item, itemIndex, card) {
+  const controls = document.createElement('div');
+  controls.className = 'media-transform-controls';
+  controls.setAttribute('role', 'group');
+  controls.setAttribute('aria-label', `Image correction controls for item ${itemIndex + 1}`);
+
+  const applyChange = (change) => {
+    syncItemsFromDOM();
+    change(items[itemIndex]);
+    updateMediaTransformCard(card, items[itemIndex]);
+    setDirty();
+  };
+  const horizontalButton = makeMediaTransformButton('↔ Flip horizontal', 'flip-horizontal', () => {
+    applyChange((mediaItem) => { mediaItem.flipHorizontal = mediaItem.flipHorizontal !== true; });
+  });
+  const verticalButton = makeMediaTransformButton('↕ Flip vertical', 'flip-vertical', () => {
+    applyChange((mediaItem) => { mediaItem.flipVertical = mediaItem.flipVertical !== true; });
+  });
+  const rotateLeftButton = makeMediaTransformButton('↶ Rotate left', 'rotate-left', () => {
+    applyChange((mediaItem) => {
+      mediaItem.rotation = normalizeMediaRotation(
+        normalizeMediaRotation(mediaItem.rotation) - QUARTER_TURN_DEGREES
+      );
+    });
+  });
+  const rotateRightButton = makeMediaTransformButton('↷ Rotate right', 'rotate-right', () => {
+    applyChange((mediaItem) => {
+      mediaItem.rotation = normalizeMediaRotation(
+        normalizeMediaRotation(mediaItem.rotation) + QUARTER_TURN_DEGREES
+      );
+    });
+  });
+  const status = document.createElement('span');
+  status.className = 'media-transform-status';
+  status.setAttribute('role', 'status');
+  status.setAttribute('aria-live', 'polite');
+  horizontalButton.setAttribute('aria-pressed', String(item.flipHorizontal === true));
+  verticalButton.setAttribute('aria-pressed', String(item.flipVertical === true));
+  status.textContent = `Rotation: ${normalizeMediaRotation(item.rotation)}°`;
+
+  controls.append(horizontalButton, verticalButton, rotateLeftButton, rotateRightButton, status);
+  return controls;
 }
 
 /**
@@ -1584,6 +1760,20 @@ function serializeRichText(value) {
 }
 
 /**
+ * Serializes only non-default media corrections so legacy/default records stay compact.
+ * @param {Object} item - Media record containing normalized correction state.
+ * @returns {string} Optional comma-prefixed JavaScript properties.
+ */
+function serializeMediaTransform(item) {
+  let properties = '';
+  if (item.flipHorizontal === true) properties += ', flipHorizontal: true';
+  if (item.flipVertical === true) properties += ', flipVertical: true';
+  const rotation = normalizeMediaRotation(item.rotation);
+  if (rotation !== 0) properties += `, rotation: ${rotation}`;
+  return properties;
+}
+
+/**
  * Serializes items[] to the window.GALLERY_ITEMS = [...]; JS assignment format.
  * Calls syncItemsFromDOM() first to capture any uncommitted in-progress edits.
  * @returns {string} Complete JS file content ready to be written to the event file.
@@ -1596,7 +1786,8 @@ function buildOutput() {
     if (item.type === 'text') {
       out += `  { type: "text", title: "${serializePlainText(item.title)}", body: "${serializeRichText(item.body)}", desc: "${serializeRichText(item.desc)}" }${comma}\n`;
     } else {
-      out += `  { name: "${serializePlainText(item.name)}", preview: "${serializePlainText(item.preview)}", desc: "${serializeRichText(item.desc)}", visible: ${item.visible !== false} }${comma}\n`;
+      const transformProperties = serializeMediaTransform(item);
+      out += `  { name: "${serializePlainText(item.name)}", preview: "${serializePlainText(item.preview)}", desc: "${serializeRichText(item.desc)}", visible: ${item.visible !== false}${transformProperties} }${comma}\n`;
     }
   });
   out += '];\n';
