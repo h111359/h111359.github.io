@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<!--
+  index.html: Browser-local image OCR application for editable multilingual text extraction.
+  Component: Image OCR — image input, preview controls, recognition status, and text export.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Extract editable English, Bulgarian, or Greek text from an image locally in your browser.">
+  <title>Image OCR | Hristo M. Hristov</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <!-- Skip link: ordinary anchor; Enter moves keyboard focus to the OCR workspace. -->
+  <a class="skip-link" href="#ocr-workspace">Skip to OCR workspace</a>
+
+  <!--
+    Application Header
+    Design intent: Connect the standalone utility to the portfolio while keeping the task primary.
+    Target: A compact header at every viewport width.
+  -->
+  <header class="app-header">
+    <div class="page-shell app-header__inner">
+      <!-- Projects link: ordinary anchor; Enter returns to the Projects catalog. -->
+      <a class="back-link" href="../../apps.html" aria-label="Back to Projects">← Projects</a>
+      <p class="app-header__label">Browser utility</p>
+    </div>
+  </header>
+
+  <!--
+    Introductory Region
+    Design intent: State the task, supported languages, and local-processing promise before input.
+    Target: A readable measure on desktop and mobile.
+  -->
+  <section class="intro" aria-labelledby="page-title">
+    <div class="page-shell intro__content">
+      <p class="eyebrow">Image to editable text</p>
+      <h1 id="page-title">Read text from an image</h1>
+      <p class="intro__lede">Choose, drop, or paste one image, select its languages, and extract editable text with OCR.</p>
+      <p class="privacy-note"><strong>Your image stays in this browser.</strong> It is processed locally and is never sent to an OCR service. The OCR engine and selected language files are downloaded from a public CDN when needed.</p>
+    </div>
+  </section>
+
+  <!--
+    OCR Workspace
+    Design intent: Follow a clear input → prepare → recognize → edit sequence without hiding recovery controls.
+    Target: Two balanced desktop columns that become one reading column on small screens.
+  -->
+  <main class="page-shell workspace" id="ocr-workspace">
+    <!--
+      Image Input Panel
+      Design intent: Give file, drag-and-drop, and clipboard methods equal visibility.
+      Keyboard: The native file input and Paste image button are reachable by Tab and activate with standard keys.
+    -->
+    <section class="panel panel--input" aria-labelledby="image-heading">
+      <div class="panel__heading">
+        <p class="step-label">Step 1</p>
+        <h2 id="image-heading">Add one image</h2>
+        <p id="image-help">Use any image format that your current browser can decode. There is no application-defined file-size limit.</p>
+      </div>
+
+      <div class="dropzone" id="dropzone" aria-describedby="image-help">
+        <div class="dropzone__icon" aria-hidden="true">＋</div>
+        <p class="dropzone__title">Drop an image here</p>
+        <p class="dropzone__separator">or</p>
+        <div class="button-row button-row--centered">
+          <!-- File control: native file input; Tab focuses it and Enter/Space opens the file picker. -->
+          <input class="visually-hidden file-input" id="image-input" type="file" accept="image/*" aria-describedby="image-help">
+          <label class="button button--primary file-input-label" for="image-input">Choose image</label>
+          <!-- Paste control: button role is native; Enter/Space reads an image after clipboard permission. -->
+          <button class="button button--secondary" id="paste-button" type="button">Paste image</button>
+        </div>
+        <p class="dropzone__hint">You can also press Ctrl+V or Command+V outside a text field.</p>
+      </div>
+
+      <div class="file-summary" id="file-summary" hidden>
+        <div>
+          <p class="file-summary__name" id="file-name"></p>
+          <p class="file-summary__detail" id="file-detail"></p>
+        </div>
+        <span class="ready-badge">Ready</span>
+      </div>
+    </section>
+
+    <!--
+      Preview and Orientation Panel
+      Design intent: Make the exact pixels and orientation sent to OCR visible before recognition.
+      Keyboard: Rotation buttons use native Enter/Space activation; disabled state prevents changes during OCR.
+    -->
+    <section class="panel panel--preview" aria-labelledby="preview-heading">
+      <div class="panel__heading panel__heading--inline">
+        <div>
+          <p class="step-label">Step 2</p>
+          <h2 id="preview-heading">Check orientation</h2>
+        </div>
+        <p class="rotation-label" id="rotation-label">Original orientation</p>
+      </div>
+
+      <div class="preview-frame" id="preview-frame">
+        <p class="preview-placeholder" id="preview-placeholder">Your image preview will appear here.</p>
+        <canvas class="preview-canvas" id="preview-canvas" role="img" aria-label="No image selected" hidden>Your selected image preview.</canvas>
+      </div>
+
+      <div class="button-row orientation-actions">
+        <!-- Rotate-left control: native button; Enter/Space rotates the preview 90 degrees counterclockwise. -->
+        <button class="button button--secondary" id="rotate-left" type="button" disabled>↶ Rotate left</button>
+        <!-- Rotate-right control: native button; Enter/Space rotates the preview 90 degrees clockwise. -->
+        <button class="button button--secondary" id="rotate-right" type="button" disabled>↷ Rotate right</button>
+        <!-- Orientation reset: native button; Enter/Space restores the original decoded orientation. -->
+        <button class="button button--quiet" id="reset-rotation" type="button" disabled>Reset orientation</button>
+      </div>
+    </section>
+
+    <!--
+      Language and Recognition Panel
+      Design intent: Keep explicit language choice adjacent to the one primary processing action.
+      Keyboard: Checkboxes toggle with Space; buttons activate with Enter/Space; native disabled states prevent overlap.
+    -->
+    <section class="panel panel--recognition" aria-labelledby="recognition-heading">
+      <div class="panel__heading">
+        <p class="step-label">Step 3</p>
+        <h2 id="recognition-heading">Choose languages and recognize</h2>
+      </div>
+
+      <fieldset class="language-fieldset" aria-describedby="language-help">
+        <legend>Text languages</legend>
+        <p id="language-help">Select every language that appears in the image. Only those language files will be loaded.</p>
+        <div class="language-options">
+          <!-- Language checkbox: native checkbox; Space toggles English recognition. -->
+          <label class="check-option"><input type="checkbox" name="ocr-language" value="eng" checked> <span>English</span><code>eng</code></label>
+          <!-- Language checkbox: native checkbox; Space toggles Bulgarian recognition. -->
+          <label class="check-option"><input type="checkbox" name="ocr-language" value="bul"> <span>Bulgarian</span><code>bul</code></label>
+          <!-- Language checkbox: native checkbox; Space toggles Greek recognition. -->
+          <label class="check-option"><input type="checkbox" name="ocr-language" value="ell"> <span>Greek</span><code>ell</code></label>
+        </div>
+        <!-- Select-all control: native button; Enter/Space selects all three OCR languages. -->
+        <button class="text-button" id="select-all-languages" type="button">Select all three</button>
+      </fieldset>
+
+      <!-- Recognition control: native button; Enter/Space starts one guarded OCR operation. -->
+      <button class="button button--primary button--large" id="recognize-button" type="button" disabled>Recognize text</button>
+
+      <!-- Status region: role=status and aria-live announce progress without moving keyboard focus. -->
+      <div class="status-card" role="status" aria-live="polite" aria-atomic="true">
+        <div class="status-card__row">
+          <span class="status-card__label">Status</span>
+          <span class="status-card__value" id="status-text">Choose an image to begin.</span>
+        </div>
+        <progress class="progress" id="progress" max="100" hidden>0%</progress>
+      </div>
+
+      <!-- Validation errors: role=alert announces recoverable failures without replacing page content. -->
+      <p class="message message--error" id="error-message" role="alert" hidden></p>
+      <!-- Action feedback: role=status announces copy, download, and selection feedback without focus changes. -->
+      <p class="message message--feedback" id="feedback-message" role="status" aria-live="polite"></p>
+    </section>
+
+    <!--
+      Editable Result Panel
+      Design intent: Treat recognized text as a working draft that can be corrected before export.
+      Keyboard: The textarea supports normal editing; copy, download, and start-over buttons use Enter/Space.
+    -->
+    <section class="panel panel--result" aria-labelledby="result-heading">
+      <div class="panel__heading panel__heading--result">
+        <div>
+          <p class="step-label">Step 4</p>
+          <h2 id="result-heading">Edit and export</h2>
+        </div>
+        <p>Review OCR output before using it.</p>
+      </div>
+
+      <!-- Result field: labelled multiline textbox; standard keyboard editing and selection are preserved. -->
+      <label class="result-label" for="result-text">Recognized text</label>
+      <textarea id="result-text" rows="14" spellcheck="true" placeholder="Recognized text will appear here."></textarea>
+
+      <div class="result-actions">
+        <div class="button-row">
+          <!-- Copy control: native button; Enter/Space copies the current edited textarea value. -->
+          <button class="button button--secondary" id="copy-button" type="button" disabled>Copy text</button>
+          <!-- Download control: native button; Enter/Space downloads the current edited value as UTF-8 text. -->
+          <button class="button button--secondary" id="download-button" type="button" disabled>Download .txt</button>
+        </div>
+        <!-- Start-over control: native button; Enter/Space clears the image, result, messages, and worker state. -->
+        <button class="button button--quiet" id="start-over-button" type="button" disabled>Start over</button>
+      </div>
+    </section>
+  </main>
+
+  <!--
+    Application Footer
+    Design intent: Close with the supported-language scope and a quiet portfolio route.
+    Target: A wrapping row that remains readable at 320 CSS pixels.
+  -->
+  <footer class="app-footer">
+    <div class="page-shell app-footer__inner">
+      <p>Local OCR for English · Bulgarian · Greek</p>
+      <!-- Projects link: ordinary anchor; Enter returns to the complete application catalog. -->
+      <a href="../../apps.html">View all projects</a>
+    </div>
+  </footer>
+</body>
+</html>
