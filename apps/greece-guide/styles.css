@@ -1,0 +1,999 @@
+/*
+ * styles.css: Mobile-first editorial design for the Nikiti and Sithonia guide.
+ * Sections: Tokens, Base, Header, Hero, Search, Cards, Phrases, Practical, Footer, Responsive.
+ */
+
+/* ============================================================
+   Design Tokens
+   Design intent: Extend the portfolio's cream, ink, rust, and sage system with a restrained Aegean blue.
+   ============================================================ */
+
+:root {
+  /* Paper — shared warm portfolio canvas. */
+  --color-paper: #f4efe4;
+  /* Raised paper — high-contrast card surface. */
+  --color-paper-raised: #fffaf0;
+  /* Ink — primary text on all light surfaces. */
+  --color-ink: #292622;
+  /* Muted ink — secondary descriptions and metadata. */
+  --color-ink-muted: #625d55;
+  /* Rust — warm portfolio identity accent. */
+  --color-rust: #8e3f2a;
+  /* Rust dark — readable warm action color. */
+  --color-rust-dark: #652c1d;
+  /* Sage — quiet editorial support surface. */
+  --color-sage: #cfd6c2;
+  /* Sage dark — dividers on paper. */
+  --color-sage-dark: #7c8773;
+  /* Aegean — thematic navigation and emergency accent. */
+  --color-aegean: #155f70;
+  /* Aegean dark — high-contrast blue surface. */
+  --color-aegean-dark: #0d3f4b;
+  /* Seafoam — quiet thematic section background. */
+  --color-seafoam: #dce9e4;
+  /* Sand — warm food section background. */
+  --color-sand: #eadbc4;
+  /* Coral — urgent but non-alarming emergency marker. */
+  --color-coral: #d87652;
+  /* Focus — dark blue keyboard indicator with strong light-surface contrast. */
+  --color-focus: #0b4d75;
+  /* White — text on deep ink and Aegean surfaces. */
+  --color-white: #ffffff;
+  /* Soft shadow — restrained paper elevation. */
+  --color-shadow: rgba(41, 38, 34, 0.14);
+  /* Deep shadow — legible elevation on thematic panels. */
+  --color-shadow-deep: rgba(13, 63, 75, 0.2);
+
+  /* Extra-small type — source labels and card metadata. */
+  --font-size-xs: 0.78rem;
+  /* Small type — support copy and compact controls. */
+  --font-size-sm: 0.9rem;
+  /* Base type — comfortable mobile reference reading. */
+  --font-size-base: clamp(1rem, 0.97rem + 0.14vw, 1.1rem);
+  /* Medium heading — cards and subsections. */
+  --font-size-md: clamp(1.2rem, 1.08rem + 0.45vw, 1.55rem);
+  /* Section heading — clear editorial wayfinding. */
+  --font-size-lg: clamp(2rem, 1.6rem + 1.9vw, 3.6rem);
+  /* Display title — destination-led hero scale. */
+  --font-size-display: clamp(3.2rem, 2.35rem + 5vw, 7rem);
+
+  /* Tight spacing — small related metadata. */
+  --space-1: 0.35rem;
+  /* Compact spacing — inline controls and labels. */
+  --space-2: 0.65rem;
+  /* Control spacing — touch target padding. */
+  --space-3: 1rem;
+  /* Component spacing — card interiors. */
+  --space-4: 1.5rem;
+  /* Section spacing — grouped content separation. */
+  --space-5: 2.25rem;
+  /* Large spacing — major visual rhythm. */
+  --space-6: 3.5rem;
+  /* Page spacing — responsive section boundaries. */
+  --space-7: clamp(4.5rem, 8vw, 8rem);
+
+  /* Small radius — tags and controls. */
+  --radius-sm: 0.35rem;
+  /* Medium radius — standard content cards. */
+  --radius-md: 0.85rem;
+  /* Large radius — primary feature panels. */
+  --radius-lg: 1.6rem;
+  /* Reading width — comfortable long-form line length. */
+  --reading-width: 68ch;
+  /* Content width — maximum guide canvas. */
+  --content-width: 78rem;
+}
+
+/* ============================================================
+   Base and Accessibility
+   Design intent: Preserve source reading order, generous targets, and visible keyboard position.
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: var(--font-size-base);
+  line-height: 1.65;
+  text-rendering: optimizeLegibility;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+dl {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3 {
+  color: inherit;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+
+h2 {
+  margin-bottom: var(--space-4);
+  font-size: var(--font-size-lg);
+}
+
+h3 {
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-md);
+}
+
+a {
+  color: var(--color-rust-dark);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+/* Hover state: deepen the warm action color without moving the link. */
+a:hover {
+  color: var(--color-rust);
+}
+
+/* Keyboard focus state: the offset ring remains visible across every surface. */
+:focus-visible {
+  outline: 0.2rem solid var(--color-focus);
+  outline-offset: 0.2rem;
+}
+
+[id] {
+  scroll-margin-top: 10rem;
+}
+
+[hidden] {
+  display: none;
+}
+
+.shell {
+  width: min(calc(100% - (2 * var(--space-4))), var(--content-width));
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: var(--space-7);
+}
+
+.section--seafoam {
+  background: var(--color-seafoam);
+}
+
+.section--sand {
+  background: var(--color-sand);
+}
+
+.section-heading {
+  max-width: var(--reading-width);
+  margin-bottom: var(--space-5);
+}
+
+.section-heading--compact {
+  margin-bottom: var(--space-4);
+}
+
+.section-heading > p:last-child {
+  max-width: var(--reading-width);
+  margin-bottom: 0;
+  color: var(--color-ink-muted);
+}
+
+.eyebrow {
+  margin-bottom: var(--space-2);
+  color: var(--color-rust);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.skip-link {
+  position: fixed;
+  /* Skip link layer — above the sticky header and section navigation. */
+  z-index: 30;
+  top: var(--space-2);
+  left: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-ink);
+  color: var(--color-white);
+  transform: translateY(-180%);
+}
+
+/* Focus state: return the skip link to the viewport for keyboard users. */
+.skip-link:focus {
+  color: var(--color-white);
+  transform: translateY(0);
+}
+
+/* ============================================================
+   Header and Section Navigation
+   Design intent: Mirror the portfolio's compact editorial header while keeping travel sections close.
+   ============================================================ */
+
+.guide-header {
+  position: sticky;
+  /* Header layer — above content and below the focused skip link. */
+  z-index: 20;
+  top: 0;
+  border-bottom: 0.08rem solid var(--color-sage-dark);
+  background: var(--color-paper);
+  box-shadow: 0 0.2rem 1rem var(--color-shadow);
+}
+
+.guide-header__top {
+  display: flex;
+  min-height: 3.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.guide-brand {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.guide-location,
+.connection-note {
+  margin-bottom: 0;
+  color: var(--color-ink-muted);
+  font-size: var(--font-size-sm);
+}
+
+.guide-location {
+  font-weight: 700;
+}
+
+.connection-note {
+  text-align: right;
+}
+
+.connection-note.is-offline {
+  color: var(--color-rust-dark);
+  font-weight: 700;
+}
+
+.section-nav {
+  background: var(--color-aegean-dark);
+}
+
+.section-nav__scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: var(--space-1);
+  padding-block: var(--space-1);
+  scrollbar-width: thin;
+}
+
+.section-nav a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  flex: 0 0 auto;
+  align-items: center;
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-sm);
+  color: var(--color-white);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Hover state: sea-blue fill gives pointer feedback inside the dark navigation strip. */
+.section-nav a:hover {
+  background: var(--color-aegean);
+  color: var(--color-white);
+}
+
+/* Keyboard focus state: pale paper ring stays visible against the dark header. */
+.section-nav a:focus-visible {
+  outline-color: var(--color-white);
+}
+
+/* ============================================================
+   Hero and Trip Summary
+   Design intent: Use large editorial type and a tide-like field to signal place without stock imagery.
+   ============================================================ */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--space-7);
+  /* Art-directed tide geometry stays isolated from semantic layout and scales away on narrow phones. */
+  background:
+    radial-gradient(circle at 92% 18%, var(--color-seafoam) 0 9rem, transparent 9.1rem),
+    var(--color-paper);
+}
+
+.hero::after {
+  /* Decorative ring proportions intentionally echo the portfolio's large editorial image crop. */
+  position: absolute;
+  right: -8rem;
+  bottom: -11rem;
+  width: 28rem;
+  height: 20rem;
+  border: 3rem solid var(--color-sand);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+  transform: rotate(-12deg);
+}
+
+.hero__grid {
+  position: relative;
+  /* Hero content layer — above the decorative tide shape. */
+  z-index: 1;
+  display: grid;
+  gap: var(--space-5);
+}
+
+.hero h1 {
+  margin-bottom: var(--space-4);
+  font-size: var(--font-size-display);
+}
+
+.hero h1 em {
+  color: var(--color-aegean);
+  font-weight: inherit;
+}
+
+.hero__lede {
+  max-width: 54ch;
+  margin-bottom: var(--space-4);
+  color: var(--color-ink-muted);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.2rem, 1.05rem + 0.7vw, 1.7rem);
+}
+
+.review-note {
+  max-width: var(--reading-width);
+  margin-bottom: 0;
+  padding-left: var(--space-3);
+  border-left: 0.25rem solid var(--color-rust);
+  font-size: var(--font-size-sm);
+}
+
+.first-day {
+  align-self: end;
+  padding: var(--space-5);
+  border-radius: var(--radius-lg) var(--radius-lg) 5rem var(--radius-lg);
+  background: var(--color-aegean-dark);
+  color: var(--color-white);
+  box-shadow: 0 1.2rem 3rem var(--color-shadow-deep);
+}
+
+.first-day .eyebrow {
+  color: var(--color-coral);
+}
+
+.first-day h2 {
+  font-size: clamp(1.8rem, 1.55rem + 1vw, 2.7rem);
+}
+
+.first-day ol {
+  margin-bottom: 0;
+  padding-left: var(--space-4);
+}
+
+.first-day li + li {
+  margin-top: var(--space-3);
+}
+
+.trip-grid {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.trip-grid article {
+  padding: var(--space-4);
+  border: 0.08rem solid var(--color-sage-dark);
+  border-radius: var(--radius-md);
+  background: var(--color-paper-raised);
+}
+
+.trip-grid article p {
+  margin-bottom: 0;
+}
+
+.card-number {
+  display: block;
+  margin-bottom: var(--space-3);
+  color: var(--color-rust);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}
+
+.quick-links a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  border: 0.08rem solid var(--color-aegean);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-aegean-dark);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Hover state: fill quick links to clearly acknowledge pointer interaction. */
+.quick-links a:hover {
+  background: var(--color-aegean-dark);
+  color: var(--color-white);
+}
+
+/* ============================================================
+   Search and Filters
+   Design intent: Make a large guide quickly queryable while leaving the source document complete.
+   ============================================================ */
+
+.search-panel {
+  padding-block: var(--space-5);
+  border-block: 0.08rem solid var(--color-sage-dark);
+  background: var(--color-paper-raised);
+}
+
+.filters {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.filters label {
+  display: grid;
+  gap: var(--space-1);
+  color: var(--color-ink-muted);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+}
+
+.filters input,
+.filters select,
+.filters button {
+  width: 100%;
+  min-height: 3rem;
+  border: 0.1rem solid var(--color-sage-dark);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font: inherit;
+}
+
+.filters input,
+.filters select {
+  padding-inline: var(--space-2);
+}
+
+.filters button {
+  align-self: end;
+  padding-inline: var(--space-3);
+  border-color: var(--color-rust);
+  background: var(--color-rust);
+  color: var(--color-white);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Hover state: darken reset control while preserving its dimensions. */
+.filters button:hover {
+  border-color: var(--color-rust-dark);
+  background: var(--color-rust-dark);
+}
+
+.result-status {
+  min-height: 1.6em;
+  margin: var(--space-3) 0 0;
+  color: var(--color-ink-muted);
+  font-size: var(--font-size-sm);
+}
+
+.noscript-note {
+  padding-block: var(--space-3);
+  color: var(--color-rust-dark);
+  font-weight: 700;
+}
+
+/* ============================================================
+   Destination and Food Cards
+   Design intent: Standardize comparison details and keep source checking adjacent to every choice.
+   ============================================================ */
+
+.place-grid,
+.food-grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.info-card,
+.food-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: var(--space-4);
+  border: 0.08rem solid var(--color-sage-dark);
+  border-radius: var(--radius-md);
+  background: var(--color-paper-raised);
+  box-shadow: 0 0.6rem 1.5rem var(--color-shadow);
+}
+
+.info-card--beyond {
+  border-color: var(--color-rust);
+}
+
+.card-topline {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  color: var(--color-ink-muted);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.card-topline strong {
+  color: var(--color-aegean-dark);
+  white-space: nowrap;
+}
+
+.info-card > p,
+.food-card > p {
+  color: var(--color-ink-muted);
+}
+
+.info-card dl {
+  margin-bottom: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 0.08rem solid var(--color-sage);
+  font-size: var(--font-size-sm);
+}
+
+.info-card dt {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.info-card dd {
+  margin: 0 0 var(--space-2);
+  color: var(--color-ink-muted);
+}
+
+.food-card > span {
+  margin-bottom: var(--space-3);
+  color: var(--color-rust-dark);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: auto;
+}
+
+.card-links a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  padding-inline: var(--space-3);
+  border: 0.08rem solid var(--color-aegean);
+  border-radius: var(--radius-sm);
+  color: var(--color-aegean-dark);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Hover state: fill destination actions to signal the external handoff. */
+.card-links a:hover {
+  background: var(--color-aegean-dark);
+  color: var(--color-white);
+}
+
+.dishes-heading {
+  margin-top: var(--space-7);
+}
+
+.dish-grid {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.dish-grid article {
+  padding-top: var(--space-3);
+  border-top: 0.15rem solid var(--color-rust);
+}
+
+.dish-grid article p {
+  margin-bottom: 0;
+}
+
+/* Filtered state: hide only matching records; headings remain as navigation cues. */
+[data-search-item].is-filtered-out {
+  display: none;
+}
+
+/* Empty group state: remove a phrase heading when all rows in that situation are filtered out. */
+.phrase-group-title.is-filtered-out {
+  display: none;
+}
+
+/* ============================================================
+   Phrasebook
+   Design intent: Align original, meaning, and pronunciation for rapid side-by-side recognition.
+   ============================================================ */
+
+.phrase-list {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.phrase-group-title {
+  margin: var(--space-6) 0 var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: 0.2rem solid var(--color-aegean);
+  color: var(--color-aegean-dark);
+}
+
+.phrase-group-title:first-child {
+  margin-top: 0;
+}
+
+.phrase {
+  display: grid;
+  min-width: 0;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border-bottom: 0.08rem solid var(--color-sage);
+  background: var(--color-paper-raised);
+}
+
+.phrase strong {
+  color: var(--color-ink);
+  font-size: 1.08em;
+}
+
+.phrase span {
+  color: var(--color-ink-muted);
+}
+
+.phrase em {
+  color: var(--color-rust-dark);
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* ============================================================
+   Practical and Emergency Content
+   Design intent: Give urgent actions maximum contrast, then return to calm reference cards.
+   ============================================================ */
+
+.section--ink {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.section--ink .section-heading > p:last-child {
+  color: var(--color-sage);
+}
+
+.emergency-panel {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--color-coral);
+  color: var(--color-ink);
+}
+
+.emergency-panel .eyebrow {
+  color: var(--color-ink);
+}
+
+.emergency-panel p:last-child {
+  margin-bottom: 0;
+}
+
+.emergency-number {
+  margin-bottom: var(--space-2);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(4rem, 3rem + 7vw, 8rem);
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 0.85;
+}
+
+.emergency-number a,
+.emergency-panel li a {
+  color: var(--color-ink);
+}
+
+.emergency-panel ul {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.emergency-panel li {
+  border-top: 0.08rem solid var(--color-ink);
+}
+
+.emergency-panel li a {
+  display: flex;
+  min-height: 3.2rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Hover state: underline dial actions without changing their spatial position. */
+.emergency-panel a:hover {
+  text-decoration: underline;
+}
+
+.source-line {
+  margin: var(--space-3) 0 var(--space-6);
+  color: var(--color-sage);
+  font-size: var(--font-size-sm);
+}
+
+.source-line a,
+.section--ink article a,
+.live-checks a {
+  color: var(--color-paper-raised);
+}
+
+.practical-grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.practical-grid article {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: var(--space-4);
+  border: 0.08rem solid var(--color-sage-dark);
+  border-radius: var(--radius-md);
+  background: var(--color-aegean-dark);
+}
+
+.practical-grid article ul {
+  padding-left: var(--space-4);
+}
+
+.practical-grid article li + li {
+  margin-top: var(--space-2);
+}
+
+.practical-grid article a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  margin-top: auto;
+  font-weight: 700;
+}
+
+.live-checks {
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  border-left: 0.3rem solid var(--color-coral);
+  background: var(--color-aegean-dark);
+}
+
+.live-checks ul {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: 0;
+  padding-left: var(--space-4);
+}
+
+/* ============================================================
+   Footer
+   Design intent: Close with review and offline boundaries in the same quiet portfolio register.
+   ============================================================ */
+
+.guide-footer {
+  padding-block: var(--space-5);
+  border-top: 0.08rem solid var(--color-sage-dark);
+  background: var(--color-paper);
+}
+
+.guide-footer p {
+  max-width: var(--reading-width);
+  color: var(--color-ink-muted);
+  font-size: var(--font-size-sm);
+}
+
+.guide-footer a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  font-weight: 700;
+}
+
+/* ============================================================
+   Responsive Layouts
+   ============================================================ */
+
+/* Mid-size phones and tablets (min 36rem): expose comparison columns without shortening targets. */
+@media (min-width: 36rem) {
+  .filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .trip-grid,
+  .dish-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .place-grid,
+  .food-grid,
+  .practical-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .phrase {
+    grid-template-columns: minmax(10rem, 1.05fr) minmax(10rem, 1fr) minmax(9rem, 0.85fr);
+    align-items: baseline;
+    gap: var(--space-3);
+  }
+}
+
+/* Desktop and wide tablets (min 62rem): balance hero and increase scan density. */
+@media (min-width: 62rem) {
+  .hero__grid {
+    grid-template-columns: minmax(0, 1.35fr) minmax(19rem, 0.65fr);
+    align-items: end;
+    gap: var(--space-6);
+  }
+
+  .trip-grid,
+  .dish-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .filters {
+    grid-template-columns: minmax(15rem, 1.5fr) repeat(4, minmax(9rem, 1fr)) auto;
+  }
+
+  .filters button {
+    width: auto;
+  }
+
+  .food-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .emergency-panel {
+    grid-template-columns: minmax(0, 1.25fr) minmax(17rem, 0.75fr);
+    align-items: center;
+  }
+}
+
+/* Narrow phones (max 40rem): simplify sticky header and retain a 320px-safe reading flow. */
+@media (max-width: 40rem) {
+  .guide-header__top {
+    flex-wrap: wrap;
+    padding-block: var(--space-1);
+  }
+
+  .guide-location {
+    order: 2;
+  }
+
+  .connection-note {
+    width: 100%;
+    order: 3;
+    padding-bottom: var(--space-1);
+    text-align: left;
+  }
+
+  .hero {
+    background: var(--color-paper);
+  }
+
+  .hero::after {
+    display: none;
+  }
+
+  .first-day,
+  .emergency-panel,
+  .live-checks {
+    padding: var(--space-4);
+  }
+
+  .card-topline {
+    align-items: flex-start;
+  }
+}
+
+/* Reduced motion: remove smooth scrolling so navigation follows the user's motion preference. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Print: remove navigation and actions, retain complete reference content in high contrast. */
+@media print {
+  .guide-header,
+  .search-panel,
+  .quick-links,
+  .card-links,
+  .guide-footer {
+    display: none;
+  }
+
+  body,
+  .section,
+  .section--ink,
+  .section--sand,
+  .section--seafoam,
+  .emergency-panel,
+  .practical-grid article,
+  .live-checks {
+    background: var(--color-white);
+    color: var(--color-ink);
+  }
+
+  .section {
+    padding-block: var(--space-4);
+  }
+
+  .info-card,
+  .food-card,
+  .practical-grid article,
+  .phrase {
+    break-inside: avoid;
+    box-shadow: none;
+  }
+
+  .section--ink a,
+  .emergency-panel a {
+    color: var(--color-ink);
+  }
+}
