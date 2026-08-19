@@ -29,13 +29,23 @@ See [trips/README.md](trips/README.md) for configuration, event generation, edit
 
 ## Local preview
 
-Because event files are loaded dynamically, preview the repository through an HTTP server rather than opening trip HTML directly as a `file:` URL:
+Some interactive pages use browser workers or dynamically loaded files. Preview
+the repository through an HTTP server rather than opening their HTML directly
+as a `file:` URL:
 
 ```sh
-python -m http.server 8765
+python3 -m http.server 8765
 ```
 
-Then open `http://127.0.0.1:8765/china/` or `http://127.0.0.1:8765/trips/template/`.
+Then open one of these local URLs:
+
+- `http://127.0.0.1:8765/china/` — China journal
+- `http://127.0.0.1:8765/trips/template/` — trip template
+
+The Video & Audio Converter is self-contained and can also be opened directly
+from `apps/video-tool/index.html` without starting a local server. In direct-file
+mode it loads its local compressed FFmpeg payload and still keeps selected and
+generated media inside the browser.
 
 ## Generator tests
 

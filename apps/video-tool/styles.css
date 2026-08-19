@@ -1,0 +1,1079 @@
+/*
+ * styles.css: Editorial interface styles for the private Video & Audio Converter.
+ * Sections: Tokens, Base, Navigation, Hero, Workspace, Forms, Timeline, Queue, Results, Responsive, Motion.
+ */
+
+/* ============================================================
+   Design Tokens and Base
+   Design intent: Extend the site's cream, charcoal, rust, and sage system into a focused utility workspace.
+   ============================================================ */
+
+:root {
+  /* Paper — cream page canvas matching the primary site. */
+  --color-paper: #f4efe4;
+  /* Raised paper — light card and input surface. */
+  --color-paper-raised: #fffaf0;
+  /* Ink — high-contrast charcoal body copy. */
+  --color-ink: #292622;
+  /* Muted ink — secondary explanatory copy. */
+  --color-ink-muted: #625d55;
+  /* Rust — primary identity and action accent. */
+  --color-rust: #8e3f2a;
+  /* Rust dark — hover, active, and high-contrast action state. */
+  --color-rust-dark: #652c1d;
+  /* Rust pale — subtle action and warning surface. */
+  --color-rust-pale: #ead4c8;
+  /* Sage — calm secondary panel surface. */
+  --color-sage: #cfd6c2;
+  /* Sage dark — quiet border and completed-state accent. */
+  --color-sage-dark: #68765f;
+  /* Focus — visible keyboard focus on every surface. */
+  --color-focus: #174d6d;
+  /* Error — accessible deep red error copy. */
+  --color-error: #842f2f;
+  /* Error pale — restrained error background. */
+  --color-error-pale: #f2d8d2;
+  /* Warning ink — deep ochre copy on the pale warning surface. */
+  --color-warning: #684718;
+  /* Warning pale — browser-memory warning background. */
+  --color-warning-pale: #f4dfad;
+  /* White — progress and primary-button foreground. */
+  --color-white: #ffffff;
+  /* Transparent ink — paper elevation shadow. */
+  --color-shadow: rgba(41, 38, 34, 0.14);
+  /* Transparent rust — drag-target emphasis. */
+  --color-rust-wash: rgba(142, 63, 42, 0.08);
+
+  /* Compact label scale — eyebrow labels and support metadata. */
+  --font-xs: 0.78rem;
+  /* Small copy scale — hints, metadata, and secondary controls. */
+  --font-sm: 0.9rem;
+  /* Reading scale — comfortable utility body copy. */
+  --font-base: clamp(1rem, 0.96rem + 0.18vw, 1.1rem);
+  /* Section heading scale — compact panel hierarchy. */
+  --font-lg: clamp(1.35rem, 1.2rem + 0.7vw, 1.9rem);
+  /* Page heading scale — editorial converter title. */
+  --font-xl: clamp(2.35rem, 1.75rem + 2.6vw, 4.6rem);
+
+  /* Tight spacing — inline metadata separation. */
+  --space-1: 0.35rem;
+  /* Compact spacing — related labels and controls. */
+  --space-2: 0.65rem;
+  /* Control spacing — touch targets and card internals. */
+  --space-3: 1rem;
+  /* Component spacing — panel padding on narrow screens. */
+  --space-4: 1.5rem;
+  /* Section spacing — gaps between workflow regions. */
+  --space-5: 2.25rem;
+  /* Desktop panel spacing — generous paper-card padding. */
+  --space-6: 3rem;
+  /* Page rhythm — hero and workspace vertical separation. */
+  --space-7: clamp(3.5rem, 7vw, 6.5rem);
+
+  /* Small radius — tags, progress, and compact controls. */
+  --radius-sm: 0.35rem;
+  /* Medium radius — inputs and messages. */
+  --radius-md: 0.75rem;
+  /* Large radius — workflow panels and preview frame. */
+  --radius-lg: 1.25rem;
+  /* Shared content width — matches the primary portfolio canvas. */
+  --content-width: 76rem;
+  /* Header reference — sticky offset and skip-link placement. */
+  --header-height: 5.5rem;
+  /* Control minimum — practical pointer and touch target height. */
+  --control-min: 2.75rem;
+  /* Fast feedback — restrained interaction response below perception delay. */
+  --motion-fast: 160ms;
+  /* Calm feedback — drag-zone and card state transition timing. */
+  --motion-calm: 220ms;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+}
+
+body.tool-page {
+  min-width: 0;
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: var(--font-base);
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+}
+
+/* Hidden-state enforcement: the utility class must override component display rules set later in this file. */
+[hidden] {
+  display: none !important;
+}
+
+body.tool-page h1,
+body.tool-page h2,
+body.tool-page p,
+body.tool-page ul,
+body.tool-page ol,
+body.tool-page dl {
+  margin-top: 0;
+}
+
+body.tool-page h1,
+body.tool-page h2 {
+  margin-left: 0;
+  color: var(--color-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+
+body.tool-page h1 {
+  max-width: 12ch;
+  margin-bottom: var(--space-4);
+  font-size: var(--font-xl);
+}
+
+body.tool-page h2 {
+  margin-bottom: 0;
+  font-size: var(--font-lg);
+}
+
+body.tool-page a {
+  color: var(--color-rust-dark);
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 0.08em;
+}
+
+/* Hover state: deepen underlining and shift toward rust without making meaning hover-dependent. */
+body.tool-page a:hover {
+  color: var(--color-rust);
+}
+
+/* Keyboard focus state: a strong offset ring stays visible on paper, rust, and sage surfaces. */
+body.tool-page :focus-visible {
+  outline: 0.2rem solid var(--color-focus);
+  outline-offset: 0.2rem;
+}
+
+.page-shell {
+  width: min(calc(100% - (2 * var(--space-4))), var(--content-width));
+  margin-inline: auto;
+}
+
+.eyebrow {
+  margin-bottom: var(--space-2);
+  color: var(--color-rust);
+  font-size: var(--font-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.support-copy {
+  margin-bottom: 0;
+  color: var(--color-ink-muted);
+  font-size: var(--font-sm);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================================
+   Navigation
+   Design intent: Preserve portfolio orientation without overpowering the task-focused workspace.
+   ============================================================ */
+
+.skip-link {
+  position: fixed;
+  /* Skip link layer (40): above the sticky navigation layer (20). */
+  z-index: 40;
+  top: var(--space-2);
+  left: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-ink);
+  color: var(--color-paper-raised);
+  transform: translateY(-180%);
+}
+
+/* Focus state: expose the normally off-canvas skip link to keyboard users. */
+.skip-link:focus {
+  color: var(--color-paper-raised);
+  transform: translateY(0);
+}
+
+.tool-header {
+  position: sticky;
+  /* Navigation layer (20): above page content but below the focused skip link. */
+  z-index: 20;
+  top: 0;
+  border-bottom: 0.0625rem solid var(--color-sage-dark);
+  background: var(--color-paper);
+}
+
+.tool-header__inner {
+  display: flex;
+  min-height: var(--header-height);
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.tool-brand {
+  color: var(--color-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.tool-nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-1) var(--space-4);
+  margin-bottom: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tool-nav a {
+  display: inline-flex;
+  min-height: var(--control-min);
+  align-items: center;
+  color: var(--color-ink-muted);
+  font-size: var(--font-sm);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Current navigation state: rust text and underline identify Projects independently of color alone. */
+.tool-nav a[aria-current="page"] {
+  color: var(--color-rust-dark);
+  text-decoration: underline;
+  text-decoration-thickness: 0.15rem;
+}
+
+/* ============================================================
+   Hero
+   Design intent: Pair a concise tool promise with an equally prominent privacy and device warning.
+   ============================================================ */
+
+.hero {
+  padding-block: var(--space-7) var(--space-6);
+}
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr);
+  align-items: end;
+  gap: var(--space-6);
+}
+
+.hero__lede {
+  max-width: 52ch;
+  margin-bottom: 0;
+  color: var(--color-ink-muted);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.15rem, 1.05rem + 0.45vw, 1.45rem);
+}
+
+.privacy-note {
+  padding: var(--space-4);
+  border-left: 0.3rem solid var(--color-sage-dark);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  background: var(--color-sage);
+}
+
+.privacy-note p {
+  margin-bottom: 0;
+  font-size: var(--font-sm);
+}
+
+.privacy-note .privacy-note__title {
+  margin-bottom: var(--space-2);
+  color: var(--color-ink);
+  font-size: var(--font-base);
+  font-weight: 700;
+}
+
+.privacy-note__title span {
+  color: var(--color-sage-dark);
+}
+
+/* ============================================================
+   Workspace and Panels
+   Design intent: Numbered paper panels provide progressive disclosure without hiding controls behind tabs.
+   ============================================================ */
+
+.workspace {
+  padding-block: 0 var(--space-7);
+}
+
+.workspace__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(18rem, 0.75fr);
+  align-items: start;
+  gap: var(--space-5);
+}
+
+.workspace__controls,
+.workspace__status {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.panel {
+  min-width: 0;
+  padding: var(--space-5);
+  border: 0.0625rem solid var(--color-sage-dark);
+  border-radius: var(--radius-lg);
+  background: var(--color-paper-raised);
+  box-shadow: 0 0.7rem 1.8rem var(--color-shadow);
+}
+
+.panel--sticky {
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-3));
+}
+
+.panel__heading {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.step-number {
+  display: inline-grid;
+  width: 2.35rem;
+  height: 2.35rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-rust);
+  color: var(--color-white);
+  font-size: var(--font-sm);
+  font-weight: 700;
+}
+
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* ============================================================
+   File Selection and Source Preview
+   Design intent: A generous drop target invites pointer use while the native input remains keyboard reachable.
+   ============================================================ */
+
+.drop-zone {
+  display: grid;
+  min-height: 12rem;
+  padding: var(--space-5);
+  place-items: center;
+  align-content: center;
+  gap: var(--space-1);
+  border: 0.15rem dashed var(--color-sage-dark);
+  border-radius: var(--radius-lg);
+  background: var(--color-paper);
+  text-align: center;
+  cursor: pointer;
+  /* Calm 220ms feedback makes drag and hover state changes legible without feeling animated. */
+  transition: border-color var(--motion-calm) ease, background-color var(--motion-calm) ease, transform var(--motion-calm) ease;
+}
+
+.drop-zone__icon {
+  color: var(--color-rust);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.drop-zone__title {
+  color: var(--color-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.drop-zone__hint {
+  color: var(--color-ink-muted);
+  font-size: var(--font-sm);
+}
+
+/* Hover state: rust outline and a slight rise signal that the full panel activates the picker. */
+.drop-zone:hover {
+  border-color: var(--color-rust);
+  transform: translateY(-0.1rem);
+}
+
+/* Drag-over state: stronger rust wash confirms that one file can be dropped here. */
+.drop-zone.is-dragging {
+  border-color: var(--color-rust-dark);
+  background: var(--color-rust-wash);
+}
+
+/* Blocked state: a genuinely missing browser capability disables picker and drop interactions. */
+.drop-zone.is-disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.file-input {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Keyboard focus state: mirror the hidden native input's focus ring on its visible label. */
+.drop-zone:has(+ .file-input:focus-visible) {
+  outline: 0.2rem solid var(--color-focus);
+  outline-offset: 0.2rem;
+}
+
+.source-summary {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.metadata-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin-bottom: 0;
+}
+
+.metadata-grid div {
+  min-width: 0;
+  padding-bottom: var(--space-2);
+  border-bottom: 0.0625rem solid var(--color-sage);
+}
+
+.metadata-grid dt {
+  color: var(--color-ink-muted);
+  font-size: var(--font-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.metadata-grid dd {
+  margin-left: 0;
+  overflow-wrap: anywhere;
+  font-weight: 700;
+}
+
+.preview-frame {
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--color-ink);
+}
+
+.preview-frame video {
+  display: block;
+  width: 100%;
+  max-height: 28rem;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+}
+
+/* ============================================================
+   Options and Buttons
+   Design intent: Card-like choices make independent outputs scannable and retain native control behavior.
+   ============================================================ */
+
+fieldset {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  margin: 0;
+}
+
+.option-list {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.option-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(9rem, auto);
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 0.0625rem solid var(--color-sage);
+  border-radius: var(--radius-md);
+  background: var(--color-paper);
+}
+
+.check-label {
+  display: flex;
+  min-width: 0;
+  min-height: var(--control-min);
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+}
+
+.check-label--standalone {
+  margin-bottom: var(--space-4);
+  padding: var(--space-3);
+  border: 0.0625rem solid var(--color-sage);
+  border-radius: var(--radius-md);
+  background: var(--color-paper);
+}
+
+.check-label input {
+  width: 1.3rem;
+  height: 1.3rem;
+  flex: 0 0 auto;
+  margin: 0;
+  accent-color: var(--color-rust);
+}
+
+.check-label span {
+  display: grid;
+  min-width: 0;
+}
+
+.check-label small {
+  color: var(--color-ink-muted);
+  font-size: var(--font-xs);
+  font-weight: 400;
+}
+
+.select-label {
+  display: grid;
+  gap: var(--space-1);
+  color: var(--color-ink-muted);
+  font-size: var(--font-xs);
+  font-weight: 700;
+}
+
+select {
+  width: 100%;
+  min-height: var(--control-min);
+  padding: var(--space-2) var(--space-3);
+  border: 0.0625rem solid var(--color-sage-dark);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper-raised);
+  color: var(--color-ink);
+  font: inherit;
+  font-size: var(--font-sm);
+}
+
+.option-note {
+  margin-bottom: 0;
+  padding: var(--space-3);
+  border-left: 0.25rem solid var(--color-warning);
+  background: var(--color-warning-pale);
+  color: var(--color-warning);
+  font-size: var(--font-sm);
+}
+
+.button,
+.text-button,
+.download-link {
+  display: inline-flex;
+  min-height: var(--control-min);
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-4);
+  border: 0.1rem solid transparent;
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-size: var(--font-sm);
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  /* Fast 160ms response confirms press and hover states without decorative motion. */
+  transition: background-color var(--motion-fast) ease, border-color var(--motion-fast) ease, color var(--motion-fast) ease;
+}
+
+.button--primary,
+.download-link {
+  background: var(--color-rust);
+  color: var(--color-white);
+}
+
+.button--secondary {
+  border-color: var(--color-rust);
+  background: var(--color-paper-raised);
+  color: var(--color-rust-dark);
+}
+
+.button--quiet,
+.text-button {
+  border-color: var(--color-sage-dark);
+  background: transparent;
+  color: var(--color-ink);
+}
+
+.text-button {
+  margin-top: var(--space-3);
+}
+
+/* Hover state: dark rust strengthens primary download and conversion affordances. */
+.button--primary:hover,
+.download-link:hover {
+  background: var(--color-rust-dark);
+  color: var(--color-white);
+}
+
+/* Hover state: pale rust confirms secondary and quiet actions without competing with Start. */
+.button--secondary:hover,
+.button--quiet:hover,
+.text-button:hover {
+  background: var(--color-rust-pale);
+}
+
+/* Disabled state: reduced opacity plus blocked cursor communicates unavailability without relying on color. */
+.button:disabled,
+.text-button:disabled,
+fieldset:disabled .check-label,
+fieldset:disabled select {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================================================
+   Dual-Handle Timeline
+   Design intent: Overlaid native sliders provide precise pointer, touch, and keyboard range selection.
+   ============================================================ */
+
+.timeline {
+  --range-start: 0%;
+  --range-end: 100%;
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-sage);
+}
+
+.timeline__values {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  font-size: var(--font-sm);
+  font-weight: 700;
+}
+
+.timeline output {
+  color: var(--color-rust-dark);
+  font-variant-numeric: tabular-nums;
+}
+
+.range-pair {
+  position: relative;
+  display: grid;
+  height: 2.2rem;
+  align-items: center;
+}
+
+.range-pair::before,
+.range-pair::after {
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: 0.4rem;
+  border-radius: var(--radius-sm);
+  content: "";
+}
+
+.range-pair::before {
+  background: var(--color-paper-raised);
+}
+
+.range-pair::after {
+  background: linear-gradient(
+    to right,
+    transparent 0 var(--range-start),
+    var(--color-rust) var(--range-start) var(--range-end),
+    transparent var(--range-end) 100%
+  );
+  pointer-events: none;
+}
+
+.range-input {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  height: 2.2rem;
+  margin: 0;
+  background: transparent;
+  pointer-events: none;
+  /* Chromium and current Safari: remove native track paint so the shared range rail remains visible. */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.range-input--end {
+  /* End-handle layer (3): places coincident handles above the start handle for reliable pointer access. */
+  z-index: 3;
+}
+
+.range-input::-webkit-slider-runnable-track {
+  height: 0.4rem;
+  background: transparent;
+}
+
+.range-input::-moz-range-track {
+  height: 0.4rem;
+  background: transparent;
+}
+
+.range-input::-webkit-slider-thumb {
+  width: 1.65rem;
+  height: 1.65rem;
+  border: 0.18rem solid var(--color-paper-raised);
+  border-radius: 50%;
+  margin-top: -0.625rem;
+  background: var(--color-rust-dark);
+  box-shadow: 0 0.15rem 0.4rem var(--color-shadow);
+  pointer-events: auto;
+  cursor: grab;
+  /* Chromium and current Safari: replace the native thumb with the larger accessible touch target. */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.range-input::-moz-range-thumb {
+  width: 1.35rem;
+  height: 1.35rem;
+  border: 0.18rem solid var(--color-paper-raised);
+  border-radius: 50%;
+  background: var(--color-rust-dark);
+  box-shadow: 0 0.15rem 0.4rem var(--color-shadow);
+  pointer-events: auto;
+  cursor: grab;
+}
+
+/* Active state: closed-hand cursor reinforces direct manipulation of the current range handle. */
+.range-input:active::-webkit-slider-thumb {
+  cursor: grabbing;
+}
+
+/* Active state: Firefox receives the same closed-hand cursor while a range handle is dragged. */
+.range-input:active::-moz-range-thumb {
+  cursor: grabbing;
+}
+
+/* ============================================================
+   Messages, Queue, and Progress
+   Design intent: Every validation and processing state combines text, structure, and color.
+   ============================================================ */
+
+.message {
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--font-sm);
+  font-weight: 700;
+}
+
+.message--warning {
+  border-left: 0.3rem solid var(--color-warning);
+  background: var(--color-warning-pale);
+  color: var(--color-warning);
+}
+
+/* Validation error state: visible label and alert semantics accompany the red error surface. */
+.message--error {
+  border-left: 0.3rem solid var(--color-error);
+  background: var(--color-error-pale);
+  color: var(--color-error);
+}
+
+.status-line {
+  margin-bottom: var(--space-4);
+  color: var(--color-ink-muted);
+}
+
+.progress-block {
+  margin-block: var(--space-4);
+}
+
+.progress-block__labels {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+  font-size: var(--font-sm);
+  font-weight: 700;
+}
+
+progress {
+  width: 100%;
+  height: 0.75rem;
+  border: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--color-sage);
+  accent-color: var(--color-rust);
+}
+
+progress::-webkit-progress-bar {
+  background: var(--color-sage);
+}
+
+progress::-webkit-progress-value {
+  background: var(--color-rust);
+}
+
+progress::-moz-progress-bar {
+  background: var(--color-rust);
+}
+
+.queue-list {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: 0;
+  padding-left: 1.4rem;
+}
+
+.queue-item {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper);
+  font-size: var(--font-sm);
+}
+
+.queue-item::marker {
+  color: var(--color-rust);
+  font-weight: 700;
+}
+
+.queue-item__state {
+  display: block;
+  color: var(--color-ink-muted);
+  font-size: var(--font-xs);
+}
+
+/* Active queue state: rust border and explicit Running text identify the current transformation. */
+.queue-item[data-state="running"] {
+  border-left: 0.25rem solid var(--color-rust);
+}
+
+/* Completed queue state: sage border and explicit Complete text confirm retained output. */
+.queue-item[data-state="complete"] {
+  border-left: 0.25rem solid var(--color-sage-dark);
+}
+
+/* Failure and cancellation state: error border is paired with an explicit textual state. */
+.queue-item[data-state="failed"],
+.queue-item[data-state="cancelled"] {
+  border-left: 0.25rem solid var(--color-error);
+}
+
+.queue-list__empty {
+  color: var(--color-ink-muted);
+  font-size: var(--font-sm);
+}
+
+/* ============================================================
+   Results
+   Design intent: Each durable session output receives its own summary and explicit download action.
+   ============================================================ */
+
+.results-list {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.result-card {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 0.0625rem solid var(--color-sage-dark);
+  border-radius: var(--radius-md);
+  background: var(--color-paper);
+}
+
+.result-card h3 {
+  margin: 0;
+  color: var(--color-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.15rem;
+}
+
+.result-card p {
+  margin-bottom: 0;
+  color: var(--color-ink-muted);
+  font-size: var(--font-sm);
+}
+
+.result-card .result-card__warning {
+  color: var(--color-warning);
+  font-weight: 700;
+}
+
+.download-link {
+  justify-self: start;
+  margin-top: var(--space-1);
+}
+
+/* ============================================================
+   Footer and Script Fallback
+   Design intent: Finish with quiet privacy reassurance and transparent local dependency attribution.
+   ============================================================ */
+
+.tool-footer {
+  border-top: 0.0625rem solid var(--color-sage-dark);
+}
+
+.tool-footer__inner {
+  display: flex;
+  min-height: 6rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  color: var(--color-ink-muted);
+  font-size: var(--font-sm);
+}
+
+.tool-footer p {
+  margin-bottom: 0;
+}
+
+.noscript-message {
+  position: fixed;
+  /* Blocking fallback layer (60): above all application content when conversion code cannot run. */
+  z-index: 60;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  left: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-error);
+  color: var(--color-white);
+  text-align: center;
+}
+
+/* ============================================================
+   Responsive Layout
+   ============================================================ */
+
+/* Tablet portrait and below (max 800px): stack hero and workflow so reading order matches task order. */
+@media (max-width: 50rem) {
+  .hero__grid,
+  .workspace__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .panel--sticky {
+    position: static;
+  }
+}
+
+/* Large phones and below (max 560px): reduce panel padding and stack option controls for comfortable touch use. */
+@media (max-width: 35rem) {
+  :root {
+    --header-height: auto;
+  }
+
+  .page-shell {
+    width: min(calc(100% - (2 * var(--space-3))), var(--content-width));
+  }
+
+  .tool-header__inner,
+  .tool-footer__inner {
+    align-items: flex-start;
+    flex-direction: column;
+    padding-block: var(--space-3);
+  }
+
+  .tool-nav__list {
+    justify-content: flex-start;
+    gap: var(--space-1) var(--space-3);
+  }
+
+  .tool-nav a {
+    min-height: 2.5rem;
+  }
+
+  .hero {
+    padding-block: var(--space-6) var(--space-5);
+  }
+
+  .panel {
+    padding: var(--space-4);
+  }
+
+  .option-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .select-label {
+    width: 100%;
+  }
+
+  .metadata-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .action-row .button {
+    flex: 1 1 8rem;
+  }
+}
+
+/* Narrow phones (max 360px): keep exact range times and navigation inside a 320 CSS-pixel viewport. */
+@media (max-width: 22.5rem) {
+  .tool-nav__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .panel__heading {
+    gap: var(--space-2);
+  }
+
+  .timeline__values {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+}
+
+/* ============================================================
+   Reduced Motion
+   Accessibility: remove smooth scrolling and transitions when the visitor requests reduced motion.
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .drop-zone,
+  .button,
+  .text-button,
+  .download-link {
+    transition: none;
+  }
+}

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<!--
+  index.html: Accessible interface for private browser-local video and audio conversion.
+  Component: Video & Audio Converter — selects, validates, transforms, and downloads one MP4.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Private Video &amp; Audio Converter | Hristo M. Hristov</title>
+  <meta name="description" content="Extract MP3 or M4A audio, compress MP4 video, or accurately trim one MP4 entirely in your browser. No media is uploaded.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://hmhristov.com/apps/video-tool/">
+  <meta property="og:title" content="Private Video &amp; Audio Converter">
+  <meta property="og:description" content="Convert, compress, and trim one MP4 locally in your browser without uploading it.">
+  <meta property="og:url" content="https://hmhristov.com/apps/video-tool/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://hmhristov.com/images/social/projects-preview.jpg">
+  <meta property="og:image:alt" content="Warm editorial project preview with technology-tool motifs.">
+  <link rel="stylesheet" href="styles.css">
+  <script src="vendor/ffmpeg/ffmpeg.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body class="tool-page">
+  <!-- Skip link: ordinary anchor; Enter moves keyboard focus to the converter workspace. -->
+  <a class="skip-link" href="#converter">Skip to converter</a>
+
+  <!--
+    Header and Primary Navigation
+    Design intent: Preserve the site's four-part navigation and provide a clear route back to Projects.
+    Target: All viewports; links remain usable when application JavaScript is unavailable.
+  -->
+  <header class="tool-header">
+    <div class="page-shell tool-header__inner">
+      <!-- Brand link: ordinary anchor; Enter returns to the primary Home page. -->
+      <a class="tool-brand" href="../../index.html">Hristo M. Hristov</a>
+      <!-- Navigation links: Tab follows source order; aria-current identifies the parent Projects section. -->
+      <nav class="tool-nav" aria-label="Primary">
+        <ul class="tool-nav__list">
+          <li><a href="../../index.html">Home</a></li>
+          <li><a href="../../cv.html">Professional</a></li>
+          <li><a href="../../apps.html" aria-current="page">Projects</a></li>
+          <li><a href="../../art_drawing.html">Creative</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!--
+    Introductory Hero
+    Design intent: Establish privacy and device limits before the visitor selects a potentially large file.
+    Target: A compact two-column desktop statement that stacks into one reading flow on phones.
+  -->
+  <main id="converter">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="page-shell hero__grid">
+        <div>
+          <p class="eyebrow">Private browser utility</p>
+          <h1 id="page-title">Video &amp; Audio Converter</h1>
+          <p class="hero__lede">Extract audio, reduce video size, or make an accurate clip from one MP4. Your media stays on this device.</p>
+        </div>
+        <aside class="privacy-note" aria-label="Privacy and performance notice">
+          <p class="privacy-note__title"><span aria-hidden="true">●</span> Local processing only</p>
+          <p>No source or generated media is uploaded. Conversion speed and memory capacity depend on your browser and device.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!--
+      Converter Workspace
+      Design intent: Present selection, settings, progress, and results as a calm numbered workflow.
+      Target: Two desktop columns with a full-width results region; one column below tablet width.
+    -->
+    <section class="workspace" aria-label="Video conversion workspace">
+      <div class="page-shell workspace__grid">
+        <div class="workspace__controls">
+          <!--
+            Source Panel
+            Design intent: Make privacy-safe drag-and-drop prominent while preserving a standard labelled file picker.
+            Keyboard: Tab reaches the file input; Space or Enter opens the native picker through its label.
+          -->
+          <section class="panel" aria-labelledby="source-heading">
+            <div class="panel__heading">
+              <span class="step-number" aria-hidden="true">1</span>
+              <div>
+                <p class="eyebrow">Source</p>
+                <h2 id="source-heading">Choose one MP4</h2>
+              </div>
+            </div>
+
+            <!-- File picker: the visible label is the accessible name; only one .mp4 is accepted. -->
+            <label class="drop-zone" id="drop-zone" for="source-file">
+              <span class="drop-zone__icon" aria-hidden="true">＋</span>
+              <span class="drop-zone__title">Drop an MP4 here</span>
+              <span class="drop-zone__hint">or choose a file from this device</span>
+            </label>
+            <input class="file-input" id="source-file" type="file" accept=".mp4,video/mp4">
+            <p class="support-copy">One file at a time. The FFmpeg engine checks the real container and decodes a frame before options are enabled.</p>
+
+            <!-- Compatibility error: role=alert announces a blocking browser limitation when detected. -->
+            <div class="message message--error" id="compatibility-error" role="alert" hidden></div>
+
+            <div class="source-summary" id="source-summary" hidden>
+              <dl class="metadata-grid">
+                <div><dt>File</dt><dd id="source-name">—</dd></div>
+                <div><dt>Size</dt><dd id="source-size">—</dd></div>
+                <div><dt>Duration</dt><dd id="source-duration">—</dd></div>
+                <div><dt>Dimensions</dt><dd id="source-dimensions">—</dd></div>
+                <div><dt>Audio</dt><dd id="source-audio">—</dd></div>
+              </dl>
+
+              <!-- Warning status: aria-live politely announces device-memory risk without blocking continuation. -->
+              <div class="message message--warning" id="source-warning" role="status" aria-live="polite" hidden></div>
+
+              <div class="preview-frame">
+                <video id="source-preview" controls playsinline preload="metadata" aria-label="Selected source video preview"></video>
+              </div>
+            </div>
+          </section>
+
+          <!--
+            Output Panel
+            Design intent: Group independent complete-source outputs while making their defaults explicit.
+            Keyboard: Native checkboxes and selects support Space, Enter, and arrow-key selection.
+          -->
+          <section class="panel" aria-labelledby="outputs-heading">
+            <div class="panel__heading">
+              <span class="step-number" aria-hidden="true">2</span>
+              <div>
+                <p class="eyebrow">Complete source</p>
+                <h2 id="outputs-heading">Choose outputs</h2>
+              </div>
+            </div>
+
+            <fieldset class="option-list" id="output-options" disabled>
+              <legend class="visually-hidden">Full-length output formats</legend>
+
+              <div class="option-card">
+                <!-- MP3 option: Space toggles selection; aria-describedby identifies the no-audio explanation. -->
+                <label class="check-label" for="output-mp3">
+                  <input id="output-mp3" type="checkbox" aria-describedby="audio-unavailable">
+                  <span><strong>MP3 audio</strong><small>Widely supported audio file</small></span>
+                </label>
+                <!-- Bitrate select: native arrows choose quality; label gives an accessible name. -->
+                <label class="select-label" for="mp3-bitrate">Bitrate
+                  <select id="mp3-bitrate">
+                    <option value="128">128 kbps</option>
+                    <option value="192" selected>192 kbps</option>
+                    <option value="256">256 kbps</option>
+                    <option value="320">320 kbps</option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="option-card">
+                <!-- M4A option: Space toggles AAC extraction; aria-describedby identifies the no-audio explanation. -->
+                <label class="check-label" for="output-m4a">
+                  <input id="output-m4a" type="checkbox" aria-describedby="audio-unavailable">
+                  <span><strong>M4A audio</strong><small>AAC audio in an M4A container</small></span>
+                </label>
+                <!-- Bitrate select: native arrows choose quality; label gives an accessible name. -->
+                <label class="select-label" for="m4a-bitrate">Bitrate
+                  <select id="m4a-bitrate">
+                    <option value="128">128 kbps</option>
+                    <option value="192" selected>192 kbps</option>
+                    <option value="256">256 kbps</option>
+                    <option value="320">320 kbps</option>
+                  </select>
+                </label>
+              </div>
+
+              <!-- No-audio explanation: visible text and aria-describedby explain disabled extraction controls. -->
+              <p class="option-note" id="audio-unavailable" hidden>This source has no audio track, so MP3 and M4A extraction are unavailable.</p>
+
+              <div class="option-card">
+                <!-- Compression option: Space toggles H.264/AAC MP4 generation. -->
+                <label class="check-label" for="output-compressed">
+                  <input id="output-compressed" type="checkbox">
+                  <span><strong>Compressed MP4</strong><small>H.264 video with AAC audio when present</small></span>
+                </label>
+                <!-- Preset select: native arrows choose the documented compression profile. -->
+                <label class="select-label" for="compression-preset">Preset
+                  <select id="compression-preset">
+                    <option value="small">Small · 480p / CRF 32</option>
+                    <option value="balanced" selected>Balanced · 720p / CRF 28</option>
+                    <option value="high">High Quality · 1080p / CRF 23</option>
+                  </select>
+                </label>
+              </div>
+            </fieldset>
+          </section>
+
+          <!--
+            Trim Panel
+            Design intent: Keep accurate clipping separate from full-source extraction and compression.
+            Keyboard: Space toggles trimming; range handles use arrows, Page Up/Down, Home, and End.
+          -->
+          <section class="panel" aria-labelledby="trim-heading">
+            <div class="panel__heading">
+              <span class="step-number" aria-hidden="true">3</span>
+              <div>
+                <p class="eyebrow">Separate transformation</p>
+                <h2 id="trim-heading">Trim an MP4</h2>
+              </div>
+            </div>
+
+            <fieldset id="trim-options" disabled>
+              <legend class="visually-hidden">Trim settings</legend>
+              <!-- Trim option: Space toggles the separate re-encoded MP4 job. -->
+              <label class="check-label check-label--standalone" for="output-trimmed">
+                <input id="output-trimmed" type="checkbox">
+                <span><strong>Create trimmed MP4</strong><small>Accurate boundaries, re-encoded at high quality</small></span>
+              </label>
+
+              <div class="timeline" id="timeline" aria-describedby="trim-help">
+                <div class="timeline__values" aria-live="off">
+                  <span>Start <output id="trim-start-output" for="trim-start">00:00.00</output></span>
+                  <span>End <output id="trim-end-output" for="trim-end">00:00.00</output></span>
+                </div>
+                <div class="range-pair">
+                  <!-- Start handle: labelled slider; arrow keys adjust by 0.05 seconds. -->
+                  <label class="visually-hidden" for="trim-start">Trim start time</label>
+                  <input class="range-input range-input--start" id="trim-start" type="range" min="0" max="1" step="0.05" value="0" aria-label="Trim start time">
+                  <!-- End handle: labelled slider; arrow keys adjust by 0.05 seconds. -->
+                  <label class="visually-hidden" for="trim-end">Trim end time</label>
+                  <input class="range-input range-input--end" id="trim-end" type="range" min="0" max="1" step="0.05" value="1" aria-label="Trim end time">
+                </div>
+                <p class="support-copy" id="trim-help">Set both handles, then preview the selected range. Audio and compression still use the complete source.</p>
+                <!-- Preview button: Enter or Space seeks to the selected start and plays until the selected end. -->
+                <button class="text-button" id="preview-range" type="button" disabled>Preview selected range</button>
+              </div>
+            </fieldset>
+          </section>
+
+          <!-- Action buttons: Enter or Space starts, cancels, or resets without moving focus unexpectedly. -->
+          <div class="action-row">
+            <button class="button button--primary" id="start-button" type="button" disabled>Start conversion</button>
+            <button class="button button--secondary" id="cancel-button" type="button" disabled>Cancel</button>
+            <button class="button button--quiet" id="reset-button" type="button">Reset</button>
+          </div>
+        </div>
+
+        <aside class="workspace__status" aria-label="Processing and results">
+          <!--
+            Queue Panel
+            Design intent: Make sequential work, current progress, cancellations, and failures understandable.
+            Accessibility: role=status and polite live updates announce changes without stealing focus.
+          -->
+          <section class="panel panel--sticky" aria-labelledby="queue-heading">
+            <p class="eyebrow">Processing</p>
+            <h2 id="queue-heading">Queue</h2>
+            <div class="status-line" id="status-message" role="status" aria-live="polite" aria-atomic="true">Choose an MP4 to begin.</div>
+            <!-- Error region: role=alert immediately announces validation or job failures. -->
+            <div class="message message--error" id="error-message" role="alert" hidden></div>
+
+            <div class="progress-block" id="progress-block" hidden>
+              <div class="progress-block__labels">
+                <span id="current-job">Preparing…</span>
+                <span id="progress-value">0%</span>
+              </div>
+              <progress id="job-progress" max="100" value="0">0%</progress>
+            </div>
+
+            <ol class="queue-list" id="queue-list">
+              <li class="queue-list__empty">Selected jobs will appear here.</li>
+            </ol>
+          </section>
+
+          <!--
+            Results Panel
+            Design intent: Keep every completed output explicit and user-initiated through its own download link.
+            Keyboard: Tab reaches each generated download; Enter starts only that chosen download.
+          -->
+          <section class="panel" aria-labelledby="results-heading">
+            <p class="eyebrow">Ready when complete</p>
+            <h2 id="results-heading">Downloads</h2>
+            <p class="support-copy" id="results-empty">Completed files remain here until you replace the source or reset the app.</p>
+            <div class="results-list" id="results-list"></div>
+          </section>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!--
+    Footer
+    Design intent: Restate the local-processing promise and expose required dependency attribution.
+    Target: A compact row that wraps cleanly on narrow screens.
+  -->
+  <footer class="tool-footer">
+    <div class="page-shell tool-footer__inner">
+      <p>Media bytes stay in this browser session.</p>
+      <!-- Attribution link: Enter opens the repository-hosted third-party notices document. -->
+      <a href="THIRD_PARTY_NOTICES.md">FFmpeg.wasm licenses &amp; attribution</a>
+    </div>
+  </footer>
+
+  <!-- No-script notice: essential explanation remains visible when enhancement code cannot run. -->
+  <noscript>
+    <div class="noscript-message">JavaScript is required for local media conversion. No file can be processed while it is disabled.</div>
+  </noscript>
+</body>
+</html>
