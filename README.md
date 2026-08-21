@@ -4,12 +4,12 @@ This repository is the source for Hristo M. Hristov's static personal website. I
 
 ## Main site
 
-The primary career presentation remains a four-page static site:
+The primary career presentation is a bilingual four-page static site. Existing URLs remain the English defaults, with paired Bulgarian documents:
 
-- `index.html` — Home
-- `cv.html` — Professional
-- `apps.html` — Projects
-- `art_drawing.html` — Creative
+- `index.html` / `index-bg.html` — Home
+- `cv.html` / `cv-bg.html` — Professional
+- `apps.html` / `apps-bg.html` — Projects
+- `art_drawing.html` / `art_drawing-bg.html` — Creative
 
 Trip journals and utilities are auxiliary pages reached through their own URLs; they do not add items to the primary navigation.
 

@@ -10,10 +10,15 @@
   <title>Professional Profile | Hristo M. Hristov</title>
   <meta name="description" content="Executive profile of Hristo M. Hristov covering data and analytics leadership, delivery, architecture, team growth, skills, education, and credentials.">
   <link rel="canonical" href="https://hmhristov.com/cv.html">
+  <link rel="alternate" hreflang="en" href="https://hmhristov.com/cv.html">
+  <link rel="alternate" hreflang="bg" href="https://hmhristov.com/cv-bg.html">
+  <link rel="alternate" hreflang="x-default" href="https://hmhristov.com/cv.html">
   <meta property="og:title" content="Professional Profile | Hristo M. Hristov">
   <meta property="og:description" content="A concise executive profile spanning data and analytics leadership, transformation delivery, architecture, and team growth.">
   <meta property="og:url" content="https://hmhristov.com/cv.html">
   <meta property="og:type" content="profile">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="bg_BG">
   <meta property="og:image" content="https://hmhristov.com/images/social/professional-preview.jpg">
   <meta property="og:image:alt" content="Professional portrait of Hristo M. Hristov with an executive-profile editorial treatment.">
   <link rel="stylesheet" href="css/main.css">
@@ -32,15 +37,23 @@
     <div class="site-shell site-header__inner">
       <!-- Brand link: ordinary anchor; Enter returns to Home. -->
       <a class="site-brand" href="index.html">Hristo M. Hristov</a>
-      <!-- Navigation links: ordinary anchors; Tab moves in document order and Enter opens each page. -->
-      <nav class="site-nav" aria-label="Primary" data-site-nav>
-        <ul class="site-nav__list">
-          <li><a class="site-nav__link" href="index.html">Home</a></li>
-          <li><a class="site-nav__link" href="cv.html" aria-current="page">Professional</a></li>
-          <li><a class="site-nav__link" href="apps.html">Projects</a></li>
-          <li><a class="site-nav__link" href="art_drawing.html">Creative</a></li>
-        </ul>
-      </nav>
+      <div class="site-header__navigation">
+        <!-- Navigation links: ordinary anchors; Tab moves in document order and Enter opens each page. -->
+        <nav class="site-nav" aria-label="Primary" data-site-nav>
+          <ul class="site-nav__list">
+            <li><a class="site-nav__link" href="index.html">Home</a></li>
+            <li><a class="site-nav__link" href="cv.html" aria-current="page">Professional</a></li>
+            <li><a class="site-nav__link" href="apps.html">Projects</a></li>
+            <li><a class="site-nav__link" href="art_drawing.html">Creative</a></li>
+          </ul>
+        </nav>
+        <!-- Language links: ordinary anchors preserve the logical Professional page; aria-current identifies English. -->
+        <nav class="site-language" aria-label="Language">
+          <a class="site-language__link" href="cv-bg.html" hreflang="bg" lang="bg" data-language-option="bg">BG</a>
+          <span class="site-language__separator" aria-hidden="true">|</span>
+          <a class="site-language__link" href="cv.html" hreflang="en" lang="en" aria-current="true" data-language-option="en">EN</a>
+        </nav>
+      </div>
     </div>
   </header>
 

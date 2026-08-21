@@ -1,12 +1,17 @@
 /**
- * site.js: Progressive enhancement for the four-page career presentation.
- * Provides in-place route-state confirmation and one-time reveal behavior.
+ * site.js: Progressive enhancement for the bilingual four-page career presentation.
+ * Provides language preference, in-place route-state confirmation, and one-time reveals.
  */
 
 (function enhanceCareerSite() {
     "use strict";
 
-    const HOME_PATHS = new Set(["/", "/index.html"]);
+    const ROOT_PATH = "/";
+    const ENGLISH_HOME_PATH = "/index.html";
+    const BULGARIAN_HOME_PATH = "/index-bg.html";
+    const HOME_PATHS = new Set([ROOT_PATH, ENGLISH_HOME_PATH]);
+    const LANGUAGE_STORAGE_KEY = "portfolio-language";
+    const SUPPORTED_LANGUAGES = new Set(["bg", "en"]);
     const CURRENT_CLASS = "is-current";
     const REVEAL_READY_CLASS = "reveal-ready";
     const REVEAL_VISIBLE_CLASS = "reveal-visible";
@@ -25,7 +30,65 @@
      */
     function normalizePath(pathname) {
         const normalizedPath = pathname.replace(/\/+/g, "/");
-        return HOME_PATHS.has(normalizedPath) ? "/index.html" : normalizedPath;
+        return HOME_PATHS.has(normalizedPath) ? ENGLISH_HOME_PATH : normalizedPath;
+    }
+
+    /**
+     * Reads a valid language preference when browser storage is available.
+     *
+     * @returns {string|null} The saved language code, or null when unavailable or invalid.
+     */
+    function readLanguagePreference() {
+        try {
+            const language = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+            return SUPPORTED_LANGUAGES.has(language) ? language : null;
+        } catch (storageError) {
+            // Privacy settings may block storage; static language links remain fully functional.
+            return null;
+        }
+    }
+
+    /**
+     * Saves a supported language preference when browser storage is available.
+     *
+     * @param {string} language - The language code selected by the visitor.
+     * @returns {void}
+     */
+    function writeLanguagePreference(language) {
+        if (!SUPPORTED_LANGUAGES.has(language)) {
+            return;
+        }
+
+        try {
+            window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+        } catch (storageError) {
+            // A failed preference write never blocks navigation through ordinary links.
+        }
+    }
+
+    /**
+     * Applies root-only preference routing and records explicit language choices.
+     *
+     * @returns {boolean} True when navigation to the Bulgarian Home page has started.
+     */
+    function enhanceLanguagePreference() {
+        const currentPath = window.location.pathname.replace(/\/+/g, "/");
+
+        // Only the bare domain root may follow a saved preference; named URLs stay authoritative.
+        if (currentPath === ROOT_PATH && readLanguagePreference() === "bg") {
+            const destination = `${BULGARIAN_HOME_PATH}${window.location.search}${window.location.hash}`;
+            window.location.replace(destination);
+            return true;
+        }
+
+        writeLanguagePreference(document.documentElement.lang);
+        const languageLinks = document.querySelectorAll("[data-language-option]");
+        languageLinks.forEach(function rememberSelectedLanguage(link) {
+            link.addEventListener("click", function saveLanguageBeforeNavigation() {
+                writeLanguagePreference(link.dataset.languageOption);
+            });
+        });
+        return false;
     }
 
     /**
@@ -97,6 +160,8 @@
         });
     }
 
-    enhanceNavigation();
-    enhanceReveals();
+    if (!enhanceLanguagePreference()) {
+        enhanceNavigation();
+        enhanceReveals();
+    }
 }());

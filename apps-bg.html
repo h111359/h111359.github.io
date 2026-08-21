@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!--
+  apps-bg.html: Bulgarian Projects page presenting the supported browser-based tools.
+  Component: Projects — describes and links directly to the unchanged static applications.
+-->
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Проекти за браузър | Христо М. Христов</title>
+  <meta name="description" content="Разгледайте шест проекта за браузър на Христо М. Христов: речникови инструменти, български пътеводител за Гърция и поверителни локални инструменти за документи, изображения, видео и аудио.">
+  <link rel="canonical" href="https://hmhristov.com/apps-bg.html">
+  <link rel="alternate" hreflang="en" href="https://hmhristov.com/apps.html">
+  <link rel="alternate" hreflang="bg" href="https://hmhristov.com/apps-bg.html">
+  <link rel="alternate" hreflang="x-default" href="https://hmhristov.com/apps.html">
+  <meta property="og:title" content="Проекти за браузър | Христо М. Христов">
+  <meta property="og:description" content="Шест статични проекта за браузър за упражняване на лексика, справки при пътуване и поверителна локална обработка на документи, изображения, видео и аудио.">
+  <meta property="og:url" content="https://hmhristov.com/apps-bg.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="bg_BG">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:image" content="https://hmhristov.com/images/social/projects-preview.jpg">
+  <meta property="og:image:alt" content="Топло редакционно представяне на проектите с Христо М. Христов и мотиви от технологични инструменти.">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/site.js" defer></script>
+</head>
+<body class="site-page site-page--projects">
+  <!-- Skip link: ordinary anchor; Enter moves keyboard focus to the main content landmark. -->
+  <a class="site-skip-link" href="#main-content">Към основното съдържание</a>
+
+  <!--
+    Header and Primary Navigation
+    Design intent: Keep the four career pillars visible and identify Projects in source.
+    Target: All viewports; the complete navigation remains available without JavaScript.
+  -->
+  <header class="site-header">
+    <div class="site-shell site-header__inner">
+      <!-- Brand link: ordinary anchor; Enter returns to Home. -->
+      <a class="site-brand" href="index-bg.html">Христо М. Христов</a>
+      <div class="site-header__navigation">
+        <!-- Navigation links: ordinary anchors; Tab moves in document order and Enter opens each page. -->
+        <nav class="site-nav" aria-label="Основна навигация" data-site-nav>
+          <ul class="site-nav__list">
+            <li><a class="site-nav__link" href="index-bg.html">Начало</a></li>
+            <li><a class="site-nav__link" href="cv-bg.html">Професионален профил</a></li>
+            <li><a class="site-nav__link" href="apps-bg.html" aria-current="page">Проекти</a></li>
+            <li><a class="site-nav__link" href="art_drawing-bg.html">Творчество</a></li>
+          </ul>
+        </nav>
+        <!-- Language links: ordinary anchors preserve the logical Projects page; aria-current identifies Bulgarian. -->
+        <nav class="site-language" aria-label="Език">
+          <a class="site-language__link" href="apps-bg.html" hreflang="bg" lang="bg" aria-current="true" data-language-option="bg">BG</a>
+          <span class="site-language__separator" aria-hidden="true">|</span>
+          <a class="site-language__link" href="apps.html" hreflang="en" lang="en" data-language-option="en">EN</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!--
+    Projects Content
+    Design intent: Give the supported tools equal credibility with evidence-bound descriptions.
+    Target: Six cards in two desktop columns that become a single reading column on narrow screens.
+  -->
+  <main class="site-main" id="main-content">
+    <section class="site-section" aria-labelledby="projects-title">
+      <div class="site-shell">
+        <div class="site-section-heading" data-reveal>
+          <p class="site-eyebrow">Проекти</p>
+          <h1 id="projects-title">Практически инструменти за учене, пътуване, документи, изображения и мултимедия</h1>
+          <p class="site-lede">Шест проекта за браузър подпомагат упражняването на лексика, справките при пътуване и локалната обработка на документи, изображения, видео и аудио. Всеки от тях се предоставя като статична страница.</p>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card" data-reveal>
+            <span class="project-card__marker">Вграден набор от думи</span>
+            <h2>English Words for PUK</h2>
+            <p>Компактен тест с английска и българска лексика, съхранена директно в страницата. Всеки въпрос сменя на случаен принцип посоката на превод и предлага няколко възможни отговора.</p>
+            <!-- Project link: ordinary anchor; Enter launches the unchanged PUK vocabulary application. -->
+            <a class="site-button" href="apps/PUK_English_Words.html">Стартирайте English Words for PUK</a>
+          </article>
+
+          <article class="project-card" data-reveal>
+            <span class="project-card__marker">С отделен набор от данни</span>
+            <h2>HH Words</h2>
+            <p>По-голям английско-български тест, който зарежда лексиката си от отделен набор от данни, променя посоката на превод и продължава през оставащите думи след всеки верен отговор.</p>
+            <!-- Project link: ordinary anchor; Enter launches the unchanged HH Words application. -->
+            <a class="site-button" href="apps/hhwords/index.html">Стартирайте HH Words</a>
+          </article>
+
+          <article class="project-card" data-reveal>
+            <span class="project-card__marker">Локален каталог на български</span>
+            <h2>Nikiti Catalogue</h2>
+            <p>Достъпен офлайн пътеводител, основан на източници, за храна, ресторанти, гръцка риба, забележителности и плажове в Никити и околността — с датирани цени, координати, оценки и ясно обозначени липсващи данни.</p>
+            <!-- Project link: ordinary anchor; Enter launches the five-part Nikiti catalogue. -->
+            <a class="site-button" href="apps/greece-guide/index.html">Отворете Nikiti Catalogue</a>
+          </article>
+
+          <article class="project-card" data-reveal>
+            <span class="project-card__marker">Локална PDF обработка</span>
+            <h2>PDF Splitter + Markdown Export</h2>
+            <p>Инструмент на български език, който разделя PDF при избрани страници, извлича наличния текст в съответстващи Markdown файлове и пакетира резултатите за изтегляне. Обработката на документите остава в браузъра.</p>
+            <!-- Project link: ordinary anchor; Enter launches the PDF splitter and Markdown export application. -->
+            <a class="site-button" href="apps/pdf_splitter/index.html">Стартирайте PDF Splitter</a>
+          </article>
+
+          <article class="project-card" data-reveal>
+            <span class="project-card__marker">Поверително OCR разпознаване</span>
+            <h2>Image OCR</h2>
+            <p>Инструмент на английски език, който разпознава английски, български и гръцки текст от по едно изображение. Изображенията остават в браузъра, а резултатите могат да се редактират, копират или изтеглят.</p>
+            <!-- Project link: ordinary anchor; Enter launches the browser-local image OCR application. -->
+            <a class="site-button" href="apps/image-ocr/index.html">Стартирайте Image OCR</a>
+          </article>
+
+          <article class="project-card" data-reveal>
+            <span class="project-card__marker">Поверителна обработка на мултимедия</span>
+            <h2>Video &amp; Audio Converter</h2>
+            <p>Локален MP4 инструмент за извличане на MP3 или M4A, компресиране с H.264 чрез предварително зададени настройки и точно изрязване с високо качество. Изходната и генерираната медия никога не напускат браузъра.</p>
+            <!-- Project link: ordinary anchor; Enter launches the browser-local video and audio converter. -->
+            <a class="site-button" href="apps/video-tool/index.html">Стартирайте Video &amp; Audio Converter</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!--
+    Footer
+    Design intent: End with a quiet page label and the shared tertiary GitHub contact.
+    Target: Horizontal desktop layout that stacks without crowding on mobile.
+  -->
+  <footer class="site-footer">
+    <div class="site-shell site-footer__inner">
+      <p>Шест статични проекта за браузър · Христо М. Христов</p>
+      <!-- Footer link: ordinary anchor; Enter opens GitHub in a safely isolated browsing context. -->
+      <a class="site-text-link" href="https://github.com/hmhristov/" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </footer>
+</body>
+</html>

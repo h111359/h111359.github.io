@@ -405,6 +405,14 @@ body.site-page .site-header__inner {
   gap: var(--site-space-4);
 }
 
+body.site-page .site-header__navigation {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--site-space-3);
+}
+
 body.site-page .site-brand {
   flex: 0 0 auto;
   color: var(--site-color-ink);
@@ -448,6 +456,49 @@ body.site-page .site-nav__link[aria-current="page"],
 body.site-page .site-nav__link.is-current {
   background: var(--site-color-rust-pale);
   color: var(--site-color-rust-dark);
+}
+
+/* ============================================================
+   Language Switcher
+   Design intent: A compact, always-visible BG | EN control keeps equivalent
+   language routes reachable through ordinary links on every viewport.
+   ============================================================ */
+
+body.site-page .site-language {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: var(--site-space-1);
+  white-space: nowrap;
+}
+
+body.site-page .site-language__link {
+  display: inline-flex;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--site-radius-sm);
+  color: var(--site-color-ink-muted);
+  font-size: var(--site-font-size-sm);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Hover state: use the raised paper surface to confirm the language target. */
+body.site-page .site-language__link:hover {
+  background: var(--site-color-paper-raised);
+  color: var(--site-color-rust-dark);
+}
+
+/* Current state: identify the active document language without disabling its link. */
+body.site-page .site-language__link[aria-current="true"] {
+  background: var(--site-color-rust-pale);
+  color: var(--site-color-rust-dark);
+}
+
+body.site-page .site-language__separator {
+  color: var(--site-color-sage-dark);
 }
 
 /* ============================================================
@@ -629,7 +680,7 @@ body.site-page .profile-meta__group {
 
 /* ============================================================
    Project Cards
-   Design intent: Five equally credible, evidence-bound summaries route
+   Design intent: Six equally credible, evidence-bound summaries route
    directly to the supported browser tools in a balanced two-column grid.
    ============================================================ */
 
@@ -814,6 +865,13 @@ body.site-page.reveal-ready [data-reveal].reveal-visible {
     gap: var(--site-space-2);
   }
 
+  body.site-page .site-header__navigation {
+    width: 100%;
+    align-items: stretch;
+    flex-direction: column;
+    gap: var(--site-space-1);
+  }
+
   body.site-page .site-nav,
   body.site-page .site-nav__list {
     width: 100%;
@@ -827,6 +885,10 @@ body.site-page.reveal-ready [data-reveal].reveal-visible {
   body.site-page .site-nav__link {
     justify-content: center;
     padding-inline: var(--site-space-2);
+  }
+
+  body.site-page .site-language {
+    align-self: flex-end;
   }
 
   body.site-page .pillar-grid,

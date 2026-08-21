@@ -10,10 +10,15 @@
   <title>Browser Projects | Hristo M. Hristov</title>
   <meta name="description" content="Explore six browser-based projects by Hristo M. Hristov: vocabulary tools, a Bulgarian Greece guide, and private local document, image, video, and audio utilities.">
   <link rel="canonical" href="https://hmhristov.com/apps.html">
+  <link rel="alternate" hreflang="en" href="https://hmhristov.com/apps.html">
+  <link rel="alternate" hreflang="bg" href="https://hmhristov.com/apps-bg.html">
+  <link rel="alternate" hreflang="x-default" href="https://hmhristov.com/apps.html">
   <meta property="og:title" content="Browser Projects | Hristo M. Hristov">
   <meta property="og:description" content="Six static browser projects for vocabulary practice, travel reference, and private local document, image, video, and audio processing.">
   <meta property="og:url" content="https://hmhristov.com/apps.html">
   <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="bg_BG">
   <meta property="og:image" content="https://hmhristov.com/images/social/projects-preview.jpg">
   <meta property="og:image:alt" content="Warm editorial project preview with Hristo M. Hristov and technology-tool motifs.">
   <link rel="stylesheet" href="css/main.css">
@@ -32,15 +37,23 @@
     <div class="site-shell site-header__inner">
       <!-- Brand link: ordinary anchor; Enter returns to Home. -->
       <a class="site-brand" href="index.html">Hristo M. Hristov</a>
-      <!-- Navigation links: ordinary anchors; Tab moves in document order and Enter opens each page. -->
-      <nav class="site-nav" aria-label="Primary" data-site-nav>
-        <ul class="site-nav__list">
-          <li><a class="site-nav__link" href="index.html">Home</a></li>
-          <li><a class="site-nav__link" href="cv.html">Professional</a></li>
-          <li><a class="site-nav__link" href="apps.html" aria-current="page">Projects</a></li>
-          <li><a class="site-nav__link" href="art_drawing.html">Creative</a></li>
-        </ul>
-      </nav>
+      <div class="site-header__navigation">
+        <!-- Navigation links: ordinary anchors; Tab moves in document order and Enter opens each page. -->
+        <nav class="site-nav" aria-label="Primary" data-site-nav>
+          <ul class="site-nav__list">
+            <li><a class="site-nav__link" href="index.html">Home</a></li>
+            <li><a class="site-nav__link" href="cv.html">Professional</a></li>
+            <li><a class="site-nav__link" href="apps.html" aria-current="page">Projects</a></li>
+            <li><a class="site-nav__link" href="art_drawing.html">Creative</a></li>
+          </ul>
+        </nav>
+        <!-- Language links: ordinary anchors preserve the logical Projects page; aria-current identifies English. -->
+        <nav class="site-language" aria-label="Language">
+          <a class="site-language__link" href="apps-bg.html" hreflang="bg" lang="bg" data-language-option="bg">BG</a>
+          <span class="site-language__separator" aria-hidden="true">|</span>
+          <a class="site-language__link" href="apps.html" hreflang="en" lang="en" aria-current="true" data-language-option="en">EN</a>
+        </nav>
+      </div>
     </div>
   </header>
 
