@@ -1,0 +1,3032 @@
+{
+  "meta": {
+    "title": "Никити — проверим каталог",
+    "verified": "2026-08-21",
+    "origin": {
+      "name": "Кметство на община Ситония, Никити",
+      "latitude": 40.22398,
+      "longitude": 23.6683,
+      "source": "https://www.openstreetmap.org/node/299492270"
+    },
+    "travelTimeNote": "Времената са ориентировъчни за автомобил при нормален трафик от кметството и не са гаранция за летния сезон.",
+    "ratingMethod": "Популярност се изчислява само при налична Google моментна снимка: rating × ln(1 + reviews). Липсващите платформи не се заместват и не се усредняват.",
+    "dataLicense": "Координати и част от категориите: © OpenStreetMap contributors, ODbL 1.0."
+  },
+  "foods": [
+    {
+      "id": "greek-salad",
+      "greek": "Χωριάτικη σαλάτα",
+      "bulgarian": "Гръцка салата",
+      "category": "Салата",
+      "description": "Домати, краставица, лук, маслини и фета; версията на Synagrida добавя дресинг с горчичено семе.",
+      "preparation": "Зеленчуците се режат едро и се поднасят сурови с фета и зехтин.",
+      "ingredients": [
+        "домати",
+        "краставица",
+        "лук",
+        "маслини Халкидики",
+        "фета",
+        "зехтин"
+      ],
+      "taste": "Свежа, солена и сочна; хрупкави зеленчуци и кремообразна фета.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 14.5,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        }
+      ],
+      "image": {
+        "src": "images/food/greek-salad.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Ястие „Гръцка салата“ — Домати, краставица, лук, маслини и фета; версията на Synagrida добавя дресинг с горчичено семе.",
+        "credit": "pastitio",
+        "license": "CC BY 2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Greek_salad.jpg"
+      }
+    },
+    {
+      "id": "dakos",
+      "greek": "Κρητικός ντάκος",
+      "bulgarian": "Критски дакос",
+      "category": "Салата",
+      "description": "Ечемичен сухар с домат, маслинова паста и пресни билки.",
+      "preparation": "Сухарът се овлажнява от нарязания домат и се завършва със зехтин и билки.",
+      "ingredients": [
+        "ечемичен сухар",
+        "домат",
+        "маслинова паста",
+        "магданоз",
+        "мащерка",
+        "зехтин"
+      ],
+      "taste": "Сочен и хрупкав едновременно, с тревист и леко солен вкус.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 14.5,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        }
+      ],
+      "image": {
+        "src": "images/food/dakos.jpg",
+        "width": 640,
+        "height": 853,
+        "alt": "Ястие „Критски дакос“ — Ечемичен сухар с домат, маслинова паста и пресни билки.",
+        "credit": "Benoît Prieur",
+        "license": "CC0",
+        "source": "https://commons.wikimedia.org/wiki/File:Plat_de_Dakos_en_Cr%C3%A8te_en_juillet_2021.jpg"
+      }
+    },
+    {
+      "id": "tzatziki",
+      "greek": "Τζατζίκι",
+      "bulgarian": "Дзадзики",
+      "category": "Разядка",
+      "description": "Студена млечна разядка; Marina публикува и чеснов компонент, а Synagrida описва цедено кисело мляко и зехтин.",
+      "preparation": "Киселото мляко се смесва с краставица, чесън и зехтин и се охлажда.",
+      "ingredients": [
+        "цедено кисело мляко",
+        "краставица",
+        "чесън",
+        "зехтин"
+      ],
+      "taste": "Хладна, кремообразна, кисело-свежа и чеснова.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 7,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        },
+        {
+          "restaurantId": "marina",
+          "restaurant": "Taverna Marina",
+          "price": 6.5,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.marina-nikiti.com/copy-of-qr"
+        }
+      ],
+      "image": {
+        "src": "images/food/tzatziki.jpg",
+        "width": 640,
+        "height": 425,
+        "alt": "Ястие „Дзадзики“ — Студена млечна разядка; Marina публикува и чеснов компонент, а Synagrida описва цедено кисело мляко и зехтин.",
+        "credit": "Nikodem Nijaki",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tzatziki_meze_or_appetizer,_also_used_as_a_sauce.jpg"
+      }
+    },
+    {
+      "id": "tirokafteri",
+      "greek": "Τυροκαυτερή",
+      "bulgarian": "Пикантна разядка с фета",
+      "category": "Разядка",
+      "description": "Разбита фета с люта чушка и зехтин.",
+      "preparation": "Сиренето се разбива до крем и се овкусява с люта чушка и зехтин.",
+      "ingredients": [
+        "фета",
+        "люта чушка",
+        "зехтин"
+      ],
+      "taste": "Солена, кремообразна и отчетливо пикантна.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 7,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        },
+        {
+          "restaurantId": "marina",
+          "restaurant": "Taverna Marina",
+          "price": 6.5,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.marina-nikiti.com/copy-of-qr"
+        }
+      ],
+      "image": {
+        "src": "images/food/tirokafteri.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Ястие „Пикантна разядка с фета“ — Разбита фета с люта чушка и зехтин.",
+        "credit": "Alexander Baxevanis",
+        "license": "CC BY 2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tirokafteri.jpg"
+      }
+    },
+    {
+      "id": "fava",
+      "greek": "Φάβα Σαντορίνης",
+      "bulgarian": "Фава от Санторини",
+      "category": "Разядка",
+      "description": "Гладко пюре от жълт грах с каперси, пресен лук и зехтин.",
+      "preparation": "Грахът се вари до разпадане и се пасира, после се гарнира.",
+      "ingredients": [
+        "жълт грах",
+        "каперси",
+        "пресен лук",
+        "зехтин"
+      ],
+      "taste": "Мека, земна и леко сладка, с пикантно-солен акцент от каперсите.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 7,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        }
+      ],
+      "image": {
+        "src": "images/food/fava.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Ястие „Фава от Санторини“ — Гладко пюре от жълт грах с каперси, пресен лук и зехтин.",
+        "credit": "Wikimedia Commons contributor",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Greek_fava.jpg"
+      }
+    },
+    {
+      "id": "dolmadakia",
+      "greek": "Ντολμαδάκια",
+      "bulgarian": "Лозови сарми",
+      "category": "Предястие",
+      "description": "Лозови листа, пълнени с ориз и средиземноморски подправки.",
+      "preparation": "Плънката се завива в лозови листа и се готви бавно до омекване.",
+      "ingredients": [
+        "лозови листа",
+        "ориз",
+        "билки",
+        "зехтин"
+      ],
+      "taste": "Меки, тревисти и леко кисели, със сочна оризова плънка.",
+      "offers": [
+        {
+          "restaurantId": "marina",
+          "restaurant": "Taverna Marina",
+          "price": 7.5,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.marina-nikiti.com/copy-of-qr"
+        }
+      ],
+      "image": {
+        "src": "images/food/dolmadakia.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Ястие „Лозови сарми“ — Лозови листа, пълнени с ориз и средиземноморски подправки.",
+        "credit": "Heidi Bauer",
+        "license": "CC BY-SA 2.5",
+        "source": "https://commons.wikimedia.org/wiki/File:Greek_dolmades.jpg"
+      }
+    },
+    {
+      "id": "gigantes",
+      "greek": "Γίγαντες στο φούρνο",
+      "bulgarian": "Едър боб на фурна",
+      "category": "Предястие",
+      "description": "Едър бял боб, изпечен в доматен сос.",
+      "preparation": "Предварително свареният боб се пече бавно със зеленчуков доматен сос.",
+      "ingredients": [
+        "едър бял боб",
+        "домат",
+        "лук",
+        "зехтин",
+        "подправки"
+      ],
+      "taste": "Плътен, мек и леко сладък от доматите.",
+      "offers": [
+        {
+          "restaurantId": "marina",
+          "restaurant": "Taverna Marina",
+          "price": 8.5,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.marina-nikiti.com/copy-of-qr"
+        }
+      ],
+      "image": {
+        "src": "images/food/gigantes.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Ястие „Едър боб на фурна“ — Едър бял боб, изпечен в доматен сос.",
+        "credit": "Hevesli",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Gigandes_plaki.jpg"
+      }
+    },
+    {
+      "id": "fried-zucchini",
+      "greek": "Κολοκυθάκια τηγανητά",
+      "bulgarian": "Пържени тиквички",
+      "category": "Предястие",
+      "description": "Тънки хрупкави тиквички с млечно-ментова или чеснова гарнитура според ресторанта.",
+      "preparation": "Резените се панират леко и се пържат до хрупкава коричка.",
+      "ingredients": [
+        "тиквички",
+        "брашно или панировка",
+        "олио",
+        "млечен сос"
+      ],
+      "taste": "Хрупкави отвън, сочни отвътре и свежи със соса.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 8,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        },
+        {
+          "restaurantId": "marina",
+          "restaurant": "Taverna Marina",
+          "price": 7.5,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.marina-nikiti.com/copy-of-qr"
+        }
+      ],
+      "image": {
+        "src": "images/food/fried-zucchini.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Ястие „Пържени тиквички“ — Тънки хрупкави тиквички с млечно-ментова или чеснова гарнитура според ресторанта.",
+        "credit": "Chris Olszewski",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Fried_Zucchini_dish.jpg"
+      }
+    },
+    {
+      "id": "anthotyro-pies",
+      "greek": "Τυροπιτάκια ανθότυρου",
+      "bulgarian": "Питки с антотиро и мед",
+      "category": "Предястие",
+      "description": "Малки сиренени питки с антотиро, мащерков мед и маково семе.",
+      "preparation": "Плънката се затваря в тесто, изпича или пържи и се завършва с мед.",
+      "ingredients": [
+        "антотиро",
+        "тесто",
+        "мащерков мед",
+        "маково семе"
+      ],
+      "taste": "Меко-солени и млечни с ароматна сладост.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 9.5,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        }
+      ],
+      "image": {
+        "src": "images/food/anthotyro-pies.jpg",
+        "width": 640,
+        "height": 769,
+        "alt": "Ястие „Питки с антотиро и мед“ — Малки сиренени питки с антотиро, мащерков мед и маково семе.",
+        "credit": "Benoît Prieur",
+        "license": "CC0",
+        "source": "https://commons.wikimedia.org/wiki/File:Restaurant_Erotokritos_(Almyrida)_-_beignets.jpg"
+      }
+    },
+    {
+      "id": "breaded-feta",
+      "greek": "Φέτα πανέ",
+      "bulgarian": "Панирана фета",
+      "category": "Сирене",
+      "description": "Фета от Халкидики в хрупкава коричка със сусам и мащерков мед.",
+      "preparation": "Сиренето се панира, изпържва до златисто и се полива с мед.",
+      "ingredients": [
+        "фета",
+        "панировка",
+        "сусам",
+        "мащерков мед"
+      ],
+      "taste": "Хрупкаво, солено и кремообразно с ясна сладка нотка.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 9.5,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        }
+      ],
+      "image": {
+        "src": "images/food/breaded-feta.jpg",
+        "width": 640,
+        "height": 853,
+        "alt": "Ястие „Панирана фета“ — Фета от Халкидики в хрупкава коричка със сусам и мащерков мед.",
+        "credit": "Kritzolina",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Feta_Saganaki.jpg"
+      }
+    },
+    {
+      "id": "smoked-mackerel",
+      "greek": "Καπνιστό σκουμπρί",
+      "bulgarian": "Пушена скумрия",
+      "category": "Риба",
+      "description": "Пушена скумрия с лук и лимоново-зехтинов дресинг.",
+      "preparation": "Предварително опушената риба се поднася студена с кисел и ароматен дресинг.",
+      "ingredients": [
+        "скумрия",
+        "лук",
+        "лимон",
+        "зехтин"
+      ],
+      "taste": "Мазна, плътна и опушена, балансирана от лимона.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 9.5,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        },
+        {
+          "restaurantId": "marina",
+          "restaurant": "Taverna Marina",
+          "price": 8,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.marina-nikiti.com/copy-of-qr"
+        }
+      ],
+      "image": {
+        "src": "images/food/smoked-mackerel.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Ястие „Пушена скумрия“ — Пушена скумрия с лук и лимоново-зехтинов дресинг.",
+        "credit": "Miyuki Meinaka",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kajika_no_Aburi,_Smoked_Mackerel_from_Kajika,_Japan.jpg"
+      }
+    },
+    {
+      "id": "marinated-anchovies",
+      "greek": "Γαύρος μαρινάτος",
+      "bulgarian": "Маринована хамсия",
+      "category": "Риба",
+      "description": "Хамсия, маринована с лимон, прясно смлян пипер и мащерка.",
+      "preparation": "Филетата се почистват и престояват в кисела марината, без топлинна обработка.",
+      "ingredients": [
+        "хамсия",
+        "лимон",
+        "пипер",
+        "мащерка"
+      ],
+      "taste": "Свежо-кисела, солена и мека.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 10,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        }
+      ],
+      "image": {
+        "src": "images/food/marinated-anchovies.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Ястие „Маринована хамсия“ — Хамсия, маринована с лимон, прясно смлян пипер и мащерка.",
+        "credit": "C messier",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%CE%93%CE%B1%CF%8D%CF%81%CE%BF%CF%82_%CE%BC%CE%B1%CF%81%CE%B9%CE%BD%CE%AC%CF%84%CE%BF%CF%82_2607.jpg"
+      }
+    },
+    {
+      "id": "grilled-sardines",
+      "greek": "Σαρδέλα ψητή",
+      "bulgarian": "Сардини на скара",
+      "category": "Риба",
+      "description": "Цели сардини на скара с ароматен зехтин и лимонов дресинг.",
+      "preparation": "Рибите се пекат кратко на силна скара и се овкусяват след изпичане.",
+      "ingredients": [
+        "сардини",
+        "зехтин",
+        "лимон",
+        "билки"
+      ],
+      "taste": "Сочни, мазни и морски, с лек опушен ръб.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 16.5,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        }
+      ],
+      "image": {
+        "src": "images/food/grilled-sardines.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Ястие „Сардини на скара“ — Цели сардини на скара с ароматен зехтин и лимонов дресинг.",
+        "credit": "E4024",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Grilled_sardines.jpg"
+      }
+    },
+    {
+      "id": "fried-anchovies",
+      "greek": "Γαύρος τηγανητός",
+      "bulgarian": "Пържена хамсия",
+      "category": "Риба",
+      "description": "Малки цели риби, пържени и поднесени с айоли и лимон.",
+      "preparation": "Рибките се набрашняват леко и се пържат бързо до хрупкавост.",
+      "ingredients": [
+        "хамсия",
+        "брашно",
+        "олио",
+        "айоли",
+        "лимон"
+      ],
+      "taste": "Хрупкава, солено-морска и сочна отвътре.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 13.5,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        }
+      ],
+      "image": {
+        "src": "images/food/fried-anchovies.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Ястие „Пържена хамсия“ — Малки цели риби, пържени и поднесени с айоли и лимон.",
+        "credit": "E4024",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Hamsi_tava_and_salad.jpg"
+      }
+    },
+    {
+      "id": "tuna-tartare",
+      "greek": "Ταρτάρ τόνου",
+      "bulgarian": "Тартар от тон",
+      "category": "Сурова риба",
+      "description": "Суров нарязан тон със соев сос, сусам и лайм.",
+      "preparation": "Добре охладената риба се нарязва на кубчета и се овкусява непосредствено преди сервиране.",
+      "ingredients": [
+        "тон",
+        "соев сос",
+        "сусам",
+        "лайм"
+      ],
+      "taste": "Мека, плътна и умами, с цитрусова свежест.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 26,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        }
+      ],
+      "image": {
+        "src": "images/food/tuna-tartare.jpg",
+        "width": 640,
+        "height": 425,
+        "alt": "Ястие „Тартар от тон“ — Суров нарязан тон със соев сос, сусам и лайм.",
+        "credit": "Sarah Ackerman from New York, USA",
+        "license": "CC BY 2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tuna_Tartare_(3897330416).jpg"
+      }
+    },
+    {
+      "id": "fish-fricassee",
+      "greek": "Ψάρι ημέρας φρικασέ",
+      "bulgarian": "Дневна риба фрикасе",
+      "category": "Риба",
+      "description": "Риба на деня с диви зелени листа, резене и сос авголемоно.",
+      "preparation": "Рибата се готви нежно със зелените листа и се завършва с яйчено-лимонов сос.",
+      "ingredients": [
+        "риба на деня",
+        "диви зелени листа",
+        "резене",
+        "яйце",
+        "лимон"
+      ],
+      "taste": "Деликатна, тревиста и кремообразно-кисела.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 28,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        }
+      ],
+      "image": {
+        "src": "images/food/fish-fricassee.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Ястие „Дневна риба фрикасе“ — Риба на деня с диви зелени листа, резене и сос авголемоно.",
+        "credit": "Tangopaso",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Fricass%C3%A9e_de_poissons_(Brasserie_Mollard).jpg"
+      }
+    },
+    {
+      "id": "grilled-octopus",
+      "greek": "Χταπόδι ψητό",
+      "bulgarian": "Октопод на скара",
+      "category": "Морски дарове",
+      "description": "Октопод на скара с фава от Санторини и карамелизиран лук.",
+      "preparation": "Октоподът се омекотява предварително и се запича на силна скара.",
+      "ingredients": [
+        "октопод",
+        "фава",
+        "лук",
+        "зехтин"
+      ],
+      "taste": "Месест и леко опушен, с кремообразна и сладка гарнитура.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 20,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        }
+      ],
+      "image": {
+        "src": "images/food/grilled-octopus.jpg",
+        "width": 640,
+        "height": 853,
+        "alt": "Ястие „Октопод на скара“ — Октопод на скара с фава от Санторини и карамелизиран лук.",
+        "credit": "Baoothersks",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Grilled_octopus_with_chilly_salt.jpg"
+      }
+    },
+    {
+      "id": "shrimp-saganaki",
+      "greek": "Γαρίδες σαγανάκι",
+      "bulgarian": "Скариди саганаки",
+      "category": "Морски дарове",
+      "description": "Скариди в доматен сос с фета, биск от скариди и босилек.",
+      "preparation": "Скаридите се доготвят кратко в горещ доматен сос и се завършват със сирене.",
+      "ingredients": [
+        "скариди",
+        "домат",
+        "фета",
+        "босилек"
+      ],
+      "taste": "Сочно, доматено, солено и леко сладко.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 21,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        }
+      ],
+      "image": {
+        "src": "images/food/shrimp-saganaki.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Ястие „Скариди саганаки“ — Скариди в доматен сос с фета, биск от скариди и босилек.",
+        "credit": "C messier",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%CE%93%CE%B1%CF%81%CE%AF%CE%B4%CE%B5%CF%82_%CF%83%CE%B1%CE%B3%CE%B1%CE%BD%CE%AC%CE%BA%CE%B9_IMG_20230425_212334.jpg"
+      }
+    },
+    {
+      "id": "seafood-orzotto",
+      "greek": "Κριθαρότο θαλασσινών",
+      "bulgarian": "Орзото с морски дарове",
+      "category": "Паста",
+      "description": "Орзо със скариди, миди, октопод и калмари в доматено-билков сос.",
+      "preparation": "Орзото се готви като ризото в концентриран сос с морски дарове.",
+      "ingredients": [
+        "орзо",
+        "скариди",
+        "миди",
+        "октопод",
+        "калмари",
+        "домат"
+      ],
+      "taste": "Кремообразно, плътно и силно морско.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 21.5,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        }
+      ],
+      "image": {
+        "src": "images/food/seafood-orzotto.jpg",
+        "width": 640,
+        "height": 428,
+        "alt": "Ястие „Орзото с морски дарове“ — Орзо със скариди, миди, октопод и калмари в доматено-билков сос.",
+        "credit": "Alpha",
+        "license": "CC BY-SA 2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Thalassino_Youvetsi_close-up_-_Hellenic_Republic_AUD24.jpg"
+      }
+    },
+    {
+      "id": "shrimp-pasta",
+      "greek": "Γαριδομακαρονάδα",
+      "bulgarian": "Паста със скариди",
+      "category": "Паста",
+      "description": "Паста със скариди и доматен сос; Synagrida добавя бисque и масло от омар.",
+      "preparation": "Пастата се довършва в соса, а скаридите се готвят кратко, за да останат сочни.",
+      "ingredients": [
+        "паста",
+        "скариди",
+        "домат",
+        "пипер",
+        "масло"
+      ],
+      "taste": "Сочно, сладко-морско и доматено.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 22,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        },
+        {
+          "restaurantId": "marina",
+          "restaurant": "Taverna Marina",
+          "price": 24,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.marina-nikiti.com/copy-of-qr"
+        }
+      ],
+      "image": {
+        "src": "images/food/shrimp-pasta.jpg",
+        "width": 640,
+        "height": 500,
+        "alt": "Ястие „Паста със скариди“ — Паста със скариди и доматен сос; Synagrida добавя бисque и масло от омар.",
+        "credit": "FranHogan",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Shrimp_pasta.jpg"
+      }
+    },
+    {
+      "id": "moussaka",
+      "greek": "Μουσακάς",
+      "bulgarian": "Мусака",
+      "category": "Традиционно",
+      "description": "Пластове патладжан, картоф, месен сос и бешамел.",
+      "preparation": "Компонентите се приготвят отделно, подреждат се на пластове и се запичат.",
+      "ingredients": [
+        "патладжан",
+        "картоф",
+        "кайма",
+        "домат",
+        "бешамел"
+      ],
+      "taste": "Богата, мека и кремообразна, със запечена коричка.",
+      "offers": [
+        {
+          "restaurantId": "marina",
+          "restaurant": "Taverna Marina",
+          "price": 13,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.marina-nikiti.com/copy-of-qr"
+        }
+      ],
+      "image": {
+        "src": "images/moussaka.jpg",
+        "alt": "Порция гръцка мусака с патладжан, картофи и салата",
+        "credit": "Michael Wittwer / Wikimedia Commons",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Moussaka_2022.jpg"
+      }
+    },
+    {
+      "id": "gemista",
+      "greek": "Γεμιστά",
+      "bulgarian": "Пълнени домати и чушки",
+      "category": "Традиционно",
+      "description": "Печени домати и чушки с оризова и билкова плънка.",
+      "preparation": "Зеленчуците се издълбават, пълнят и се пекат бавно.",
+      "ingredients": [
+        "домати",
+        "чушки",
+        "ориз",
+        "лук",
+        "билки",
+        "зехтин"
+      ],
+      "taste": "Сладко-зеленчуково, сочно и ароматно.",
+      "offers": [
+        {
+          "restaurantId": "marina",
+          "restaurant": "Taverna Marina",
+          "price": 10,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.marina-nikiti.com/copy-of-qr"
+        }
+      ],
+      "image": {
+        "src": "images/food/gemista.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Ястие „Пълнени домати и чушки“ — Печени домати и чушки с оризова и билкова плънка.",
+        "credit": "Badseed",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Gemista.jpg"
+      }
+    },
+    {
+      "id": "fish-soup",
+      "greek": "Ψαρόσουπα",
+      "bulgarian": "Рибена супа",
+      "category": "Супа",
+      "description": "Топла супа на основата на риба; точният дневен състав не е публикуван.",
+      "preparation": "Рибата и зеленчуците се варят, а бульонът се прецежда и овкусява.",
+      "ingredients": [
+        "риба",
+        "зеленчуци",
+        "вода или бульон",
+        "подправки"
+      ],
+      "taste": "Лека до плътна, солено-морска и затопляща; варира по улов.",
+      "offers": [
+        {
+          "restaurantId": "marina",
+          "restaurant": "Taverna Marina",
+          "price": 7,
+          "priceNote": "малка; голяма 12 €",
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.marina-nikiti.com/copy-of-qr"
+        }
+      ],
+      "image": {
+        "src": "images/food/fish-soup.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Ястие „Рибена супа“ — Топла супа на основата на риба; точният дневен състав не е публикуван.",
+        "credit": "Gerda Arendt",
+        "license": "CC0",
+        "source": "https://commons.wikimedia.org/wiki/File:Fish_soup,_Ibiza.jpg"
+      }
+    },
+    {
+      "id": "pork-souvlaki",
+      "greek": "Χοιρινό σουβλάκι",
+      "bulgarian": "Свинско сувлаки",
+      "category": "Месо",
+      "description": "Шиш от свинско филе с питка, пържени картофи и дзадзики.",
+      "preparation": "Кубчетата месо се нанизват и пекат на силна скара.",
+      "ingredients": [
+        "свинско филе",
+        "питка",
+        "картофи",
+        "дзадзики"
+      ],
+      "taste": "Сочно и опушено, с хрупкава и свежо-млечна гарнитура.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 18.5,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        }
+      ],
+      "image": {
+        "src": "images/food/pork-souvlaki.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Ястие „Свинско сувлаки“ — Шиш от свинско филе с питка, пържени картофи и дзадзики.",
+        "credit": "EntaXoyas",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%CE%95%CE%BB%CE%BB%CE%B7%CE%BD%CE%B9%CE%BA%CF%8C_%CE%A3%CE%BF%CF%85%CE%B2%CE%BB%CE%AC%CE%BA%CE%B9_-_panoramio.jpg"
+      }
+    },
+    {
+      "id": "galaktoboureko",
+      "greek": "Γαλακτομπούρεκο",
+      "bulgarian": "Галактобуреко",
+      "category": "Десерт",
+      "description": "Сиропиран десерт от фини кори и млечен крем; в Synagrida е с шамфъстък и ванилов сладолед.",
+      "preparation": "Млечният крем се затваря между кори, изпича се и се сиропира.",
+      "ingredients": [
+        "кори",
+        "мляко",
+        "грис",
+        "захарен сироп",
+        "шамфъстък"
+      ],
+      "taste": "Хрупкаво-кремообразно, сладко и ванилово.",
+      "offers": [
+        {
+          "restaurantId": "synagrida",
+          "restaurant": "Synagrida",
+          "price": 14.5,
+          "currency": "EUR",
+          "verified": "2026-08-21",
+          "source": "https://www.synagrida.gr/food-menu/"
+        }
+      ],
+      "image": {
+        "src": "images/food/galaktoboureko.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Ястие „Галактобуреко“ — Сиропиран десерт от фини кори и млечен крем; в Synagrida е с шамфъстък и ванилов сладолед.",
+        "credit": "Badseed",
+        "license": "CC BY 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Galaktoboureko.jpg"
+      }
+    }
+  ],
+  "restaurants": [
+    {
+      "id": "marina",
+      "name": "Taverna Marina",
+      "type": "Ресторант-таверна",
+      "cuisines": [
+        "гръцка",
+        "средиземноморска",
+        "риба",
+        "месо"
+      ],
+      "description": "Пълно меню с традиционни ястия, риба, месо и паста; публикувано е и на български.",
+      "address": "Marina Hotel, Никити 63088",
+      "latitude": 40.2175654,
+      "longitude": 23.6645793,
+      "phone": "+30 23750 22123",
+      "official": "https://www.marina-nikiti.com/copy-of-english",
+      "google": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.google.com/maps/search/?api=1&query=Taverna+Marina+Nikiti"
+      },
+      "tripadvisor": null,
+      "priceLevel": "€€",
+      "busy": "Няма достатъчно данни",
+      "dishes": [
+        "tzatziki",
+        "tirokafteri",
+        "dolmadakia",
+        "gigantes",
+        "fried-zucchini",
+        "smoked-mackerel",
+        "moussaka",
+        "gemista",
+        "fish-soup",
+        "shrimp-pasta"
+      ],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.marina-nikiti.com/copy-of-english",
+        "https://www.openstreetmap.org/node/484898210"
+      ],
+      "image": {
+        "src": "images/nikiti-taverna.jpg",
+        "width": 1280,
+        "height": 960,
+        "alt": "Контекстова сцена от Никити към записа „Taverna Marina“; изображението не показва конкретното заведение.",
+        "credit": "Rosa-Maria Rinkl",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Taverne_in_Nikiti.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    },
+    {
+      "id": "nel-fuoco",
+      "name": "Nel fuoco",
+      "type": "Ресторант-пицария",
+      "cuisines": [
+        "италианска"
+      ],
+      "description": "Ресторант в крайбрежната зона, отбелязан като италианска кухня в OpenStreetMap.",
+      "address": "Крайбрежна зона, Никити 63088",
+      "latitude": 40.2161776,
+      "longitude": 23.6667682,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.google.com/maps/search/?api=1&query=Nel+fuoco+Nikiti"
+      },
+      "tripadvisor": null,
+      "priceLevel": "Няма достатъчно данни",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/1886177291"
+      ],
+      "image": {
+        "src": "images/places/restaurant-harbour-01.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Контекстова сцена от Никити към записа „Nel fuoco“; изображението не показва конкретното заведение.",
+        "credit": "Kritzolina",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_harbour_01.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    },
+    {
+      "id": "gyromania",
+      "name": "Gyromania",
+      "type": "Грил с пълно меню",
+      "cuisines": [
+        "гръцка",
+        "грил"
+      ],
+      "description": "Гирос, сувлаки и грил в достъпен неформален формат.",
+      "address": "Никити 63088",
+      "latitude": 40.2157123,
+      "longitude": 23.6674143,
+      "phone": null,
+      "official": "https://gyromanianikiti1988.business.site/",
+      "google": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.google.com/maps/search/?api=1&query=Gyromania+Nikiti"
+      },
+      "tripadvisor": null,
+      "priceLevel": "€",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://visitsithonia.com/lifestyle/food-drink/restaurants/top-10-restaurants-taverns-in-nikiti/",
+        "https://www.openstreetmap.org/node/2360629377"
+      ],
+      "image": {
+        "src": "images/places/restaurant-ergon-13.jpg",
+        "width": 640,
+        "height": 453,
+        "alt": "Контекстова сцена от Никити към записа „Gyromania“; изображението не показва конкретното заведение.",
+        "credit": "KaiKemmann",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_13.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    },
+    {
+      "id": "antigoni",
+      "name": "Antigoni Taverne",
+      "type": "Таверна",
+      "cuisines": [
+        "гръцка",
+        "риба",
+        "морски дарове"
+      ],
+      "description": "Крайбрежна таверна с традиционни ястия и риба от местни рибари.",
+      "address": "Neakitou, Никити 63088",
+      "latitude": 40.2166334,
+      "longitude": 23.6656451,
+      "phone": "+30 23750 22660",
+      "official": "https://antigoni-restaurant.gr/",
+      "google": {
+        "rating": 4.2,
+        "reviews": 1007,
+        "url": "https://www.google.com/maps/search/?api=1&query=Antigoni+Taverne+Nikiti",
+        "verified": "2026-08-21"
+      },
+      "tripadvisor": {
+        "rating": 3.9,
+        "reviews": 154,
+        "url": "https://www.tripadvisor.com/Search?q=Antigoni%20Taverne%20Nikiti",
+        "verified": "2026-08-21"
+      },
+      "priceLevel": "€€",
+      "busy": "Вечер е възможно натоварване; ориентировъчно, без надеждна почасова серия",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://sithonia.discoverhalkidiki.com/?p=23112&post_type=estiatorio",
+        "https://www.openstreetmap.org/node/4743860622",
+        "https://wanderlog.com/place/details/1226598"
+      ],
+      "image": {
+        "src": "images/places/restaurant-harbour-03.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Контекстова сцена от Никити към записа „Antigoni Taverne“; изображението не показва конкретното заведение.",
+        "credit": "Kritzolina",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_harbour_03.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    },
+    {
+      "id": "three-steps",
+      "name": "3 steps",
+      "type": "Ресторант",
+      "cuisines": [
+        "Няма достатъчно данни"
+      ],
+      "description": "Ресторант в пристанищната зона, идентифициран в OpenStreetMap.",
+      "address": "Пристанищна зона, Никити 63088",
+      "latitude": 40.2172599,
+      "longitude": 23.6657587,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.google.com/maps/search/?api=1&query=3+steps+Nikiti"
+      },
+      "tripadvisor": null,
+      "priceLevel": "Няма достатъчно данни",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/5022144413"
+      ],
+      "image": {
+        "src": "images/places/restaurant-ergon-17.jpg",
+        "width": 640,
+        "height": 457,
+        "alt": "Контекстова сцена от Никити към записа „3 steps“; изображението не показва конкретното заведение.",
+        "credit": "KaiKemmann",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_17.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    },
+    {
+      "id": "akrogiali",
+      "name": "Akrogiali 2",
+      "type": "Ресторант",
+      "cuisines": [
+        "гръцка",
+        "средиземноморска"
+      ],
+      "description": "Крайбрежен ресторант с пълно хранене; менюто не е заснето локално.",
+      "address": "Пристанищна зона, Никити 63088",
+      "latitude": 40.2169772,
+      "longitude": 23.6656139,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.google.com/maps/search/?api=1&query=Akrogiali+2+Nikiti"
+      },
+      "tripadvisor": null,
+      "priceLevel": "€€",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/5022144414"
+      ],
+      "image": {
+        "src": "images/nikiti-taverna.jpg",
+        "width": 1280,
+        "height": 960,
+        "alt": "Контекстова сцена от Никити към записа „Akrogiali 2“; изображението не показва конкретното заведение.",
+        "credit": "Rosa-Maria Rinkl",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Taverne_in_Nikiti.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    },
+    {
+      "id": "pizza-di-porto",
+      "name": "Pizza di Porto",
+      "type": "Пицария-ресторант",
+      "cuisines": [
+        "италианска",
+        "пица"
+      ],
+      "description": "Пицария в пристанищната зона с формат за пълно хранене.",
+      "address": "Пристанищна зона, Никити 63088",
+      "latitude": 40.2173541,
+      "longitude": 23.6663917,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.google.com/maps/search/?api=1&query=Pizza+di+Porto+Nikiti"
+      },
+      "tripadvisor": null,
+      "priceLevel": "€€",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/5022144415"
+      ],
+      "image": {
+        "src": "images/places/restaurant-harbour-01.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Контекстова сцена от Никити към записа „Pizza di Porto“; изображението не показва конкретното заведение.",
+        "credit": "Kritzolina",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_harbour_01.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    },
+    {
+      "id": "to-spitaki",
+      "name": "Το σπιτάκι",
+      "type": "Ресторант",
+      "cuisines": [
+        "Няма достатъчно данни"
+      ],
+      "description": "Ресторант до пристанището, идентифициран в OpenStreetMap.",
+      "address": "Пристанищна зона, Никити 63088",
+      "latitude": 40.2165144,
+      "longitude": 23.6662362,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.google.com/maps/search/?api=1&query=To+Spitaki+Nikiti"
+      },
+      "tripadvisor": null,
+      "priceLevel": "Няма достатъчно данни",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/5022144416"
+      ],
+      "image": {
+        "src": "images/places/restaurant-ergon-13.jpg",
+        "width": 640,
+        "height": 453,
+        "alt": "Контекстова сцена от Никити към записа „Το σπιτάκι“; изображението не показва конкретното заведение.",
+        "credit": "KaiKemmann",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_13.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    },
+    {
+      "id": "alexandros",
+      "name": "Alexandros",
+      "type": "Кафе-ресторант-бар",
+      "cuisines": [
+        "италианска",
+        "гръцка",
+        "пица",
+        "морски дарове"
+      ],
+      "description": "Крайбрежен ресторант с пица, гръцки ястия и морска кухня.",
+      "address": "Аιγιαλού, Никити 63088",
+      "latitude": 40.2152527,
+      "longitude": 23.6678991,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.google.com/maps/search/?api=1&query=Alexandros+Cafe+Restaurant+Bar+Nikiti"
+      },
+      "tripadvisor": null,
+      "priceLevel": "€€",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://visitsithonia.com/locations/nikiti/",
+        "https://www.openstreetmap.org/node/5022144419"
+      ],
+      "image": {
+        "src": "images/places/restaurant-harbour-03.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Контекстова сцена от Никити към записа „Alexandros“; изображението не показва конкретното заведение.",
+        "credit": "Kritzolina",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_harbour_03.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    },
+    {
+      "id": "arsanas",
+      "name": "Arsanas",
+      "type": "Таверна-ресторант",
+      "cuisines": [
+        "гръцка",
+        "средиземноморска",
+        "риба",
+        "морски дарове"
+      ],
+      "description": "Крайбрежна таверна с местни продукти, риба и морски дарове.",
+      "address": "Egialou, Никити 63088",
+      "latitude": 40.2142654,
+      "longitude": 23.668854,
+      "phone": "+30 23750 23787",
+      "official": "https://www.arsanas.gr/",
+      "google": {
+        "rating": 4.3,
+        "reviews": 3463,
+        "url": "https://www.google.com/maps/search/?api=1&query=Arsanas+Nikiti",
+        "verified": "2026-08-21"
+      },
+      "tripadvisor": {
+        "rating": 4,
+        "reviews": 744,
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g668422-d4475093-Reviews-Arsanas-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html",
+        "verified": "2026-08-21"
+      },
+      "priceLevel": "€€–€€€",
+      "busy": "Няма надеждна публична почасова серия; резервация е препоръчана от туристическия източник",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://visitsithonia.com/lifestyle/food-drink/restaurants/arsanas-tavern-nikiti/",
+        "https://www.openstreetmap.org/node/5022144420",
+        "https://restaurantguru.com/Arsanas-Nikiti"
+      ],
+      "image": {
+        "src": "images/places/restaurant-ergon-17.jpg",
+        "width": 640,
+        "height": 457,
+        "alt": "Контекстова сцена от Никити към записа „Arsanas“; изображението не показва конкретното заведение.",
+        "credit": "KaiKemmann",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_17.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    },
+    {
+      "id": "almira",
+      "name": "Almira / Iskios",
+      "type": "Ресторант",
+      "cuisines": [
+        "Няма достатъчно данни"
+      ],
+      "description": "Крайбрежен ресторант с външни места; публичните източници използват две имена.",
+      "address": "Аιγιαλού, Никити 63088",
+      "latitude": 40.2131241,
+      "longitude": 23.6701676,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.google.com/maps/search/?api=1&query=Almira+Iskios+Nikiti"
+      },
+      "tripadvisor": null,
+      "priceLevel": "Няма достатъчно данни",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/6718689254"
+      ],
+      "image": {
+        "src": "images/nikiti-taverna.jpg",
+        "width": 1280,
+        "height": 960,
+        "alt": "Контекстова сцена от Никити към записа „Almira / Iskios“; изображението не показва конкретното заведение.",
+        "credit": "Rosa-Maria Rinkl",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Taverne_in_Nikiti.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    },
+    {
+      "id": "allegreco",
+      "name": "Allegreco",
+      "type": "Ресторант",
+      "cuisines": [
+        "Няма достатъчно данни"
+      ],
+      "description": "Крайбрежен ресторант, идентифициран в OpenStreetMap.",
+      "address": "Аιγιαλού, Никити 63088",
+      "latitude": 40.2133732,
+      "longitude": 23.6696509,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.google.com/maps/search/?api=1&query=Allegreco+Nikiti"
+      },
+      "tripadvisor": null,
+      "priceLevel": "Няма достатъчно данни",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/6720445480"
+      ],
+      "image": {
+        "src": "images/places/restaurant-harbour-01.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Контекстова сцена от Никити към записа „Allegreco“; изображението не показва конкретното заведение.",
+        "credit": "Kritzolina",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_harbour_01.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    },
+    {
+      "id": "avra",
+      "name": "AVRA Beach Bar Restaurant",
+      "type": "Бар-ресторант",
+      "cuisines": [
+        "италианска",
+        "средиземноморска",
+        "пица",
+        "грил"
+      ],
+      "description": "Крайбрежен бар-ресторант с пици, паста и месо на скара.",
+      "address": "Плаж Никити, 63088",
+      "latitude": 40.2110179,
+      "longitude": 23.6733167,
+      "phone": "+30 23750 23554",
+      "official": "https://www.avra-restaurant.gr/",
+      "google": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.google.com/maps/search/?api=1&query=AVRA+Restaurant+Nikiti"
+      },
+      "tripadvisor": null,
+      "priceLevel": "€€",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.avra-restaurant.gr/",
+        "https://www.openstreetmap.org/node/6720523787"
+      ],
+      "image": {
+        "src": "images/places/restaurant-ergon-13.jpg",
+        "width": 640,
+        "height": 453,
+        "alt": "Контекстова сцена от Никити към записа „AVRA Beach Bar Restaurant“; изображението не показва конкретното заведение.",
+        "credit": "KaiKemmann",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_13.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    },
+    {
+      "id": "kazanis",
+      "name": "Kazanis",
+      "type": "Ресторант-таверна",
+      "cuisines": [
+        "гръцка",
+        "риба",
+        "морски дарове",
+        "месо"
+      ],
+      "description": "Крайбрежна гръцка таверна с риба, месо и мезета.",
+      "address": "Paralia Nikitis, Никити 63088",
+      "latitude": 40.2112233,
+      "longitude": 23.6730146,
+      "phone": "+30 23750 23333",
+      "official": null,
+      "google": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.google.com/maps/search/?api=1&query=Kazanis+Restaurant+Nikiti"
+      },
+      "tripadvisor": null,
+      "priceLevel": "€€",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.xo.gr/profile/profile-906843203/el/",
+        "https://www.openstreetmap.org/node/6720523788"
+      ],
+      "image": {
+        "src": "images/places/restaurant-harbour-03.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Контекстова сцена от Никити към записа „Kazanis“; изображението не показва конкретното заведение.",
+        "credit": "Kritzolina",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_harbour_03.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    },
+    {
+      "id": "crispy",
+      "name": "Crispy — pizza brunch coffee",
+      "type": "Пицария-ресторант",
+      "cuisines": [
+        "пица",
+        "брънч"
+      ],
+      "description": "Неформално заведение за пица и брънч, отбелязано като ресторант в OpenStreetMap.",
+      "address": "Никити 63088",
+      "latitude": 40.2180983,
+      "longitude": 23.6664483,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.google.com/maps/search/?api=1&query=Crispy+Nikiti+Greece"
+      },
+      "tripadvisor": null,
+      "priceLevel": "€",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/7985910452"
+      ],
+      "image": {
+        "src": "images/places/restaurant-ergon-17.jpg",
+        "width": 640,
+        "height": 457,
+        "alt": "Контекстова сцена от Никити към записа „Crispy — pizza brunch coffee“; изображението не показва конкретното заведение.",
+        "credit": "KaiKemmann",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_17.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    },
+    {
+      "id": "the-kitchen",
+      "name": "The Kitchen",
+      "type": "Ресторант",
+      "cuisines": [
+        "гръцка"
+      ],
+      "description": "Ресторант в централната част на Никити, означен като гръцка кухня.",
+      "address": "Център, Никити 63088",
+      "latitude": 40.2219317,
+      "longitude": 23.6696595,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.google.com/maps/search/?api=1&query=The+Kitchen+Nikiti"
+      },
+      "tripadvisor": null,
+      "priceLevel": "Няма достатъчно данни",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/10923657287"
+      ],
+      "image": {
+        "src": "images/nikiti-taverna.jpg",
+        "width": 1280,
+        "height": 960,
+        "alt": "Контекстова сцена от Никити към записа „The Kitchen“; изображението не показва конкретното заведение.",
+        "credit": "Rosa-Maria Rinkl",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Taverne_in_Nikiti.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    },
+    {
+      "id": "apovrado",
+      "name": "Απόβραδο",
+      "type": "Таверна-ресторант",
+      "cuisines": [
+        "гръцка",
+        "средиземноморска"
+      ],
+      "description": "Таверна в централната част на Никити.",
+      "address": "Център, Никити 63088",
+      "latitude": 40.221543,
+      "longitude": 23.6680164,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.google.com/maps/search/?api=1&query=Apovrado+Nikiti"
+      },
+      "tripadvisor": null,
+      "priceLevel": "€€",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/10923790647"
+      ],
+      "image": {
+        "src": "images/places/restaurant-harbour-01.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Контекстова сцена от Никити към записа „Απόβραδο“; изображението не показва конкретното заведение.",
+        "credit": "Kritzolina",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_harbour_01.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    },
+    {
+      "id": "limeri",
+      "name": "Limeri",
+      "type": "Ресторант",
+      "cuisines": [
+        "Няма достатъчно данни"
+      ],
+      "description": "Ресторант в централната част на Никити, идентифициран в OpenStreetMap.",
+      "address": "Център, Никити 63088",
+      "latitude": 40.2211422,
+      "longitude": 23.6677921,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.google.com/maps/search/?api=1&query=Limeri+Nikiti"
+      },
+      "tripadvisor": null,
+      "priceLevel": "Няма достатъчно данни",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/10923790648"
+      ],
+      "image": {
+        "src": "images/places/restaurant-ergon-13.jpg",
+        "width": 640,
+        "height": 453,
+        "alt": "Контекстова сцена от Никити към записа „Limeri“; изображението не показва конкретното заведение.",
+        "credit": "KaiKemmann",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_13.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    },
+    {
+      "id": "karma",
+      "name": "Κάρμα",
+      "type": "Ресторант",
+      "cuisines": [
+        "Няма достатъчно данни"
+      ],
+      "description": "Ресторант в пристанищната зона, идентифициран в OpenStreetMap.",
+      "address": "Пристанищна зона, Никити 63088",
+      "latitude": 40.2163503,
+      "longitude": 23.6663504,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.google.com/maps/search/?api=1&query=Karma+Restaurant+Nikiti"
+      },
+      "tripadvisor": null,
+      "priceLevel": "Няма достатъчно данни",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/10923846268"
+      ],
+      "image": {
+        "src": "images/places/restaurant-harbour-03.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Контекстова сцена от Никити към записа „Κάρμα“; изображението не показва конкретното заведение.",
+        "credit": "Kritzolina",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_harbour_03.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    },
+    {
+      "id": "sonia",
+      "name": "Taverna Sonia",
+      "type": "Таверна",
+      "cuisines": [
+        "гръцка",
+        "средиземноморска",
+        "риба",
+        "морски дарове"
+      ],
+      "description": "Традиционна таверна в северозападната част на Никити с пълно меню.",
+      "address": "Neon Moudanion–Sithonias, Никити 63088",
+      "latitude": 40.2296822,
+      "longitude": 23.6300895,
+      "phone": "+30 23750 22496",
+      "official": null,
+      "google": {
+        "rating": 4.6,
+        "reviews": 1451,
+        "url": "https://www.google.com/maps/search/?api=1&query=Taverna+Sonia+Nikiti",
+        "verified": "2026-08-21"
+      },
+      "tripadvisor": {
+        "rating": 4.6,
+        "reviews": 462,
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g668422-d4739297-Reviews-Taverna_Sonia-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html",
+        "verified": "2026-08-21"
+      },
+      "priceLevel": "€€–€€€",
+      "busy": "Вероятно натоварено вечер; посетителски отзиви препоръчват ранно посещение или резервация",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.tripadvisor.com/Restaurant_Review-g668422-d4739297-Reviews-Taverna_Sonia-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html",
+        "https://restaurantguru.com/TAVERNA-SONIA-Greece",
+        "https://www.openstreetmap.org/way/608392343"
+      ],
+      "image": {
+        "src": "images/places/restaurant-ergon-17.jpg",
+        "width": 640,
+        "height": 457,
+        "alt": "Контекстова сцена от Никити към записа „Taverna Sonia“; изображението не показва конкретното заведение.",
+        "credit": "KaiKemmann",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_17.jpg",
+        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      }
+    }
+  ],
+  "fish": [
+    {
+      "id": "tsipoura",
+      "greek": "Τσιπούρα",
+      "pronunciation": "ципу̀ра",
+      "bulgarian": "ципура",
+      "scientific": "Sparus aurata",
+      "description": "Сребриста ципура със златна ивица между очите.",
+      "size": "Обичайно 20–35 cm; може да надхвърли 50 cm.",
+      "preparation": "Цяла на скара или фурна.",
+      "taste": "Стегнато, сочно и умерено мазно бяло месо.",
+      "bones": "Отделете главата, повдигнете горното филе по гръбнака, извадете гръбнака и проверете ребрените кости.",
+      "eating": "Започнете от горното филе; бузите са ядливи.",
+      "pairing": "Сухо бяло вино, узо или светла бира.",
+      "image": {
+        "src": "images/tsipoura.jpg",
+        "alt": "Фактологична снимка на ципура Sparus aurata",
+        "credit": "Luis Miguel Bugallo Sánchez / Wikimedia Commons",
+        "license": "CC BY-SA 2.5 ES",
+        "source": "https://commons.wikimedia.org/wiki/File:Sparus_aurata.Dourada.jpg"
+      }
+    },
+    {
+      "id": "lavraki",
+      "greek": "Λαβράκι",
+      "pronunciation": "лавра̀ки",
+      "bulgarian": "лаврак",
+      "scientific": "Dicentrarchus labrax",
+      "description": "Удължена сребриста риба с две отделни гръбни перки.",
+      "size": "Често 25–50 cm; по-едри екземпляри съществуват.",
+      "preparation": "На скара, в солена кора или фурна.",
+      "taste": "Деликатно, влажно и сравнително постно месо.",
+      "bones": "Отворете по гръбнака, свалете филето, отстранете гръбнака и опипайте централната линия.",
+      "eating": "Подходящ за отделяне на големи цели филета.",
+      "pairing": "Совиньон блан, асиртико или лека бира.",
+      "image": {
+        "src": "images/fish/lavraki.jpg",
+        "width": 640,
+        "height": 425,
+        "alt": "Фактологично изображение на Dicentrarchus labrax (лаврак)",
+        "credit": "Miguel Mendez from Malahide, Ireland",
+        "license": "CC BY 2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Sealife,_Bray,_Ireland._(6985874908).jpg"
+      }
+    },
+    {
+      "id": "sardela",
+      "greek": "Σαρδέλα",
+      "pronunciation": "сардѐла",
+      "bulgarian": "сардина",
+      "scientific": "Sardina pilchardus",
+      "description": "Малка сребриста пасажна риба с по-тъмносин гръб.",
+      "size": "Обичайно 12–20 cm.",
+      "preparation": "На скара, пържена или маринована.",
+      "taste": "Мазна, сочна и изразено морска.",
+      "bones": "При малките екземпляри отделете главата и изтеглете гръбнака; фините кости често омекват при готвене.",
+      "eating": "Яде се цяла или разтворена като пеперуда.",
+      "pairing": "Узо, ципуро, сухо розе.",
+      "image": {
+        "src": "images/fish/sardela.jpg",
+        "width": 640,
+        "height": 405,
+        "alt": "Фактологично изображение на Sardina pilchardus (сардина)",
+        "credit": "© Citron",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Sardina_pilchardus_2011.jpg"
+      }
+    },
+    {
+      "id": "gavros",
+      "greek": "Γαύρος",
+      "pronunciation": "га̀врос",
+      "bulgarian": "хамсия",
+      "scientific": "Engraulis encrasicolus",
+      "description": "Много малка сребриста риба с голяма уста и изпъкнала долна челюст.",
+      "size": "Обичайно 9–15 cm.",
+      "preparation": "Пържена или маринована.",
+      "taste": "Солено-морска, мазна и мека.",
+      "bones": "Отчупете главата и издърпайте вътрешностите и гръбнака; при пържене фините кости често се ядат.",
+      "eating": "Малките пържени риби се ядат цели; при мариновани — на филета.",
+      "pairing": "Узо, ципуро или кисело бяло вино.",
+      "image": {
+        "src": "images/fish/gavros.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Фактологично изображение на Engraulis encrasicolus (хамсия)",
+        "credit": "Jschop",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Ansjovis.jpg"
+      }
+    },
+    {
+      "id": "barbouni",
+      "greek": "Μπαρμπούνι",
+      "pronunciation": "барбу̀ни",
+      "bulgarian": "барбуня / червен барбун",
+      "scientific": "Mullus barbatus",
+      "description": "Червеникава риба с две чувствителни мустачета под брадичката.",
+      "size": "Често 12–25 cm.",
+      "preparation": "Леко набрашнена и пържена; по-едрата и на скара.",
+      "taste": "Сладко, богато и нежно месо.",
+      "bones": "Свалете горното месо, вдигнете гръбнака от опашката към главата и проверете фините ребрени кости.",
+      "eating": "Малките се ядат внимателно около централния скелет.",
+      "pairing": "Сухо розе, асиртико или узо.",
+      "image": {
+        "src": "images/fish/barbouni.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Фактологично изображение на Mullus barbatus (барбуня / червен барбун)",
+        "credit": "Roberto Pillon",
+        "license": "CC BY 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Mullus_barbatus_Paros_2.JPG"
+      }
+    },
+    {
+      "id": "koutsomoura",
+      "greek": "Κουτσομούρα",
+      "pronunciation": "куцому̀ра",
+      "bulgarian": "ивичест барбун",
+      "scientific": "Mullus surmuletus",
+      "description": "Червеникава риба с надлъжни линии и мустачета под брадичката.",
+      "size": "Често 15–30 cm.",
+      "preparation": "Пържена или печена цяла.",
+      "taste": "Нежно, леко сладко и ароматно месо.",
+      "bones": "Следвайте централния гръбнак и отделяйте месото на малки порции.",
+      "eating": "Внимавайте за фини ребрени кости.",
+      "pairing": "Розе, узо или леко бяло вино.",
+      "image": {
+        "src": "images/fish/koutsomoura.jpg",
+        "width": 640,
+        "height": 360,
+        "alt": "Фактологично изображение на Mullus surmuletus (ивичест барбун)",
+        "credit": "© Hans Hillewaert",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Mullus_surmuletus.jpg"
+      }
+    },
+    {
+      "id": "kolios",
+      "greek": "Κολιός",
+      "pronunciation": "кольо̀с",
+      "bulgarian": "средиземноморска скумрия",
+      "scientific": "Scomber colias",
+      "description": "Стройна риба с вълнообразни тъмни линии по синьо-зеления гръб.",
+      "size": "Често 20–35 cm.",
+      "preparation": "На скара, печена или маринована.",
+      "taste": "Мазна, плътна и по-силна на вкус.",
+      "bones": "Разтворете по корема, отстранете гръбнака и проверете средната линия за кости.",
+      "eating": "Кожата е вкусна, когато е добре запечена.",
+      "pairing": "Рецина, узо или светла бира.",
+      "image": {
+        "src": "images/fish/kolios.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Фактологично изображение на Scomber colias (средиземноморска скумрия)",
+        "credit": "Etrusko25",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Lanzardo_2.jpg"
+      }
+    },
+    {
+      "id": "skoumpri",
+      "greek": "Σκουμπρί",
+      "pronunciation": "скумбрѝ",
+      "bulgarian": "атлантическа скумрия",
+      "scientific": "Scomber scombrus",
+      "description": "Синьо-зелена риба с отчетливи тъмни напречни ивици.",
+      "size": "Често 25–40 cm.",
+      "preparation": "Пушена, на скара или печена.",
+      "taste": "Сочно, мазно и интензивно месо.",
+      "bones": "Отделете две филета и извадете костиците по централната линия.",
+      "eating": "Лимонът балансира мазнината; кожата може да се яде.",
+      "pairing": "Узо, ципуро или кисело бяло вино.",
+      "image": {
+        "src": "images/fish/skoumpri.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Фактологично изображение на Scomber scombrus (атлантическа скумрия)",
+        "credit": "Mikael Nyman",
+        "license": "CC BY 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Scomber_scombrus_217326414.jpg"
+      }
+    },
+    {
+      "id": "gopa",
+      "greek": "Γόπα",
+      "pronunciation": "го̀па",
+      "bulgarian": "бопс / морска каракуда",
+      "scientific": "Boops boops",
+      "description": "Малка сребриста риба с големи очи и фини златисти линии.",
+      "size": "Често 12–25 cm.",
+      "preparation": "Пържена или на скара.",
+      "taste": "Леко, постно и отчетливо морско месо.",
+      "bones": "Отделете месото от двете страни на гръбнака и проверете фините кости.",
+      "eating": "Яжте на малки хапки, особено при дребни екземпляри.",
+      "pairing": "Узо, бира или младо бяло вино.",
+      "image": {
+        "src": "images/fish/gopa.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Фактологично изображение на Boops boops (бопс / морска каракуда)",
+        "credit": "Roberto Pillon",
+        "license": "CC BY 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Boops_boops_Karpathos_01.JPG"
+      }
+    },
+    {
+      "id": "melanouri",
+      "greek": "Μελανούρι",
+      "pronunciation": "мелану̀ри",
+      "bulgarian": "облада / седлова ципура",
+      "scientific": "Oblada melanura",
+      "description": "Сребриста риба с характерно черно петно, обградено с бяло, при опашката.",
+      "size": "Често 15–30 cm.",
+      "preparation": "Цяла на скара или фурна.",
+      "taste": "Стегнато, деликатно и леко сладко.",
+      "bones": "Свалете филето над гръбнака, после повдигнете централната кост.",
+      "eating": "Подобно на ципура, но по-малките екземпляри имат по-фини кости.",
+      "pairing": "Асиртико или сухо розе.",
+      "image": {
+        "src": "images/fish/melanouri.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Фактологично изображение на Oblada melanura (облада / седлова ципура)",
+        "credit": "Diego Delso",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Oblada_(Oblada_melanura),_%C4%8Airkewwa,_Malta,_Malta,_2021-08-24,_DD_26.jpg"
+      }
+    },
+    {
+      "id": "sargos",
+      "greek": "Σαργός",
+      "pronunciation": "сарго̀с",
+      "bulgarian": "бяла морска каракуда",
+      "scientific": "Diplodus sargus",
+      "description": "Сребриста риба с тъмни вертикални линии и черно петно при опашката.",
+      "size": "Често 20–35 cm.",
+      "preparation": "На скара или фурна.",
+      "taste": "Стегнато, бяло и умерено сладко месо.",
+      "bones": "Отделете филетата и следете твърдите ребрени кости.",
+      "eating": "Подходяща за споделяне цяла; помолете за филетиране.",
+      "pairing": "Сухо бяло вино или узо.",
+      "image": {
+        "src": "images/fish/sargos.jpg",
+        "width": 640,
+        "height": 387,
+        "alt": "Фактологично изображение на Diplodus sargus (бяла морска каракуда)",
+        "credit": "Diego Delso",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Sargo_com%C3%BAn_(Diplodus_sargus),_Madeira,_Portugal,_2019-05-31,_DD_29.jpg"
+      }
+    },
+    {
+      "id": "synagrida-fish",
+      "greek": "Συναγρίδα",
+      "pronunciation": "синагрѝда",
+      "bulgarian": "обикновен дентекс",
+      "scientific": "Dentex dentex",
+      "description": "Едра розово-сребриста хищна риба със силни кучешки зъби.",
+      "size": "Често 40–80 cm; може да бъде по-едра.",
+      "preparation": "На скара, фурна или в солена кора.",
+      "taste": "Стегнато, сочно и фино сладко бяло месо.",
+      "bones": "При голям екземпляр отделете дебелите филета; отстранете гръбнака и ребрата.",
+      "eating": "Често се продава на килограм; потвърдете теглото и цената преди поръчка.",
+      "pairing": "Плътно асиртико или бяло вино с минералност.",
+      "image": {
+        "src": "images/fish/synagrida-fish.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Фактологично изображение на Dentex dentex (обикновен дентекс)",
+        "credit": "michael_bommerer",
+        "license": "CC BY 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Dentex_dentex_Canary.jpg"
+      }
+    },
+    {
+      "id": "fagri",
+      "greek": "Φαγκρί",
+      "pronunciation": "фангрѝ",
+      "bulgarian": "червен пагел / пагър",
+      "scientific": "Pagrus pagrus",
+      "description": "Розово-сребриста ципурова риба със синкави петънца.",
+      "size": "Често 30–60 cm.",
+      "preparation": "Цяла на скара или печена.",
+      "taste": "Плътно, сочно и леко сладко месо.",
+      "bones": "Свалете филето по гръбнака и отделете големите ребрени кости.",
+      "eating": "Проверете дали цената е за порция или килограм.",
+      "pairing": "Минерално бяло вино или сухо розе.",
+      "image": {
+        "src": "images/fish/fagri.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Фактологично изображение на Pagrus pagrus (червен пагел / пагър)",
+        "credit": "Julien Renoult",
+        "license": "CC BY 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Pagrus_pagrus_579910017_(cropped).jpg"
+      }
+    },
+    {
+      "id": "lithrini",
+      "greek": "Λυθρίνι",
+      "pronunciation": "литрѝни",
+      "bulgarian": "червена пандора",
+      "scientific": "Pagellus erythrinus",
+      "description": "Розова до сребристорозова риба с издължено тяло.",
+      "size": "Често 15–35 cm.",
+      "preparation": "Пържена при малки размери, печена или на скара при по-едри.",
+      "taste": "Деликатно, леко сладко и постно месо.",
+      "bones": "Повдигнете централния гръбнак след горното филе и проверете ребрата.",
+      "eating": "Яжте внимателно при малки риби заради фините кости.",
+      "pairing": "Леко бяло вино или узо.",
+      "image": {
+        "src": "images/fish/lithrini.jpg",
+        "width": 640,
+        "height": 386,
+        "alt": "Фактологично изображение на Pagellus erythrinus (червена пандора)",
+        "credit": "riblje oko.hr",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Pagellus_erythrinus_RO.jpg"
+      }
+    },
+    {
+      "id": "salpa",
+      "greek": "Σάλπα",
+      "pronunciation": "са̀лпа",
+      "bulgarian": "салпа",
+      "scientific": "Sarpa salpa",
+      "description": "Сребриста риба с множество надлъжни златисти линии.",
+      "size": "Често 20–35 cm.",
+      "preparation": "На скара или печена.",
+      "taste": "Постно и тревисто месо; вкусът варира според храненето.",
+      "bones": "Филетирайте по гръбнака и проверете централните кости.",
+      "eating": "Поискайте съвет за свежест и сезонност.",
+      "pairing": "Кисело бяло вино или лимонова безалкохолна напитка.",
+      "image": {
+        "src": "images/fish/salpa.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Фактологично изображение на Sarpa salpa (салпа)",
+        "credit": "Diego Delso",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Salema_(Sarpa_salpa),_Catania,_Sicilia,_Italia,_2025-04-04,_DD_90.jpg"
+      }
+    },
+    {
+      "id": "kefalos",
+      "greek": "Κέφαλος",
+      "pronunciation": "кѐфалос",
+      "bulgarian": "кефал",
+      "scientific": "Mugil cephalus",
+      "description": "Издължена сребриста риба с широка глава и две отделни гръбни перки.",
+      "size": "Често 30–60 cm.",
+      "preparation": "На скара, печена или пушена.",
+      "taste": "Стегнато и умерено мазно; вкусът зависи от местообитанието.",
+      "bones": "Отделете филетата и премахнете ребрените кости и тъмната средна линия по желание.",
+      "eating": "Проверете произхода и препоръчания начин на приготвяне.",
+      "pairing": "Сухо бяло вино или бира.",
+      "image": {
+        "src": "images/fish/kefalos.jpg",
+        "width": 640,
+        "height": 299,
+        "alt": "Фактологично изображение на Mugil cephalus (кефал)",
+        "credit": "Diego Delso",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:M%C3%BAjol_(Mugil_cephalus),_Parque_natural_de_la_Arr%C3%A1bida,_Portugal,_2021-09-09,_DD_25.jpg"
+      }
+    },
+    {
+      "id": "glossa",
+      "greek": "Γλώσσα",
+      "pronunciation": "гло̀са",
+      "bulgarian": "морски език",
+      "scientific": "Solea solea",
+      "description": "Плоска кафеникава риба с двете очи от едната страна.",
+      "size": "Често 25–40 cm.",
+      "preparation": "Пържен, на тиган или печен.",
+      "taste": "Много нежно, постно и фино месо.",
+      "bones": "Прокарайте нож покрай централната кост и отделете четирите плоски филета.",
+      "eating": "Лесна за ядене след отстраняване на централния скелет.",
+      "pairing": "Леко шардоне или друго сухо бяло вино.",
+      "image": {
+        "src": "images/fish/glossa.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Фактологично изображение на Solea solea (морски език)",
+        "credit": "© Hans Hillewaert",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Solea_solea_1.jpg"
+      }
+    },
+    {
+      "id": "bakaliaros",
+      "greek": "Μπακαλιάρος",
+      "pronunciation": "бакаля̀рос",
+      "bulgarian": "европейски хек / мерлуза",
+      "scientific": "Merluccius merluccius",
+      "description": "Издължена сиво-сребриста риба с голяма уста и остри зъби.",
+      "size": "Често 30–70 cm.",
+      "preparation": "Пържен, печен или в супа.",
+      "taste": "Меко, люспесто и постно бяло месо.",
+      "bones": "Филетирайте покрай гръбнака и отстранете централните игловидни кости.",
+      "eating": "Месото се разделя на големи люспи, но проверявайте всяка хапка.",
+      "pairing": "Сухо бяло вино или светла бира.",
+      "image": {
+        "src": "images/fish/bakaliaros.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Фактологично изображение на Merluccius merluccius (европейски хек / мерлуза)",
+        "credit": "Fernando Losada Rodríguez",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Merluccius_merluccius.002_-_Aquarium_Finisterrae.JPG"
+      }
+    },
+    {
+      "id": "xifias",
+      "greek": "Ξιφίας",
+      "pronunciation": "ксифѝас",
+      "bulgarian": "риба меч",
+      "scientific": "Xiphias gladius",
+      "description": "Много едра океанска риба с дълъг плосък рострум като меч.",
+      "size": "В ресторант обичайно се сервира на стек; възрастните риби са много едри.",
+      "preparation": "Стек на скара или тиган.",
+      "taste": "Плътно, месесто и сравнително постно.",
+      "bones": "Стекът има малко кости; отделете кожата и централните твърди части.",
+      "eating": "Не е нужна работа с цял скелет, но проверете центъра на стека.",
+      "pairing": "Плътно бяло вино или леко червено, охладено.",
+      "image": {
+        "src": "images/fish/xifias.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Фактологично изображение на Xiphias gladius (риба меч)",
+        "credit": "Naturalis Biodiversity Center",
+        "license": "CC0",
+        "source": "https://commons.wikimedia.org/wiki/File:Xiphias_gladius_Linnaeus,_1758_2599925021.jpg"
+      }
+    },
+    {
+      "id": "palamida",
+      "greek": "Παλαμίδα",
+      "pronunciation": "паламѝда",
+      "bulgarian": "паламуд",
+      "scientific": "Sarda sarda",
+      "description": "Торпедовидна риба с тъмни диагонални линии по гърба.",
+      "size": "Често 40–70 cm.",
+      "preparation": "На скара, печена, осолена или маринована.",
+      "taste": "Плътно, тъмно и изразено месо.",
+      "bones": "Отделете четирите надлъжни филета и премахнете централната костна линия.",
+      "eating": "Подходяща на резени; тъмната кръвна линия е по-силна на вкус.",
+      "pairing": "Розе, лека рецина или бира.",
+      "image": {
+        "src": "images/fish/palamida.jpg",
+        "width": 640,
+        "height": 234,
+        "alt": "Фактологично изображение на Sarda sarda (паламуд)",
+        "credit": "Sherman Foote Denton",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Sarda_sarda.jpg"
+      }
+    },
+    {
+      "id": "tonos",
+      "greek": "Τόνος",
+      "pronunciation": "то̀нос",
+      "bulgarian": "червен тон",
+      "scientific": "Thunnus thynnus",
+      "description": "Много едра, мощна риба с тъмносин гръб и ред малки перки пред опашката.",
+      "size": "Сервира се на порции; видът достига няколко метра.",
+      "preparation": "Тартар, леко запечен или на скара.",
+      "taste": "Плътно, месесто и богато, от постно до мазно според разреза.",
+      "bones": "Порционните филета обикновено са без големи кости; проверете за остатъчни.",
+      "eating": "При сурова версия попитайте за обработката и алергените.",
+      "pairing": "Розе, леко червено или саке при азиатски профил.",
+      "image": {
+        "src": "images/fish/tonos.jpg",
+        "width": 640,
+        "height": 422,
+        "alt": "Фактологично изображение на Thunnus thynnus (червен тон)",
+        "credit": "Unknown author",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Bluefin-big.jpg"
+      }
+    },
+    {
+      "id": "rofos",
+      "greek": "Ροφός",
+      "pronunciation": "рофо̀с",
+      "bulgarian": "тъмен групер",
+      "scientific": "Epinephelus marginatus",
+      "description": "Едра петниста рифова риба с масивна глава и уста.",
+      "size": "Често се предлага на килограм; дивите възрастни са много едри.",
+      "preparation": "Печен, на скара или в рибена супа.",
+      "taste": "Плътно, сочно и желатиново около костите.",
+      "bones": "Големите кости се отделят лесно, но проверете дебелите ребра.",
+      "eating": "Главата и бузите са ценени; потвърдете законния произход и наличност.",
+      "pairing": "Плътно бяло вино.",
+      "image": {
+        "src": "images/fish/rofos.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Фактологично изображение на Epinephelus marginatus (тъмен групер)",
+        "credit": "Diego Delso",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Mero_(Epinephelus_marginatus),_Cabo_de_Palos,_Espa%C3%B1a,_2022-07-15,_DD_34.jpg"
+      }
+    },
+    {
+      "id": "drakaina",
+      "greek": "Δράκαινα",
+      "pronunciation": "дра̀кена",
+      "bulgarian": "голям морски дракон",
+      "scientific": "Trachinus draco",
+      "description": "Издължена дънна риба с отровни шипове на първата гръбна перка.",
+      "size": "Често 20–35 cm.",
+      "preparation": "В супа или пържена след професионално почистване.",
+      "taste": "Нежно, бяло и деликатно месо.",
+      "bones": "Не почиствайте сами сурова риба; след готвене отделете филетата от централния скелет.",
+      "eating": "Шиповете трябва да са отстранени от професионалист; попитайте ресторанта.",
+      "pairing": "Леко бяло вино.",
+      "image": {
+        "src": "images/fish/drakaina.jpg",
+        "width": 640,
+        "height": 393,
+        "alt": "Фактологично изображение на Trachinus draco (голям морски дракон)",
+        "credit": "Tomasz Sienicki",
+        "license": "CC BY 1.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Trachinus_draco_2.jpeg"
+      }
+    },
+    {
+      "id": "skorpina",
+      "greek": "Σκορπίνα",
+      "pronunciation": "скорпѝна",
+      "bulgarian": "червена скорпида",
+      "scientific": "Scorpaena scrofa",
+      "description": "Червеникава риба с масивна глава, кожни израстъци и бодливи перки.",
+      "size": "Често 20–40 cm.",
+      "preparation": "Най-често в рибена супа или печена.",
+      "taste": "Богато, стегнато и желатиново около главата.",
+      "bones": "Не пипайте суровите шипове; в готово ястие отделяйте месото от големия скелет.",
+      "eating": "Помолете персонала да я почисти и сервира безопасно.",
+      "pairing": "Минерално бяло вино.",
+      "image": {
+        "src": "images/fish/skorpina.jpg",
+        "width": 640,
+        "height": 363,
+        "alt": "Фактологично изображение на Scorpaena scrofa (червена скорпида)",
+        "credit": "Vicmicallef",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Red_Scorpionfish_(cropped).jpg"
+      }
+    },
+    {
+      "id": "zargana",
+      "greek": "Ζαργάνα",
+      "pronunciation": "зарга̀на",
+      "bulgarian": "зарган",
+      "scientific": "Belone belone",
+      "description": "Много издължена риба с дълги челюсти; костите могат да изглеждат зеленикави.",
+      "size": "Често 40–70 cm.",
+      "preparation": "Пържена, печена или на скара.",
+      "taste": "Стегнато, постно и леко сладко.",
+      "bones": "Разтворете рибата, повдигнете дългия гръбнак и проверете фините странични кости.",
+      "eating": "Зеленият цвят на костите е естествен, но костите остават опасност.",
+      "pairing": "Сухо бяло вино или бира.",
+      "image": {
+        "src": "images/fish/zargana.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Фактологично изображение на Belone belone (зарган)",
+        "credit": "Sarah Faulwetter",
+        "license": "CC BY 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Garfish,_Peloponnese,_Peloponnese,_Western_Greece_and_the_Ionian_Islands,_GR_imported_from_iNaturalist_photo_222165464.jpg"
+      }
+    },
+    {
+      "id": "safridi",
+      "greek": "Σαφρίδι",
+      "pronunciation": "сафрѝди",
+      "bulgarian": "средиземноморски сафрид",
+      "scientific": "Trachurus mediterraneus",
+      "description": "Стройна сребриста риба с твърди щитчета по страничната линия.",
+      "size": "Често 15–30 cm.",
+      "preparation": "Пържен или на скара.",
+      "taste": "Сочно, умерено мазно и отчетливо морско.",
+      "bones": "Отделете месото от централния гръбнак и внимавайте за фините ребрени кости.",
+      "eating": "Малките екземпляри се ядат внимателно около скелета.",
+      "pairing": "Узо, ципуро или светла бира.",
+      "image": {
+        "src": "images/fish/safridi.jpg",
+        "width": 640,
+        "height": 318,
+        "alt": "Фактологично изображение на Trachurus mediterraneus (средиземноморски сафрид)",
+        "credit": "Foundling",
+        "license": "CC BY 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Jurel_blanco_o_mediterr%C3%A1neo_(Trachurus_mediterraneus).jpeg"
+      }
+    }
+  ],
+  "sights": [
+    {
+      "id": "old-nikiti",
+      "name": "Старо Никити",
+      "type": "Традиционен квартал",
+      "location": "Палеа Никити, над съвременния град",
+      "latitude": 40.230608,
+      "longitude": 23.672701,
+      "driveMinutes": 5,
+      "description": "Каменни къщи и тесни улици в запазеното старо селище.",
+      "history": "Селището се развива от късното Средновековие върху земи на светогорско метохче.",
+      "access": "Свободен достъп; тесни, стръмни и павирани улици. Паркирайте в периферията.",
+      "hours": "Открито обществено пространство",
+      "fee": "Без вход",
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/old-nikiti.jpg",
+        "alt": "Каменна улица и традиционни къщи в Старо Никити",
+        "credit": "Mihail Sotirov / Wikimedia Commons",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_old_1.JPG"
+      },
+      "sources": [
+        "https://www.visit-halkidiki.gr/wp-content/uploads/2023/05/URBAN-CENTERS-GREECE-HALKIDIKI-5-ROUTES-ENGLISH-GNTO.pdf",
+        "https://www.wikidata.org/wiki/Q111026539"
+      ]
+    },
+    {
+      "id": "agios-nikitas",
+      "name": "Църква „Св. Никита“",
+      "type": "Църква",
+      "location": "Старо Никити",
+      "latitude": 40.2329476,
+      "longitude": 23.6729356,
+      "driveMinutes": 5,
+      "description": "Каменен храм, доминиращ старото селище.",
+      "history": "Публичните туристически източници датират храма от 1867 г.",
+      "access": "Активен православен храм; облекло и поведение, подходящи за богослужебно място.",
+      "hours": "Няма надеждно публикувано туристическо работно време",
+      "fee": "Няма публикувана такса",
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/places/sight-agios-nikitas.jpg",
+        "width": 640,
+        "height": 360,
+        "alt": "Църквата „Св. Никита“ в Старо Никити",
+        "credit": "LucT",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Agios_Nikitas_-_panoramio.jpg"
+      },
+      "sources": [
+        "https://halkidikigreece.gr/sithonia-villages.html",
+        "https://www.openstreetmap.org/way/310798879"
+      ]
+    },
+    {
+      "id": "nikiti-museum",
+      "name": "Исторически и фолклорен музей на Никити",
+      "type": "Музей",
+      "location": "Каменното училище, Старо Никити",
+      "latitude": 40.232705,
+      "longitude": 23.6729793,
+      "driveMinutes": 5,
+      "description": "Местна колекция за историята и всекидневието на Никити през XIX–XX век.",
+      "history": "Музеят е открит през 2015 г. в училище от 1870 г.; общината описва около 1500 дарени предмета.",
+      "access": "Провери по телефон или на място преди посещение.",
+      "hours": "OSM моментна снимка: пон.–съб. 11:00–13:00 и 19:00–22:00; променливо",
+      "fee": "Няма достатъчно данни",
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/places/sight-old-nikiti-02.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Каменна архитектура в Старо Никити, където се намира историческият и фолклорен музей",
+        "credit": "M sotirov",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_old_2.JPG",
+        "context": "Контекст от Старо Никити; не показва самия музей."
+      },
+      "sources": [
+        "https://dimossithonias.gr/egkainia-toy-istorikoy-kai-laografikoy-moyseioy-nikitis-2/",
+        "https://www.openstreetmap.org/node/13002605470"
+      ]
+    },
+    {
+      "id": "sofronios",
+      "name": "Раннохристиянска базилика „Софроний“",
+      "type": "Археологически обект",
+      "location": "Югоизточно от центъра на Никити",
+      "latitude": 40.2077362,
+      "longitude": 23.6800819,
+      "driveMinutes": 7,
+      "description": "Останки от раннохристиянска базилика, известна с мозайките си.",
+      "history": "Обектът свидетелства за късноантичното християнско присъствие в района.",
+      "access": "Провери достъпа на място; не е гарантирана посетителска инфраструктура.",
+      "hours": "Няма достатъчно надеждни данни",
+      "fee": "Няма достатъчно данни",
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/places/sight-sofronios.jpg",
+        "width": 640,
+        "height": 92,
+        "alt": "Изображение на раннохристиянската базилика „Софроний“ край Никити",
+        "credit": "W.Horseman",
+        "license": "CC0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_Banner_Agios_Sofronios.jpg"
+      },
+      "sources": [
+        "https://dimossithonias.gr/wp-content/uploads/2024/09/26-2025-%CE%A8%CE%9D%CE%A94%CE%A91%CE%A6-%CE%A6%CE%9E%CE%94.pdf",
+        "https://www.openstreetmap.org/way/507802713"
+      ]
+    },
+    {
+      "id": "psalida",
+      "name": "Кула и византийска стена „Псалида“",
+      "type": "Археологически обект",
+      "location": "Източно от Никити",
+      "latitude": 40.2218547,
+      "longitude": 23.691679,
+      "driveMinutes": 8,
+      "description": "Останки от византийска кула и укрепителна стена.",
+      "history": "Гръцкият археологически кадастър регистрира обекта като паметник.",
+      "access": "Свободният достъп на терен не е потвърден; не преминавайте огради.",
+      "hours": "Открит терен; няма публикувано работно време",
+      "fee": "Няма публикувана такса",
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/places/sight-old-nikiti-02.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Историческа каменна среда в района на Никити към записа за Псалида",
+        "credit": "M sotirov",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_old_2.JPG",
+        "context": "Контекст от историческата среда на Никити; не показва конкретно Псалида."
+      },
+      "sources": [
+        "https://www.arxaiologikoktimatologio.gov.gr/el/monuments_info?id=154210&type=Monument",
+        "https://www.openstreetmap.org/way/1228974528"
+      ]
+    },
+    {
+      "id": "toumba",
+      "name": "Тумба Никити",
+      "type": "Археологически обект",
+      "location": "Източният край на Никити",
+      "latitude": 40.2171553,
+      "longitude": 23.6838642,
+      "driveMinutes": 7,
+      "description": "Регистрирано селищно място от бронзовата и желязната епоха.",
+      "history": "Археологическият кадастър и OSM го описват като праисторическо селище.",
+      "access": "Няма потвърдена туристическа инфраструктура; наблюдавайте само от разрешени места.",
+      "hours": "Няма достатъчно данни",
+      "fee": "Няма достатъчно данни",
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/old-nikiti.jpg",
+        "alt": "Историческата среда на Никити към записа за Тумба Никити",
+        "credit": "Mihail Sotirov / Wikimedia Commons",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_old_1.JPG",
+        "context": "Контекст от историческата среда на Никити; не показва конкретно Тумба Никити."
+      },
+      "sources": [
+        "https://www.arxaiologikoktimatologio.gov.gr/el/monuments_info?id=165296&type=Space",
+        "https://www.openstreetmap.org/way/1228968334"
+      ]
+    },
+    {
+      "id": "chrysokamaro",
+      "name": "Кула Хрисокамаро и древна Сингос",
+      "type": "Археологически обект",
+      "location": "До Пиргос, североизточно от Никити",
+      "latitude": 40.2524618,
+      "longitude": 23.7231305,
+      "driveMinutes": 16,
+      "description": "Византийска кула в зона с останки, свързвани с древна Сингос.",
+      "history": "Обектът е нанесен в гръцкия археологически кадастър като укрепление и археологическа зона.",
+      "access": "Достъпът е отбелязан като обществен в OSM, но теренът може да е неравен.",
+      "hours": "Открит терен",
+      "fee": "Няма публикувана такса",
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/places/sight-agios-nikolaos.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Пейзаж от района на Агиос Николаос към записа за Хрисокамаро и древна Сингос",
+        "credit": "Wolfgang Reiter",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%C3%80gios_Nik%C3%B3laos,IMG2_0209-B.jpg",
+        "context": "Контекст от близкия район; не показва конкретно Хрисокамаро или древна Сингос."
+      },
+      "sources": [
+        "https://www.arxaiologikoktimatologio.gov.gr/el/monuments_info?id=165316&type=Space",
+        "https://www.openstreetmap.org/node/8887131158"
+      ]
+    },
+    {
+      "id": "agios-nikolaos-village",
+      "name": "Село Агиос Николаос",
+      "type": "Традиционно селище",
+      "location": "Агиос Николаос, североизточно от Никити",
+      "latitude": 40.2491826,
+      "longitude": 23.6941924,
+      "driveMinutes": 12,
+      "description": "Вътрешно село с централен площад, църкви и местен фолклорен музей.",
+      "history": "Селището е историческият административен център за околните крайбрежни махали.",
+      "access": "Обществени улици; центърът е компактен, но настилките са неравни.",
+      "hours": "Открито обществено пространство",
+      "fee": "Без вход",
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/places/sight-agios-nikolaos.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Изглед от село Агиос Николаос в Халкидики",
+        "credit": "Wolfgang Reiter",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%C3%80gios_Nik%C3%B3laos,IMG2_0209-B.jpg"
+      },
+      "sources": [
+        "https://visitsithonia.com/locations/ormos-panagias/",
+        "https://www.openstreetmap.org/node/11276356890"
+      ]
+    }
+  ],
+  "beaches": [
+    {
+      "id": "nikiti-beach",
+      "name": "Плаж Никити",
+      "location": "Крайбрежната алея на Никити",
+      "latitude": 40.2150351,
+      "longitude": 23.6670937,
+      "driveMinutes": 3,
+      "length": "Дълга градска ивица; няма надеждна единна измерена стойност",
+      "width": "Варира по сектори",
+      "cleanliness": "Отлично качество за 2024; проби са публикувани и за 2025",
+      "cleanlinessSource": "https://bathingwaterprofiles.gr/en/monitor/eval/2580",
+      "freeZone": "Да, по отделни сектори; ориентировъчно",
+      "organized": "Да, по отделни сектори",
+      "shore": "Пясък",
+      "seabed": "Пясък с локални камъчета; провери конкретния сектор",
+      "depth": "Постепенно на много места; не е еднакво по цялата ивица",
+      "rocks": "Локални камъни са възможни",
+      "hazards": "Лодки около пристанището, летен трафик и променлив морски флаг",
+      "toilets": "Няма достатъчно данни за цялата ивица",
+      "services": "Много заведения и магазини по алеята",
+      "noise": "Средно до високо вечер; ориентировъчно",
+      "access": "Лесен пешеходен достъп; уличното паркиране се запълва",
+      "family": true,
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/nikiti-kastri.jpg",
+        "alt": "Брегът на Никити и заливът към Кастри",
+        "credit": "Tilemahos Efthimiadis / Wikimedia Commons",
+        "license": "CC BY 2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nikiti,_Halkidiki,_Greece.jpg"
+      },
+      "sources": [
+        "https://bathingwaterprofiles.gr/en/monitor/eval/2580",
+        "https://www.openstreetmap.org/way/27146789"
+      ]
+    },
+    {
+      "id": "mikro-kastri",
+      "name": "Микро Кастри",
+      "location": "Южно от Никити",
+      "latitude": 40.1960696,
+      "longitude": 23.682979,
+      "driveMinutes": 8,
+      "length": "Няма достатъчно данни",
+      "width": "Няма достатъчно данни",
+      "cleanliness": "Няма достатъчно надеждни данни",
+      "freeZone": "Няма достатъчно данни",
+      "organized": "Няма достатъчно данни",
+      "shore": "Пясък и камъчета; ориентировъчно",
+      "seabed": "Няма достатъчно данни",
+      "depth": "Няма достатъчно данни",
+      "rocks": "Вероятни край малкия залив; проверка на място",
+      "hazards": "Ограничено пространство и липса на потвърден спасител",
+      "toilets": "Няма достатъчно данни",
+      "services": "Няма достатъчно данни",
+      "noise": "Ниско до средно; ориентировъчно",
+      "access": "Ограничено паркиране; провери подхода",
+      "family": false,
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/places/beach-nikiti-03.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Брегов контекст от Никити към записа за Микро Кастри",
+        "credit": "Kritzolina",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_Beach_03.jpg",
+        "context": "Контекст от крайбрежието на Никити; не показва конкретно Микро Кастри."
+      },
+      "sources": [
+        "https://www.openstreetmap.org/way/27146795"
+      ]
+    },
+    {
+      "id": "kastri-beach",
+      "name": "Кастри",
+      "location": "Южно от Никити, срещу островчето Кастри",
+      "latitude": 40.1934799,
+      "longitude": 23.6860482,
+      "driveMinutes": 9,
+      "length": "Няма надеждна стойност",
+      "width": "Малък залив; няма надеждна стойност",
+      "cleanliness": "Няма достатъчно надеждни данни",
+      "freeZone": "Да; ориентировъчно",
+      "organized": "Ограничено или липсващо; провери на място",
+      "shore": "Пясък и камъчета",
+      "seabed": "Пясък с каменисти участъци",
+      "depth": "Няма достатъчно данни",
+      "rocks": "Да, около краищата и островчето",
+      "hazards": "Скали, лодки и липса на потвърден спасител",
+      "toilets": "Няма достатъчно данни",
+      "services": "Ограничени",
+      "noise": "Ниско до средно; ориентировъчно",
+      "access": "Малък подход и ограничено паркиране",
+      "family": false,
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/nikiti-kastri.jpg",
+        "alt": "Брегът на Никити и заливът към Кастри",
+        "credit": "Tilemahos Efthimiadis / Wikimedia Commons",
+        "license": "CC BY 2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nikiti,_Halkidiki,_Greece.jpg",
+        "context": "Панорамен изглед към района на Кастри."
+      },
+      "sources": [
+        "https://visitsithonia.com/locations/nikiti/",
+        "https://www.openstreetmap.org/way/178610187"
+      ]
+    },
+    {
+      "id": "agios-ioannis-beach",
+      "name": "Агиос Йоанис",
+      "location": "Южно от Никити по крайбрежния път",
+      "latitude": 40.1919442,
+      "longitude": 23.6933007,
+      "driveMinutes": 10,
+      "length": "Няма надеждна стойност",
+      "width": "Широка ивица; няма надеждна стойност",
+      "cleanliness": "Няма достатъчно надеждни данни за текуща оценка",
+      "freeZone": "Да, извън организираните сектори; ориентировъчно",
+      "organized": "Да, по сектори",
+      "shore": "Пясък",
+      "seabed": "Предимно пясък; провери конкретния сектор",
+      "depth": "Постепенно на много места; ориентировъчно",
+      "rocks": "Локални камъни са възможни",
+      "hazards": "Летен трафик, водни активности и променлив морски флаг",
+      "toilets": "При част от организираните обекти; не е гарантирано",
+      "services": "Плажни обекти и сезонни услуги",
+      "noise": "Средно до високо в организираните сектори",
+      "access": "Автомобилен достъп; паркингът варира по сектор",
+      "family": true,
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/agios-ioannis.jpg",
+        "alt": "Плаж Агиос Йоанис до Никити и островчето Кастри",
+        "credit": "Sakis Hatzis / Wikimedia Commons",
+        "license": "CC BY 2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Ai_Yiannis_beach_in_Nikiti.jpg"
+      },
+      "sources": [
+        "https://visitsithonia.com/locations/nikiti/",
+        "https://www.openstreetmap.org/way/178610190"
+      ]
+    },
+    {
+      "id": "koviou",
+      "name": "Ковиу",
+      "location": "Южно от Агиос Йоанис",
+      "latitude": 40.1819687,
+      "longitude": 23.7097775,
+      "driveMinutes": 13,
+      "length": "Няма достатъчно данни",
+      "width": "Няма достатъчно данни",
+      "cleanliness": "Няма достатъчно надеждни данни",
+      "freeZone": "Няма достатъчно данни",
+      "organized": "Да, по част от залива; ориентировъчно",
+      "shore": "Пясък",
+      "seabed": "Пясък; провери конкретния вход",
+      "depth": "Често описван като плавен, но няма измерена текуща серия",
+      "rocks": "Възможни по краищата",
+      "hazards": "Ограничено паркиране и сезонно натоварване",
+      "toilets": "При частни обекти; не е гарантирано",
+      "services": "Сезонни плажни услуги",
+      "noise": "Средно; ориентировъчно",
+      "access": "Достъп от главния път; паркирането може да е ограничено",
+      "family": true,
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/places/beach-kalogria.jpg",
+        "width": 640,
+        "height": 853,
+        "alt": "Крайбрежен контекст южно от Никити към записа за Ковиу",
+        "credit": "ale3andro",
+        "license": "CC BY-SA 2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kalogria_Beach,_Nikiti,_Chalkidiki,_Greece.jpg",
+        "context": "Контекст от съседния бряг при Калогрия; не показва конкретно Ковиу."
+      },
+      "sources": [
+        "https://visitsithonia.com/beaches/9-most-popular-beaches-with-natural-shade-in-sithonia/",
+        "https://www.openstreetmap.org/way/178610956"
+      ]
+    },
+    {
+      "id": "kalogria",
+      "name": "Калогрия",
+      "location": "Южно от Ковиу",
+      "latitude": 40.1766652,
+      "longitude": 23.7145485,
+      "driveMinutes": 15,
+      "length": "Няма надеждна стойност",
+      "width": "Ширината варира по заливите",
+      "cleanliness": "Blue Flag 2026 за сектора Kalogrias",
+      "cleanlinessSource": "https://www.blueflag.gr/el/awards/2026",
+      "freeZone": "Да, но разпределението е сезонно; ориентировъчно",
+      "organized": "Да, по сектори",
+      "shore": "Фин пясък",
+      "seabed": "Предимно пясък",
+      "depth": "Плавна на много места; проверете на място",
+      "rocks": "Скалисти участъци около краищата",
+      "hazards": "Водни активности, сезонно натоварване и ограничено паркиране",
+      "toilets": "При организираните обекти; не е гарантирано за свободната зона",
+      "services": "Плажни барове и сезонни услуги",
+      "noise": "Високо около организираните сектори; ориентировъчно",
+      "access": "Автомобилен достъп; идвайте рано",
+      "family": true,
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/places/beach-kalogria.jpg",
+        "width": 640,
+        "height": 853,
+        "alt": "Плаж Калогрия край Никити",
+        "credit": "ale3andro",
+        "license": "CC BY-SA 2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kalogria_Beach,_Nikiti,_Chalkidiki,_Greece.jpg"
+      },
+      "sources": [
+        "https://www.blueflag.gr/el/awards/2026",
+        "https://www.openstreetmap.org/way/169010917"
+      ]
+    },
+    {
+      "id": "spathies",
+      "name": "Спатиес",
+      "location": "Малки заливи южно от Калогрия",
+      "latitude": 40.1702226,
+      "longitude": 23.7208804,
+      "driveMinutes": 17,
+      "length": "Няма достатъчно данни",
+      "width": "Малки заливи",
+      "cleanliness": "Няма достатъчно надеждни данни",
+      "freeZone": "Да; ориентировъчно",
+      "organized": "Ограничено или липсващо",
+      "shore": "Пясък",
+      "seabed": "Пясък с каменисти краища",
+      "depth": "Няма достатъчно данни",
+      "rocks": "Да, около краищата",
+      "hazards": "Липса на потвърден спасител, скали и ограничен паркинг",
+      "toilets": "Няма достатъчно данни",
+      "services": "Ограничени",
+      "noise": "Ниско до средно; ориентировъчно",
+      "access": "Тесен подход и ограничени места",
+      "family": false,
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/spathies.jpg",
+        "alt": "Малкият пясъчен залив Спатиес до Никити",
+        "credit": "Sakis Hatzis / Wikimedia Commons",
+        "license": "CC BY 2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Spathies_beach_in_Nikiti.jpg"
+      },
+      "sources": [
+        "https://visitsithonia.com/beaches/spathies-beach/",
+        "https://www.openstreetmap.org/way/178759943"
+      ]
+    },
+    {
+      "id": "elia",
+      "name": "Елия",
+      "location": "Крайбрежието на Елия",
+      "latitude": 40.1434937,
+      "longitude": 23.734124,
+      "driveMinutes": 20,
+      "length": "Дълга ивица; няма надеждна единна стойност",
+      "width": "Варира по сектори",
+      "cleanliness": "Blue Flag 2026 за Elia/Acrotel и Elia 2/Anthemus",
+      "cleanlinessSource": "https://www.blueflag.gr/el/awards/2026",
+      "freeZone": "Няма достатъчно данни за всички сектори",
+      "organized": "Да, при хотелските сектори",
+      "shore": "Пясък и дребни камъчета; варира",
+      "seabed": "Няма достатъчно данни за цялата ивица",
+      "depth": "Няма достатъчно данни",
+      "rocks": "Локални скали и камъни",
+      "hazards": "Дълга и нееднородна ивица; проверете достъпа и флага на конкретния сектор",
+      "toilets": "При организираните обекти",
+      "services": "Хотели и сезонни плажни услуги",
+      "noise": "Средно; варира по сектор",
+      "access": "Някои сектори са свързани с хотелски комплекси; търсете обществен достъп",
+      "family": true,
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/places/beach-elia.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Плаж Елия на Ситония",
+        "credit": "Edal Anton Lefterov",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:EliaBeach.jpg"
+      },
+      "sources": [
+        "https://www.blueflag.gr/el/awards/2026",
+        "https://www.openstreetmap.org/way/1152385905"
+      ]
+    },
+    {
+      "id": "lagomandra",
+      "name": "Лагомандра",
+      "location": "Южно от Елия",
+      "latitude": 40.1336655,
+      "longitude": 23.7508148,
+      "driveMinutes": 23,
+      "length": "Няма надеждна стойност",
+      "width": "Няма надеждна стойност",
+      "cleanliness": "Blue Flag 2026 за Lagomandra/Lagomandra Beach Hotel",
+      "cleanlinessSource": "https://www.blueflag.gr/el/awards/2026",
+      "freeZone": "Няма достатъчно данни",
+      "organized": "Да, по част от ивицата",
+      "shore": "Пясък",
+      "seabed": "Пясък с възможни каменисти участъци",
+      "depth": "Няма достатъчно данни",
+      "rocks": "Възможни по краищата",
+      "hazards": "Сезонно натоварване и движение по главния път",
+      "toilets": "При организирания сектор",
+      "services": "Хотелски и плажни услуги",
+      "noise": "Средно; ориентировъчно",
+      "access": "Автомобилен достъп; проверете общественото паркиране",
+      "family": true,
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/places/beach-lagomandra.jpg",
+        "width": 640,
+        "height": 960,
+        "alt": "Плаж Лагомандра на Ситония",
+        "credit": "Kritzolina",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Lagomandra_Beach_01.jpg"
+      },
+      "sources": [
+        "https://www.blueflag.gr/el/awards/2026",
+        "https://www.openstreetmap.org/way/229414810"
+      ]
+    },
+    {
+      "id": "trani-ammouda",
+      "name": "Трани Амуда / Ливрохио",
+      "location": "Източно от Агиос Николаос",
+      "latitude": 40.2423307,
+      "longitude": 23.7267146,
+      "driveMinutes": 17,
+      "length": "Дълга ивица; няма надеждна стойност",
+      "width": "Широка ивица; няма надеждна стойност",
+      "cleanliness": "Blue Flag 2026 за Livrochio 1",
+      "cleanlinessSource": "https://www.blueflag.gr/el/awards/2026",
+      "freeZone": "Да; разпределението е сезонно",
+      "organized": "Да, по сектори",
+      "shore": "Пясък",
+      "seabed": "Пясък",
+      "depth": "Често плавна; проверете флага и конкретния сектор",
+      "rocks": "Ограничени, предимно по краищата",
+      "hazards": "Сезонно натоварване, слънце без естествена сянка и водни активности",
+      "toilets": "При организирани обекти; не е гарантирано навсякъде",
+      "services": "Плажни барове и сезонни услуги",
+      "noise": "Средно; по-високо при организираните сектори",
+      "access": "Автомобилен достъп и паркинги по сектори",
+      "family": true,
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/places/beach-trani-ammouda.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Плаж Трани Амуда край Ормос Панагиас",
+        "credit": "KaiKemmann",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Angelos_Hotel,_%CE%A0%CE%B1%CF%81%CE%B1%CE%BB%CE%AF%CE%B1_%CE%A4%CF%81%CE%B1%CE%BD%CE%AE_%CE%91%CE%BC%CE%BC%CE%BF%CF%8D%CE%B4%CE%B1,_Trani_Ammouda_beach,_Agios_Nikolaos,_630_78_%CE%8C%CF%81%CE%BC%CE%BF%CF%82_%CE%A0%CE%B1%CE%BD%CE%B1%CE%B3%CE%AF%CE%B1%CF%82_Ormos_Panagias,_Greece.jpg"
+      },
+      "sources": [
+        "https://www.blueflag.gr/el/awards/2026",
+        "https://www.openstreetmap.org/way/54842604"
+      ]
+    },
+    {
+      "id": "lagonisi",
+      "name": "Лагониси",
+      "location": "Между Ормос Панагиас и Вурвуру",
+      "latitude": 40.2299274,
+      "longitude": 23.7463818,
+      "driveMinutes": 20,
+      "length": "Няма достатъчно данни",
+      "width": "Няма достатъчно данни",
+      "cleanliness": "Няма достатъчно надеждни данни",
+      "freeZone": "Няма достатъчно данни",
+      "organized": "Да, по част от залива; ориентировъчно",
+      "shore": "Пясък",
+      "seabed": "Пясък с плитки участъци; ориентировъчно",
+      "depth": "Няма надеждна измерена серия",
+      "rocks": "Възможни край носовете",
+      "hazards": "Сезонно натоварване, лодки и ограничен паркинг",
+      "toilets": "При частни обекти; не е гарантирано",
+      "services": "Сезонни плажни услуги",
+      "noise": "Средно до високо; ориентировъчно",
+      "access": "Достъпът и условията за паркиране може да се променят",
+      "family": true,
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/places/beach-trani-ammouda.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Крайбрежен контекст около Ормос Панагиас към записа за Лагониси",
+        "credit": "KaiKemmann",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Angelos_Hotel,_%CE%A0%CE%B1%CF%81%CE%B1%CE%BB%CE%AF%CE%B1_%CE%A4%CF%81%CE%B1%CE%BD%CE%AE_%CE%91%CE%BC%CE%BC%CE%BF%CF%8D%CE%B4%CE%B1,_Trani_Ammouda_beach,_Agios_Nikolaos,_630_78_%CE%8C%CF%81%CE%BC%CE%BF%CF%82_%CE%A0%CE%B1%CE%BD%CE%B1%CE%B3%CE%AF%CE%B1%CF%82_Ormos_Panagias,_Greece.jpg",
+        "context": "Контекст от съседния район на Ормос Панагиас; не показва конкретно Лагониси."
+      },
+      "sources": [
+        "https://www.openstreetmap.org/way/166071797"
+      ]
+    },
+    {
+      "id": "latoura",
+      "name": "Латура",
+      "location": "До Ормос Панагиас",
+      "latitude": 40.2298936,
+      "longitude": 23.737964,
+      "driveMinutes": 17,
+      "length": "Няма достатъчно данни",
+      "width": "Няма достатъчно данни",
+      "cleanliness": "Няма достатъчно надеждни данни",
+      "freeZone": "Няма достатъчно данни",
+      "organized": "Няма достатъчно данни",
+      "shore": "Пясък и камъчета; ориентировъчно",
+      "seabed": "Няма достатъчно данни",
+      "depth": "Няма достатъчно данни",
+      "rocks": "Вероятни по краищата",
+      "hazards": "Близост до лодки и пристанищно движение",
+      "toilets": "Няма достатъчно данни",
+      "services": "Услуги в Ормос Панагиас",
+      "noise": "Средно; ориентировъчно",
+      "access": "Автомобилен достъп; паркирането е ограничено",
+      "family": false,
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/places/beach-trani-ammouda.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Крайбрежен контекст около Ормос Панагиас към записа за Латура",
+        "credit": "KaiKemmann",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Angelos_Hotel,_%CE%A0%CE%B1%CF%81%CE%B1%CE%BB%CE%AF%CE%B1_%CE%A4%CF%81%CE%B1%CE%BD%CE%AE_%CE%91%CE%BC%CE%BC%CE%BF%CF%8D%CE%B4%CE%B1,_Trani_Ammouda_beach,_Agios_Nikolaos,_630_78_%CE%8C%CF%81%CE%BC%CE%BF%CF%82_%CE%A0%CE%B1%CE%BD%CE%B1%CE%B3%CE%AF%CE%B1%CF%82_Ormos_Panagias,_Greece.jpg",
+        "context": "Контекст от съседния район на Ормос Панагиас; не показва конкретно Латура."
+      },
+      "sources": [
+        "https://www.openstreetmap.org/way/175494218"
+      ]
+    },
+    {
+      "id": "fteroti",
+      "name": "Фтероти",
+      "location": "Западно от Вурвуру",
+      "latitude": 40.2093528,
+      "longitude": 23.762217,
+      "driveMinutes": 23,
+      "length": "Няма достатъчно данни",
+      "width": "Малки отделни ивици",
+      "cleanliness": "Няма достатъчно надеждни данни",
+      "freeZone": "Да; ориентировъчно",
+      "organized": "Не е потвърдено",
+      "shore": "Пясък",
+      "seabed": "Пясък; OSM данни за съседни участъци",
+      "depth": "Няма достатъчно данни",
+      "rocks": "Възможни между отделните ивици",
+      "hazards": "Няма потвърден спасител; лодки и труден локален достъп",
+      "toilets": "Няма достатъчно данни",
+      "services": "Ограничени или липсващи",
+      "noise": "Ниско; ориентировъчно",
+      "access": "Проверете маршрута и законното място за паркиране предварително",
+      "family": false,
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/places/beach-elia.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Крайбрежен контекст на Ситония към записа за Фтероти",
+        "credit": "Edal Anton Lefterov",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:EliaBeach.jpg",
+        "context": "Контекст от крайбрежието на Ситония; не показва конкретно Фтероти."
+      },
+      "sources": [
+        "https://www.openstreetmap.org/way/1215583879"
+      ]
+    }
+  ]
+}

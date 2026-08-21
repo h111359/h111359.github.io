@@ -1,0 +1,626 @@
+{
+  "updated": "2026-08-21",
+  "images": [
+    {
+      "file": "nikiti-kastri.jpg",
+      "subject": "Nikiti and Kastri Beach",
+      "author": "Tilemahos Efthimiadis",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Nikiti,_Halkidiki,_Greece.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "nikiti-taverna.jpg",
+      "subject": "Taverna in Nikiti",
+      "author": "Rosa-Maria Rinkl",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Taverne_in_Nikiti.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "moussaka.jpg",
+      "subject": "Greek moussaka",
+      "author": "Michael Wittwer",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Moussaka_2022.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "tsipoura.jpg",
+      "subject": "Gilthead seabream (Sparus aurata)",
+      "author": "Luis Miguel Bugallo Sánchez",
+      "license": "CC BY-SA 2.5 ES",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5/es/deed.en",
+      "source": "https://commons.wikimedia.org/wiki/File:Sparus_aurata.Dourada.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "old-nikiti.jpg",
+      "subject": "Old quarter of Nikiti",
+      "author": "Mihail Sotirov",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Nikiti_old_1.JPG",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "spathies.jpg",
+      "subject": "Spathies beach near Nikiti",
+      "author": "Sakis Hatzis",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Spathies_beach_in_Nikiti.jpg",
+      "changes": "Locally stored Wikimedia version."
+    },
+    {
+      "file": "agios-ioannis.jpg",
+      "subject": "Agios Ioannis beach near Nikiti",
+      "author": "Sakis Hatzis",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Ai_Yiannis_beach_in_Nikiti.jpg",
+      "changes": "Locally stored Wikimedia version."
+    },
+    {
+      "file": "food/greek-salad.jpg",
+      "subject": "Ястие: Χωριάτικη σαλάτα / Гръцка салата",
+      "author": "pastitio",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Greek_salad.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/dakos.jpg",
+      "subject": "Ястие: Κρητικός ντάκος / Критски дакос",
+      "author": "Benoît Prieur",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "source": "https://commons.wikimedia.org/wiki/File:Plat_de_Dakos_en_Cr%C3%A8te_en_juillet_2021.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/tzatziki.jpg",
+      "subject": "Ястие: Τζατζίκι / Дзадзики",
+      "author": "Nikodem Nijaki",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Tzatziki_meze_or_appetizer,_also_used_as_a_sauce.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/tirokafteri.jpg",
+      "subject": "Ястие: Τυροκαυτερή / Пикантна разядка с фета",
+      "author": "Alexander Baxevanis",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Tirokafteri.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/fava.jpg",
+      "subject": "Ястие: Φάβα Σαντορίνης / Фава от Санторини",
+      "author": "Wikimedia Commons contributor",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Greek_fava.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/dolmadakia.jpg",
+      "subject": "Ястие: Ντολμαδάκια / Лозови сарми",
+      "author": "Heidi Bauer",
+      "license": "CC BY-SA 2.5",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5",
+      "source": "https://commons.wikimedia.org/wiki/File:Greek_dolmades.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/gigantes.jpg",
+      "subject": "Ястие: Γίγαντες στο φούρνο / Едър боб на фурна",
+      "author": "Hevesli",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:Gigandes_plaki.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/fried-zucchini.jpg",
+      "subject": "Ястие: Κολοκυθάκια τηγανητά / Пържени тиквички",
+      "author": "Chris Olszewski",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Fried_Zucchini_dish.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/anthotyro-pies.jpg",
+      "subject": "Ястие: Τυροπιτάκια ανθότυρου / Питки с антотиро и мед",
+      "author": "Benoît Prieur",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "source": "https://commons.wikimedia.org/wiki/File:Restaurant_Erotokritos_(Almyrida)_-_beignets.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/breaded-feta.jpg",
+      "subject": "Ястие: Φέτα πανέ / Панирана фета",
+      "author": "Kritzolina",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Feta_Saganaki.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/smoked-mackerel.jpg",
+      "subject": "Ястие: Καπνιστό σκουμπρί / Пушена скумрия",
+      "author": "Miyuki Meinaka",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Kajika_no_Aburi,_Smoked_Mackerel_from_Kajika,_Japan.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/marinated-anchovies.jpg",
+      "subject": "Ястие: Γαύρος μαρινάτος / Маринована хамсия",
+      "author": "C messier",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:%CE%93%CE%B1%CF%8D%CF%81%CE%BF%CF%82_%CE%BC%CE%B1%CF%81%CE%B9%CE%BD%CE%AC%CF%84%CE%BF%CF%82_2607.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/grilled-sardines.jpg",
+      "subject": "Ястие: Σαρδέλα ψητή / Сардини на скара",
+      "author": "E4024",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Grilled_sardines.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/fried-anchovies.jpg",
+      "subject": "Ястие: Γαύρος τηγανητός / Пържена хамсия",
+      "author": "E4024",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Hamsi_tava_and_salad.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/tuna-tartare.jpg",
+      "subject": "Ястие: Ταρτάρ τόνου / Тартар от тон",
+      "author": "Sarah Ackerman from New York, USA",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Tuna_Tartare_(3897330416).jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/fish-fricassee.jpg",
+      "subject": "Ястие: Ψάρι ημέρας φρικασέ / Дневна риба фрикасе",
+      "author": "Tangopaso",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:Fricass%C3%A9e_de_poissons_(Brasserie_Mollard).jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/grilled-octopus.jpg",
+      "subject": "Ястие: Χταπόδι ψητό / Октопод на скара",
+      "author": "Baoothersks",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Grilled_octopus_with_chilly_salt.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/shrimp-saganaki.jpg",
+      "subject": "Ястие: Γαρίδες σαγανάκι / Скариди саганаки",
+      "author": "C messier",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:%CE%93%CE%B1%CF%81%CE%AF%CE%B4%CE%B5%CF%82_%CF%83%CE%B1%CE%B3%CE%B1%CE%BD%CE%AC%CE%BA%CE%B9_IMG_20230425_212334.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/seafood-orzotto.jpg",
+      "subject": "Ястие: Κριθαρότο θαλασσινών / Орзото с морски дарове",
+      "author": "Alpha",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Thalassino_Youvetsi_close-up_-_Hellenic_Republic_AUD24.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/shrimp-pasta.jpg",
+      "subject": "Ястие: Γαριδομακαρονάδα / Паста със скариди",
+      "author": "FranHogan",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Shrimp_pasta.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/gemista.jpg",
+      "subject": "Ястие: Γεμιστά / Пълнени домати и чушки",
+      "author": "Badseed",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Gemista.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/fish-soup.jpg",
+      "subject": "Ястие: Ψαρόσουπα / Рибена супа",
+      "author": "Gerda Arendt",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "source": "https://commons.wikimedia.org/wiki/File:Fish_soup,_Ibiza.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/pork-souvlaki.jpg",
+      "subject": "Ястие: Χοιρινό σουβλάκι / Свинско сувлаки",
+      "author": "EntaXoyas",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:%CE%95%CE%BB%CE%BB%CE%B7%CE%BD%CE%B9%CE%BA%CF%8C_%CE%A3%CE%BF%CF%85%CE%B2%CE%BB%CE%AC%CE%BA%CE%B9_-_panoramio.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "food/galaktoboureko.jpg",
+      "subject": "Ястие: Γαλακτομπούρεκο / Галактобуреко",
+      "author": "Badseed",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Galaktoboureko.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/lavraki.jpg",
+      "subject": "Риба: Dicentrarchus labrax / лаврак",
+      "author": "Miguel Mendez from Malahide, Ireland",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Sealife,_Bray,_Ireland._(6985874908).jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/sardela.jpg",
+      "subject": "Риба: Sardina pilchardus / сардина",
+      "author": "© Citron",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Sardina_pilchardus_2011.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/gavros.jpg",
+      "subject": "Риба: Engraulis encrasicolus / хамсия",
+      "author": "Jschop",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ansjovis.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/barbouni.jpg",
+      "subject": "Риба: Mullus barbatus / барбуня / червен барбун",
+      "author": "Roberto Pillon",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Mullus_barbatus_Paros_2.JPG",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/koutsomoura.jpg",
+      "subject": "Риба: Mullus surmuletus / ивичест барбун",
+      "author": "© Hans Hillewaert",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Mullus_surmuletus.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/kolios.jpg",
+      "subject": "Риба: Scomber colias / средиземноморска скумрия",
+      "author": "Etrusko25",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:Lanzardo_2.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/skoumpri.jpg",
+      "subject": "Риба: Scomber scombrus / атлантическа скумрия",
+      "author": "Mikael Nyman",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Scomber_scombrus_217326414.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/gopa.jpg",
+      "subject": "Риба: Boops boops / бопс / морска каракуда",
+      "author": "Roberto Pillon",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Boops_boops_Karpathos_01.JPG",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/melanouri.jpg",
+      "subject": "Риба: Oblada melanura / облада / седлова ципура",
+      "author": "Diego Delso",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Oblada_(Oblada_melanura),_%C4%8Airkewwa,_Malta,_Malta,_2021-08-24,_DD_26.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/sargos.jpg",
+      "subject": "Риба: Diplodus sargus / бяла морска каракуда",
+      "author": "Diego Delso",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Sargo_com%C3%BAn_(Diplodus_sargus),_Madeira,_Portugal,_2019-05-31,_DD_29.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/synagrida-fish.jpg",
+      "subject": "Риба: Dentex dentex / обикновен дентекс",
+      "author": "michael_bommerer",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Dentex_dentex_Canary.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/fagri.jpg",
+      "subject": "Риба: Pagrus pagrus / червен пагел / пагър",
+      "author": "Julien Renoult",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Pagrus_pagrus_579910017_(cropped).jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/lithrini.jpg",
+      "subject": "Риба: Pagellus erythrinus / червена пандора",
+      "author": "riblje oko.hr",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Pagellus_erythrinus_RO.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/salpa.jpg",
+      "subject": "Риба: Sarpa salpa / салпа",
+      "author": "Diego Delso",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Salema_(Sarpa_salpa),_Catania,_Sicilia,_Italia,_2025-04-04,_DD_90.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/kefalos.jpg",
+      "subject": "Риба: Mugil cephalus / кефал",
+      "author": "Diego Delso",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:M%C3%BAjol_(Mugil_cephalus),_Parque_natural_de_la_Arr%C3%A1bida,_Portugal,_2021-09-09,_DD_25.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/glossa.jpg",
+      "subject": "Риба: Solea solea / морски език",
+      "author": "© Hans Hillewaert",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Solea_solea_1.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/bakaliaros.jpg",
+      "subject": "Риба: Merluccius merluccius / европейски хек / мерлуза",
+      "author": "Fernando Losada Rodríguez",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Merluccius_merluccius.002_-_Aquarium_Finisterrae.JPG",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/xifias.jpg",
+      "subject": "Риба: Xiphias gladius / риба меч",
+      "author": "Naturalis Biodiversity Center",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "source": "https://commons.wikimedia.org/wiki/File:Xiphias_gladius_Linnaeus,_1758_2599925021.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/palamida.jpg",
+      "subject": "Риба: Sarda sarda / паламуд",
+      "author": "Sherman Foote Denton",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:Sarda_sarda.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/tonos.jpg",
+      "subject": "Риба: Thunnus thynnus / червен тон",
+      "author": "Unknown author",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:Bluefin-big.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/rofos.jpg",
+      "subject": "Риба: Epinephelus marginatus / тъмен групер",
+      "author": "Diego Delso",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Mero_(Epinephelus_marginatus),_Cabo_de_Palos,_Espa%C3%B1a,_2022-07-15,_DD_34.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/drakaina.jpg",
+      "subject": "Риба: Trachinus draco / голям морски дракон",
+      "author": "Tomasz Sienicki",
+      "license": "CC BY 1.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/1.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Trachinus_draco_2.jpeg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/skorpina.jpg",
+      "subject": "Риба: Scorpaena scrofa / червена скорпида",
+      "author": "Vicmicallef",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Red_Scorpionfish_(cropped).jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/zargana.jpg",
+      "subject": "Риба: Belone belone / зарган",
+      "author": "Sarah Faulwetter",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Garfish,_Peloponnese,_Peloponnese,_Western_Greece_and_the_Ionian_Islands,_GR_imported_from_iNaturalist_photo_222165464.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "fish/safridi.jpg",
+      "subject": "Риба: Trachurus mediterraneus / средиземноморски сафрид",
+      "author": "Foundling",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Jurel_blanco_o_mediterr%C3%A1neo_(Trachurus_mediterraneus).jpeg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "places/restaurant-harbour-01.jpg",
+      "subject": "Пристанището на Никити — ресторантски контекст",
+      "author": "Kritzolina",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Nikiti_harbour_01.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "places/restaurant-harbour-03.jpg",
+      "subject": "Пристанището на Никити — ресторантски контекст",
+      "author": "Kritzolina",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Nikiti_harbour_03.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "places/restaurant-ergon-13.jpg",
+      "subject": "Крайбрежен ресторантски контекст в Никити",
+      "author": "KaiKemmann",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_13.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "places/restaurant-ergon-17.jpg",
+      "subject": "Крайбрежен ресторантски контекст в Никити",
+      "author": "KaiKemmann",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_17.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "places/sight-agios-nikitas.jpg",
+      "subject": "Църквата Св. Никита в Никити",
+      "author": "LucT",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Agios_Nikitas_-_panoramio.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "places/sight-sofronios.jpg",
+      "subject": "Раннохристиянска базилика Софроний",
+      "author": "W.Horseman",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "source": "https://commons.wikimedia.org/wiki/File:Nikiti_Banner_Agios_Sofronios.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "places/sight-agios-nikolaos.jpg",
+      "subject": "Село Агиос Николаос, Халкидики",
+      "author": "Wolfgang Reiter",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:%C3%80gios_Nik%C3%B3laos,IMG2_0209-B.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "places/sight-old-nikiti-02.jpg",
+      "subject": "Старо Никити — исторически контекст",
+      "author": "M sotirov",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "source": "https://commons.wikimedia.org/wiki/File:Nikiti_old_2.JPG",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "places/beach-kalogria.jpg",
+      "subject": "Плаж Калогрия край Никити",
+      "author": "ale3andro",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Kalogria_Beach,_Nikiti,_Chalkidiki,_Greece.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "places/beach-elia.jpg",
+      "subject": "Плаж Елия на Ситония",
+      "author": "Edal Anton Lefterov",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:EliaBeach.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "places/beach-lagomandra.jpg",
+      "subject": "Плаж Лагомандра на Ситония",
+      "author": "Kritzolina",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Lagomandra_Beach_01.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "places/beach-trani-ammouda.jpg",
+      "subject": "Плаж Трани Амуда край Ормос Панагиас",
+      "author": "KaiKemmann",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Angelos_Hotel,_%CE%A0%CE%B1%CF%81%CE%B1%CE%BB%CE%AF%CE%B1_%CE%A4%CF%81%CE%B1%CE%BD%CE%AE_%CE%91%CE%BC%CE%BC%CE%BF%CF%8D%CE%B4%CE%B1,_Trani_Ammouda_beach,_Agios_Nikolaos,_630_78_%CE%8C%CF%81%CE%BC%CE%BF%CF%82_%CE%A0%CE%B1%CE%BD%CE%B1%CE%B3%CE%AF%CE%B1%CF%82_Ormos_Panagias,_Greece.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    },
+    {
+      "file": "places/beach-nikiti-03.jpg",
+      "subject": "Плаж Никити",
+      "author": "Kritzolina",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Nikiti_Beach_03.jpg",
+      "changes": "Locally stored Wikimedia thumbnail; no editorial changes."
+    }
+  ]
+}

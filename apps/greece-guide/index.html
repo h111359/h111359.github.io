@@ -1,740 +1,323 @@
 <!DOCTYPE html>
 <!--
-  index.html: Offline-ready Bulgarian travel guide for Nikiti and nearby Sithonia.
-  Component: Greece Guide — source-visible destinations, food, phrases, and safety references.
+  index.html: Accessible Bulgarian catalogue for food, restaurants, fish, sights, and beaches around Nikiti.
+  Component: Nikiti Catalogue — five hash-addressable tabs with complete source-visible fallback sections.
 -->
 <html lang="bg">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Никити и Ситония | Практичен пътеводител</title>
-  <meta name="description" content="Практичен пътеводител на български за плажове, храна, гръцки фрази, пътуване и безопасност около Никити и Ситония.">
+  <title>Никити | Проверим каталог за храна, места и плажове</title>
+  <meta name="description" content="Статичен пътеводител на български за ястия, ресторанти, гръцки риби, забележителности и плажове в и около Никити.">
   <link rel="canonical" href="https://hmhristov.com/apps/greece-guide/">
-  <meta property="og:title" content="Никити и Ситония | Практичен пътеводител">
-  <meta property="og:description" content="Проверими идеи за плажове, храна и спокойно пътуване с автомобил около Никити.">
+  <meta property="og:title" content="Никити | Проверим местен каталог">
+  <meta property="og:description" content="Пет каталога за решения на място в Никити — с дати, координати, цени и източници.">
   <meta property="og:url" content="https://hmhristov.com/apps/greece-guide/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="bg_BG">
-  <meta property="og:image" content="https://hmhristov.com/images/social/projects-preview.jpg">
-  <meta property="og:image:alt" content="Редакционна визуализация на проектите в hmhristov.com.">
-  <meta name="theme-color" content="#155f70">
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
+  <meta property="og:image" content="https://hmhristov.com/apps/greece-guide/images/nikiti-kastri.jpg">
+  <meta property="og:image:alt" content="Брегът на Никити и заливът към Кастри.">
+  <meta name="theme-color" content="#0f5b66">
+  <link rel="icon" href="images/nikiti-kastri.jpg">
+  <link rel="stylesheet" href="styles.css?v=4">
+  <script src="app.js?v=4" defer></script>
 </head>
 <body>
-  <!-- Skip link: Enter moves keyboard focus directly to the guide content. -->
-  <a class="skip-link" href="#main-content">Към основното съдържание</a>
+  <!-- Skip link: Enter moves keyboard focus directly to the catalogue controls and content. -->
+  <a class="skip-link" href="#catalogue">Към каталога</a>
 
   <!--
-    Header and primary section navigation
-    Design intent: Keep the guide identity and five content routes within thumb reach.
-    Target: Scrollable mobile navigation that wraps into a calm desktop bar.
+    Site header
+    Design intent: Preserve the portfolio relationship without competing with the travel task.
+    Target: Compact at every viewport; the Projects link remains a native keyboard-accessible anchor.
   -->
-  <header class="guide-header">
-    <div class="shell guide-header__top">
-      <!-- Brand link: ordinary anchor; Enter returns to the portfolio Projects page. -->
-      <a class="guide-brand" href="../../apps.html"><span aria-hidden="true">←</span> Проекти</a>
-      <p class="guide-location">Никити · Ситония</p>
-      <p class="connection-note" data-connection-status>Външните карти и източници изискват интернет.</p>
+  <header class="site-header">
+    <div class="shell site-header__inner">
+      <!-- Portfolio link: Enter returns to the source-level Projects page. -->
+      <a class="back-link" href="../../apps.html"><span aria-hidden="true">←</span> Projects</a>
+      <p class="site-header__place">Νικήτη · Халкидики</p>
     </div>
-    <!-- Navigation links: Tab follows source order; Enter jumps to each labelled section. -->
-    <nav class="section-nav" aria-label="Раздели на пътеводителя">
-      <div class="shell section-nav__scroll">
-        <a href="#home">Начало</a>
-        <a href="#places">Плажове и забележителности</a>
-        <a href="#food">Храна и напитки</a>
-        <a href="#language">Гръцки език</a>
-        <a href="#practical">Практично и спешни случаи</a>
-      </div>
-    </nav>
   </header>
 
   <!-- ============================================================
-       Main guide content — all essential information remains visible without JavaScript
+       Main content — tabs lead directly into all five source-visible catalogue sections
        ============================================================ -->
-  <main id="main-content">
-    <!--
-      Home hero
-      Design intent: Establish Nikiti as the anchor and surface the three decisions needed on arrival.
-      Target: Single-column mobile reading flow with a wider editorial composition on desktop.
-    -->
-    <section class="hero" id="home" aria-labelledby="guide-title">
-      <div class="shell hero__grid">
-        <div>
-          <p class="eyebrow">Публичен пътеводител · прегледано на 18 август 2026 г.</p>
-          <h1 id="guide-title">Никити и<br><em>Ситония</em></h1>
-          <p class="hero__lede">Един надежден ориентир за български семейства и приятели с автомобили: близки плажове, проверими места за храна, полезен гръцки и спокойни решения при непредвидена ситуация.</p>
-          <p class="review-note"><strong>Важно:</strong> работно време, цени, разписания, достъп и временни ограничения се променят. Проверете свързания източник непосредствено преди тръгване.</p>
-        </div>
-        <aside class="first-day" aria-labelledby="first-day-title">
-          <p class="eyebrow">Първият ден</p>
-          <h2 id="first-day-title">Подредете основите</h2>
-          <ol>
-            <li>Запазете <strong>112</strong> и адреса на настаняването на латиница.</li>
-            <li>Проверете гориво, вода, слънцезащита и дневния пожарен риск.</li>
-            <li>Разходете се по крайбрежната алея и Старо Никити; оставете дългия преход за следващата сутрин.</li>
-          </ol>
-        </aside>
-      </div>
-    </section>
+  <main id="catalogue">
+    <!-- Accessible document heading: preserves hierarchy without restoring the removed visual introduction. -->
+    <h1 class="visually-hidden">Каталози за Никити</h1>
 
     <!--
-      Quick routes and dated-trip context
-      Design intent: Turn a large reference into an actionable pre-departure checklist.
-      Target: Compact cards for scanning on a phone beside the car.
+      Five-tab catalogue navigation
+      Design intent: Put the five primary decisions before introductory content and keep them within horizontal thumb reach.
+      Accessibility: role=tablist names the pattern; Tab enters it, Arrow Left/Right and Home/End move and activate tabs, Enter follows the native hash link.
     -->
-    <section class="section section--seafoam" aria-labelledby="trip-title">
-      <div class="shell">
-        <div class="section-heading">
-          <p class="eyebrow">22–30 август 2026</p>
-          <h2 id="trip-title">Осем души, две поколения, една удобна база</h2>
-          <p>Периодът е в активния летен и пожароопасен сезон. Излизайте по-рано за популярните плажове, оставяйте резерв от вода в автомобилите и не разчитайте на вчерашна информация за достъп.</p>
-        </div>
-        <div class="trip-grid">
-          <article>
-            <span class="card-number">01</span>
-            <h3>Сутрин</h3>
-            <p>Тръгнете преди силната жега и паркирайте само на ясно разрешено място, без да блокирате път за аварийни автомобили.</p>
-          </article>
-          <article>
-            <span class="card-number">02</span>
-            <h3>На плажа</h3>
-            <p>Дръжте 8-годишното дете под непрекъснат надзор. Проверете флага, вятъра, дъното и наличието на спасител на място.</p>
-          </article>
-          <article>
-            <span class="card-number">03</span>
-            <h3>Вечер</h3>
-            <p>За група от осем души се обадете предварително. Потвърдете часа, попитайте за маса навън и поискайте меню преди поръчка.</p>
-          </article>
-        </div>
-        <!-- Quick links: Tab and Enter activate ordinary in-page anchors with visible focus. -->
-        <div class="quick-links" aria-label="Бързи връзки">
-          <a href="#emergency">Спешни номера</a>
-          <a href="#nearby-places">15+ близки места</a>
-          <a href="#food-list">30+ места за храна</a>
-          <a href="#phrase-list">100+ фрази</a>
-        </div>
+    <nav class="catalogue-tabs" aria-label="Каталози за Никити">
+      <div class="shell catalogue-tabs__scroll" role="tablist" aria-label="Пет основни каталога">
+        <a id="tab-food" class="catalogue-tab is-active" href="#food" role="tab" aria-controls="food" aria-selected="true">Храна</a>
+        <a id="tab-restaurants" class="catalogue-tab" href="#restaurants" role="tab" aria-controls="restaurants" aria-selected="false">Ресторанти</a>
+        <a id="tab-fish" class="catalogue-tab" href="#fish" role="tab" aria-controls="fish" aria-selected="false">Гръцки риби</a>
+        <a id="tab-sights" class="catalogue-tab" href="#sights" role="tab" aria-controls="sights" aria-selected="false">Забележителности</a>
+        <a id="tab-beaches" class="catalogue-tab" href="#beaches" role="tab" aria-controls="beaches" aria-selected="false">Плажове</a>
       </div>
-    </section>
+    </nav>
 
     <!--
-      Progressive search and filters
-      Design intent: Add fast lookup without withholding source content when scripts are unavailable.
-      Target: Hidden until JavaScript confirms enhancement; controls stack at narrow widths.
+      Progressive filter controls
+      Design intent: One stable control surface adapts to each active catalogue to reduce mobile clutter.
+      Accessibility: every native control has a visible label; reset supports Enter and Space; the result count is announced politely.
     -->
-    <section class="section search-panel" data-search-panel hidden aria-labelledby="search-title">
+    <section class="filter-section">
       <div class="shell">
-        <div class="section-heading section-heading--compact">
-          <p class="eyebrow">Бързо намиране</p>
-          <h2 id="search-title">Филтрирай справочника</h2>
-        </div>
-        <form class="filters" data-filter-form>
-          <!-- Search input: associated label names the field; typing filters all indexed cards. -->
-          <label>
-            <span>Текстово търсене</span>
-            <input type="search" name="query" placeholder="напр. паркинг, мусака, лекар">
+        <form class="catalogue-filters" data-catalog-filters hidden>
+          <label class="filter-field filter-field--search">
+            <span>Търсене</span>
+            <input type="search" data-filter-query placeholder="Име, вкус, място…" autocomplete="off">
           </label>
-          <!-- Content filter: native select supports arrows, Space, and Enter. -->
-          <label>
-            <span>Раздел</span>
-            <select name="kind">
-              <option value="all">Всички</option>
-              <option value="place">Места</option>
-              <option value="food">Храна</option>
-              <option value="phrase">Фрази</option>
-            </select>
+          <label class="filter-field">
+            <span data-filter-a-label>Категория</span>
+            <select data-filter-a><option value="all">Всички</option></select>
           </label>
-          <!-- Category filter: combines place type, food type, and language situation. -->
-          <label>
-            <span>Категория / ситуация</span>
-            <select name="category">
-              <option value="all">Всички</option>
-              <optgroup label="Места">
-                <option value="beach">Плаж</option>
-                <option value="history">История</option>
-                <option value="village">Селище</option>
-                <option value="nature">Природа</option>
-              </optgroup>
-              <optgroup label="Храна">
-                <option value="tavern">Таверна</option>
-                <option value="restaurant">Ресторант</option>
-                <option value="cafe">Кафе / сладко</option>
-                <option value="bakery">Пекарна</option>
-                <option value="street">Бързо хапване</option>
-              </optgroup>
-              <optgroup label="Гръцки">
-                <option value="greetings">Поздрави</option>
-                <option value="polite">Учтивост</option>
-                <option value="restaurant-phrase">Ресторант</option>
-                <option value="shopping">Пазаруване</option>
-                <option value="beach-phrase">Плаж</option>
-                <option value="transport">Транспорт</option>
-                <option value="accommodation">Настаняване</option>
-                <option value="health">Здраве</option>
-                <option value="emergency-phrase">Спешни случаи</option>
-                <option value="numbers">Числа</option>
-              </optgroup>
-            </select>
+          <label class="filter-field">
+            <span data-filter-b-label>Допълнителен филтър</span>
+            <select data-filter-b><option value="all">Всички</option></select>
           </label>
-          <!-- Area filter: native select narrows destination and dining cards geographically. -->
-          <label>
-            <span>Район</span>
-            <select name="area">
-              <option value="all">Всички</option>
-              <option value="nikiti">Никити</option>
-              <option value="west">Западна Ситония</option>
-              <option value="east">Източна Ситония</option>
-              <option value="north">Северно от Никити</option>
-              <option value="beyond">Извън предпочитания радиус</option>
-            </select>
+          <label class="filter-field">
+            <span>Сортиране</span>
+            <select data-sort><option value="name">Име</option></select>
           </label>
-          <!-- Feature filter: native select narrows cards by useful trip context. -->
-          <label>
-            <span>Подходящо за</span>
-            <select name="feature">
-              <option value="all">Всички</option>
-              <option value="family">Семейство</option>
-              <option value="easy">Лесен достъп</option>
-              <option value="quick">Бързо хапване</option>
-              <option value="group">Група</option>
-              <option value="view">Гледка</option>
-            </select>
-          </label>
-          <!-- Reset button: Enter or Space restores all controls and records. -->
-          <button type="reset">Изчисти</button>
+          <!-- Reset button: Enter or Space restores all active-tab controls. -->
+          <button class="filter-reset" type="reset">Изчисти</button>
         </form>
         <p class="result-status" data-result-status role="status" aria-live="polite"></p>
+        <noscript><p class="noscript-note">Без JavaScript петте каталога са показани последователно по-долу. Интерактивното филтриране и сортиране не са налични.</p></noscript>
       </div>
     </section>
-    <noscript><p class="shell noscript-note">Търсенето изисква JavaScript, но целият справочник остава достъпен по-долу.</p></noscript>
 
     <!--
-      Beaches and sights
-      Design intent: Compare realistic drive time, access, and family fit before opening a map.
-      Target: Dense cards that remain readable from 320 CSS pixels upward.
+      Food catalogue panel
+      Design intent: Compare canonical dish types by meaning and dated menu evidence, not by decorative menu photography.
+      Accessibility: role=tabpanel links this section to its tab; without JavaScript it remains in normal document flow.
     -->
-    <section class="section" id="places" aria-labelledby="places-title">
+    <section class="catalogue-panel catalogue-panel--food" id="food" role="tabpanel" aria-labelledby="tab-food" tabindex="0">
       <div class="shell">
         <div class="section-heading">
-          <p class="eyebrow">Близък радиус</p>
-          <h2 id="places-title">Плажове и забележителности</h2>
-          <p>Времената са ориентири от центъра на Никити при нормално движение, а не обещание. През август добавете резерв за трафик и търсене на място.</p>
+          <p class="eyebrow">Менюта с публикувани цени</p>
+          <h2>Храна</h2>
+          <p>Нормализирани типове ястия от официалните менюта на Synagrida и Taverna Marina. Размери, гарнитури и дребни варианти не са отделни записи.</p>
         </div>
-        <!-- Card links: every map/source is an ordinary anchor; Tab reaches it and Enter opens a new isolated tab. -->
-        <div class="place-grid searchable-list" id="nearby-places">
-          <article class="info-card" data-search-item data-kind="place" data-category="beach" data-area="nikiti" data-feature="family easy view">
-            <div class="card-topline"><span>Плаж</span><strong>0–5 мин</strong></div>
-            <h3>Градски плаж Никити</h3>
-            <p>Дълга крайбрежна ивица до алеята, удобна за първи или кратък ден. Избира се заради лесния достъп до храна и услуги.</p>
-            <dl><dt>Достъп</dt><dd>Улично паркиране; в пиков час местата намаляват.</dd><dt>За семейства</dt><dd>Да; проверете конкретния сектор и морския флаг.</dd></dl>
-            <div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Nikiti+Beach+Greece" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/beaches/nikiti-beach/" target="_blank" rel="noopener noreferrer">Източник</a></div>
-          </article>
-          <article class="info-card" data-search-item data-kind="place" data-category="history village" data-area="nikiti" data-feature="family easy view">
-            <div class="card-topline"><span>Старо селище</span><strong>5 мин</strong></div>
-            <h3>Старо Никити и „Св. Никита“</h3>
-            <p>Каменни къщи, тесни улици и църквата от XIX век дават културен контрапункт на плажа. Подходящо е за привечер и залез.</p>
-            <dl><dt>Достъп</dt><dd>Паркирайте в периферията; улиците нагоре са тесни и стръмни.</dd><dt>За семейства</dt><dd>Да, с удобни обувки и внимание по паважа.</dd></dl>
-            <div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Old+Nikiti+Agios+Nikitas+Church" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://dimossithonias.gr/paroysiasi-dimoy/nikiti/" target="_blank" rel="noopener noreferrer">Община</a></div>
-          </article>
-          <article class="info-card" data-search-item data-kind="place" data-category="history" data-area="nikiti" data-feature="family easy">
-            <div class="card-topline"><span>Археология</span><strong>5 мин</strong></div>
-            <h3>Раннохристиянска базилика „Софроний“</h3>
-            <p>Останки от раннохристиянски комплекс с мозайки близо до Никити. Причината да я потърсите е кратката среща с местната история.</p>
-            <dl><dt>Достъп</dt><dd>Следвайте картата; проверете на място дали обектът е отворен.</dd><dt>За семейства</dt><dd>Да за по-големи деца; няма гарантирани посетителски услуги.</dd></dl>
-            <div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Basilica+of+Sophronios+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/places/nikiti/" target="_blank" rel="noopener noreferrer">Източник</a></div>
-          </article>
-          <article class="info-card" data-search-item data-kind="place" data-category="beach" data-area="west" data-feature="family easy view">
-            <div class="card-topline"><span>Плаж</span><strong>10 мин</strong></div>
-            <h3>Агиос Йоанис</h3>
-            <p>Широк залив южно от Никити с лесен автомобилен достъп. Добър избор за група, която иска пространство и ясна връзка с главния път.</p>
-            <dl><dt>Достъп</dt><dd>Паркингът и организацията варират по сектор; не спирайте по платното.</dd><dt>За семейства</dt><dd>Да; огледайте дъното и дълбочината при пристигане.</dd></dl>
-            <div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Agios+Ioannis+Beach+Sithonia" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/locations/nikiti/" target="_blank" rel="noopener noreferrer">Източник</a></div>
-          </article>
-          <article class="info-card" data-search-item data-kind="place" data-category="beach nature" data-area="west" data-feature="family view">
-            <div class="card-topline"><span>Малък залив</span><strong>10 мин</strong></div>
-            <h3>Кастри</h3>
-            <p>Компактен залив и островче близо до Никити. Изберете го за кратко плуване и по-интимен пейзаж, но не разчитайте на много място.</p>
-            <dl><dt>Достъп</dt><dd>Ограничени места и неравен подход; пристигнете рано.</dd><dt>За семейства</dt><dd>С повишено внимание при скали и без непрекъснати услуги.</dd></dl>
-            <div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Kastri+Beach+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/locations/nikiti/" target="_blank" rel="noopener noreferrer">Източник</a></div>
-          </article>
-          <article class="info-card" data-search-item data-kind="place" data-category="beach" data-area="west" data-feature="family easy view">
-            <div class="card-topline"><span>Плаж</span><strong>15 мин</strong></div>
-            <h3>Калогрия</h3>
-            <p>Популярен пясъчен залив на западния бряг. Причината за посещение са прозрачната вода и удобната комбинация от организирани и свободни участъци.</p>
-            <dl><dt>Достъп</dt><dd>Паркирането се натоварва през август; проверете обозначенията.</dd><dt>За семейства</dt><dd>Да; дръжте децата близо при по-оживени сектори.</dd></dl>
-            <div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Kalogria+Beach+Sithonia" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://www.blueflag.gr/el/awards/2026" target="_blank" rel="noopener noreferrer">Blue Flag 2026</a></div>
-          </article>
-          <article class="info-card" data-search-item data-kind="place" data-category="beach" data-area="west" data-feature="family easy view">
-            <div class="card-topline"><span>Плаж</span><strong>15 мин</strong></div>
-            <h3>Ковиу</h3>
-            <p>Защитен на вид залив между Агиос Йоанис и Калогрия. Подходящ е за спокойна плажна пауза и красиви цветове на водата.</p>
-            <dl><dt>Достъп</dt><dd>Достъпите са отделни; не използвайте частен хотелски вход без разрешение.</dd><dt>За семейства</dt><dd>Да, след проверка на условията в деня.</dd></dl>
-            <div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Koviou+Beach+Sithonia" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/beaches/9-most-popular-beaches-with-natural-shade-in-sithonia/" target="_blank" rel="noopener noreferrer">Източник</a></div>
-          </article>
-          <article class="info-card" data-search-item data-kind="place" data-category="beach nature" data-area="west" data-feature="family view">
-            <div class="card-topline"><span>Малки заливи</span><strong>15–20 мин</strong></div>
-            <h3>Спатиес</h3>
-            <p>Два малки пясъчни залива с боров пейзаж. Причината да ги изберете е естествената атмосфера, не наборът от услуги.</p>
-            <dl><dt>Достъп</dt><dd>Малък и неформален паркинг; възможно е кратко ходене.</dd><dt>За семейства</dt><dd>Да с личен чадър, вода и наблюдение около скалите.</dd></dl>
-            <div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Spathies+Beach+Sithonia" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/beaches/spathies-beach/" target="_blank" rel="noopener noreferrer">Източник</a></div>
-          </article>
-          <article class="info-card" data-search-item data-kind="place" data-category="beach nature" data-area="west" data-feature="family view">
-            <div class="card-topline"><span>Брегова ивица</span><strong>20 мин</strong></div>
-            <h3>Елия</h3>
-            <p>Поредица от плажни участъци и скалисти паузи под боровете. Подходяща е за избор между различни по характер малки спирки.</p>
-            <dl><dt>Достъп</dt><dd>Изберете конкретен обществен достъп предварително; не всички сектори са еднакви.</dd><dt>За семейства</dt><dd>Да, но огледайте стъпалата, скалите и сянката.</dd></dl>
-            <div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Elia+Beach+Sithonia" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://www.blueflag.gr/el/awards/2026" target="_blank" rel="noopener noreferrer">Blue Flag 2026</a></div>
-          </article>
-          <article class="info-card" data-search-item data-kind="place" data-category="beach nature" data-area="west" data-feature="family easy view">
-            <div class="card-topline"><span>Плаж</span><strong>20–25 мин</strong></div>
-            <h3>Лагомандра</h3>
-            <p>По-дълга плажна зона, известна с боровете и естествената сянка. Добър избор за по-продължителен семеен ден.</p>
-            <dl><dt>Достъп</dt><dd>Има различни входове; уточнете обществения достъп и правилата за паркиране.</dd><dt>За семейства</dt><dd>Да; Blue Flag се отнася до конкретно обозначения сектор.</dd></dl>
-            <div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Lagomandra+Beach+Sithonia" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://www.blueflag.gr/el/awards/2026" target="_blank" rel="noopener noreferrer">Blue Flag 2026</a></div>
-          </article>
-          <article class="info-card" data-search-item data-kind="place" data-category="beach village nature" data-area="north" data-feature="family easy">
-            <div class="card-topline"><span>Плаж и парк</span><strong>15 мин</strong></div>
-            <h3>Метаморфоси</h3>
-            <p>Малко селище северно от Никити с крайбрежие и сенчест централен парк. Подходящо за по-тиха следобедна разходка.</p>
-            <dl><dt>Достъп</dt><dd>Градски улици и отделни плажни подходи; следвайте местните знаци.</dd><dt>За семейства</dt><dd>Да; някои спускания към морето са по-стръмни.</dd></dl>
-            <div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Metamorfosi+Beach+Halkidiki" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/locations/metamorfosi/" target="_blank" rel="noopener noreferrer">Източник</a></div>
-          </article>
-          <article class="info-card" data-search-item data-kind="place" data-category="village history" data-area="east" data-feature="family easy">
-            <div class="card-topline"><span>Планинско селище</span><strong>15 мин</strong></div>
-            <h3>Агиос Николаос</h3>
-            <p>Традиционно селище навътре от източния бряг. Причината за посещение е спокойна разходка извън морската алея.</p>
-            <dl><dt>Достъп</dt><dd>Паркирайте извън тесните централни улици.</dd><dt>За семейства</dt><dd>Да; удобна кратка спирка по пътя към Ормос Панагиас.</dd></dl>
-            <div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Agios+Nikolaos+Sithonia" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/locations/ormos-panagias/" target="_blank" rel="noopener noreferrer">Регионален източник</a></div>
-          </article>
-          <article class="info-card" data-search-item data-kind="place" data-category="village nature" data-area="east" data-feature="family easy view">
-            <div class="card-topline"><span>Рибарско пристанище</span><strong>20 мин</strong></div>
-            <h3>Ормос Панагиас</h3>
-            <p>Малко пристанище с рибарски лодки и отправни точки за морски екскурзии. Посетете го за разходка, гледка и обяд край водата.</p>
-            <dl><dt>Достъп</dt><dd>Натоварено при отплаване на туристическите лодки; не блокирайте кея.</dd><dt>За семейства</dt><dd>Да, с внимание около пристанищния ръб и движението.</dd></dl>
-            <div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Ormos+Panagias+Sithonia" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/locations/ormos-panagias/" target="_blank" rel="noopener noreferrer">Източник</a></div>
-          </article>
-          <article class="info-card" data-search-item data-kind="place" data-category="beach" data-area="east" data-feature="family easy view">
-            <div class="card-topline"><span>Дълъг плаж</span><strong>20–25 мин</strong></div>
-            <h3>Трани Амуда / Ливрохио</h3>
-            <p>Широка пясъчна ивица до Ормос Панагиас. Причината да я предпочетете е пространството за семейна група и по-дълъг престой.</p>
-            <dl><dt>Достъп</dt><dd>Няколко подхода и зони за спиране; спазвайте обозначените входове.</dd><dt>За семейства</dt><dd>Да; проверете флага и спасителния сектор на място.</dd></dl>
-            <div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Trani+Ammouda+Livrochio+Beach" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://www.blueflag.gr/el/awards/2026" target="_blank" rel="noopener noreferrer">Blue Flag 2026</a></div>
-          </article>
-          <article class="info-card" data-search-item data-kind="place" data-category="beach nature village" data-area="east" data-feature="family view">
-            <div class="card-topline"><span>Заливи</span><strong>25–30 мин</strong></div>
-            <h3>Вурвуру и Кариди</h3>
-            <p>Лагунен пейзаж, плитки заливи и гледки към остров Диапорос. Подходящо за разнообразие спрямо западния бряг.</p>
-            <dl><dt>Достъп</dt><dd>Кариди има ограничено неформално паркиране; не навлизайте сред дърветата.</dd><dt>За семейства</dt><dd>Да, но популярните участъци се запълват рано.</dd></dl>
-            <div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Karidi+Beach+Vourvourou" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://www.visitgreece.gr/en/blog/travel-tips/sithonia-discover-the-gem-of-northern-greece" target="_blank" rel="noopener noreferrer">Visit Greece</a></div>
-          </article>
-          <article class="info-card" data-search-item data-kind="place" data-category="village" data-area="west" data-feature="family easy view">
-            <div class="card-topline"><span>Крайбрежно градче</span><strong>25–30 мин</strong></div>
-            <h3>Неос Мармарас</h3>
-            <p>Оживено амфитеатрално градче на западния бряг. Причината за посещение е вечерната разходка, пристанището и по-големият избор за храна.</p>
-            <dl><dt>Достъп</dt><dd>Стръмни улици и натоварен център; използвайте периферен паркинг.</dd><dt>За семейства</dt><dd>Да, но планирайте ходене по наклон.</dd></dl>
-            <div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Neos+Marmaras+Sithonia" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/places/neos-marmaras/" target="_blank" rel="noopener noreferrer">Източник</a></div>
-          </article>
-          <article class="info-card info-card--beyond" data-search-item data-kind="place" data-category="village history nature" data-area="beyond" data-feature="family view">
-            <div class="card-topline"><span>Извън радиуса</span><strong>35–45 мин</strong></div>
-            <h3>Партенонас</h3>
-            <p>Възстановено планинско село над Неос Мармарас с гледка към залива. Допълнителна възможност за залез, ясно извън предпочитаните 20–30 минути.</p>
-            <dl><dt>Достъп</dt><dd>Изкачване по завои; не тръгвайте при умора или лоша видимост.</dd><dt>За семейства</dt><dd>Да, ако групата приема по-дълго пътуване и наклон.</dd></dl>
-            <div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Parthenonas+Sithonia" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/restaurants/" target="_blank" rel="noopener noreferrer">Регионален източник</a></div>
-          </article>
+        <div class="catalogue-grid fallback-list" data-catalog-list>
+          <article><h3>Χωριάτικη σαλάτα · Гръцка салата</h3><p>Домати, краставица, лук, маслини и фета · Synagrida 14,50 € · проверено 21.08.2026.</p></article>
+          <article><h3>Κρητικός ντάκος · Критски дакос</h3><p>Ечемичен сухар с домат и маслинова паста · Synagrida 14,50 €.</p></article>
+          <article><h3>Τζατζίκι · Дзадзики</h3><p>Студена млечна разядка · Synagrida 7 € · Marina 6,50 €.</p></article>
+          <article><h3>Τυροκαυτερή · Пикантна фета</h3><p>Фета, люта чушка и зехтин · Synagrida 7 € · Marina 6,50 €.</p></article>
+          <article><h3>Φάβα Σαντορίνης · Фава</h3><p>Пюре от жълт грах с каперси · Synagrida 7 €.</p></article>
+          <article><h3>Ντολμαδάκια · Лозови сарми</h3><p>Лозови листа с ориз и билки · Marina 7,50 €.</p></article>
+          <article><h3>Γίγαντες στο φούρνο · Едър боб на фурна</h3><p>Боб в доматен сос · Marina 8,50 €.</p></article>
+          <article><h3>Κολοκυθάκια τηγανητά · Пържени тиквички</h3><p>Хрупкави тиквички със сос · Synagrida 8 € · Marina 7,50 €.</p></article>
+          <article><h3>Τυροπιτάκια ανθότυρου · Питки с антотиро</h3><p>Сирене, мащерков мед и мак · Synagrida 9,50 €.</p></article>
+          <article><h3>Φέτα πανέ · Панирана фета</h3><p>Хрупкава фета със сусам и мед · Synagrida 9,50 €.</p></article>
+          <article><h3>Καπνιστό σκουμπρί · Пушена скумрия</h3><p>С лук и лимонов дресинг · Synagrida 9,50 € · Marina 8 €.</p></article>
+          <article><h3>Γαύρος μαρινάτος · Маринована хамсия</h3><p>Лимон, пипер и мащерка · Synagrida 10 €.</p></article>
+          <article><h3>Σαρδέλα ψητή · Сардини на скара</h3><p>Със зехтин и лимон · Synagrida 16,50 €.</p></article>
+          <article><h3>Γαύρος τηγανητός · Пържена хамсия</h3><p>С айоли и лимон · Synagrida 13,50 €.</p></article>
+          <article><h3>Ταρτάρ τόνου · Тартар от тон</h3><p>Соев сос, сусам и лайм · Synagrida 26 €.</p></article>
+          <article><h3>Ψάρι ημέρας φρικασέ · Дневна риба фрикасе</h3><p>Диви зелени листа и авголемоно · Synagrida 28 €.</p></article>
+          <article><h3>Χταπόδι ψητό · Октопод на скара</h3><p>С фава и карамелизиран лук · Synagrida 20 €.</p></article>
+          <article><h3>Γαρίδες σαγανάκι · Скариди саганаки</h3><p>Домат, фета и босилек · Synagrida 21 €.</p></article>
+          <article><h3>Κριθαρότο θαλασσινών · Орзото с морски дарове</h3><p>Скариди, миди, октопод и калмари · Synagrida 21,50 €.</p></article>
+          <article><h3>Γαριδομακαρονάδα · Паста със скариди</h3><p>Synagrida 22 € · Marina 24 €.</p></article>
+          <article><h3>Μουσακάς · Мусака</h3><p>Патладжан, картоф, кайма и бешамел · Marina 13 €.</p></article>
+          <article><h3>Γεμιστά · Пълнени домати и чушки</h3><p>Ориз и билки · Marina 10 €.</p></article>
+          <article><h3>Ψαρόσουπα · Рибена супа</h3><p>Marina 7 € малка / 12 € голяма.</p></article>
+          <article><h3>Χοιρινό σουβλάκι · Свинско сувлаки</h3><p>С питка, картофи и дзадзики · Synagrida 18,50 €.</p></article>
+          <article><h3>Γαλακτομπούρεκο · Галактобуреко</h3><p>С шамфъстък и ванилов сладолед · Synagrida 14,50 €.</p></article>
         </div>
       </div>
     </section>
 
     <!--
-      Food directory
-      Design intent: Offer a verification-first shortlist, not volatile rankings or promises.
-      Target: Compact cards with consistent visit context and two explicit outbound checks.
+      Restaurant catalogue panel
+      Design intent: Show coverage and missing evidence with equal visual weight so sparse profiles are never overstated.
+      Accessibility: source-visible cards remain reachable in sequential reading order when scripts fail.
     -->
-    <section class="section section--sand" id="food" aria-labelledby="food-title">
+    <section class="catalogue-panel catalogue-panel--restaurants" id="restaurants" role="tabpanel" aria-labelledby="tab-restaurants" tabindex="0">
       <div class="shell">
         <div class="section-heading">
-          <p class="eyebrow">Провери, после избери</p>
-          <h2 id="food-title">Храна и напитки</h2>
-          <p>Това е справочник за избор, не класация. Обектите са потвърдени чрез регионални туристически каталози или актуален ресторантски индекс; менюта, качество, свободни места и работно време не са гарантирани.</p>
+          <p class="eyebrow">Физически в Никити · пълно хранене</p>
+          <h2>Ресторанти</h2>
+          <p>Включени са проверимо идентифицирани ресторанти, таверни, грилове и пицарии. Кафенета, пекарни и десертни обекти без пълно меню са изключени.</p>
         </div>
-        <!-- Food links: map and source anchors are keyboard reachable and open in isolated tabs. -->
-        <div class="food-grid searchable-list" id="food-list">
-          <article class="food-card" data-search-item data-kind="food" data-category="tavern" data-area="nikiti" data-feature="family group"><span>Таверна · Никити</span><h3>Antigoni Tavern</h3><p>Гръцки ястия от море и суша. Подходяща за спокойна семейна вечеря и група, която търси традиционен избор.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Antigoni+Tavern+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/restaurants/top-10-restaurants-taverns-in-nikiti/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="tavern" data-area="nikiti" data-feature="family group"><span>Таверна · Никити</span><h3>Thymari Tavern</h3><p>Традиционна гръцка кухня и непринудена атмосфера. Проверете за маса за осем души преди вечерното натоварване.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Thymari+Tavern+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/restaurants/top-10-restaurants-taverns-in-nikiti/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="tavern" data-area="nikiti" data-feature="family group"><span>Таверна · Никити</span><h3>Taverna Sonia</h3><p>Морска и средиземноморска кухня, често посочвана като подходяща за семейства. Добър кандидат за обща вечеря.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Taverna+Sonia+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://www.tripadvisor.com/Restaurants-g668422-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html" target="_blank" rel="noopener noreferrer">Актуален индекс</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="restaurant" data-area="nikiti" data-feature="group"><span>Ресторант · Никити</span><h3>Synagrida</h3><p>Сезонен, по-съвременен прочит на местни продукти според регионалния каталог. Подходящ за по-специална вечеря.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Synagrida+Restaurant+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/restaurants/top-10-restaurants-taverns-in-nikiti/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="restaurant" data-area="nikiti" data-feature="family group"><span>Ресторант · Никити</span><h3>Kazanis</h3><p>Гръцка кухня с фокус върху местни вкусове. Подходящ за компания с различни предпочитания.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Kazanis+Restaurant+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/restaurants/top-10-restaurants-taverns-in-nikiti/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="restaurant" data-area="nikiti" data-feature="group"><span>Бар-ресторант · Никити</span><h3>Paparouna</h3><p>Съвременни варианти на гръцки вкусове и вечерна атмосфера. Подходящ за възрастните и по-големите младежи.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Paparouna+Bar+Restaurant+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/restaurants/top-10-restaurants-taverns-in-nikiti/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="street" data-area="nikiti" data-feature="family quick group"><span>Гирос · Никити</span><h3>Gyromania</h3><p>Гирос и сувлаки в неформален формат. Полезен избор за бързо хапване след плаж или за семейство с различен ритъм.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Gyromania+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/restaurants/top-10-restaurants-taverns-in-nikiti/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="tavern" data-area="nikiti" data-feature="family group view"><span>Таверна · крайбрежие Никити</span><h3>Arsanas</h3><p>Гръцка и средиземноморска кухня край плажа. Подходяща за дълга групова вечеря с морска гледка.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Arsanas+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/restaurants/arsanas-tavern-nikiti/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="tavern" data-area="nikiti" data-feature="family group"><span>Таверна · Старо Никити</span><h3>Platanos</h3><p>Традиционни и съвременни гръцки ястия в атмосферата на старото селище. Съчетава се добре с вечерна разходка.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Platanos+Restaurant+Old+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/restaurants/top-10-restaurants-taverns-in-nikiti/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="restaurant" data-area="nikiti" data-feature="family group view"><span>Ресторант · Никити</span><h3>AVRA</h3><p>Морска гледка и разнообразно меню според регионалния каталог. Подходящ за вечеря по залез.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=AVRA+Restaurant+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/restaurants/top-10-restaurants-taverns-in-nikiti/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="restaurant" data-area="nikiti" data-feature="family group view"><span>Кафе-ресторант · Никити</span><h3>Alexandros</h3><p>Пица, морска и гръцка кухня в крайбрежна обстановка. Практичен избор за група с различни вкусове.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Alexandros+Cafe+Restaurant+Bar+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/places/nikiti/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="tavern" data-area="nikiti" data-feature="family group"><span>Таверна · Никити</span><h3>Apovrado Taverna Karalis</h3><p>Морска и средиземноморска кухня в неформален формат. Подходяща за семейна вечеря без церемониалност.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Apovrado+Taverna+Karalis+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://www.tripadvisor.com/Restaurants-g668422-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html" target="_blank" rel="noopener noreferrer">Актуален индекс</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="tavern" data-area="nikiti" data-feature="family group view"><span>Таверна · Никити</span><h3>Kyma Tavern</h3><p>Средиземноморска кухня и морска гледка. Причината да я проверите е спокойната крайбрежна атмосфера.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Kyma+Tavern+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://www.tripadvisor.com/Restaurants-g668422-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html" target="_blank" rel="noopener noreferrer">Актуален индекс</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="restaurant" data-area="nikiti" data-feature="group"><span>Мезе-ресторант · Никити</span><h3>Mezervoir</h3><p>Мезета и гръцки вкусове за споделяне. Подходящ за компания, която иска да опита няколко малки блюда.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Mezervoir+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://www.tripadvisor.com/Restaurants-g668422-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html" target="_blank" rel="noopener noreferrer">Актуален индекс</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="restaurant" data-area="nikiti" data-feature="family group view"><span>Ресторант · крайбрежие Никити</span><h3>Akrogiali</h3><p>Гръцка и средиземноморска кухня край морето. Подходящ за класическа вечеря след разходка по алеята.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Akrogiali+Restaurant+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://www.tripadvisor.com/Restaurants-g668422-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html" target="_blank" rel="noopener noreferrer">Актуален индекс</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="restaurant" data-area="nikiti" data-feature="family group view"><span>Ресторант · Никити</span><h3>Restaurant MARINA</h3><p>Морска и европейска кухня близо до пристанищната зона. Подходящ за група, която предпочита познат избор край водата.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Restaurant+Marina+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://www.tripadvisor.com/Tourism-g668422-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia-Vacations.html" target="_blank" rel="noopener noreferrer">Актуален индекс</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="street" data-area="nikiti" data-feature="family quick"><span>Бързо хапване · Никити</span><h3>Crispy</h3><p>Неформален вариант за храна за вкъщи. Полезен за кратка пауза, когато групата не иска пълна вечеря.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Crispy+Nikiti+Greece" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://www.tripadvisor.com/Restaurants-g668422-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html" target="_blank" rel="noopener noreferrer">Актуален индекс</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="street" data-area="nikiti" data-feature="family quick"><span>Гирос · Никити</span><h3>Masa Gyros</h3><p>Гръцка улична храна и бързо обслужване. Подходящ за обяд между две кратки спирки.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Masa+Gyros+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/street-food/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="bakery" data-area="nikiti" data-feature="family quick"><span>Пекарна · Никити</span><h3>Gavanas Bakery &amp; Pastry</h3><p>Хляб, закуски и сладки изделия. Практична сутрешна спирка преди плаж или път.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Gavanas+Bakery+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/bakeries/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="cafe street" data-area="nikiti" data-feature="family quick"><span>Кафе и закуски · Никити</span><h3>Bruno Coffee &amp; Snack</h3><p>Кафе и бързи закуски. Подходящо за ранно тръгване или кратка почивка без продължително сядане.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Bruno+Coffee+Snack+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/bakeries/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="bakery" data-area="nikiti" data-feature="family quick"><span>Пекарна · Никити</span><h3>Tasos Bakery &amp; Pastry</h3><p>Семейна пекарна с хляб, закуски и сладки изделия. Подходяща за сутрешно снабдяване на групата.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Tasos+Bakery+Pastry+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/bakeries/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="cafe" data-area="nikiti" data-feature="family quick"><span>Бистро · Никити</span><h3>The Pattern Bistro</h3><p>Брънч, кафе и джелато в по-съвременна среда. Подходящо за късна закуска или следобедна пауза.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=The+Pattern+Bistro+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/places/nikiti/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="cafe bakery" data-area="nikiti" data-feature="family quick"><span>Сладкарница · Никити</span><h3>The Mall Pastry</h3><p>Сладки изделия и кратка кафе пауза. Подходящо за семейство след вечерна разходка.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=The+Mall+Pastry+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/bakeries/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="cafe street" data-area="nikiti" data-feature="family quick"><span>Лукумадес · Никити</span><h3>Kipseli Loukoumatzidiko</h3><p>Гръцки понички и десертно хапване. Подходящо за споделяне и кратка сладка спирка.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Kipseli+Loukoumatzidiko+Nikiti" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://www.tripadvisor.com/Restaurants-g668422-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html" target="_blank" rel="noopener noreferrer">Актуален индекс</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="restaurant tavern" data-area="east" data-feature="family group view"><span>Рибен ресторант · Ормос Панагиас</span><h3>Aristos</h3><p>Прясна риба в пристанищна обстановка според регионалния източник. Подходящ за обяд след Трани Амуда.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Aristos+Restaurant+Ormos+Panagias" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/restaurants/aristos-restaurant/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="tavern" data-area="east" data-feature="family group view"><span>Рибна таверна · Ормос Панагиас</span><h3>Giannelis</h3><p>Рибна таверна в малкото пристанище. Подходяща за традиционен обяд; потвърдете работния ден преди пътуване.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Giannelis+Fish+Tavern+Ormos+Panagias" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/restaurants/sithonia-restaurants-open-all-year-winter/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="restaurant" data-area="east" data-feature="family quick group"><span>Пицария · Ормос Панагиас</span><h3>Pizza Rio</h3><p>Пица и неформален обяд. Практична алтернатива за деца и група, когато рибното меню не е общ избор.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Pizza+Rio+Ormos+Panagias" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/restaurants/sithonia-restaurants-open-all-year-winter/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="restaurant tavern" data-area="west" data-feature="family group view"><span>Морски ресторант · Неос Мармарас</span><h3>Okyalos</h3><p>Семейно управляван морски ресторант с тераси към водата според регионалния профил. Подходящ за специална вечеря.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Okyalos+Seafood+Restaurant+Neos+Marmaras" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/restaurants/okyalos-seafood-restaurant-neos-marmaras/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="tavern" data-area="west" data-feature="family group view"><span>Рибна таверна · Неос Мармарас</span><h3>Panos Fish Tavern</h3><p>Семейна рибна таверна на крайбрежието, посочвана от местни жители. Подходяща за морска храна и залез.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Panos+Fish+Tavern+Neos+Marmaras" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/restaurants/top-taverns-in-sithonia-by-locals/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="tavern" data-area="west" data-feature="family group view"><span>Таверна · Неос Мармарас</span><h3>Parádeisos</h3><p>Морска храна, вегетариански варианти и мезета според местния подбор. Подходяща за споделяне в семейна група.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Paradeisos+Tavern+Neos+Marmaras" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/restaurants/top-taverns-in-sithonia-by-locals/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="restaurant" data-area="west" data-feature="family group"><span>Ресторант · Неос Мармарас</span><h3>Origano</h3><p>Неформален ресторант, отбелязан в регионалния каталог като целогодишен избор. Удобен при вечерна разходка в града.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Origano+Restaurant+Neos+Marmaras" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://visitsithonia.com/lifestyle/food-drink/restaurants/sithonia-restaurants-open-all-year-winter/" target="_blank" rel="noopener noreferrer">Източник</a></div></article>
-          <article class="food-card" data-search-item data-kind="food" data-category="restaurant" data-area="west" data-feature="family group view"><span>Ресторант · Неос Мармарас</span><h3>Ta Kymata</h3><p>Крайбрежен ресторант за гръцка и морска кухня. Подходящ за вечеря с гледка; проверете актуалния профил преди път.</p><div class="card-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Ta+Kymata+Neos+Marmaras" target="_blank" rel="noopener noreferrer">Карта</a><a href="https://www.tripadvisor.com/Restaurants-g663174-Neos_Marmaras_Sithonia_Halkidiki_Region_Central_Macedonia.html" target="_blank" rel="noopener noreferrer">Актуален индекс</a></div></article>
-        </div>
-
-        <div class="section-heading dishes-heading">
-          <p class="eyebrow">Какво да опитате</p>
-          <h2>Кратък речник на масата</h2>
-        </div>
-        <div class="dish-grid">
-          <article><h3>Хориатики</h3><p>Гръцка салата с домати, краставици, маслини и фета.</p></article>
-          <article><h3>Дзадзики</h3><p>Кисело мляко, краставица и чесън; поднася се като разядка.</p></article>
-          <article><h3>Тирокафтери</h3><p>Пикантна разядка с фета и чушка.</p></article>
-          <article><h3>Бу̀ю̀рди</h3><p>Запечено сирене с домат и чушка, характерно за Северна Гърция.</p></article>
-          <article><h3>Долмадес</h3><p>Лозови сарми, често с ориз и билки.</p></article>
-          <article><h3>Сувлаки</h3><p>Малки шишчета месо; попитайте дали гарнитурата е включена.</p></article>
-          <article><h3>Гирос</h3><p>Печено месо, често в пита с домат, лук, сос и картофи.</p></article>
-          <article><h3>Мусака</h3><p>Пластове патладжан, картоф, месен сос и бешамел.</p></article>
-          <article><h3>Октопод на скара</h3><p>Класическо морско мезе; уловът и цената може да са дневни.</p></article>
-          <article><h3>Саганаки</h3><p>Име за ястия в малък тиган; уточнете дали е сирене, скариди или миди.</p></article>
-          <article><h3>Лукумадес</h3><p>Малки пържени топчета тесто с мед или друг сладък топинг.</p></article>
-          <article><h3>Ципуро</h3><p>Силен гроздов дестилат; за водача изборът е без алкохол.</p></article>
+        <figure class="catalogue-lead-media">
+          <img src="images/nikiti-taverna.jpg" width="1280" height="960" loading="lazy" alt="Традиционна таверна в Никити с маси под навес">
+          <figcaption>Контекстова снимка на таверна в Никити, не на конкретен запис · <a href="https://commons.wikimedia.org/wiki/File:Taverne_in_Nikiti.jpg" target="_blank" rel="noopener noreferrer">Rosa-Maria Rinkl · CC BY-SA 4.0</a></figcaption>
+        </figure>
+        <div class="catalogue-grid fallback-list" data-catalog-list>
+          <article><h3>Taverna Marina</h3><p>40.217565, 23.664579 · +30 23750 22123 · гръцка и средиземноморска кухня · публикувано пълно меню.</p></article>
+          <article><h3>Nel fuoco</h3><p>40.216178, 23.666768 · италиански ресторант · няма достатъчно данни за рейтинг.</p></article>
+          <article><h3>Gyromania</h3><p>40.215712, 23.667414 · гръцки грил · няма достатъчно данни за моментен рейтинг.</p></article>
+          <article><h3>Antigoni Taverne</h3><p>40.216633, 23.665645 · +30 23750 22660 · Google 4,2 / 1007 · Tripadvisor 3,9 / 154.</p></article>
+          <article><h3>3 steps</h3><p>40.217260, 23.665759 · пристанищна зона · няма достатъчно данни за кухня и рейтинг.</p></article>
+          <article><h3>Akrogiali 2</h3><p>40.216977, 23.665614 · гръцка и средиземноморска кухня · цени €€.</p></article>
+          <article><h3>Pizza di Porto</h3><p>40.217354, 23.666392 · пицария-ресторант · цени €€.</p></article>
+          <article><h3>Το σπιτάκι</h3><p>40.216514, 23.666236 · ресторант · няма достатъчно данни.</p></article>
+          <article><h3>Alexandros</h3><p>40.215253, 23.667899 · кафе-ресторант-бар с пица и морски ястия.</p></article>
+          <article><h3>Arsanas</h3><p>40.214265, 23.668854 · +30 23750 23787 · Google 4,3 / 3463 · Tripadvisor 4,0 / 744.</p></article>
+          <article><h3>Almira / Iskios</h3><p>40.213124, 23.670168 · крайбрежен ресторант · източниците използват две имена.</p></article>
+          <article><h3>Allegreco</h3><p>40.213373, 23.669651 · крайбрежен ресторант · няма достатъчно данни.</p></article>
+          <article><h3>AVRA</h3><p>40.211018, 23.673317 · +30 23750 23554 · италианска и средиземноморска кухня.</p></article>
+          <article><h3>Kazanis</h3><p>40.211223, 23.673015 · +30 23750 23333 · гръцка кухня, риба и месо.</p></article>
+          <article><h3>Crispy</h3><p>40.218098, 23.666448 · пица и брънч · няма достатъчно данни за рейтинг.</p></article>
+          <article><h3>The Kitchen</h3><p>40.221932, 23.669660 · гръцки ресторант · няма достатъчно данни.</p></article>
+          <article><h3>Απόβραδο</h3><p>40.221543, 23.668016 · гръцка таверна · цени €€.</p></article>
+          <article><h3>Limeri</h3><p>40.221142, 23.667792 · ресторант · няма достатъчно данни.</p></article>
+          <article><h3>Κάρμα</h3><p>40.216350, 23.666350 · ресторант в пристанищната зона.</p></article>
+          <article><h3>Taverna Sonia</h3><p>40.229682, 23.630090 · +30 23750 22496 · Google 4,6 / 1451 · Tripadvisor 4,6 / 462.</p></article>
         </div>
       </div>
     </section>
 
     <!--
-      Greek phrasebook
-      Design intent: Put Greek recognition, Bulgarian meaning, and speakable phonetics on one line.
-      Target: Horizontally safe stacked rows at 320 CSS pixels; searchable by situation.
+      Fish catalogue panel
+      Design intent: Pair restaurant-ready Greek recognition with practical eating guidance and a visible bone warning.
+      Accessibility: scientific and Greek names remain text, not image-only labels.
     -->
-    <section class="section" id="language" aria-labelledby="language-title">
+    <section class="catalogue-panel catalogue-panel--fish" id="fish" role="tabpanel" aria-labelledby="tab-fish" tabindex="0">
       <div class="shell">
         <div class="section-heading">
-          <p class="eyebrow">Кажи го уверено</p>
-          <h2 id="language-title">Практичен гръцки</h2>
-          <p>Фонетиката е ориентир за българоговорящи, не академична транскрипция. Ударението е отбелязано с ударена гласна, когато помага.</p>
+          <p class="eyebrow">26 вида · само същински риби</p>
+          <h2>Гръцки риби</h2>
+          <p>Списъкът стъпва върху търговски важните за Гърция видове във FishBase, полевия определител на FAO и гръцки меню-речници. Октопод, калмар, скариди, миди и раци не са риби и не са включени.</p>
         </div>
-        <div class="phrase-list searchable-list" id="phrase-list">
-          <h3 class="phrase-group-title">Поздрави</h3>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="greetings"><strong lang="el">Καλημέρα.</strong><span>Добро утро / Добър ден.</span><em>Калимѐра.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="greetings"><strong lang="el">Καλησπέρα.</strong><span>Добър вечер.</span><em>Калиспѐра.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="greetings"><strong lang="el">Καληνύχτα.</strong><span>Лека нощ.</span><em>Калинѝхта.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="greetings"><strong lang="el">Γεια σας.</strong><span>Здравейте.</span><em>Я сас.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="greetings"><strong lang="el">Γεια σου.</strong><span>Здравей.</span><em>Я су.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="greetings"><strong lang="el">Αντίο.</strong><span>Довиждане.</span><em>Андѝо.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="greetings"><strong lang="el">Τα λέμε.</strong><span>До скоро.</span><em>Та лѐме.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="greetings"><strong lang="el">Καλώς ήρθατε.</strong><span>Добре дошли.</span><em>Калòс ѝртате.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="greetings"><strong lang="el">Χάρηκα.</strong><span>Приятно ми е.</span><em>Хàрика.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="greetings"><strong lang="el">Τι κάνετε;</strong><span>Как сте?</span><em>Ти кàнете?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="greetings"><strong lang="el">Καλά, ευχαριστώ.</strong><span>Добре, благодаря.</span><em>Калà, ефхаристò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="greetings"><strong lang="el">Καλό ταξίδι.</strong><span>Приятно пътуване.</span><em>Калò таксѝди.</em></div>
+        <div class="catalogue-grid fallback-list" data-catalog-list>
+          <article><h3>Τσιπούρα · ципу̀ра · ципура</h3><p>Sparus aurata · златна ивица между очите · цяла на скара или фурна.</p></article>
+          <article><h3>Λαβράκι · лавра̀ки · лаврак</h3><p>Dicentrarchus labrax · деликатно бяло месо · на скара или в солена кора.</p></article>
+          <article><h3>Σαρδέλα · сардѐла · сардина</h3><p>Sardina pilchardus · малка мазна риба · на скара, пържена или маринована.</p></article>
+          <article><h3>Γαύρος · га̀врос · хамсия</h3><p>Engraulis encrasicolus · малка риба · пържена или маринована.</p></article>
+          <article><h3>Μπαρμπούνι · барбу̀ни · червен барбун</h3><p>Mullus barbatus · червеникав с мустачета · най-често пържен.</p></article>
+          <article><h3>Κουτσομούρα · куцому̀ра · ивичест барбун</h3><p>Mullus surmuletus · надлъжни линии и мустачета · пържен или печен.</p></article>
+          <article><h3>Κολιός · кольо̀с · средиземноморска скумрия</h3><p>Scomber colias · мазна и плътна · на скара или маринована.</p></article>
+          <article><h3>Σκουμπρί · скумбрѝ · атлантическа скумрия</h3><p>Scomber scombrus · тъмни напречни ивици · пушена или на скара.</p></article>
+          <article><h3>Γόπα · го̀па · бопс</h3><p>Boops boops · големи очи и златисти линии · пържена или на скара.</p></article>
+          <article><h3>Μελανούρι · мелану̀ри · облада</h3><p>Oblada melanura · черно петно при опашката · цяла на скара.</p></article>
+          <article><h3>Σαργός · сарго̀с · бяла морска каракуда</h3><p>Diplodus sargus · вертикални линии · стегнато бяло месо.</p></article>
+          <article><h3>Συναγρίδα · синагрѝда · дентекс</h3><p>Dentex dentex · едра хищна риба · на скара, фурна или в сол.</p></article>
+          <article><h3>Φαγκρί · фангрѝ · червен пагел</h3><p>Pagrus pagrus · розово-сребрист · плътно и сочно месо.</p></article>
+          <article><h3>Λυθρίνι · литрѝни · червена пандора</h3><p>Pagellus erythrinus · розова риба · пържена или печена.</p></article>
+          <article><h3>Σάλπα · са̀лпа · салпа</h3><p>Sarpa salpa · много златисти линии · постно месо.</p></article>
+          <article><h3>Κέφαλος · кѐфалос · кефал</h3><p>Mugil cephalus · широка глава · на скара, печен или пушен.</p></article>
+          <article><h3>Γλώσσα · гло̀са · морски език</h3><p>Solea solea · плоска риба · нежно и постно месо.</p></article>
+          <article><h3>Μπακαλιάρος · бакаля̀рос · хек</h3><p>Merluccius merluccius · люспесто бяло месо · пържен, печен или в супа.</p></article>
+          <article><h3>Ξιφίας · ксифѝас · риба меч</h3><p>Xiphias gladius · сервира се на стек · плътно месо.</p></article>
+          <article><h3>Παλαμίδα · паламѝда · паламуд</h3><p>Sarda sarda · диагонални линии · на скара или маринован.</p></article>
+          <article><h3>Τόνος · то̀нос · червен тон</h3><p>Thunnus thynnus · тартар, леко запечен или на скара.</p></article>
+          <article><h3>Ροφός · рофо̀с · тъмен групер</h3><p>Epinephelus marginatus · масивна глава · печен или в супа.</p></article>
+          <article><h3>Δράκαινα · дра̀кена · морски дракон</h3><p>Trachinus draco · отровни шипове в суров вид · само професионално почистена.</p></article>
+          <article><h3>Σκορπίνα · скорпѝна · червена скорпида</h3><p>Scorpaena scrofa · бодливи перки · често в рибена супа.</p></article>
+          <article><h3>Ζαργάνα · зарга̀на · зарган</h3><p>Belone belone · издължена риба със зеленикави кости.</p></article>
+          <article><h3>Σαφρίδι · сафрѝди · сафрид</h3><p>Trachurus mediterraneus · сребрист и умерено мазен · пържен или на скара.</p></article>
+        </div>
+        <p class="panel-warning"><strong>Кости:</strong> всяка риба може да съдържа кости. Помолете ресторанта за почистване; този справочник не заменя указанията на персонала.</p>
+      </div>
+    </section>
 
-          <h3 class="phrase-group-title">Учтивост и разбиране</h3>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="polite"><strong lang="el">Παρακαλώ.</strong><span>Моля / Няма защо.</span><em>Паракалò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="polite"><strong lang="el">Ευχαριστώ πολύ.</strong><span>Много благодаря.</span><em>Ефхаристò полѝ.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="polite"><strong lang="el">Συγγνώμη.</strong><span>Извинете.</span><em>Сигнòми.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="polite"><strong lang="el">Με συγχωρείτε.</strong><span>Извинете ме.</span><em>Ме синхорѝте.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="polite"><strong lang="el">Ναι.</strong><span>Да.</span><em>Не.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="polite"><strong lang="el">Όχι.</strong><span>Не.</span><em>Òхи.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="polite"><strong lang="el">Ίσως.</strong><span>Може би.</span><em>Ѝсос.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="polite"><strong lang="el">Βεβαίως.</strong><span>Разбира се.</span><em>Вевѐос.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="polite"><strong lang="el">Δεν πειράζει.</strong><span>Няма нищо.</span><em>Ден пирàзи.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="polite"><strong lang="el">Δεν καταλαβαίνω.</strong><span>Не разбирам.</span><em>Ден каталевѐно.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="polite"><strong lang="el">Μιλάτε αγγλικά;</strong><span>Говорите ли английски?</span><em>Милàте англикà?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="polite"><strong lang="el">Μιλάτε βουλγαρικά;</strong><span>Говорите ли български?</span><em>Милàте вулгарикà?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="polite"><strong lang="el">Πιο αργά, παρακαλώ.</strong><span>По-бавно, моля.</span><em>Пьо аргà, паракалò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="polite"><strong lang="el">Μπορείτε να το επαναλάβετε;</strong><span>Може ли да повторите?</span><em>Борѝте на то епаналàвете?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="polite"><strong lang="el">Γράψτε το, παρακαλώ.</strong><span>Напишете го, моля.</span><em>Грàпсте то, паракалò.</em></div>
-
-          <h3 class="phrase-group-title">Ресторант</h3>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Ένα τραπέζι για οκτώ, παρακαλώ.</strong><span>Маса за осем, моля.</span><em>Ѐна трапѐзи я охтò, паракалò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Έχετε ελεύθερο τραπέζι;</strong><span>Имате ли свободна маса?</span><em>Ѐхете елѐфтеро трапѐзи?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Θα θέλαμε να καθίσουμε έξω.</strong><span>Бихме искали да седнем навън.</span><em>Та тѐламе на катѝсуме ѐксо.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Μπορούμε να δούμε το μενού;</strong><span>Може ли да видим менюто?</span><em>Борỳме на дỳме то менỳ?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Έχετε παιδικό μενού;</strong><span>Имате ли детско меню?</span><em>Ѐхете педикò менỳ?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Τι προτείνετε;</strong><span>Какво препоръчвате?</span><em>Ти протѝнете?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Θα ήθελα αυτό.</strong><span>Бих искал/а това.</span><em>Та ѝтела афтò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Χωρίς κρεμμύδι, παρακαλώ.</strong><span>Без лук, моля.</span><em>Хорѝс кремѝди, паракалò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Είμαι αλλεργικός / αλλεργική σε…</strong><span>Алергичен / алергична съм към…</span><em>Ѐме алергикòс / алергикѝ се…</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Είναι πικάντικο;</strong><span>Люто ли е?</span><em>Ѐне пикàнтико?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Είναι φρέσκο;</strong><span>Прясно ли е?</span><em>Ѐне фрѐско?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Έχετε φρέσκο ψάρι σήμερα;</strong><span>Имате ли прясна риба днес?</span><em>Ѐхете фрѐско псàри сѝмера?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Έχετε χορτοφαγικό φαγητό;</strong><span>Имате ли вегетарианска храна?</span><em>Ѐхете хортофайикò файитò?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Νερό χωρίς ανθρακικό, παρακαλώ.</strong><span>Негазирана вода, моля.</span><em>Нерò хорѝс антракѝкò, паракалò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Νερό με ανθρακικό, παρακαλώ.</strong><span>Газирана вода, моля.</span><em>Нерò ме антракѝкò, паракалò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Λίγο ψωμί, παρακαλώ.</strong><span>Малко хляб, моля.</span><em>Лѝго псомѝ, паракалò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Τον λογαριασμό, παρακαλώ.</strong><span>Сметката, моля.</span><em>Тон лоярясмò, паракалò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Μπορώ να πληρώσω με κάρτα;</strong><span>Мога ли да платя с карта?</span><em>Борò на плирòсо ме кàрта?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Ξεχωριστούς λογαριασμούς, παρακαλώ.</strong><span>Отделни сметки, моля.</span><em>Ксехористỳс лоярясмỳс, паракалò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Ήταν πολύ νόστιμο.</strong><span>Беше много вкусно.</span><em>Ѝтан полѝ нòстимо.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Δεν παραγγείλαμε αυτό.</strong><span>Не сме поръчвали това.</span><em>Ден парангѝламе афтò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="restaurant-phrase"><strong lang="el">Απόδειξη, παρακαλώ.</strong><span>Касова бележка, моля.</span><em>Апòдикси, паракалò.</em></div>
-
-          <h3 class="phrase-group-title">Пазаруване</h3>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="shopping"><strong lang="el">Πόσο κάνει;</strong><span>Колко струва?</span><em>Пòсо кàни?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="shopping"><strong lang="el">Είναι πολύ ακριβό.</strong><span>Много е скъпо.</span><em>Ѐне полѝ акривò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="shopping"><strong lang="el">Έχετε μικρότερο;</strong><span>Имате ли по-малко?</span><em>Ѐхете микрòтеро?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="shopping"><strong lang="el">Έχετε μεγαλύτερο;</strong><span>Имате ли по-голямо?</span><em>Ѐхете мегалѝтеро?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="shopping"><strong lang="el">Μπορώ να το δοκιμάσω;</strong><span>Мога ли да го пробвам?</span><em>Борò на то докимàсо?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="shopping"><strong lang="el">Πού είναι το σούπερ μάρκετ;</strong><span>Къде е супермаркетът?</span><em>Пỳ ѝне то сỳпер мàркет?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="shopping"><strong lang="el">Πού είναι το φαρμακείο;</strong><span>Къде е аптеката?</span><em>Пỳ ѝне то фармакѝо?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="shopping"><strong lang="el">Θέλω αυτό.</strong><span>Искам това.</span><em>Тѐло афтò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="shopping"><strong lang="el">Δεν το θέλω.</strong><span>Не го искам.</span><em>Ден то тѐло.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="shopping"><strong lang="el">Έχετε αντηλιακό;</strong><span>Имате ли слънцезащитен крем?</span><em>Ѐхете андилиакò?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="shopping"><strong lang="el">Έχετε κρύο νερό;</strong><span>Имате ли студена вода?</span><em>Ѐхете крѝо нерò?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="shopping"><strong lang="el">Δέχεστε κάρτα;</strong><span>Приемате ли карта?</span><em>Дѐхесте кàрта?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="shopping"><strong lang="el">Έχετε ρέστα;</strong><span>Имате ли да върнете?</span><em>Ѐхете рѐста?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="shopping"><strong lang="el">Μια σακούλα, παρακαλώ.</strong><span>Една торбичка, моля.</span><em>Мя сакỳла, паракалò.</em></div>
-
-          <h3 class="phrase-group-title">Плаж</h3>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="beach-phrase"><strong lang="el">Πού είναι η παραλία;</strong><span>Къде е плажът?</span><em>Пỳ ѝне и паралѝа?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="beach-phrase"><strong lang="el">Είναι ασφαλές για παιδιά;</strong><span>Безопасно ли е за деца?</span><em>Ѐне асфалѐс я педя̀?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="beach-phrase"><strong lang="el">Υπάρχει ναυαγοσώστης;</strong><span>Има ли спасител?</span><em>Ипàрхи наваяосòстис?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="beach-phrase"><strong lang="el">Πού έχει σκιά;</strong><span>Къде има сянка?</span><em>Пỳ ѐхи скиà?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="beach-phrase"><strong lang="el">Μπορούμε να νοικιάσουμε ομπρέλα;</strong><span>Може ли да наемем чадър?</span><em>Борỳме на никясуме обрѐла?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="beach-phrase"><strong lang="el">Πόσο βαθιά είναι;</strong><span>Колко е дълбоко?</span><em>Пòсо ватя̀ ѝне?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="beach-phrase"><strong lang="el">Έχει ρεύμα;</strong><span>Има ли течение?</span><em>Ѐхи рѐвма?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="beach-phrase"><strong lang="el">Προσέξτε τα βράχια.</strong><span>Внимавайте със скалите.</span><em>Просѐксте та врàхя.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="beach-phrase"><strong lang="el">Χρειαζόμαστε βοήθεια.</strong><span>Нуждаем се от помощ.</span><em>Хрясòмасте воѝтя.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="beach-phrase"><strong lang="el">Πού είναι η τουαλέτα;</strong><span>Къде е тоалетната?</span><em>Пỳ ѝне и туалѐта?</em></div>
-
-          <h3 class="phrase-group-title">Транспорт и автомобил</h3>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="transport"><strong lang="el">Πώς πάμε στη Νικήτη;</strong><span>Как се стига до Никити?</span><em>Пос пàме сти Никѝти?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="transport"><strong lang="el">Είναι μακριά;</strong><span>Далече ли е?</span><em>Ѐне макря̀?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="transport"><strong lang="el">Πόση ώρα κάνει;</strong><span>Колко време отнема?</span><em>Пòси òра кàни?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="transport"><strong lang="el">Δεξιά.</strong><span>Надясно.</span><em>Декся̀.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="transport"><strong lang="el">Αριστερά.</strong><span>Наляво.</span><em>Аристерà.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="transport"><strong lang="el">Ευθεία.</strong><span>Направо.</span><em>Ефтѝа.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="transport"><strong lang="el">Έχω χαθεί.</strong><span>Изгубих се.</span><em>Ѐхо хатѝ.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="transport"><strong lang="el">Πού είναι το βενζινάδικο;</strong><span>Къде е бензиностанцията?</span><em>Пỳ ѝне то вензинàдико?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="transport"><strong lang="el">Γεμίστε, παρακαλώ.</strong><span>Напълнете, моля.</span><em>Йемѝсте, паракалò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="transport"><strong lang="el">Βενζίνη, παρακαλώ.</strong><span>Бензин, моля.</span><em>Вензѝни, паракалò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="transport"><strong lang="el">Πετρέλαιο, παρακαλώ.</strong><span>Дизел, моля.</span><em>Петрѐлео, паракалò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="transport"><strong lang="el">Πού είναι το πάρκινγκ;</strong><span>Къде е паркингът?</span><em>Пỳ ѝне то пàркинг?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="transport"><strong lang="el">Επιτρέπεται το πάρκινγκ εδώ;</strong><span>Разрешено ли е паркирането тук?</span><em>Епитрѐпете то пàркинг едò?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="transport"><strong lang="el">Το αυτοκίνητο χάλασε.</strong><span>Колата се повреди.</span><em>То афтокѝнито хàласе.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="transport"><strong lang="el">Χρειαζόμαστε οδική βοήθεια.</strong><span>Нуждаем се от пътна помощ.</span><em>Хрясòмасте одикѝ воѝтя.</em></div>
-
-          <h3 class="phrase-group-title">Настаняване</h3>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="accommodation"><strong lang="el">Έχουμε κράτηση.</strong><span>Имаме резервация.</span><em>Ѐхуме крàтиси.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="accommodation"><strong lang="el">Η κράτηση είναι στο όνομα…</strong><span>Резервацията е на името…</span><em>И крàтиси ѝне сто òнома…</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="accommodation"><strong lang="el">Πού είναι το δωμάτιο;</strong><span>Къде е стаята?</span><em>Пỳ ѝне то домàтио?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="accommodation"><strong lang="el">Χάσαμε το κλειδί.</strong><span>Изгубихме ключа.</span><em>Хàсаме то клидѝ.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="accommodation"><strong lang="el">Δεν λειτουργεί το κλιματιστικό.</strong><span>Климатикът не работи.</span><em>Ден литургѝ то климатистикò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="accommodation"><strong lang="el">Δεν έχει ζεστό νερό.</strong><span>Няма топла вода.</span><em>Ден ѐхи зестò нерò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="accommodation"><strong lang="el">Ποιος είναι ο κωδικός Wi-Fi;</strong><span>Каква е паролата за Wi-Fi?</span><em>Пьос ѝне о кодикòс уай-фай?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="accommodation"><strong lang="el">Χρειαζόμαστε καθαρές πετσέτες.</strong><span>Нуждаем се от чисти кърпи.</span><em>Хрясòмасте катарѐс петсѐтес.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="accommodation"><strong lang="el">Τι ώρα είναι η αναχώρηση;</strong><span>В колко часа е напускането?</span><em>Ти òра ѝне и анахòриси?</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="accommodation"><strong lang="el">Μπορούμε να αφήσουμε τις αποσκευές;</strong><span>Може ли да оставим багажа?</span><em>Борỳме на афѝсуме тис апоскевѐс?</em></div>
-
-          <h3 class="phrase-group-title">Здраве</h3>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="health"><strong lang="el">Χρειάζομαι γιατρό.</strong><span>Трябва ми лекар.</span><em>Хрязòме ятрò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="health"><strong lang="el">Χρειάζομαι φαρμακείο.</strong><span>Трябва ми аптека.</span><em>Хрязòме фармакѝо.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="health"><strong lang="el">Πονάω εδώ.</strong><span>Боли ме тук.</span><em>Понàо едò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="health"><strong lang="el">Έχω πυρετό.</strong><span>Имам температура.</span><em>Ѐхо пиретò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="health"><strong lang="el">Έχω αλλεργία.</strong><span>Имам алергия.</span><em>Ѐхо алергѝа.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="health"><strong lang="el">Παίρνω αυτό το φάρμακο.</strong><span>Вземам това лекарство.</span><em>Пѐрно афтò то фàрмако.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="health"><strong lang="el">Έχω μια πληγή.</strong><span>Имам рана.</span><em>Ѐхо мя плийѝ.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="health"><strong lang="el">Έχω καεί από τον ήλιο.</strong><span>Изгорях от слънцето.</span><em>Ѐхо каѝ апò тон ѝльо.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="health"><strong lang="el">Έχω αφυδατωθεί.</strong><span>Обезводнен/а съм.</span><em>Ѐхо афидатотѝ.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="health"><strong lang="el">Ζαλίζομαι.</strong><span>Вие ми се свят.</span><em>Залѝзоме.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="health"><strong lang="el">Έχω άσθμα.</strong><span>Имам астма.</span><em>Ѐхо àстма.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="health"><strong lang="el">Έχω Ευρωπαϊκή Κάρτα Ασφάλισης Ασθενείας.</strong><span>Имам Европейска здравноосигурителна карта.</span><em>Ѐхо европаикѝ кàрта асфàлиси астенѝас.</em></div>
-
-          <h3 class="phrase-group-title">Спешни случаи</h3>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="emergency-phrase"><strong lang="el">Βοήθεια!</strong><span>Помощ!</span><em>Воѝтя!</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="emergency-phrase"><strong lang="el">Καλέστε το 112.</strong><span>Обадете се на 112.</span><em>Калѐсте то ѐна-ѐна-дѝо.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="emergency-phrase"><strong lang="el">Καλέστε ασθενοφόρο.</strong><span>Повикайте линейка.</span><em>Калѐсте астенофòро.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="emergency-phrase"><strong lang="el">Καλέστε την αστυνομία.</strong><span>Повикайте полиция.</span><em>Калѐсте тин астиномѝа.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="emergency-phrase"><strong lang="el">Καλέστε την πυροσβεστική.</strong><span>Повикайте пожарната.</span><em>Калѐсте тин пиросвестикѝ.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="emergency-phrase"><strong lang="el">Καλέστε το λιμενικό.</strong><span>Повикайте бреговата охрана.</span><em>Калѐсте то лименикò.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="emergency-phrase"><strong lang="el">Χάθηκε ένα άτομο.</strong><span>Изчезна човек.</span><em>Хàтике ѐна àтомо.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="emergency-phrase"><strong lang="el">Χάθηκε ένα παιδί.</strong><span>Изгуби се дете.</span><em>Хàтике ѐна педѝ.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="emergency-phrase"><strong lang="el">Υπάρχει φωτιά.</strong><span>Има пожар.</span><em>Ипàрхи фотя̀.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="emergency-phrase"><strong lang="el">Έγινε ατύχημα.</strong><span>Стана инцидент.</span><em>Ѐйине атѝхима.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="emergency-phrase"><strong lang="el">Είμαστε σε αυτή την τοποθεσία.</strong><span>Намираме се на това място.</span><em>Ѐмасте се афтѝ тин топотесѝа.</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="emergency-phrase"><strong lang="el">Μην τον μετακινείτε.</strong><span>Не го местете.</span><em>Мин тон метакѝните.</em></div>
-
-          <h3 class="phrase-group-title">Числа</h3>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="numbers"><strong lang="el">μηδέν — 0</strong><span>нула</span><em>мидѐн</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="numbers"><strong lang="el">ένα — 1</strong><span>едно</span><em>ѐна</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="numbers"><strong lang="el">δύο — 2</strong><span>две</span><em>дѝо</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="numbers"><strong lang="el">τρία — 3</strong><span>три</span><em>трѝа</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="numbers"><strong lang="el">τέσσερα — 4</strong><span>четири</span><em>тѐсера</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="numbers"><strong lang="el">πέντε — 5</strong><span>пет</span><em>пѐнде</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="numbers"><strong lang="el">έξι — 6</strong><span>шест</span><em>ѐкси</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="numbers"><strong lang="el">επτά — 7</strong><span>седем</span><em>ефтà</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="numbers"><strong lang="el">οκτώ — 8</strong><span>осем</span><em>охтò</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="numbers"><strong lang="el">εννέα — 9</strong><span>девет</span><em>енѐа</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="numbers"><strong lang="el">δέκα — 10</strong><span>десет</span><em>дѐка</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="numbers"><strong lang="el">έντεκα — 11</strong><span>единадесет</span><em>ѐндека</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="numbers"><strong lang="el">δώδεκα — 12</strong><span>дванадесет</span><em>дòдека</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="numbers"><strong lang="el">είκοσι — 20</strong><span>двадесет</span><em>ѝкоси</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="numbers"><strong lang="el">τριάντα — 30</strong><span>тридесет</span><em>триàнда</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="numbers"><strong lang="el">πενήντα — 50</strong><span>петдесет</span><em>пенѝнда</em></div>
-          <div class="phrase" data-search-item data-kind="phrase" data-category="numbers"><strong lang="el">εκατό — 100</strong><span>сто</span><em>екатò</em></div>
+    <!--
+      Sight catalogue panel
+      Design intent: Keep nearby heritage practical by pairing context with exact location and access uncertainty.
+      Accessibility: all map destinations are also available as source-visible coordinates and native links after enhancement.
+    -->
+    <section class="catalogue-panel catalogue-panel--sights" id="sights" role="tabpanel" aria-labelledby="tab-sights" tabindex="0">
+      <div class="shell">
+        <div class="section-heading">
+          <p class="eyebrow">Никити и до 30 мин с автомобил</p>
+          <h2>Забележителности</h2>
+          <p>Ориентировъчните времена започват от кметството на община Ситония и не включват търсене на паркинг или сезонно задръстване.</p>
+        </div>
+        <div class="catalogue-grid fallback-list" data-catalog-list>
+          <article><h3>Старо Никити</h3><p>40.230608, 23.672701 · ≈ 5 мин · традиционен квартал с каменни къщи и стръмни улици.</p></article>
+          <article><h3>Църква „Св. Никита“</h3><p>40.232948, 23.672936 · ≈ 5 мин · активен храм от XIX век.</p></article>
+          <article><h3>Исторически и фолклорен музей</h3><p>40.232705, 23.672979 · ≈ 5 мин · в каменното училище от 1870 г.; провери работното време.</p></article>
+          <article><h3>Базилика „Софроний“</h3><p>40.207736, 23.680082 · ≈ 7 мин · раннохристиянски археологически обект.</p></article>
+          <article><h3>Кула и стена „Псалида“</h3><p>40.221855, 23.691679 · ≈ 8 мин · византийски останки; достъпът на терен не е гарантиран.</p></article>
+          <article><h3>Тумба Никити</h3><p>40.217155, 23.683864 · ≈ 7 мин · селищно място от бронзовата и желязната епоха.</p></article>
+          <article><h3>Кула Хрисокамаро и древна Сингос</h3><p>40.252462, 23.723131 · ≈ 16 мин · археологическа зона и византийска кула.</p></article>
+          <article><h3>Село Агиос Николаос</h3><p>40.249183, 23.694192 · ≈ 12 мин · традиционно вътрешно село с площад и музей.</p></article>
         </div>
       </div>
     </section>
 
     <!--
-      Practical and emergency reference
-      Design intent: Separate immediate actions from planning advice and anchor critical claims to authorities.
-      Target: Emergency numbers lead visually; reference cards follow in a responsive grid.
+      Beach catalogue panel
+      Design intent: Prioritize access, uncertainty, and family-use signals over lifestyle claims.
+      Accessibility: changing characteristics are text-labelled and never communicated only by color.
     -->
-    <section class="section section--ink" id="practical" aria-labelledby="practical-title">
+    <section class="catalogue-panel catalogue-panel--beaches" id="beaches" role="tabpanel" aria-labelledby="tab-beaches" tabindex="0">
       <div class="shell">
         <div class="section-heading">
-          <p class="eyebrow">Спокойствие чрез подготовка</p>
-          <h2 id="practical-title">Практична информация и спешни случаи</h2>
+          <p class="eyebrow">Проверимо идентифицирани · до 30 мин</p>
+          <h2>Плажове</h2>
+          <p>Blue Flag е годишно отличие, а не текущо измерване на всяка точка. Където няма надеждна стойност за чистота, размер, услуги или свободна зона, това е изписано директно.</p>
         </div>
-        <div class="emergency-panel" id="emergency">
-          <div>
-            <p class="eyebrow">Единен номер · безплатен</p>
-            <p class="emergency-number"><a href="tel:112">112</a></p>
-            <p>Кажете какво е станало, точното място, броя пострадали и телефон за обратна връзка. Следвайте получените инструкции.</p>
-          </div>
-          <ul>
-            <li><a href="tel:100"><strong>100</strong> Полиция</a></li>
-            <li><a href="tel:166"><strong>166</strong> Линейка (EKAV)</a></li>
-            <li><a href="tel:199"><strong>199</strong> Пожарна</a></li>
-            <li><a href="tel:108"><strong>108</strong> Брегова охрана</a></li>
-          </ul>
-        </div>
-        <!-- Emergency call links: native tel anchors activate the device dialler with Enter or touch. -->
-        <p class="source-line">Официална проверка: <a href="https://www.gov.gr/en/sdg/healthcare/national-emergency-numbers" target="_blank" rel="noopener noreferrer">национални спешни номера</a> и <a href="https://civilprotection.gov.gr/en/112" target="_blank" rel="noopener noreferrer">служба 112</a>.</p>
-
-        <!-- Reference links: ordinary anchors support Tab and Enter and open authoritative sources separately. -->
-        <div class="practical-grid">
-          <article>
-            <h3>Автомобил и път</h3>
-            <ul>
-              <li>Коланите и подходящите детски обезопасителни системи са задължителни.</li>
-              <li>Не използвайте телефон в ръка; следвайте знаците, дори навигацията да предлага друго.</li>
-              <li>Гръцките допустими нива на алкохол са по-ниски за нови, професионални и мото водачи; най-сигурният избор за водача е нула.</li>
-              <li>По тесните крайбрежни пътища оставяйте място за автобуси и аварийни автомобили.</li>
-            </ul>
-            <a href="https://europa.eu/youreurope/citizens/travel/driving-abroad/road-rules-and-safety/greece/index_en.htm" target="_blank" rel="noopener noreferrer">Правила за движение — Европейска комисия</a>
-          </article>
-          <article>
-            <h3>Паркиране и гориво</h3>
-            <ul>
-              <li>Не паркирайте върху суха растителност, пред пожарни изходи или по завой без видимост.</li>
-              <li>Зареждайте преди обиколка на полуострова и потвърдете бензин или дизел преди пълнене.</li>
-              <li>Снимайте мястото на паркиране и запазете офлайн адреса на настаняването.</li>
-            </ul>
-            <a href="https://www.google.com/maps/search/?api=1&amp;query=petrol+station+Nikiti+Greece" target="_blank" rel="noopener noreferrer">Провери бензиностанции на карта</a>
-          </article>
-          <article>
-            <h3>Плащания и покупки</h3>
-            <ul>
-              <li>Валутата е евро. Носете малко кеш като резерв, но почти всички доставчици са длъжни да приемат карти.</li>
-              <li>Поискайте валидна касова бележка — „Απόδειξη, παρακαλώ“.</li>
-              <li>Потвърждавайте сумата на терминала и не оставяйте картата извън поглед.</li>
-            </ul>
-            <a href="https://www.aade.gr/en/news/campaigns/apodixi-please" target="_blank" rel="noopener noreferrer">„Apodixi please“ — гръцката данъчна администрация</a>
-          </article>
-          <article>
-            <h3>Магазини и аптеки</h3>
-            <ul>
-              <li>Купете вода и закуска преди отдалечен плаж; наличностите не са еднакви навсякъде.</li>
-              <li>За дежурна аптека вижте известието на затворената аптека или потърсете актуално на карта.</li>
-              <li>Не разчитайте на фиксирано работно време в туристически район.</li>
-            </ul>
-            <a href="https://www.google.com/maps/search/?api=1&amp;query=pharmacy+Nikiti+Greece" target="_blank" rel="noopener noreferrer">Аптеки около Никити</a>
-          </article>
-          <article>
-            <h3>Здравна помощ</h3>
-            <ul>
-              <li>Носете валидна Европейска здравноосигурителна карта и лична карта или паспорт.</li>
-              <li>При спешност 112 или 166 може да организира транспорт до дежурна обществена болница.</li>
-              <li>Пазете списък с лекарства, алергии и контакт на близък човек.</li>
-            </ul>
-            <a href="https://eu-healthcare.eopyy.gov.gr/en/healthcare-in-greece/accessing-health-services-in-greece-for-eu-citizens/emergency-care-for-ehic-holders/" target="_blank" rel="noopener noreferrer">Спешна грижа за притежатели на ЕЗОК</a>
-          </article>
-          <article>
-            <h3>Жега и слънце</h3>
-            <ul>
-              <li>Ограничете слънцето и физическото усилие в най-горещите часове; търсете сянка и прохлада.</li>
-              <li>Вода, шапка, леки дрехи и редовно нанасяне на защита са част от дневния багаж.</li>
-              <li>Никога не оставяйте дете, възрастен човек или животно в затворен автомобил.</li>
-            </ul>
-            <a href="https://civilprotection.gov.gr/en/odigies-prostasias/kaysonas" target="_blank" rel="noopener noreferrer">Официални указания при горещини</a>
-          </article>
-          <article>
-            <h3>Пожари</h3>
-            <ul>
-              <li>Проверявайте дневната карта за риск и съобщенията на 112 всяка сутрин.</li>
-              <li>Не палете огън и не навлизайте в зона с временна забрана.</li>
-              <li>При дим не импровизирайте маршрут; обадете се на 112 и следвайте властите.</li>
-            </ul>
-            <a href="https://civilprotection.gov.gr/arxeio-imerision-xartwn" target="_blank" rel="noopener noreferrer">Дневна карта за пожарен риск</a>
-          </article>
-          <article>
-            <h3>Море</h3>
-            <ul>
-              <li>Не плувайте сами и не влизайте в непозната вода без проверка на дъното и теченията.</li>
-              <li>Малкото дете трябва да е под непрекъснат надзор, независимо от плитчината.</li>
-              <li>При човек в беда уведомете спасител или брегова охрана; не създавайте втори пострадал.</li>
-            </ul>
-            <a href="https://www.moh.gov.gr/articles/ethniko-programma-asfaleias-sto-nero/hellenic-national-water-safety-program/3369-water-safety-at-sea-and-inland-waters" target="_blank" rel="noopener noreferrer">Министерство на здравеопазването — водна безопасност</a>
-          </article>
-          <article>
-            <h3>Кражби и измами</h3>
-            <ul>
-              <li>Не оставяйте документи, телефони и чанти видими в автомобила или без надзор на плажа.</li>
-              <li>Проверявайте сумата, искайте касова бележка и пазете доказателства при спор.</li>
-              <li>Не давайте кодове, карти или пари на непоискани „помагачи“.</li>
-            </ul>
-            <a href="https://www.astynomia.gr/2026/07/01/01-07-2026-symvoules-pros-tous-polites-gia-tin-prolipsi-peristatikon-klopon-kata-tin-therini-periodo/" target="_blank" rel="noopener noreferrer">Летни съвети на гръцката полиция</a>
-          </article>
-          <article>
-            <h3>Етикет</h3>
-            <ul>
-              <li>Поздравете с „Καλημέρα“ или „Καλησπέρα“ и използвайте „Παρακαλώ“.</li>
-              <li>Не заемайте частен вход или маса само за снимка; попитайте първо.</li>
-              <li>В храм покрийте рамене и колене, говорете тихо и спазвайте указанията.</li>
-            </ul>
-            <a href="https://www.visitgreece.gr/en/before-you-travel/travel-tips" target="_blank" rel="noopener noreferrer">Официални съвети за пътуване</a>
-          </article>
-        </div>
-
-        <div class="live-checks" aria-labelledby="live-checks-title">
-          <h3 id="live-checks-title">Провери непосредствено преди тръгване</h3>
-          <!-- Live-condition links: Tab and Enter open current authoritative information in a new tab. -->
-          <ul>
-            <li><a href="https://www.emy.gr/en" target="_blank" rel="noopener noreferrer">Време и предупреждения — HNMS</a></li>
-            <li><a href="https://civilprotection.gov.gr/en" target="_blank" rel="noopener noreferrer">Гражданска защита и 112</a></li>
-            <li><a href="https://www.blueflag.gr/el/awards/2026" target="_blank" rel="noopener noreferrer">Blue Flag 2026</a></li>
-            <li><a href="https://europa.eu/youreurope/citizens/travel/driving-abroad/road-rules-and-safety/greece/index_en.htm" target="_blank" rel="noopener noreferrer">Актуални пътни правила</a></li>
-          </ul>
+        <div class="catalogue-grid fallback-list" data-catalog-list>
+          <article><h3>Плаж Никити</h3><p>40.215035, 23.667094 · ≈ 3 мин · пясък · качество „Отлично“ за 2024; проби 2025.</p></article>
+          <article><h3>Микро Кастри</h3><p>40.196070, 23.682979 · ≈ 8 мин · малък залив · няма достатъчно данни за услуги.</p></article>
+          <article><h3>Кастри</h3><p>40.193480, 23.686048 · ≈ 9 мин · пясък и камъчета · ограничено паркиране.</p></article>
+          <article><h3>Агиос Йоанис</h3><p>40.191944, 23.693301 · ≈ 10 мин · пясък · организирани и свободни сектори.</p></article>
+          <article><h3>Ковиу</h3><p>40.181969, 23.709778 · ≈ 13 мин · пясък · сезонни услуги.</p></article>
+          <article><h3>Калогрия</h3><p>40.176665, 23.714549 · ≈ 15 мин · фин пясък · Blue Flag 2026 за сектора Kalogrias.</p></article>
+          <article><h3>Спатиес</h3><p>40.170223, 23.720880 · ≈ 17 мин · малки пясъчни заливи · ограничени услуги.</p></article>
+          <article><h3>Елия</h3><p>40.143494, 23.734124 · ≈ 20 мин · смесени сектори · две отличия Blue Flag 2026.</p></article>
+          <article><h3>Лагомандра</h3><p>40.133666, 23.750815 · ≈ 23 мин · пясък · Blue Flag 2026 за хотелския сектор.</p></article>
+          <article><h3>Трани Амуда / Ливрохио</h3><p>40.242331, 23.726715 · ≈ 17 мин · широка пясъчна ивица · Blue Flag 2026.</p></article>
+          <article><h3>Лагониси</h3><p>40.229927, 23.746382 · ≈ 20 мин · пясък · сезонно натоварване.</p></article>
+          <article><h3>Латура</h3><p>40.229894, 23.737964 · ≈ 17 мин · пясък и камъчета · близо до лодки.</p></article>
+          <article><h3>Фтероти</h3><p>40.209353, 23.762217 · ≈ 23 мин · малки пясъчни ивици · труден локален достъп.</p></article>
         </div>
       </div>
     </section>
+
+    <!--
+      Interactive marker explorer
+      Design intent: Offer an offline coordinate overview without a paid key or a tile-library dependency.
+      Accessibility: category buttons expose pressed state; every marker is a native button that opens and focuses its catalogue context.
+    -->
+    <section class="map-section" data-map hidden aria-labelledby="map-title">
+      <div class="shell">
+        <div class="section-heading section-heading--compact">
+          <p class="eyebrow">Координатен обзор</p>
+          <h2 id="map-title">Обща интерактивна карта</h2>
+          <p>Маркерите са позиционирани по локално съхранените координати. Фонът е схематичен и работи офлайн; Google Maps връзките в записите изискват интернет.</p>
+        </div>
+        <div class="map-filters" aria-label="Филтри за маркерите">
+          <!-- Map filter buttons: Enter or Space selects one category; aria-pressed announces the active marker set. -->
+          <button type="button" data-map-filter="all" aria-pressed="true">Всички</button>
+          <button type="button" data-map-filter="restaurants" aria-pressed="false">Ресторанти</button>
+          <button type="button" data-map-filter="sights" aria-pressed="false">Забележителности</button>
+          <button type="button" data-map-filter="beaches" aria-pressed="false">Плажове</button>
+        </div>
+        <div class="coordinate-map" data-map-plot role="group" aria-label="Схематична координатна карта с интерактивни маркери">
+          <span class="coordinate-map__label coordinate-map__label--north">Север</span>
+          <span class="coordinate-map__label coordinate-map__label--nikiti">Никити</span>
+          <span class="coordinate-map__label coordinate-map__label--sea">Торонейски залив</span>
+        </div>
+        <div class="map-legend" aria-label="Легенда на картата">
+          <span><i class="legend-dot legend-dot--restaurants" aria-hidden="true"></i> Ресторанти</span>
+          <span><i class="legend-dot legend-dot--sights" aria-hidden="true"></i> Забележителности</span>
+          <span><i class="legend-dot legend-dot--beaches" aria-hidden="true"></i> Плажове</span>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!--
     Footer
-    Design intent: State the offline boundary and provenance without competing with emergency content.
-    Target: Simple stacked mobile reading order.
+    Design intent: Close with the verification date, offline boundary, and portfolio route.
+    Target: Stacked mobile copy that becomes a quiet horizontal footer on wider screens.
   -->
-  <footer class="guide-footer">
-    <div class="shell">
-      <p><strong>Последен преглед:</strong> 18 август 2026 г. Основното съдържание се пази за офлайн ползване след първо успешно онлайн посещение.</p>
-      <p>Офлайн са достъпни текстът и интерфейсът. Външните карти, сайтове и актуални съобщения винаги изискват интернет.</p>
-      <!-- Footer link: ordinary anchor; Enter returns to the Projects page. -->
+  <footer class="site-footer">
+    <div class="shell site-footer__inner">
+      <p><strong>21.08.2026</strong> · интерфейсът, текстът, локалните данни и снимките са налични офлайн след първо успешно онлайн посещение.</p>
+      <!-- Footer link: Enter returns to Projects. -->
       <a href="../../apps.html">← Обратно към Projects</a>
     </div>
   </footer>

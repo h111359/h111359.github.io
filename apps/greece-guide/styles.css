@@ -1,93 +1,101 @@
-/*
- * styles.css: Mobile-first editorial design for the Nikiti and Sithonia guide.
- * Sections: Tokens, Base, Header, Hero, Search, Cards, Phrases, Practical, Footer, Responsive.
+/**
+ * styles.css: Mobile-first editorial system for the Nikiti catalogue.
+ * Sections: tokens, foundation, header, tabs, filters, catalogue cards,
+ * map, footer, responsive and motion rules.
  */
 
 /* ============================================================
-   Design Tokens
-   Design intent: Extend the portfolio's cream, ink, rust, and sage system with a restrained Aegean blue.
+   Design tokens
+   Design intent: Pair sun-warmed paper with deep Aegean ink and coral accents.
    ============================================================ */
 
 :root {
-  /* Paper — shared warm portfolio canvas. */
-  --color-paper: #f4efe4;
-  /* Raised paper — high-contrast card surface. */
-  --color-paper-raised: #fffaf0;
-  /* Ink — primary text on all light surfaces. */
-  --color-ink: #292622;
-  /* Muted ink — secondary descriptions and metadata. */
-  --color-ink-muted: #625d55;
-  /* Rust — warm portfolio identity accent. */
-  --color-rust: #8e3f2a;
-  /* Rust dark — readable warm action color. */
-  --color-rust-dark: #652c1d;
-  /* Sage — quiet editorial support surface. */
-  --color-sage: #cfd6c2;
-  /* Sage dark — dividers on paper. */
-  --color-sage-dark: #7c8773;
-  /* Aegean — thematic navigation and emergency accent. */
-  --color-aegean: #155f70;
-  /* Aegean dark — high-contrast blue surface. */
-  --color-aegean-dark: #0d3f4b;
-  /* Seafoam — quiet thematic section background. */
-  --color-seafoam: #dce9e4;
-  /* Sand — warm food section background. */
-  --color-sand: #eadbc4;
-  /* Coral — urgent but non-alarming emergency marker. */
-  --color-coral: #d87652;
-  /* Focus — dark blue keyboard indicator with strong light-surface contrast. */
-  --color-focus: #0b4d75;
-  /* White — text on deep ink and Aegean surfaces. */
+  /* Canvas — warm, low-glare page background. */
+  --color-canvas: #f5efe2;
+  /* Paper — primary reading and card surface. */
+  --color-paper: #fffaf0;
+  /* Paper muted — subtle control and fallback surface. */
+  --color-paper-muted: #ece4d5;
+  /* Ink — primary copy with strong contrast on paper. */
+  --color-ink: #17383c;
+  /* Ink muted — secondary metadata with accessible contrast. */
+  --color-ink-muted: #526467;
+  /* Sea — primary interactive and structural color. */
+  --color-sea: #0f5b66;
+  /* Sea deep — active navigation and dark footer surface. */
+  --color-sea-deep: #093d46;
+  /* Sea pale — calm informational panel surface. */
+  --color-sea-pale: #dbe9e5;
+  /* Coral — warm identity accent and food marker. */
+  --color-coral: #c95037;
+  /* Coral deep — readable link color on light surfaces. */
+  --color-coral-deep: #86331f;
+  /* Sand — evidence and detail surface. */
+  --color-sand: #e5cfaa;
+  /* Olive — sight marker with high contrast. */
+  --color-olive: #5a663a;
+  /* Sky — beach marker and decorative sea field. */
+  --color-sky: #5fa8bd;
+  /* White — copy and icons on dark surfaces. */
   --color-white: #ffffff;
-  /* Soft shadow — restrained paper elevation. */
-  --color-shadow: rgba(41, 38, 34, 0.14);
-  /* Deep shadow — legible elevation on thematic panels. */
-  --color-shadow-deep: rgba(13, 63, 75, 0.2);
+  /* Border — quiet division between content units. */
+  --color-border: #b9b09f;
+  /* Focus — conspicuous keyboard focus against light and dark areas. */
+  --color-focus: #ffbf47;
+  /* Shadow — restrained card lift. */
+  --color-shadow: rgba(23, 56, 60, 0.14);
+  /* Shadow strong — legible elevated focus state. */
+  --color-shadow-strong: rgba(9, 61, 70, 0.28);
 
-  /* Extra-small type — source labels and card metadata. */
+  /* Extra-small type — source credits and status labels. */
   --font-size-xs: 0.78rem;
-  /* Small type — support copy and compact controls. */
+  /* Small type — metadata, controls, and compact navigation. */
   --font-size-sm: 0.9rem;
-  /* Base type — comfortable mobile reference reading. */
-  --font-size-base: clamp(1rem, 0.97rem + 0.14vw, 1.1rem);
-  /* Medium heading — cards and subsections. */
-  --font-size-md: clamp(1.2rem, 1.08rem + 0.45vw, 1.55rem);
-  /* Section heading — clear editorial wayfinding. */
-  --font-size-lg: clamp(2rem, 1.6rem + 1.9vw, 3.6rem);
-  /* Display title — destination-led hero scale. */
-  --font-size-display: clamp(3.2rem, 2.35rem + 5vw, 7rem);
-
-  /* Tight spacing — small related metadata. */
+  /* Base type — body reading at phone and desktop widths. */
+  --font-size-base: clamp(1rem, 0.97rem + 0.15vw, 1.08rem);
+  /* Card title — distinct without overtaking section hierarchy. */
+  --font-size-md: clamp(1.28rem, 1.17rem + 0.45vw, 1.65rem);
+  /* Section heading — catalogue-level wayfinding. */
+  --font-size-lg: clamp(2.1rem, 1.72rem + 1.8vw, 3.7rem);
+  /* Hairline spacing — compact label separation. */
   --space-1: 0.35rem;
-  /* Compact spacing — inline controls and labels. */
+  /* Small spacing — inline groups and metadata. */
   --space-2: 0.65rem;
-  /* Control spacing — touch target padding. */
+  /* Control spacing — comfortable touch-target interior. */
   --space-3: 1rem;
-  /* Component spacing — card interiors. */
+  /* Component spacing — card and panel interior. */
   --space-4: 1.5rem;
-  /* Section spacing — grouped content separation. */
+  /* Group spacing — related component separation. */
   --space-5: 2.25rem;
-  /* Large spacing — major visual rhythm. */
+  /* Section spacing — major content rhythm. */
   --space-6: 3.5rem;
-  /* Page spacing — responsive section boundaries. */
+  /* Page spacing — fluid separation between page landmarks. */
   --space-7: clamp(4.5rem, 8vw, 8rem);
 
-  /* Small radius — tags and controls. */
+  /* Small radius — tags and compact controls. */
   --radius-sm: 0.35rem;
-  /* Medium radius — standard content cards. */
+  /* Medium radius — cards and input controls. */
   --radius-md: 0.85rem;
-  /* Large radius — primary feature panels. */
+  /* Large radius — editorial images and map. */
   --radius-lg: 1.6rem;
-  /* Reading width — comfortable long-form line length. */
+  /* Reading width — keeps explanatory text comfortable. */
   --reading-width: 68ch;
-  /* Content width — maximum guide canvas. */
-  --content-width: 78rem;
+  /* Canvas width — limits wide-screen line and grid expansion. */
+  --content-width: 80rem;
+  /* Control height — exceeds the 44px accessible touch target. */
+  --control-height: 2.9rem;
 }
 
 /* ============================================================
-   Base and Accessibility
-   Design intent: Preserve source reading order, generous targets, and visible keyboard position.
+   Foundation and accessibility
+   Design intent: Source order stays useful before enhancement and at 320px.
    ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 html {
   scroll-behavior: smooth;
@@ -97,7 +105,7 @@ body {
   margin: 0;
   min-width: 0;
   overflow-wrap: anywhere;
-  background: var(--color-paper);
+  background: var(--color-canvas);
   color: var(--color-ink);
   font-family: Arial, Helvetica, sans-serif;
   font-size: var(--font-size-base);
@@ -105,19 +113,13 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 h1,
 h2,
 h3,
 p,
 ul,
-ol,
-dl {
+dl,
+figure {
   margin-top: 0;
 }
 
@@ -127,13 +129,13 @@ h3 {
   color: inherit;
   font-family: Georgia, "Times New Roman", serif;
   font-weight: 600;
-  letter-spacing: -0.025em;
-  line-height: 1.06;
+  letter-spacing: -0.028em;
+  line-height: 1.04;
   text-wrap: balance;
 }
 
 h2 {
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
   font-size: var(--font-size-lg);
 }
 
@@ -142,46 +144,64 @@ h3 {
   font-size: var(--font-size-md);
 }
 
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button,
+select {
+  cursor: pointer;
+}
+
 a {
-  color: var(--color-rust-dark);
-  text-decoration-thickness: 0.08em;
-  text-underline-offset: 0.18em;
+  color: var(--color-coral-deep);
+  text-decoration-thickness: 0.09em;
+  text-underline-offset: 0.17em;
 }
 
-/* Hover state: deepen the warm action color without moving the link. */
+/* Hover state: warm links deepen without shifting their geometry. */
 a:hover {
-  color: var(--color-rust);
+  color: var(--color-coral);
 }
 
-/* Keyboard focus state: the offset ring remains visible across every surface. */
+/* Keyboard focus state: a high-contrast ring remains visible on every surface. */
 :focus-visible {
-  outline: 0.2rem solid var(--color-focus);
+  outline: 0.22rem solid var(--color-focus);
   outline-offset: 0.2rem;
 }
 
 [id] {
-  scroll-margin-top: 10rem;
+  scroll-margin-top: 9rem;
 }
 
 [hidden] {
-  display: none;
+  display: none !important;
+}
+
+/* Screen-reader-only heading: preserves document hierarchy without adding visual introduction content. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .shell {
-  width: min(calc(100% - (2 * var(--space-4))), var(--content-width));
+  width: min(calc(100% - (2 * var(--space-3))), var(--content-width));
   margin-inline: auto;
-}
-
-.section {
-  padding-block: var(--space-7);
-}
-
-.section--seafoam {
-  background: var(--color-seafoam);
-}
-
-.section--sand {
-  background: var(--color-sand);
 }
 
 .section-heading {
@@ -194,806 +214,734 @@ a:hover {
 }
 
 .section-heading > p:last-child {
-  max-width: var(--reading-width);
   margin-bottom: 0;
   color: var(--color-ink-muted);
 }
 
 .eyebrow {
   margin-bottom: var(--space-2);
-  color: var(--color-rust);
+  color: var(--color-coral-deep);
   font-size: var(--font-size-xs);
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-weight: 800;
+  letter-spacing: 0.13em;
   line-height: 1.35;
   text-transform: uppercase;
 }
 
 .skip-link {
   position: fixed;
-  /* Skip link layer — above the sticky header and section navigation. */
-  z-index: 30;
+  /* Skip-link layer: always above the sticky catalogue tabs. */
+  z-index: 50;
   top: var(--space-2);
   left: var(--space-2);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
-  background: var(--color-ink);
+  background: var(--color-sea-deep);
   color: var(--color-white);
+  font-weight: 700;
   transform: translateY(-180%);
 }
 
-/* Focus state: return the skip link to the viewport for keyboard users. */
+/* Keyboard focus state: reveal the otherwise off-canvas skip link. */
 .skip-link:focus {
   color: var(--color-white);
   transform: translateY(0);
 }
 
 /* ============================================================
-   Header and Section Navigation
-   Design intent: Mirror the portfolio's compact editorial header while keeping travel sections close.
+   Site header
+   Design intent: Keep portfolio provenance visible without delaying the catalogue tabs.
    ============================================================ */
 
-.guide-header {
-  position: sticky;
-  /* Header layer — above content and below the focused skip link. */
-  z-index: 20;
-  top: 0;
-  border-bottom: 0.08rem solid var(--color-sage-dark);
+.site-header {
+  border-bottom: 1px solid var(--color-border);
   background: var(--color-paper);
-  box-shadow: 0 0.2rem 1rem var(--color-shadow);
 }
 
-.guide-header__top {
-  display: flex;
-  min-height: 3.75rem;
+.site-header__inner {
+  display: grid;
+  gap: var(--space-1) var(--space-3);
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
+  min-height: 4.6rem;
+  padding-block: var(--space-2);
 }
 
-.guide-brand {
-  display: inline-flex;
+.back-link {
+  width: fit-content;
   min-height: 2.75rem;
-  align-items: center;
+  display: inline-flex;
   gap: var(--space-2);
-  color: var(--color-ink);
+  align-items: center;
+  color: var(--color-sea-deep);
+  font-weight: 800;
+}
+
+.site-header__place {
+  margin-bottom: 0;
+}
+
+.site-header__place {
   font-family: Georgia, "Times New Roman", serif;
   font-weight: 700;
-  text-decoration: none;
 }
 
-.guide-location,
-.connection-note {
-  margin-bottom: 0;
-  color: var(--color-ink-muted);
-  font-size: var(--font-size-sm);
+/* ============================================================
+   Catalogue tabs
+   Design intent: Five stable decisions remain reachable by thumb and keyboard.
+   ============================================================ */
+
+.catalogue-tabs {
+  position: sticky;
+  /* Sticky navigation layer: above cards, below the skip link. */
+  z-index: 20;
+  top: 0;
+  border-bottom: 1px solid var(--color-border);
+  background: color-mix(in srgb, var(--color-paper) 95%, transparent);
+  box-shadow: 0 0.3rem 1rem var(--color-shadow);
+  backdrop-filter: blur(0.6rem);
 }
 
-.guide-location {
-  font-weight: 700;
-}
-
-.connection-note {
-  text-align: right;
-}
-
-.connection-note.is-offline {
-  color: var(--color-rust-dark);
-  font-weight: 700;
-}
-
-.section-nav {
-  background: var(--color-aegean-dark);
-}
-
-.section-nav__scroll {
+.catalogue-tabs__scroll {
   display: flex;
-  overflow-x: auto;
   gap: var(--space-1);
-  padding-block: var(--space-1);
+  overflow-x: auto;
+  padding-block: var(--space-2);
   scrollbar-width: thin;
 }
 
-.section-nav a {
-  display: inline-flex;
-  min-height: 2.75rem;
+.catalogue-tab {
   flex: 0 0 auto;
-  align-items: center;
-  padding-inline: var(--space-3);
-  border-radius: var(--radius-sm);
-  color: var(--color-white);
-  font-size: var(--font-size-sm);
-  font-weight: 700;
-  text-decoration: none;
-}
-
-/* Hover state: sea-blue fill gives pointer feedback inside the dark navigation strip. */
-.section-nav a:hover {
-  background: var(--color-aegean);
-  color: var(--color-white);
-}
-
-/* Keyboard focus state: pale paper ring stays visible against the dark header. */
-.section-nav a:focus-visible {
-  outline-color: var(--color-white);
-}
-
-/* ============================================================
-   Hero and Trip Summary
-   Design intent: Use large editorial type and a tide-like field to signal place without stock imagery.
-   ============================================================ */
-
-.hero {
-  position: relative;
-  overflow: hidden;
-  padding-block: var(--space-7);
-  /* Art-directed tide geometry stays isolated from semantic layout and scales away on narrow phones. */
-  background:
-    radial-gradient(circle at 92% 18%, var(--color-seafoam) 0 9rem, transparent 9.1rem),
-    var(--color-paper);
-}
-
-.hero::after {
-  /* Decorative ring proportions intentionally echo the portfolio's large editorial image crop. */
-  position: absolute;
-  right: -8rem;
-  bottom: -11rem;
-  width: 28rem;
-  height: 20rem;
-  border: 3rem solid var(--color-sand);
-  border-radius: 50%;
-  content: "";
-  pointer-events: none;
-  transform: rotate(-12deg);
-}
-
-.hero__grid {
-  position: relative;
-  /* Hero content layer — above the decorative tide shape. */
-  z-index: 1;
-  display: grid;
-  gap: var(--space-5);
-}
-
-.hero h1 {
-  margin-bottom: var(--space-4);
-  font-size: var(--font-size-display);
-}
-
-.hero h1 em {
-  color: var(--color-aegean);
-  font-weight: inherit;
-}
-
-.hero__lede {
-  max-width: 54ch;
-  margin-bottom: var(--space-4);
-  color: var(--color-ink-muted);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.2rem, 1.05rem + 0.7vw, 1.7rem);
-}
-
-.review-note {
-  max-width: var(--reading-width);
-  margin-bottom: 0;
-  padding-left: var(--space-3);
-  border-left: 0.25rem solid var(--color-rust);
-  font-size: var(--font-size-sm);
-}
-
-.first-day {
-  align-self: end;
-  padding: var(--space-5);
-  border-radius: var(--radius-lg) var(--radius-lg) 5rem var(--radius-lg);
-  background: var(--color-aegean-dark);
-  color: var(--color-white);
-  box-shadow: 0 1.2rem 3rem var(--color-shadow-deep);
-}
-
-.first-day .eyebrow {
-  color: var(--color-coral);
-}
-
-.first-day h2 {
-  font-size: clamp(1.8rem, 1.55rem + 1vw, 2.7rem);
-}
-
-.first-day ol {
-  margin-bottom: 0;
-  padding-left: var(--space-4);
-}
-
-.first-day li + li {
-  margin-top: var(--space-3);
-}
-
-.trip-grid {
-  display: grid;
-  gap: var(--space-3);
-}
-
-.trip-grid article {
-  padding: var(--space-4);
-  border: 0.08rem solid var(--color-sage-dark);
-  border-radius: var(--radius-md);
-  background: var(--color-paper-raised);
-}
-
-.trip-grid article p {
-  margin-bottom: 0;
-}
-
-.card-number {
-  display: block;
-  margin-bottom: var(--space-3);
-  color: var(--color-rust);
-  font-size: var(--font-size-xs);
-  font-weight: 700;
-  letter-spacing: 0.14em;
-}
-
-.quick-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  margin-top: var(--space-5);
-}
-
-.quick-links a {
+  min-height: var(--control-height);
   display: inline-flex;
-  min-height: 2.75rem;
   align-items: center;
   padding: var(--space-2) var(--space-3);
-  border: 0.08rem solid var(--color-aegean);
-  border-radius: var(--radius-sm);
-  background: transparent;
-  color: var(--color-aegean-dark);
-  font-weight: 700;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--color-sea-deep);
+  font-size: var(--font-size-sm);
+  font-weight: 800;
   text-decoration: none;
+  white-space: nowrap;
 }
 
-/* Hover state: fill quick links to clearly acknowledge pointer interaction. */
-.quick-links a:hover {
-  background: var(--color-aegean-dark);
+/* Hover state: preview the selectable tab with a quiet sea tint. */
+.catalogue-tab:hover {
+  background: var(--color-sea-pale);
+  color: var(--color-sea-deep);
+}
+
+/* Active state: a filled surface communicates the selected catalogue. */
+.catalogue-tab.is-active {
+  background: var(--color-sea);
   color: var(--color-white);
 }
 
 /* ============================================================
-   Search and Filters
-   Design intent: Make a large guide quickly queryable while leaving the source document complete.
+   Progressive filters
+   Design intent: One compact control surface changes with the active catalogue.
    ============================================================ */
 
-.search-panel {
-  padding-block: var(--space-5);
-  border-block: 0.08rem solid var(--color-sage-dark);
-  background: var(--color-paper-raised);
+.filter-section {
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-paper);
 }
 
-.filters {
+.catalogue-filters {
   display: grid;
   gap: var(--space-3);
+  align-items: end;
 }
 
-.filters label {
+.filter-field {
   display: grid;
   gap: var(--space-1);
   color: var(--color-ink-muted);
-  font-size: var(--font-size-sm);
-  font-weight: 700;
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  letter-spacing: 0.04em;
 }
 
-.filters input,
-.filters select,
-.filters button {
+.filter-field input,
+.filter-field select {
   width: 100%;
-  min-height: 3rem;
-  border: 0.1rem solid var(--color-sage-dark);
+  min-height: var(--control-height);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  background: var(--color-paper);
+  background: var(--color-white);
   color: var(--color-ink);
-  font: inherit;
+  letter-spacing: normal;
 }
 
-.filters input,
-.filters select {
-  padding-inline: var(--space-2);
+.filter-reset,
+.map-filters button {
+  min-height: var(--control-height);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-sea);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-sea-deep);
+  font-weight: 800;
 }
 
-.filters button {
-  align-self: end;
-  padding-inline: var(--space-3);
-  border-color: var(--color-rust);
-  background: var(--color-rust);
-  color: var(--color-white);
-  font-weight: 700;
-  cursor: pointer;
+/* Hover state: fill secondary controls while retaining their label contrast. */
+.filter-reset:hover,
+.map-filters button:hover {
+  background: var(--color-sea-pale);
 }
 
-/* Hover state: darken reset control while preserving its dimensions. */
-.filters button:hover {
-  border-color: var(--color-rust-dark);
-  background: var(--color-rust-dark);
-}
-
-.result-status {
-  min-height: 1.6em;
+.result-status,
+.noscript-note {
   margin: var(--space-3) 0 0;
   color: var(--color-ink-muted);
   font-size: var(--font-size-sm);
 }
 
 .noscript-note {
-  padding-block: var(--space-3);
-  color: var(--color-rust-dark);
-  font-weight: 700;
+  padding: var(--space-3);
+  border-left: 0.3rem solid var(--color-coral);
+  background: var(--color-paper-muted);
 }
 
 /* ============================================================
-   Destination and Food Cards
-   Design intent: Standardize comparison details and keep source checking adjacent to every choice.
+   Catalogue panels and record cards
+   Design intent: Dense factual records scan cleanly without looking clinical.
    ============================================================ */
 
-.place-grid,
-.food-grid {
+.catalogue-panel {
+  padding-block: var(--space-7);
+}
+
+.catalogue-panel--food,
+.catalogue-panel--sights {
+  background: var(--color-canvas);
+}
+
+.catalogue-panel--restaurants,
+.catalogue-panel--beaches {
+  background: var(--color-sea-pale);
+}
+
+.catalogue-panel--fish {
+  background: var(--color-paper-muted);
+}
+
+.catalogue-grid {
   display: grid;
   gap: var(--space-4);
 }
 
-.info-card,
-.food-card {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  padding: var(--space-4);
-  border: 0.08rem solid var(--color-sage-dark);
+.catalogue-lead-media {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.42fr) minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: end;
+  max-width: var(--reading-width);
+  margin-bottom: var(--space-5);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  background: var(--color-paper-raised);
-  box-shadow: 0 0.6rem 1.5rem var(--color-shadow);
+  background: var(--color-paper);
 }
 
-.info-card--beyond {
-  border-color: var(--color-rust);
+.catalogue-lead-media img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
 }
 
-.card-topline {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-2);
-  margin-bottom: var(--space-4);
+.catalogue-lead-media figcaption {
+  margin-bottom: 0;
   color: var(--color-ink-muted);
   font-size: var(--font-size-xs);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
-.card-topline strong {
-  color: var(--color-aegean-dark);
-  white-space: nowrap;
+.fallback-list article,
+.record-card {
+  min-width: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-paper);
+  box-shadow: 0 0.4rem 1.2rem var(--color-shadow);
 }
 
-.info-card > p,
-.food-card > p {
+.fallback-list article {
+  padding: var(--space-4);
+}
+
+.fallback-list article p:last-child {
+  margin-bottom: 0;
   color: var(--color-ink-muted);
 }
 
-.info-card dl {
-  margin-bottom: var(--space-4);
-  padding-top: var(--space-3);
-  border-top: 0.08rem solid var(--color-sage);
+.record-card {
+  display: grid;
+  overflow: clip;
+}
+
+.record-card__body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: var(--space-4);
+}
+
+.record-card__header {
+  margin-bottom: var(--space-3);
+}
+
+.record-card__badge {
+  display: inline-block;
+  margin-bottom: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border-radius: 999px;
+  background: var(--color-sea-pale);
+  color: var(--color-sea-deep);
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.record-card__title {
+  margin-bottom: 0;
+}
+
+.record-card__greek {
+  margin-bottom: var(--space-2);
+  color: var(--color-coral-deep);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.05em;
+  font-weight: 700;
+}
+
+.record-card__description,
+.record-card__meta {
+  margin-bottom: var(--space-3);
+}
+
+.record-card__meta {
+  color: var(--color-ink-muted);
   font-size: var(--font-size-sm);
 }
 
-.info-card dt {
-  color: var(--color-ink);
-  font-weight: 700;
-}
-
-.info-card dd {
-  margin: 0 0 var(--space-2);
-  color: var(--color-ink-muted);
-}
-
-.food-card > span {
+.offer-list {
+  display: grid;
+  gap: var(--space-1);
   margin-bottom: var(--space-3);
-  color: var(--color-rust-dark);
-  font-size: var(--font-size-xs);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  padding-left: 1.25rem;
+  color: var(--color-ink-muted);
+  font-size: var(--font-size-sm);
 }
 
-.card-links {
+.record-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
-  margin-top: auto;
+  gap: var(--space-2) var(--space-3);
+  margin-block: var(--space-2) var(--space-3);
 }
 
-.card-links a {
-  display: inline-flex;
-  min-height: 2.75rem;
-  align-items: center;
-  padding-inline: var(--space-3);
-  border: 0.08rem solid var(--color-aegean);
-  border-radius: var(--radius-sm);
-  color: var(--color-aegean-dark);
+.record-link {
+  font-weight: 800;
+}
+
+.rating-row {
+  margin-bottom: var(--space-2);
+  color: var(--color-ink-muted);
   font-size: var(--font-size-sm);
-  font-weight: 700;
-  text-decoration: none;
 }
 
-/* Hover state: fill destination actions to signal the external handoff. */
-.card-links a:hover {
-  background: var(--color-aegean-dark);
+.rating-row__label {
+  color: var(--color-ink);
+}
+
+.record-details {
+  margin-top: auto;
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-3);
+}
+
+.record-details__summary {
+  width: fit-content;
+  min-height: 2.75rem;
+  display: flex;
+  align-items: center;
+  color: var(--color-sea-deep);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.record-detail {
+  display: grid;
+  grid-template-columns: minmax(5.7rem, 0.38fr) minmax(0, 1fr);
+  gap: var(--space-1) var(--space-3);
+  margin-block: var(--space-3);
+  font-size: var(--font-size-sm);
+}
+
+.record-detail__term {
+  color: var(--color-ink-muted);
+  font-weight: 800;
+}
+
+.record-detail__value {
+  margin: 0;
+}
+
+.record-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--color-border);
+  font-size: var(--font-size-xs);
+}
+
+.change-warning,
+.panel-warning {
+  padding: var(--space-3);
+  border-left: 0.3rem solid var(--color-coral);
+  background: color-mix(in srgb, var(--color-sand) 55%, var(--color-paper));
+  color: var(--color-ink);
+  font-size: var(--font-size-sm);
+}
+
+.panel-warning {
+  max-width: var(--reading-width);
+  margin: var(--space-5) 0 0;
+}
+
+.record-media {
+  position: relative;
+  margin-bottom: 0;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-paper-muted);
+}
+
+.record-media img,
+.record-media__placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
+
+.catalogue-panel--restaurants .record-media__placeholder {
+  min-height: 7rem;
+  aspect-ratio: 16 / 5;
+}
+
+.record-media img {
+  object-fit: cover;
+}
+
+.record-media__placeholder {
+  display: grid;
+  place-content: center;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  color: var(--color-ink-muted);
+  text-align: center;
+}
+
+.record-media__symbol {
+  color: var(--color-border);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 3.5rem;
+  line-height: 1;
+}
+
+.record-media__missing {
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+}
+
+.record-media__credit {
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-sea-deep);
+  color: var(--color-white);
+  font-size: var(--font-size-xs);
+}
+
+.record-media__credit a {
   color: var(--color-white);
 }
 
-.dishes-heading {
-  margin-top: var(--space-7);
+.record-media__context {
+  display: block;
+  margin-bottom: var(--space-1);
+  color: color-mix(in srgb, var(--color-white) 82%, var(--color-sea-pale));
 }
 
-.dish-grid {
-  display: grid;
-  gap: var(--space-3);
-}
-
-.dish-grid article {
-  padding-top: var(--space-3);
-  border-top: 0.15rem solid var(--color-rust);
-}
-
-.dish-grid article p {
-  margin-bottom: 0;
-}
-
-/* Filtered state: hide only matching records; headings remain as navigation cues. */
-[data-search-item].is-filtered-out {
-  display: none;
-}
-
-/* Empty group state: remove a phrase heading when all rows in that situation are filtered out. */
-.phrase-group-title.is-filtered-out {
-  display: none;
+/* Map target state: a temporary outline connects a marker to its record. */
+.record-card.is-map-target {
+  outline: 0.28rem solid var(--color-focus);
+  outline-offset: 0.25rem;
+  box-shadow: 0 1rem 2.2rem var(--color-shadow-strong);
 }
 
 /* ============================================================
-   Phrasebook
-   Design intent: Align original, meaning, and pronunciation for rapid side-by-side recognition.
+   Coordinate map
+   Design intent: Provide an offline spatial overview without pretending to be a road map.
    ============================================================ */
 
-.phrase-list {
-  display: grid;
-  gap: var(--space-2);
+.map-section {
+  padding-block: var(--space-7);
+  background: var(--color-paper);
 }
 
-.phrase-group-title {
-  margin: var(--space-6) 0 var(--space-2);
-  padding-bottom: var(--space-2);
-  border-bottom: 0.2rem solid var(--color-aegean);
-  color: var(--color-aegean-dark);
-}
-
-.phrase-group-title:first-child {
-  margin-top: 0;
-}
-
-.phrase {
-  display: grid;
-  min-width: 0;
-  gap: var(--space-1);
-  padding: var(--space-3);
-  border-bottom: 0.08rem solid var(--color-sage);
-  background: var(--color-paper-raised);
-}
-
-.phrase strong {
-  color: var(--color-ink);
-  font-size: 1.08em;
-}
-
-.phrase span {
-  color: var(--color-ink-muted);
-}
-
-.phrase em {
-  color: var(--color-rust-dark);
-  font-style: normal;
-  font-weight: 700;
-}
-
-/* ============================================================
-   Practical and Emergency Content
-   Design intent: Give urgent actions maximum contrast, then return to calm reference cards.
-   ============================================================ */
-
-.section--ink {
-  background: var(--color-ink);
-  color: var(--color-paper);
-}
-
-.section--ink .section-heading > p:last-child {
-  color: var(--color-sage);
-}
-
-.emergency-panel {
-  display: grid;
-  gap: var(--space-4);
-  padding: var(--space-5);
-  border-radius: var(--radius-lg);
-  background: var(--color-coral);
-  color: var(--color-ink);
-}
-
-.emergency-panel .eyebrow {
-  color: var(--color-ink);
-}
-
-.emergency-panel p:last-child {
-  margin-bottom: 0;
-}
-
-.emergency-number {
-  margin-bottom: var(--space-2);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(4rem, 3rem + 7vw, 8rem);
-  font-weight: 700;
-  letter-spacing: -0.06em;
-  line-height: 0.85;
-}
-
-.emergency-number a,
-.emergency-panel li a {
-  color: var(--color-ink);
-}
-
-.emergency-panel ul {
-  display: grid;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.emergency-panel li {
-  border-top: 0.08rem solid var(--color-ink);
-}
-
-.emergency-panel li a {
+.map-filters {
   display: flex;
-  min-height: 3.2rem;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-  font-weight: 700;
-  text-decoration: none;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
 }
 
-/* Hover state: underline dial actions without changing their spatial position. */
-.emergency-panel a:hover {
-  text-decoration: underline;
+/* Pressed state: selected map category uses the primary sea surface. */
+.map-filters button[aria-pressed="true"] {
+  background: var(--color-sea);
+  color: var(--color-white);
 }
 
-.source-line {
-  margin: var(--space-3) 0 var(--space-6);
-  color: var(--color-sage);
+.coordinate-map {
+  position: relative;
+  min-height: clamp(25rem, 70vw, 43rem);
+  overflow: hidden;
+  border: 0.4rem solid var(--color-paper-muted);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 66% 44%, var(--color-paper) 0 3%, transparent 3.3%),
+    linear-gradient(142deg, var(--color-sand) 0 47%, var(--color-sky) 47.3% 100%);
+  box-shadow: inset 0 0 0 1px var(--color-border);
+}
+
+.coordinate-map::before,
+.coordinate-map::after {
+  position: absolute;
+  border: 1px solid color-mix(in srgb, var(--color-white) 45%, transparent);
+  border-radius: 50%;
+  content: "";
+}
+
+.coordinate-map::before {
+  right: -8%;
+  bottom: 8%;
+  width: 45%;
+  height: 15%;
+  transform: rotate(-18deg);
+}
+
+.coordinate-map::after {
+  right: 12%;
+  bottom: 27%;
+  width: 30%;
+  height: 11%;
+  transform: rotate(-10deg);
+}
+
+.coordinate-map__label {
+  position: absolute;
+  /* Map labels layer: below all interactive markers. */
+  z-index: 1;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-paper) 83%, transparent);
+  color: var(--color-ink-muted);
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+}
+
+.coordinate-map__label--north {
+  top: var(--space-3);
+  left: var(--space-3);
+}
+
+.coordinate-map__label--nikiti {
+  top: 48%;
+  left: 43%;
+}
+
+.coordinate-map__label--sea {
+  right: var(--space-4);
+  bottom: var(--space-4);
+}
+
+.map-marker {
+  position: absolute;
+  /* Map markers layer: above map labels and schematic coast details. */
+  z-index: 3;
+  top: var(--marker-top);
+  left: var(--marker-left);
+  width: 1.35rem;
+  min-height: 1.35rem;
+  padding: 0;
+  border: 0.16rem solid var(--color-white);
+  border-radius: 50% 50% 50% 0;
+  background: var(--color-coral);
+  box-shadow: 0 0.2rem 0.45rem var(--color-shadow-strong);
+  transform: translate(-50%, -100%) rotate(-45deg);
+}
+
+/* Hover state: enlarge the marker while keeping its mapped anchor fixed. */
+.map-marker:hover {
+  transform: translate(-50%, -100%) rotate(-45deg) scale(1.25);
+}
+
+/* Keyboard focus state: keep the marker transform while exposing its focus ring. */
+.map-marker:focus-visible {
+  transform: translate(-50%, -100%) rotate(-45deg) scale(1.25);
+}
+
+.map-marker--sights {
+  background: var(--color-olive);
+}
+
+.map-marker--beaches {
+  background: var(--color-sea);
+}
+
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin-top: var(--space-3);
+  color: var(--color-ink-muted);
   font-size: var(--font-size-sm);
 }
 
-.source-line a,
-.section--ink article a,
-.live-checks a {
-  color: var(--color-paper-raised);
+.legend-dot {
+  width: 0.8rem;
+  height: 0.8rem;
+  display: inline-block;
+  border-radius: 50%;
+  background: var(--color-coral);
 }
 
-.practical-grid {
-  display: grid;
-  gap: var(--space-4);
+.legend-dot--sights {
+  background: var(--color-olive);
 }
 
-.practical-grid article {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  padding: var(--space-4);
-  border: 0.08rem solid var(--color-sage-dark);
-  border-radius: var(--radius-md);
-  background: var(--color-aegean-dark);
-}
-
-.practical-grid article ul {
-  padding-left: var(--space-4);
-}
-
-.practical-grid article li + li {
-  margin-top: var(--space-2);
-}
-
-.practical-grid article a {
-  display: inline-flex;
-  min-height: 2.75rem;
-  align-items: center;
-  margin-top: auto;
-  font-weight: 700;
-}
-
-.live-checks {
-  margin-top: var(--space-6);
-  padding: var(--space-5);
-  border-left: 0.3rem solid var(--color-coral);
-  background: var(--color-aegean-dark);
-}
-
-.live-checks ul {
-  display: grid;
-  gap: var(--space-2);
-  margin-bottom: 0;
-  padding-left: var(--space-4);
+.legend-dot--beaches {
+  background: var(--color-sea);
 }
 
 /* ============================================================
    Footer
-   Design intent: Close with review and offline boundaries in the same quiet portfolio register.
+   Design intent: Close on verification and offline boundaries.
    ============================================================ */
 
-.guide-footer {
+.site-footer {
   padding-block: var(--space-5);
-  border-top: 0.08rem solid var(--color-sage-dark);
-  background: var(--color-paper);
+  background: var(--color-sea-deep);
+  color: var(--color-white);
 }
 
-.guide-footer p {
+.site-footer__inner {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.site-footer p {
   max-width: var(--reading-width);
-  color: var(--color-ink-muted);
-  font-size: var(--font-size-sm);
+  margin-bottom: 0;
 }
 
-.guide-footer a {
-  display: inline-flex;
-  min-height: 2.75rem;
-  align-items: center;
-  font-weight: 700;
+.site-footer a {
+  width: fit-content;
+  color: var(--color-white);
+  font-weight: 800;
 }
 
 /* ============================================================
-   Responsive Layouts
+   Responsive layout
    ============================================================ */
 
-/* Mid-size phones and tablets (min 36rem): expose comparison columns without shortening targets. */
-@media (min-width: 36rem) {
-  .filters {
+/* Tablet layout: distribute controls while preserving readable card widths. */
+@media (min-width: 42rem) {
+  .shell {
+    width: min(calc(100% - (2 * var(--space-5))), var(--content-width));
+  }
+
+  .site-header__inner {
+    grid-template-columns: auto 1fr;
+    gap: var(--space-4);
+  }
+
+  .site-header__place {
+    text-align: right;
+  }
+
+  .catalogue-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .trip-grid,
-  .dish-grid {
+  .catalogue-filters {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .place-grid,
-  .food-grid,
-  .practical-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .filter-field--search {
+    grid-column: 1 / -1;
   }
 
-  .phrase {
-    grid-template-columns: minmax(10rem, 1.05fr) minmax(10rem, 1fr) minmax(9rem, 0.85fr);
-    align-items: baseline;
-    gap: var(--space-3);
+  .record-card__body {
+    padding: var(--space-5);
   }
-}
 
-/* Desktop and wide tablets (min 62rem): balance hero and increase scan density. */
-@media (min-width: 62rem) {
-  .hero__grid {
-    grid-template-columns: minmax(0, 1.35fr) minmax(19rem, 0.65fr);
+  .site-footer__inner {
+    grid-template-columns: 1fr auto;
     align-items: end;
-    gap: var(--space-6);
-  }
-
-  .trip-grid,
-  .dish-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .filters {
-    grid-template-columns: minmax(15rem, 1.5fr) repeat(4, minmax(9rem, 1fr)) auto;
-  }
-
-  .filters button {
-    width: auto;
-  }
-
-  .food-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .emergency-panel {
-    grid-template-columns: minmax(0, 1.25fr) minmax(17rem, 0.75fr);
-    align-items: center;
   }
 }
 
-/* Narrow phones (max 40rem): simplify sticky header and retain a 320px-safe reading flow. */
-@media (max-width: 40rem) {
-  .guide-header__top {
-    flex-wrap: wrap;
-    padding-block: var(--space-1);
+/* Desktop layout: expand controls and catalogue records into a three-column rhythm. */
+@media (min-width: 62rem) {
+  .catalogue-filters {
+    grid-template-columns: minmax(16rem, 1.5fr) repeat(3, minmax(9rem, 1fr)) auto;
   }
 
-  .guide-location {
-    order: 2;
+  .filter-field--search {
+    grid-column: auto;
   }
 
-  .connection-note {
-    width: 100%;
-    order: 3;
-    padding-bottom: var(--space-1);
-    text-align: left;
+  .catalogue-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .hero {
-    background: var(--color-paper);
+}
+
+/* Print layout: expose all catalogue panels and remove navigation-only controls. */
+@media print {
+  .skip-link,
+  .catalogue-tabs,
+  .filter-section,
+  .map-section {
+    display: none !important;
   }
 
-  .hero::after {
-    display: none;
+  .catalogue-panel[hidden] {
+    display: block !important;
   }
 
-  .first-day,
-  .emergency-panel,
-  .live-checks {
-    padding: var(--space-4);
+  .catalogue-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .card-topline {
-    align-items: flex-start;
+  .record-card,
+  .fallback-list article {
+    break-inside: avoid;
+    box-shadow: none;
   }
 }
 
-/* Reduced motion: remove smooth scrolling so navigation follows the user's motion preference. */
+/* Reduced-motion preference: remove smooth scrolling and all interface transitions. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-}
 
-/* Print: remove navigation and actions, retain complete reference content in high contrast. */
-@media print {
-  .guide-header,
-  .search-panel,
-  .quick-links,
-  .card-links,
-  .guide-footer {
-    display: none;
-  }
-
-  body,
-  .section,
-  .section--ink,
-  .section--sand,
-  .section--seafoam,
-  .emergency-panel,
-  .practical-grid article,
-  .live-checks {
-    background: var(--color-white);
-    color: var(--color-ink);
-  }
-
-  .section {
-    padding-block: var(--space-4);
-  }
-
-  .info-card,
-  .food-card,
-  .practical-grid article,
-  .phrase {
-    break-inside: avoid;
-    box-shadow: none;
-  }
-
-  .section--ink a,
-  .emergency-panel a {
-    color: var(--color-ink);
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

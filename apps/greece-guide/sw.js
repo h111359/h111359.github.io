@@ -1,19 +1,59 @@
 /**
- * sw.js: Folder-scoped offline cache for the Nikiti and Sithonia guide.
- * Pre-caches the complete local app shell and refreshes same-origin resources when online.
+ * sw.js: Folder-scoped offline cache for the Nikiti catalogue.
+ * Pre-caches the structured snapshot, interface, and every locally licensed image.
  */
 
-const CACHE_NAME = "greece-guide-v1";
-const CORE_ASSETS = ["./", "./index.html", "./styles.css", "./app.js", "./sw.js"];
+const CACHE_NAME = "greece-guide-v4";
+const GUIDE_CACHE_PREFIX = "greece-guide-";
 const GET_METHOD = "GET";
 const NAVIGATION_MODE = "navigate";
+const RECORD_COLLECTION_KEYS = ["foods", "restaurants", "fish", "sights", "beaches"];
+const CORE_ASSETS = [
+    "./",
+    "./index.html",
+    "./styles.css?v=4",
+    "./app.js?v=4",
+    "./sw.js",
+    "./catalog-data.json?v=4",
+    "./images/image-licenses.json"
+];
 
 /**
- * Fetches a request and stores a successful same-origin response for later offline use.
+ * Collects every unique local record image declared by the structured catalogue.
  *
- * @param {Request} request - Same-origin request to retrieve and cache.
+ * @param {Object} catalogue - Parsed catalogue snapshot with the five record collections.
+ * @returns {string[]} Folder-relative image paths ready for Cache.addAll().
+ */
+function collectCatalogueImageAssets(catalogue) {
+    const imagePaths = RECORD_COLLECTION_KEYS.flatMap(function collectCollectionImages(collectionKey) {
+        return catalogue[collectionKey].map(function getRecordImage(record) {
+            return `./${record.image.src}`;
+        });
+    });
+    return Array.from(new Set(imagePaths));
+}
+
+/**
+ * Pre-caches the interface, structured snapshot, attribution registry, and all record images.
+ *
+ * @returns {Promise<void>} Promise resolved when the complete local catalogue is cached.
+ */
+async function cacheCompleteLocalSnapshot() {
+    const cache = await caches.open(CACHE_NAME);
+    await cache.addAll(CORE_ASSETS);
+    const catalogueResponse = await cache.match("./catalog-data.json?v=4");
+    if (!catalogueResponse) {
+        throw new Error("The cached catalogue snapshot is unavailable.");
+    }
+    const catalogue = await catalogueResponse.json();
+    await cache.addAll(collectCatalogueImageAssets(catalogue));
+}
+
+/**
+ * Fetches a same-origin request and refreshes its successful cached response.
+ *
+ * @param {Request} request - Local request to retrieve and cache.
  * @returns {Promise<Response>} Network response for the current request.
- * @throws {TypeError} When the network request cannot be completed.
  */
 async function fetchAndCache(request) {
     const response = await fetch(request);
@@ -27,26 +67,28 @@ async function fetchAndCache(request) {
 }
 
 /**
- * Resolves a navigation request online first and falls back to the cached guide document.
+ * Uses the network for navigation so a returning visitor receives current static files.
  *
- * @param {Request} request - Browser navigation request within the guide scope.
- * @returns {Promise<Response>} Live page or cached guide document when offline.
+ * @param {Request} request - Navigation request within the guide scope.
+ * @returns {Promise<Response>} Live page or cached source-visible document.
  */
 async function handleNavigation(request) {
     try {
         return await fetchAndCache(request);
     } catch (error) {
-        // Navigation remains useful offline by returning the complete source-visible guide.
-        const cachedDocument = await caches.match("./index.html");
-        if (cachedDocument) {
-            return cachedDocument;
+        const requestedDocument = await caches.match(request);
+        const fallbackDocument = await caches.match("./index.html");
+
+        if (requestedDocument || fallbackDocument) {
+            return requestedDocument || fallbackDocument;
         }
+
         throw error;
     }
 }
 
 /**
- * Resolves a local asset from cache first and refreshes missing assets from the network.
+ * Serves static local assets immediately and fills cache gaps from the network.
  *
  * @param {Request} request - Same-origin asset request within the guide scope.
  * @returns {Promise<Response>} Cached or live response for the requested asset.
@@ -56,25 +98,22 @@ async function handleAsset(request) {
     return cachedResponse || fetchAndCache(request);
 }
 
-self.addEventListener("install", function cacheGuideShell(event) {
+self.addEventListener("install", function cacheCompleteGuide(event) {
     event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(function addCoreAssets(cache) {
-                return cache.addAll(CORE_ASSETS);
-            })
+        cacheCompleteLocalSnapshot()
             .then(function activateCurrentWorker() {
                 return self.skipWaiting();
             })
     );
 });
 
-self.addEventListener("activate", function removeOldGuideCaches(event) {
+self.addEventListener("activate", function removeSupersededGuideCaches(event) {
     event.waitUntil(
         caches.keys()
             .then(function deleteUnusedCaches(cacheNames) {
                 return Promise.all(cacheNames
                     .filter(function isOldGuideCache(cacheName) {
-                        return cacheName.startsWith("greece-guide-") && cacheName !== CACHE_NAME;
+                        return cacheName.startsWith(GUIDE_CACHE_PREFIX) && cacheName !== CACHE_NAME;
                     })
                     .map(function deleteOldGuideCache(cacheName) {
                         return caches.delete(cacheName);
