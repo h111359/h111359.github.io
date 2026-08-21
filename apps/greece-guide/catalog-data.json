@@ -3,14 +3,19 @@
     "title": "Никити — проверим каталог",
     "verified": "2026-08-21",
     "origin": {
-      "name": "Кметство на община Ситония, Никити",
-      "latitude": 40.22398,
-      "longitude": 23.6683,
-      "source": "https://www.openstreetmap.org/node/299492270"
+      "name": "The Seaside Villas, Никити",
+      "latitude": 40.207465355104475,
+      "longitude": 23.676892454034267,
+      "source": "https://www.google.com/maps/search/?api=1&query=40.207465355104475%2C23.676892454034267"
     },
-    "travelTimeNote": "Времената са ориентировъчни за автомобил при нормален трафик от кметството и не са гаранция за летния сезон.",
-    "ratingMethod": "Популярност се изчислява само при налична Google моментна снимка: rating × ln(1 + reviews). Липсващите платформи не се заместват и не се усредняват.",
-    "dataLicense": "Координати и част от категориите: © OpenStreetMap contributors, ODbL 1.0."
+    "travelTimeNote": "Разстоянията и времената са ориентировъчна статична моментна снимка от The Seaside Villas. Google Maps може да предложи различен маршрут според условията.",
+    "ratingMethod": "Числова оценка се показва само за точно съпоставен профил с поне 50 отзива. Google и Tripadvisor са независими моментни снимки; популярността е Google rating × ln(1 + reviews). Липсващите платформи не се заместват и не се усредняват.",
+    "dataLicense": "Координати и част от категориите: © OpenStreetMap contributors, ODbL 1.0.",
+    "routeMethod": "Пешеходните и автомобилните стойности са изчислени по мрежата на OpenStreetMap чрез Valhalla; действията за маршрут отварят Google Maps с точни начални и крайни координати.",
+    "routeSources": [
+      "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+      "https://www.openstreetmap.org/copyright"
+    ]
   },
   "foods": [
     {
@@ -47,7 +52,14 @@
         "credit": "pastitio",
         "license": "CC BY 2.0",
         "source": "https://commons.wikimedia.org/wiki/File:Greek_salad.jpg"
-      }
+      },
+      "normalizedName": "Χωριάτικη σαλάτα",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/"
+      ]
     },
     {
       "id": "dakos",
@@ -83,7 +95,14 @@
         "credit": "Benoît Prieur",
         "license": "CC0",
         "source": "https://commons.wikimedia.org/wiki/File:Plat_de_Dakos_en_Cr%C3%A8te_en_juillet_2021.jpg"
-      }
+      },
+      "normalizedName": "Κρητικός ντάκος",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/"
+      ]
     },
     {
       "id": "tzatziki",
@@ -125,7 +144,15 @@
         "credit": "Nikodem Nijaki",
         "license": "CC BY-SA 3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Tzatziki_meze_or_appetizer,_also_used_as_a_sauce.jpg"
-      }
+      },
+      "normalizedName": "Τζατζίκι",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/",
+        "https://www.marina-nikiti.com/copy-of-qr"
+      ]
     },
     {
       "id": "tirokafteri",
@@ -166,7 +193,15 @@
         "credit": "Alexander Baxevanis",
         "license": "CC BY 2.0",
         "source": "https://commons.wikimedia.org/wiki/File:Tirokafteri.jpg"
-      }
+      },
+      "normalizedName": "Τυροκαυτερή",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/",
+        "https://www.marina-nikiti.com/copy-of-qr"
+      ]
     },
     {
       "id": "fava",
@@ -200,7 +235,14 @@
         "credit": "Wikimedia Commons contributor",
         "license": "CC BY-SA 3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Greek_fava.jpg"
-      }
+      },
+      "normalizedName": "Φάβα Σαντορίνης",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/"
+      ]
     },
     {
       "id": "dolmadakia",
@@ -234,7 +276,14 @@
         "credit": "Heidi Bauer",
         "license": "CC BY-SA 2.5",
         "source": "https://commons.wikimedia.org/wiki/File:Greek_dolmades.jpg"
-      }
+      },
+      "normalizedName": "Ντολμαδάκια",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.marina-nikiti.com/copy-of-qr"
+      ]
     },
     {
       "id": "gigantes",
@@ -269,7 +318,14 @@
         "credit": "Hevesli",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Gigandes_plaki.jpg"
-      }
+      },
+      "normalizedName": "Γίγαντες στο φούρνο",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.marina-nikiti.com/copy-of-qr"
+      ]
     },
     {
       "id": "fried-zucchini",
@@ -311,7 +367,15 @@
         "credit": "Chris Olszewski",
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Fried_Zucchini_dish.jpg"
-      }
+      },
+      "normalizedName": "Κολοκυθάκια τηγανητά",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/",
+        "https://www.marina-nikiti.com/copy-of-qr"
+      ]
     },
     {
       "id": "anthotyro-pies",
@@ -345,7 +409,14 @@
         "credit": "Benoît Prieur",
         "license": "CC0",
         "source": "https://commons.wikimedia.org/wiki/File:Restaurant_Erotokritos_(Almyrida)_-_beignets.jpg"
-      }
+      },
+      "normalizedName": "Τυροπιτάκια ανθότυρου",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/"
+      ]
     },
     {
       "id": "breaded-feta",
@@ -379,7 +450,14 @@
         "credit": "Kritzolina",
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Feta_Saganaki.jpg"
-      }
+      },
+      "normalizedName": "Φέτα πανέ",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/"
+      ]
     },
     {
       "id": "smoked-mackerel",
@@ -421,7 +499,15 @@
         "credit": "Miyuki Meinaka",
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Kajika_no_Aburi,_Smoked_Mackerel_from_Kajika,_Japan.jpg"
-      }
+      },
+      "normalizedName": "Καπνιστό σκουμπρί",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/",
+        "https://www.marina-nikiti.com/copy-of-qr"
+      ]
     },
     {
       "id": "marinated-anchovies",
@@ -455,7 +541,14 @@
         "credit": "C messier",
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:%CE%93%CE%B1%CF%8D%CF%81%CE%BF%CF%82_%CE%BC%CE%B1%CF%81%CE%B9%CE%BD%CE%AC%CF%84%CE%BF%CF%82_2607.jpg"
-      }
+      },
+      "normalizedName": "Γαύρος μαρινάτος",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/"
+      ]
     },
     {
       "id": "grilled-sardines",
@@ -489,7 +582,14 @@
         "credit": "E4024",
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Grilled_sardines.jpg"
-      }
+      },
+      "normalizedName": "Σαρδέλα ψητή",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/"
+      ]
     },
     {
       "id": "fried-anchovies",
@@ -524,7 +624,14 @@
         "credit": "E4024",
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Hamsi_tava_and_salad.jpg"
-      }
+      },
+      "normalizedName": "Γαύρος τηγανητός",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/"
+      ]
     },
     {
       "id": "tuna-tartare",
@@ -558,7 +665,14 @@
         "credit": "Sarah Ackerman from New York, USA",
         "license": "CC BY 2.0",
         "source": "https://commons.wikimedia.org/wiki/File:Tuna_Tartare_(3897330416).jpg"
-      }
+      },
+      "normalizedName": "Ταρτάρ τόνου",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/"
+      ]
     },
     {
       "id": "fish-fricassee",
@@ -593,7 +707,14 @@
         "credit": "Tangopaso",
         "license": "Public domain",
         "source": "https://commons.wikimedia.org/wiki/File:Fricass%C3%A9e_de_poissons_(Brasserie_Mollard).jpg"
-      }
+      },
+      "normalizedName": "Ψάρι ημέρας φρικασέ",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/"
+      ]
     },
     {
       "id": "grilled-octopus",
@@ -627,7 +748,14 @@
         "credit": "Baoothersks",
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Grilled_octopus_with_chilly_salt.jpg"
-      }
+      },
+      "normalizedName": "Χταπόδι ψητό",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/"
+      ]
     },
     {
       "id": "shrimp-saganaki",
@@ -661,7 +789,14 @@
         "credit": "C messier",
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:%CE%93%CE%B1%CF%81%CE%AF%CE%B4%CE%B5%CF%82_%CF%83%CE%B1%CE%B3%CE%B1%CE%BD%CE%AC%CE%BA%CE%B9_IMG_20230425_212334.jpg"
-      }
+      },
+      "normalizedName": "Γαρίδες σαγανάκι",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/"
+      ]
     },
     {
       "id": "seafood-orzotto",
@@ -697,7 +832,14 @@
         "credit": "Alpha",
         "license": "CC BY-SA 2.0",
         "source": "https://commons.wikimedia.org/wiki/File:Thalassino_Youvetsi_close-up_-_Hellenic_Republic_AUD24.jpg"
-      }
+      },
+      "normalizedName": "Κριθαρότο θαλασσινών",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/"
+      ]
     },
     {
       "id": "shrimp-pasta",
@@ -740,7 +882,15 @@
         "credit": "FranHogan",
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Shrimp_pasta.jpg"
-      }
+      },
+      "normalizedName": "Γαριδομακαρονάδα",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/",
+        "https://www.marina-nikiti.com/copy-of-qr"
+      ]
     },
     {
       "id": "moussaka",
@@ -773,7 +923,14 @@
         "credit": "Michael Wittwer / Wikimedia Commons",
         "license": "CC BY-SA 4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Moussaka_2022.jpg"
-      }
+      },
+      "normalizedName": "Μουσακάς",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.marina-nikiti.com/copy-of-qr"
+      ]
     },
     {
       "id": "gemista",
@@ -809,7 +966,14 @@
         "credit": "Badseed",
         "license": "CC BY-SA 3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Gemista.jpg"
-      }
+      },
+      "normalizedName": "Γεμιστά",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.marina-nikiti.com/copy-of-qr"
+      ]
     },
     {
       "id": "fish-soup",
@@ -844,7 +1008,14 @@
         "credit": "Gerda Arendt",
         "license": "CC0",
         "source": "https://commons.wikimedia.org/wiki/File:Fish_soup,_Ibiza.jpg"
-      }
+      },
+      "normalizedName": "Ψαρόσουπα",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.marina-nikiti.com/copy-of-qr"
+      ]
     },
     {
       "id": "pork-souvlaki",
@@ -878,7 +1049,14 @@
         "credit": "EntaXoyas",
         "license": "CC BY-SA 3.0",
         "source": "https://commons.wikimedia.org/wiki/File:%CE%95%CE%BB%CE%BB%CE%B7%CE%BD%CE%B9%CE%BA%CF%8C_%CE%A3%CE%BF%CF%85%CE%B2%CE%BB%CE%AC%CE%BA%CE%B9_-_panoramio.jpg"
-      }
+      },
+      "normalizedName": "Χοιρινό σουβλάκι",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/"
+      ]
     },
     {
       "id": "galaktoboureko",
@@ -913,374 +1091,1172 @@
         "credit": "Badseed",
         "license": "CC BY 3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Galaktoboureko.jpg"
+      },
+      "normalizedName": "Γαλακτομπούρεκο",
+      "localStatus": "confirmed",
+      "statusLabel": "Потвърдено в Никити",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.synagrida.gr/food-menu/"
+      ]
+    },
+    {
+      "id": "spanakopita",
+      "normalizedName": "Σπανακόπιτα",
+      "greek": "Σπανακόπιτα",
+      "bulgarian": "Спанакопита",
+      "category": "Печиво",
+      "description": "Печена гръцка пита с плънка от спанак, сирене и билки между тънки кори.",
+      "preparation": "Плънката се затваря между кори и се пече до златиста коричка.",
+      "ingredients": [
+        "кори",
+        "спанак",
+        "фета",
+        "лук",
+        "копър",
+        "зехтин"
+      ],
+      "taste": "Солено и тревисто, с хрупкави кори и сочна плънка.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:Spanakopita.jpg"
+      ],
+      "image": {
+        "src": "images/food/spanakopita.jpg",
+        "alt": "Спанакопита — фактологична снимка на ястието",
+        "credit": "Alpha",
+        "license": "CC BY-SA 2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Spanakopita.jpg",
+        "width": 960,
+        "height": 720
+      }
+    },
+    {
+      "id": "pastitsio",
+      "normalizedName": "Παστίτσιο",
+      "greek": "Παστίτσιο",
+      "bulgarian": "Пастицио",
+      "category": "Традиционно",
+      "description": "Печено ястие на пластове с тръбеста паста, кайма в доматен сос и бешамел.",
+      "preparation": "Пастата и месният сос се подреждат, покриват се с бешамел и се запичат.",
+      "ingredients": [
+        "паста",
+        "кайма",
+        "домат",
+        "лук",
+        "бешамел",
+        "подправки"
+      ],
+      "taste": "Плътно, меко и ароматно, със запечен кремообразен връх.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:Pastitsio.jpg"
+      ],
+      "image": {
+        "src": "images/food/pastitsio.jpg",
+        "alt": "Пастицио — фактологична снимка на ястието",
+        "credit": "Robert Kindermann",
+        "license": "CC BY-SA 2.5",
+        "source": "https://commons.wikimedia.org/wiki/File:Pastitsio.jpg",
+        "width": 960,
+        "height": 776
+      }
+    },
+    {
+      "id": "cheese-saganaki",
+      "normalizedName": "Τυρί σαγανάκι",
+      "greek": "Τυρί σαγανάκι",
+      "bulgarian": "Сирене саганаки",
+      "category": "Сирене",
+      "description": "Дебело парче твърдо гръцко сирене, запечено или изпържено в малък тиган.",
+      "preparation": "Сиренето се набрашнява леко и се готви до златиста коричка; поднася се с лимон.",
+      "ingredients": [
+        "твърдо сирене",
+        "брашно",
+        "зехтин",
+        "лимон"
+      ],
+      "taste": "Солено и разтопено отвътре, с плътна златиста коричка.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:Saganaki.jpg"
+      ],
+      "image": {
+        "src": "images/food/cheese-saganaki.jpg",
+        "alt": "Сирене саганаки — фактологична снимка на ястието",
+        "credit": "Tammy Green from Chicago, USA",
+        "license": "CC BY-SA 2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Saganaki.jpg",
+        "width": 960,
+        "height": 720
+      }
+    },
+    {
+      "id": "tiropita",
+      "normalizedName": "Τυρόπιτα",
+      "greek": "Τυρόπιτα",
+      "bulgarian": "Тиропита",
+      "category": "Печиво",
+      "description": "Гръцка пита с кори и плънка от сирена, най-често фета.",
+      "preparation": "Сирената се затварят в намаслени кори и се пекат до хрупкавост.",
+      "ingredients": [
+        "кори",
+        "фета",
+        "яйца",
+        "зехтин"
+      ],
+      "taste": "Солено и маслено, с ронлива плънка и хрупкави кори.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:Tiropita.jpg"
+      ],
+      "image": {
+        "src": "images/food/tiropita.jpg",
+        "alt": "Тиропита — фактологична снимка на ястието",
+        "credit": "NikosLikomitros",
+        "license": "CC0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tiropita.jpg",
+        "width": 960,
+        "height": 1280
+      }
+    },
+    {
+      "id": "bougatsa",
+      "normalizedName": "Μπουγάτσα",
+      "greek": "Μπουγάτσα",
+      "bulgarian": "Бугаца",
+      "category": "Печиво",
+      "description": "Северногръцко печиво от фини кори; срещат се кремова и сиренена плънка.",
+      "preparation": "Плънката се обвива в кори, пече се и се нарязва непосредствено преди поднасяне.",
+      "ingredients": [
+        "кори",
+        "масло",
+        "крем или сирене според варианта"
+      ],
+      "taste": "Маслено и много хрупкаво; сладко или солено според плънката.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:Bougatsa.jpg"
+      ],
+      "image": {
+        "src": "images/food/bougatsa.jpg",
+        "alt": "Бугаца — фактологична снимка на ястието",
+        "credit": "Konstantinos Stampoulis ( Geraki )",
+        "license": "CC BY-SA 2.5",
+        "source": "https://commons.wikimedia.org/wiki/File:Bougatsa.jpg",
+        "width": 960,
+        "height": 720
+      }
+    },
+    {
+      "id": "loukoumades",
+      "normalizedName": "Λουκουμάδες",
+      "greek": "Λουκουμάδες",
+      "bulgarian": "Лукумадес",
+      "category": "Десерт",
+      "description": "Малки пържени топчета от втасало тесто, полети с мед и поръсени с канела.",
+      "preparation": "Втасалото тесто се пържи на малки порции и се поднася топло с мед.",
+      "ingredients": [
+        "брашно",
+        "мая",
+        "вода",
+        "мед",
+        "канела",
+        "сусам"
+      ],
+      "taste": "Хрупкави отвън, въздушни отвътре и сладки от меда.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/recipes/loukoumades",
+        "https://commons.wikimedia.org/wiki/File:Loukoumades.jpg"
+      ],
+      "image": {
+        "src": "images/food/loukoumades.jpg",
+        "alt": "Лукумадес — фактологична снимка на ястието",
+        "credit": "Flickr.com user \"avlxyz\"",
+        "license": "CC BY-SA 2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Loukoumades.jpg",
+        "width": 960,
+        "height": 720
+      }
+    },
+    {
+      "id": "baklava",
+      "normalizedName": "Μπακλαβάς",
+      "greek": "Μπακλαβάς",
+      "bulgarian": "Баклава",
+      "category": "Десерт",
+      "description": "Сиропиран сладкиш от многолистни кори и ядки.",
+      "preparation": "Кори и ядки се редят на пластове, изпичат се и се заливат с ароматен сироп.",
+      "ingredients": [
+        "кори",
+        "орехи или бадеми",
+        "масло",
+        "захарен сироп",
+        "подправки"
+      ],
+      "taste": "Много сладко, хрупкаво и ядково, със сочни сиропирани пластове.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/greek-sweets",
+        "https://commons.wikimedia.org/wiki/File:Baklava.jpg"
+      ],
+      "image": {
+        "src": "images/food/baklava.jpg",
+        "alt": "Баклава — фактологична снимка на ястието",
+        "credit": "Unknown author (see source)",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Baklava.jpg",
+        "width": 960,
+        "height": 808
+      }
+    },
+    {
+      "id": "skordalia",
+      "normalizedName": "Σκορδαλιά",
+      "greek": "Σκορδαλιά",
+      "bulgarian": "Скордаля",
+      "category": "Разядка",
+      "description": "Гъста чеснова разядка, обичайно с картофи или хляб и зехтин.",
+      "preparation": "Основата се стрива с чесън, зехтин и киселина до гладка емулсия.",
+      "ingredients": [
+        "чесън",
+        "картофи или хляб",
+        "зехтин",
+        "оцет или лимон"
+      ],
+      "taste": "Силен чеснов вкус, кремообразна текстура и свежа киселинност.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:Skordalia.jpg"
+      ],
+      "image": {
+        "src": "images/food/skordalia.jpg",
+        "alt": "Скордаля — фактологична снимка на ястието",
+        "credit": "Amymoni",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Skordalia.jpg",
+        "width": 960,
+        "height": 875
+      }
+    },
+    {
+      "id": "briam",
+      "normalizedName": "Μπριάμ",
+      "greek": "Μπριάμ",
+      "bulgarian": "Бриам",
+      "category": "Традиционно",
+      "description": "Лятно ястие от смесени зеленчуци, печени бавно със зехтин и билки.",
+      "preparation": "Нарязаните зеленчуци се пекат заедно до омекване и леко карамелизиране.",
+      "ingredients": [
+        "тиквички",
+        "патладжан",
+        "картофи",
+        "домати",
+        "лук",
+        "зехтин"
+      ],
+      "taste": "Сочно, сладко-зеленчуково и тревисто, с меки запечени ръбове.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:Briam.jpg"
+      ],
+      "image": {
+        "src": "images/food/briam.jpg",
+        "alt": "Бриам — фактологична снимка на ястието",
+        "credit": "Dianeira",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Briam.jpg",
+        "width": 960,
+        "height": 1008
+      }
+    },
+    {
+      "id": "fried-calamari",
+      "normalizedName": "Καλαμαράκια τηγανητά",
+      "greek": "Καλαμαράκια τηγανητά",
+      "bulgarian": "Пържени калмари",
+      "category": "Морски дарове",
+      "description": "Кръгчета и пипала от калмар, леко набрашнени и изпържени.",
+      "preparation": "Почистеният калмар се подсушава, набрашнява и пържи кратко на силна температура.",
+      "ingredients": [
+        "калмар",
+        "брашно",
+        "олио",
+        "лимон",
+        "сол"
+      ],
+      "taste": "Хрупкаво отвън и крехко отвътре, с чист морски вкус.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:Fried_calamari.jpg"
+      ],
+      "image": {
+        "src": "images/food/fried-calamari.jpg",
+        "alt": "Пържени калмари — фактологична снимка на ястието",
+        "credit": "en:User:Chensiyuan",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Fried_calamari.jpg",
+        "width": 960,
+        "height": 720
+      }
+    },
+    {
+      "id": "fasolada",
+      "normalizedName": "Φασολάδα",
+      "greek": "Φασολάδα",
+      "bulgarian": "Фасолада",
+      "category": "Супа",
+      "description": "Традиционна гъста супа от бял боб, домати и ароматни зеленчуци.",
+      "preparation": "Накиснатият боб се вари бавно със зеленчуци, домат и зехтин.",
+      "ingredients": [
+        "бял боб",
+        "домат",
+        "морков",
+        "целина",
+        "лук",
+        "зехтин"
+      ],
+      "taste": "Топло, земно и плътно, с меки зърна и зеленчукова сладост.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:Fasolada.JPG"
+      ],
+      "image": {
+        "src": "images/food/fasolada.jpg",
+        "alt": "Фасолада — фактологична снимка на ястието",
+        "credit": "Miansari66",
+        "license": "CC0",
+        "source": "https://commons.wikimedia.org/wiki/File:Fasolada.JPG",
+        "width": 960,
+        "height": 953
+      }
+    },
+    {
+      "id": "giouvetsi",
+      "normalizedName": "Γιουβέτσι",
+      "greek": "Γιουβέτσι",
+      "bulgarian": "Ювеци",
+      "category": "Месо",
+      "description": "Месо, печено в доматен сос с дребна паста критараки.",
+      "preparation": "Месото се задушава, след което се допича с доматен сос и критараки.",
+      "ingredients": [
+        "телешко или агнешко",
+        "критараки",
+        "домат",
+        "лук",
+        "подправки"
+      ],
+      "taste": "Богато и сочно, с мека паста и концентриран месен сос.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:Giouvetsi.JPG"
+      ],
+      "image": {
+        "src": "images/food/giouvetsi.jpg",
+        "alt": "Ювеци — фактологична снимка на ястието",
+        "credit": "Robert Kindermann",
+        "license": "CC BY-SA 2.5",
+        "source": "https://commons.wikimedia.org/wiki/File:Giouvetsi.JPG",
+        "width": 960,
+        "height": 640
+      }
+    },
+    {
+      "id": "lamb-kleftiko",
+      "normalizedName": "Αρνί κλέφτικο",
+      "greek": "Αρνί κλέφτικο",
+      "bulgarian": "Агнешко клефтико",
+      "category": "Месо",
+      "description": "Агнешко, печено бавно в затворен пакет с лимон, чесън и билки.",
+      "preparation": "Подправеното месо се затваря с картофи в хартия или съд и се пече продължително.",
+      "ingredients": [
+        "агнешко",
+        "картофи",
+        "лимон",
+        "чесън",
+        "риган",
+        "зехтин"
+      ],
+      "taste": "Много крехко, цитрусово и билково, със сочен печен сос.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:Kleftiko.JPG"
+      ],
+      "image": {
+        "src": "images/food/lamb-kleftiko.jpg",
+        "alt": "Агнешко клефтико — фактологична снимка на ястието",
+        "credit": "Lord Mountbatten",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kleftiko.JPG",
+        "width": 960,
+        "height": 720
+      }
+    },
+    {
+      "id": "kolokithokeftedes",
+      "normalizedName": "Κολοκυθοκεφτέδες",
+      "greek": "Κολοκυθοκεφτέδες",
+      "bulgarian": "Кюфтенца от тиквички",
+      "category": "Предястие",
+      "description": "Пържени зеленчукови кюфтенца от тиквички, билки и сирене.",
+      "preparation": "Отцедените тиквички се смесват с билки и сирене, оформят се и се пържат.",
+      "ingredients": [
+        "тиквички",
+        "фета",
+        "билки",
+        "яйце",
+        "брашно"
+      ],
+      "taste": "Хрупкави отвън, сочни и тревисти отвътре.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:Restaurant_Thal%C3%A1mi_(Almyrida)_-_Kolokithokeftedes_(courgette_or_zucchini_balls).jpg"
+      ],
+      "image": {
+        "src": "images/food/kolokithokeftedes.jpg",
+        "alt": "Кюфтенца от тиквички — фактологична снимка на ястието",
+        "credit": "Benoît Prieur",
+        "license": "CC0",
+        "source": "https://commons.wikimedia.org/wiki/File:Restaurant_Thal%C3%A1mi_(Almyrida)_-_Kolokithokeftedes_(courgette_or_zucchini_balls).jpg",
+        "width": 960,
+        "height": 720
+      }
+    },
+    {
+      "id": "melitzanosalata",
+      "normalizedName": "Μελιτζανοσαλάτα",
+      "greek": "Μελιτζανοσαλάτα",
+      "bulgarian": "Мелидзаносалата",
+      "category": "Разядка",
+      "description": "Разядка от печен патладжан с чесън, зехтин и киселина.",
+      "preparation": "Патладжанът се изпича до омекване, обелва се и се намачква с подправките.",
+      "ingredients": [
+        "патладжан",
+        "чесън",
+        "зехтин",
+        "лимон или оцет",
+        "магданоз"
+      ],
+      "taste": "Пушено, кремообразно и свежо кисело.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:Eggplant_salad.JPG"
+      ],
+      "image": {
+        "src": "images/food/melitzanosalata.jpg",
+        "alt": "Мелидзаносалата — фактологична снимка на ястието",
+        "credit": "Badseed",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Eggplant_salad.JPG",
+        "width": 960,
+        "height": 638
+      }
+    },
+    {
+      "id": "mussels-saganaki",
+      "normalizedName": "Μύδια σαγανάκι",
+      "greek": "Μύδια σαγανάκι",
+      "bulgarian": "Миди саганаки",
+      "category": "Морски дарове",
+      "description": "Миди, приготвени в доматен сос с фета и ароматни подправки.",
+      "preparation": "Мидите се отварят в тиган и се довършват в доматен сос с натрошено сирене.",
+      "ingredients": [
+        "миди",
+        "домат",
+        "фета",
+        "лук",
+        "зехтин",
+        "билки"
+      ],
+      "taste": "Солено-морско, доматено и кремообразно от сиренето.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:%CE%9C%CF%8D%CE%B4%CE%B9%CE%B1_%CF%83%CE%B1%CE%B3%CE%B1%CE%BD%CE%AC%CE%BA%CE%B9_0801.jpg"
+      ],
+      "image": {
+        "src": "images/food/mussels-saganaki.jpg",
+        "alt": "Миди саганаки — фактологична снимка на ястието",
+        "credit": "C messier",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%CE%9C%CF%8D%CE%B4%CE%B9%CE%B1_%CF%83%CE%B1%CE%B3%CE%B1%CE%BD%CE%AC%CE%BA%CE%B9_0801.jpg",
+        "width": 960,
+        "height": 720
+      }
+    },
+    {
+      "id": "soutzoukakia",
+      "normalizedName": "Σουτζουκάκια Σμυρναίικα",
+      "greek": "Σουτζουκάκια Σμυρναίικα",
+      "bulgarian": "Судзукакия по смирненски",
+      "category": "Месо",
+      "description": "Продълговати кюфтета с кимион, задушени в гъст доматен сос.",
+      "preparation": "Подправената кайма се оформя, запържва и довършва в доматен сос.",
+      "ingredients": [
+        "кайма",
+        "кимион",
+        "чесън",
+        "домат",
+        "зехтин"
+      ],
+      "taste": "Пикантно-ароматно, месно и сочно, с наситен доматен сос.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:Soutzoukakia_Smyrneika.jpg"
+      ],
+      "image": {
+        "src": "images/food/soutzoukakia.jpg",
+        "alt": "Судзукакия по смирненски — фактологична снимка на ястието",
+        "credit": "Gamluca",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Soutzoukakia_Smyrneika.jpg",
+        "width": 960,
+        "height": 720
+      }
+    },
+    {
+      "id": "stifado",
+      "normalizedName": "Στιφάδο",
+      "greek": "Στιφάδο",
+      "bulgarian": "Стифадо",
+      "category": "Месо",
+      "description": "Бавно задушено месо с малки цели лукчета, домат и топли подправки.",
+      "preparation": "Месото и лукчетата се готвят продължително в доматен сос с вино и подправки.",
+      "ingredients": [
+        "телешко или заешко",
+        "малки лукчета",
+        "домат",
+        "вино",
+        "канела"
+      ],
+      "taste": "Дълбоко, сладко-солено и ароматно, с много крехко месо.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:Stifado.JPG"
+      ],
+      "image": {
+        "src": "images/food/stifado.jpg",
+        "alt": "Стифадо — фактологична снимка на ястието",
+        "credit": "Fajardoalacant",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Stifado.JPG",
+        "width": 960,
+        "height": 737
+      }
+    },
+    {
+      "id": "taramosalata",
+      "normalizedName": "Ταραμοσαλάτα",
+      "greek": "Ταραμοσαλάτα",
+      "bulgarian": "Тарамосалата",
+      "category": "Разядка",
+      "description": "Гладка разядка от осолен рибен хайвер, хляб или картоф, лимон и зехтин.",
+      "preparation": "Хайверът се емулгира с основата, лимонов сок и зехтин.",
+      "ingredients": [
+        "тарама",
+        "хляб или картоф",
+        "лимон",
+        "зехтин",
+        "лук"
+      ],
+      "taste": "Солено-морско, кремообразно и ярко лимоново.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:Taramosalata01.jpg"
+      ],
+      "image": {
+        "src": "images/food/taramosalata.jpg",
+        "alt": "Тарамосалата — фактологична снимка на ястието",
+        "credit": "Robert Kindermann",
+        "license": "CC BY-SA 2.5",
+        "source": "https://commons.wikimedia.org/wiki/File:Taramosalata01.jpg",
+        "width": 960,
+        "height": 640
+      }
+    },
+    {
+      "id": "revani",
+      "normalizedName": "Ραβανί",
+      "greek": "Ραβανί",
+      "bulgarian": "Равани",
+      "category": "Десерт",
+      "description": "Сиропиран сладкиш от грис, често ароматизиран с цитрус.",
+      "preparation": "Кексът с грис се изпича и още топъл се напоява със студен сироп.",
+      "ingredients": [
+        "грис",
+        "брашно",
+        "яйца",
+        "захар",
+        "цитрус",
+        "сироп"
+      ],
+      "taste": "Сочно, зърнесто и сладко, със свеж цитрусов аромат.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/greek-sweets",
+        "https://commons.wikimedia.org/wiki/File:Greek_revani.JPG"
+      ],
+      "image": {
+        "src": "images/food/revani.jpg",
+        "alt": "Равани — фактологична снимка на ястието",
+        "credit": "Akerbeltz",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Greek_revani.JPG",
+        "width": 960,
+        "height": 720
+      }
+    },
+    {
+      "id": "karidopita",
+      "normalizedName": "Καρυδόπιτα",
+      "greek": "Καρυδόπιτα",
+      "bulgarian": "Каридопита",
+      "category": "Десерт",
+      "description": "Орехов сладкиш с подправки, напоен със захарен сироп.",
+      "preparation": "Ореховото тесто се изпича и се сиропира след печенето.",
+      "ingredients": [
+        "орехи",
+        "брашно",
+        "яйца",
+        "захар",
+        "канела",
+        "сироп"
+      ],
+      "taste": "Сочно, ядково и топло подправено.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/greek-sweets",
+        "https://commons.wikimedia.org/wiki/File:Karydopita_(walnut_pie).jpg"
+      ],
+      "image": {
+        "src": "images/food/karidopita.jpg",
+        "alt": "Каридопита — фактологична снимка на ястието",
+        "credit": "Dianeira",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Karydopita_(walnut_pie).jpg",
+        "width": 960,
+        "height": 1009
+      }
+    },
+    {
+      "id": "koulouri-thessalonikis",
+      "normalizedName": "Κουλούρι Θεσσαλονίκης",
+      "greek": "Κουλούρι Θεσσαλονίκης",
+      "bulgarian": "Сусамов геврек от Солун",
+      "category": "Печиво",
+      "description": "Кръгло хлебче с обилна сусамова коричка, типична бърза закуска в Северна Гърция.",
+      "preparation": "Оформеното тесто се овалва в сусам и се пече до златисто.",
+      "ingredients": [
+        "брашно",
+        "мая",
+        "вода",
+        "сусам",
+        "сол"
+      ],
+      "taste": "Хрупкава сусамова кора и мек, неутрално солен център.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:KoulouriaSimit.jpg"
+      ],
+      "image": {
+        "src": "images/food/koulouri-thessalonikis.jpg",
+        "alt": "Сусамов геврек от Солун — фактологична снимка на ястието",
+        "credit": "FocalPoint",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:KoulouriaSimit.jpg",
+        "width": 960,
+        "height": 693
+      }
+    },
+    {
+      "id": "imam-baildi",
+      "normalizedName": "Ιμάμ μπαϊλντί",
+      "greek": "Ιμάμ μπαϊλντί",
+      "bulgarian": "Имам баялдъ",
+      "category": "Традиционно",
+      "description": "Патладжан, пълнен с бавно сготвени лук, домат и чесън в зехтин.",
+      "preparation": "Патладжанът се разрязва, напълва със зеленчуците и се пече бавно.",
+      "ingredients": [
+        "патладжан",
+        "лук",
+        "домат",
+        "чесън",
+        "зехтин",
+        "магданоз"
+      ],
+      "taste": "Меко, сладко-зеленчуково и богато на зехтин.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:%C4%B0mam_bay%C4%B1ld%C4%B1_with_b%C3%B6rek.jpg"
+      ],
+      "image": {
+        "src": "images/food/imam-baildi.jpg",
+        "alt": "Имам баялдъ — фактологична снимка на ястието",
+        "credit": "seelensturm",
+        "license": "CC BY 2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%C4%B0mam_bay%C4%B1ld%C4%B1_with_b%C3%B6rek.jpg",
+        "width": 960,
+        "height": 745
+      }
+    },
+    {
+      "id": "kataifi",
+      "normalizedName": "Κανταΐφι",
+      "greek": "Κανταΐφι",
+      "bulgarian": "Кадаиф",
+      "category": "Десерт",
+      "description": "Сиропиран сладкиш от фини нишковидни кори и ядкова плънка.",
+      "preparation": "Нишките се увиват около ядки, изпичат се с масло и се заливат със сироп.",
+      "ingredients": [
+        "нишковидни кори",
+        "ядки",
+        "масло",
+        "захарен сироп",
+        "подправки"
+      ],
+      "taste": "Хрупкаво, много сладко и ядково, със сочен сиропиран център.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/greek-sweets",
+        "https://commons.wikimedia.org/wiki/File:%CE%93%CE%BB%CF%85%CE%BA%CF%8C_%CE%BA%CE%B1%CE%BD%CF%84%CE%B1%CE%90%CF%86%CE%B9.JPG"
+      ],
+      "image": {
+        "src": "images/food/kataifi.jpg",
+        "alt": "Кадаиф — фактологична снимка на ястието",
+        "credit": "Mar.masouridi",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%CE%93%CE%BB%CF%85%CE%BA%CF%8C_%CE%BA%CE%B1%CE%BD%CF%84%CE%B1%CE%90%CF%86%CE%B9.JPG",
+        "width": 960,
+        "height": 697
+      }
+    },
+    {
+      "id": "ntomatokeftedes",
+      "normalizedName": "Ντοματοκεφτέδες",
+      "greek": "Ντοματοκεφτέδες",
+      "bulgarian": "Доматени кюфтенца",
+      "category": "Предястие",
+      "description": "Пържени зеленчукови кюфтенца от домат, лук и билки.",
+      "preparation": "Нарязаните и отцедени зеленчуци се смесват с брашно и се пържат на малки порции.",
+      "ingredients": [
+        "домати",
+        "лук",
+        "билки",
+        "брашно",
+        "зехтин"
+      ],
+      "taste": "Сочно и сладко-доматено отвътре, с хрупкави краища.",
+      "offers": [],
+      "localStatus": "unconfirmed",
+      "statusLabel": "Не е потвърдено в Никити",
+      "priceStatus": "Няма потвърдена местна цена",
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.visitgreece.gr/experiences/gastronomy/traditional-cuisine/tastes-which-linger-in-the-memory",
+        "https://commons.wikimedia.org/wiki/File:Tomato_keftedes.jpg"
+      ],
+      "image": {
+        "src": "images/food/ntomatokeftedes.jpg",
+        "alt": "Доматени кюфтенца — фактологична снимка на ястието",
+        "credit": "ArticCynda",
+        "license": "CC BY-SA 4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tomato_keftedes.jpg",
+        "width": 960,
+        "height": 640
       }
     }
   ],
   "restaurants": [
     {
-      "id": "marina",
-      "name": "Taverna Marina",
+      "id": "avra",
+      "name": "AVRA Beach Bar Restaurant",
+      "type": "Бар-ресторант",
+      "cuisines": [
+        "италианска",
+        "средиземноморска",
+        "пица",
+        "грил"
+      ],
+      "description": "Крайбрежен бар-ресторант с пици, паста и месо на скара.",
+      "address": "Плаж Никити, 63088",
+      "latitude": 40.2110179,
+      "longitude": 23.6733167,
+      "phone": "+30 23750 23554",
+      "official": "https://www.avra-restaurant.gr/",
+      "google": {
+        "rating": 4.4,
+        "reviews": 574,
+        "url": "https://www.google.com/maps/search/?api=1&query=AVRA+Restaurant+Beach+Bar%2C+Nikiti+630+88%2C+Greece&query_place_id=ChIJxQ0121WXqBQR3jkpAw2rV6o",
+        "verified": "2026-08-21"
+      },
+      "tripadvisor": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.tripadvisor.com/Search?q=AVRA%20Beach%20Bar%20Restaurant%20Nikiti",
+        "verified": "2026-08-21"
+      },
+      "priceLevel": "€€",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.avra-restaurant.gr/",
+        "https://www.openstreetmap.org/node/6720523787"
+      ],
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 0.496,
+        "durationMinutes": 6,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "menu": {
+        "status": "external",
+        "label": "Официален сайт / публична галерия",
+        "url": "https://www.avra-restaurant.gr/",
+        "verified": "2026-08-21"
+      }
+    },
+    {
+      "id": "kazanis",
+      "name": "Kazanis",
       "type": "Ресторант-таверна",
+      "cuisines": [
+        "гръцка",
+        "риба",
+        "морски дарове",
+        "месо"
+      ],
+      "description": "Крайбрежна гръцка таверна с риба, месо и мезета.",
+      "address": "Paralia Nikitis, Никити 63088",
+      "latitude": 40.2112233,
+      "longitude": 23.6730146,
+      "phone": "+30 23750 23333",
+      "official": null,
+      "google": {
+        "rating": 4.2,
+        "reviews": 1236,
+        "url": "https://www.google.com/maps/place/@40.211207,23.672968,17z/data=!4m10!3m9!1s0x14a89755c5d12b3b:0xe2e0b34c6b41ce5e!5m2!4m1!1i2!8m2!3d40.211207!4d23.672968!9m1!1b1",
+        "verified": "2026-08-21"
+      },
+      "tripadvisor": {
+        "rating": 3.7,
+        "reviews": 153,
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g668422-d4569482-Reviews-Kazanis-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html",
+        "verified": "2026-08-21"
+      },
+      "priceLevel": "€€",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.xo.gr/profile/profile-906843203/el/",
+        "https://www.openstreetmap.org/node/6720523788"
+      ],
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 0.531,
+        "durationMinutes": 6,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "menu": {
+        "status": "not-found",
+        "label": "Не е намерено публично меню",
+        "url": null,
+        "verified": "2026-08-21"
+      }
+    },
+    {
+      "id": "ergon-beach-house",
+      "name": "ERGON Beach House Seaside Restaurant",
+      "type": "Крайбрежен ресторант",
       "cuisines": [
         "гръцка",
         "средиземноморска",
         "риба",
-        "месо"
-      ],
-      "description": "Пълно меню с традиционни ястия, риба, месо и паста; публикувано е и на български.",
-      "address": "Marina Hotel, Никити 63088",
-      "latitude": 40.2175654,
-      "longitude": 23.6645793,
-      "phone": "+30 23750 22123",
-      "official": "https://www.marina-nikiti.com/copy-of-english",
-      "google": {
-        "rating": null,
-        "reviews": null,
-        "url": "https://www.google.com/maps/search/?api=1&query=Taverna+Marina+Nikiti"
-      },
-      "tripadvisor": null,
-      "priceLevel": "€€",
-      "busy": "Няма достатъчно данни",
-      "dishes": [
-        "tzatziki",
-        "tirokafteri",
-        "dolmadakia",
-        "gigantes",
-        "fried-zucchini",
-        "smoked-mackerel",
-        "moussaka",
-        "gemista",
-        "fish-soup",
-        "shrimp-pasta"
-      ],
-      "verified": "2026-08-21",
-      "sources": [
-        "https://www.marina-nikiti.com/copy-of-english",
-        "https://www.openstreetmap.org/node/484898210"
-      ],
-      "image": {
-        "src": "images/nikiti-taverna.jpg",
-        "width": 1280,
-        "height": 960,
-        "alt": "Контекстова сцена от Никити към записа „Taverna Marina“; изображението не показва конкретното заведение.",
-        "credit": "Rosa-Maria Rinkl",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Taverne_in_Nikiti.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
-      }
-    },
-    {
-      "id": "nel-fuoco",
-      "name": "Nel fuoco",
-      "type": "Ресторант-пицария",
-      "cuisines": [
-        "италианска"
-      ],
-      "description": "Ресторант в крайбрежната зона, отбелязан като италианска кухня в OpenStreetMap.",
-      "address": "Крайбрежна зона, Никити 63088",
-      "latitude": 40.2161776,
-      "longitude": 23.6667682,
-      "phone": null,
-      "official": null,
-      "google": {
-        "rating": null,
-        "reviews": null,
-        "url": "https://www.google.com/maps/search/?api=1&query=Nel+fuoco+Nikiti"
-      },
-      "tripadvisor": null,
-      "priceLevel": "Няма достатъчно данни",
-      "busy": "Няма достатъчно данни",
-      "dishes": [],
-      "verified": "2026-08-21",
-      "sources": [
-        "https://www.openstreetmap.org/node/1886177291"
-      ],
-      "image": {
-        "src": "images/places/restaurant-harbour-01.jpg",
-        "width": 640,
-        "height": 427,
-        "alt": "Контекстова сцена от Никити към записа „Nel fuoco“; изображението не показва конкретното заведение.",
-        "credit": "Kritzolina",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_harbour_01.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
-      }
-    },
-    {
-      "id": "gyromania",
-      "name": "Gyromania",
-      "type": "Грил с пълно меню",
-      "cuisines": [
-        "гръцка",
-        "грил"
-      ],
-      "description": "Гирос, сувлаки и грил в достъпен неформален формат.",
-      "address": "Никити 63088",
-      "latitude": 40.2157123,
-      "longitude": 23.6674143,
-      "phone": null,
-      "official": "https://gyromanianikiti1988.business.site/",
-      "google": {
-        "rating": null,
-        "reviews": null,
-        "url": "https://www.google.com/maps/search/?api=1&query=Gyromania+Nikiti"
-      },
-      "tripadvisor": null,
-      "priceLevel": "€",
-      "busy": "Няма достатъчно данни",
-      "dishes": [],
-      "verified": "2026-08-21",
-      "sources": [
-        "https://visitsithonia.com/lifestyle/food-drink/restaurants/top-10-restaurants-taverns-in-nikiti/",
-        "https://www.openstreetmap.org/node/2360629377"
-      ],
-      "image": {
-        "src": "images/places/restaurant-ergon-13.jpg",
-        "width": 640,
-        "height": 453,
-        "alt": "Контекстова сцена от Никити към записа „Gyromania“; изображението не показва конкретното заведение.",
-        "credit": "KaiKemmann",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_13.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
-      }
-    },
-    {
-      "id": "antigoni",
-      "name": "Antigoni Taverne",
-      "type": "Таверна",
-      "cuisines": [
-        "гръцка",
-        "риба",
         "морски дарове"
       ],
-      "description": "Крайбрежна таверна с традиционни ястия и риба от местни рибари.",
-      "address": "Neakitou, Никити 63088",
-      "latitude": 40.2166334,
-      "longitude": 23.6656451,
-      "phone": "+30 23750 22660",
-      "official": "https://antigoni-restaurant.gr/",
+      "description": "Официално описан крайбрежен ресторант с местни сезонни продукти и морски дарове.",
+      "latitude": 40.2040873,
+      "longitude": 23.6806494,
+      "address": "Nikiti Beach, 63088",
+      "phone": "+30 23750 22300",
+      "priceLevel": "Няма потвърдена ценова категория",
       "google": {
-        "rating": 4.2,
-        "reviews": 1007,
-        "url": "https://www.google.com/maps/search/?api=1&query=Antigoni+Taverne+Nikiti",
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.google.com/maps/search/?api=1&query=ERGON+Beach+House+Seaside+Restaurant+Nikiti",
         "verified": "2026-08-21"
       },
       "tripadvisor": {
-        "rating": 3.9,
-        "reviews": 154,
-        "url": "https://www.tripadvisor.com/Search?q=Antigoni%20Taverne%20Nikiti",
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.tripadvisor.com/Search?q=ERGON%20Beach%20House%20Seaside%20Restaurant%20Nikiti",
         "verified": "2026-08-21"
       },
-      "priceLevel": "€€",
-      "busy": "Вечер е възможно натоварване; ориентировъчно, без надеждна почасова серия",
+      "busy": "Няма надеждна публична почасова серия",
       "dishes": [],
+      "official": "https://houses.ergonfoods.com/ergon-beach-house-nikiti-dining",
       "verified": "2026-08-21",
       "sources": [
-        "https://sithonia.discoverhalkidiki.com/?p=23112&post_type=estiatorio",
-        "https://www.openstreetmap.org/node/4743860622",
-        "https://wanderlog.com/place/details/1226598"
+        "https://houses.ergonfoods.com/ergon-beach-house-nikiti-dining",
+        "https://houses.ergonfoods.com/ergon-beach-house-menus",
+        "https://www.openstreetmap.org/node/12544366588"
       ],
-      "image": {
-        "src": "images/places/restaurant-harbour-03.jpg",
-        "width": 640,
-        "height": 427,
-        "alt": "Контекстова сцена от Никити към записа „Antigoni Taverne“; изображението не показва конкретното заведение.",
-        "credit": "Kritzolina",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_harbour_03.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      "images": [
+        {
+          "src": "images/places/restaurant-ergon-13.jpg",
+          "width": 640,
+          "height": 453,
+          "alt": "ERGON Beach House в Никити — крайбрежна обстановка",
+          "credit": "KaiKemmann",
+          "license": "CC BY-SA 4.0",
+          "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_13.jpg"
+        },
+        {
+          "src": "images/places/restaurant-ergon-17.jpg",
+          "width": 640,
+          "height": 457,
+          "alt": "ERGON Beach House в Никити — ресторантска зона",
+          "credit": "KaiKemmann",
+          "license": "CC BY-SA 4.0",
+          "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_17.jpg"
+        }
+      ],
+      "imageShortage": "Намерени са 2 конкретни разрешени снимки; трета разрешена снимка не е намерена при проверката.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 0.6,
+        "durationMinutes": 7,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "menu": {
+        "status": "external",
+        "label": "Официални менюта",
+        "url": "https://houses.ergonfoods.com/ergon-beach-house-menus",
+        "verified": "2026-08-21"
       }
     },
     {
-      "id": "three-steps",
-      "name": "3 steps",
+      "id": "almira",
+      "name": "Almira / Iskios",
       "type": "Ресторант",
       "cuisines": [
         "Няма достатъчно данни"
       ],
-      "description": "Ресторант в пристанищната зона, идентифициран в OpenStreetMap.",
-      "address": "Пристанищна зона, Никити 63088",
-      "latitude": 40.2172599,
-      "longitude": 23.6657587,
-      "phone": null,
-      "official": null,
-      "google": {
-        "rating": null,
-        "reviews": null,
-        "url": "https://www.google.com/maps/search/?api=1&query=3+steps+Nikiti"
-      },
-      "tripadvisor": null,
-      "priceLevel": "Няма достатъчно данни",
-      "busy": "Няма достатъчно данни",
-      "dishes": [],
-      "verified": "2026-08-21",
-      "sources": [
-        "https://www.openstreetmap.org/node/5022144413"
-      ],
-      "image": {
-        "src": "images/places/restaurant-ergon-17.jpg",
-        "width": 640,
-        "height": 457,
-        "alt": "Контекстова сцена от Никити към записа „3 steps“; изображението не показва конкретното заведение.",
-        "credit": "KaiKemmann",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_17.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
-      }
-    },
-    {
-      "id": "akrogiali",
-      "name": "Akrogiali 2",
-      "type": "Ресторант",
-      "cuisines": [
-        "гръцка",
-        "средиземноморска"
-      ],
-      "description": "Крайбрежен ресторант с пълно хранене; менюто не е заснето локално.",
-      "address": "Пристанищна зона, Никити 63088",
-      "latitude": 40.2169772,
-      "longitude": 23.6656139,
-      "phone": null,
-      "official": null,
-      "google": {
-        "rating": null,
-        "reviews": null,
-        "url": "https://www.google.com/maps/search/?api=1&query=Akrogiali+2+Nikiti"
-      },
-      "tripadvisor": null,
-      "priceLevel": "€€",
-      "busy": "Няма достатъчно данни",
-      "dishes": [],
-      "verified": "2026-08-21",
-      "sources": [
-        "https://www.openstreetmap.org/node/5022144414"
-      ],
-      "image": {
-        "src": "images/nikiti-taverna.jpg",
-        "width": 1280,
-        "height": 960,
-        "alt": "Контекстова сцена от Никити към записа „Akrogiali 2“; изображението не показва конкретното заведение.",
-        "credit": "Rosa-Maria Rinkl",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Taverne_in_Nikiti.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
-      }
-    },
-    {
-      "id": "pizza-di-porto",
-      "name": "Pizza di Porto",
-      "type": "Пицария-ресторант",
-      "cuisines": [
-        "италианска",
-        "пица"
-      ],
-      "description": "Пицария в пристанищната зона с формат за пълно хранене.",
-      "address": "Пристанищна зона, Никити 63088",
-      "latitude": 40.2173541,
-      "longitude": 23.6663917,
-      "phone": null,
-      "official": null,
-      "google": {
-        "rating": null,
-        "reviews": null,
-        "url": "https://www.google.com/maps/search/?api=1&query=Pizza+di+Porto+Nikiti"
-      },
-      "tripadvisor": null,
-      "priceLevel": "€€",
-      "busy": "Няма достатъчно данни",
-      "dishes": [],
-      "verified": "2026-08-21",
-      "sources": [
-        "https://www.openstreetmap.org/node/5022144415"
-      ],
-      "image": {
-        "src": "images/places/restaurant-harbour-01.jpg",
-        "width": 640,
-        "height": 427,
-        "alt": "Контекстова сцена от Никити към записа „Pizza di Porto“; изображението не показва конкретното заведение.",
-        "credit": "Kritzolina",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_harbour_01.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
-      }
-    },
-    {
-      "id": "to-spitaki",
-      "name": "Το σπιτάκι",
-      "type": "Ресторант",
-      "cuisines": [
-        "Няма достатъчно данни"
-      ],
-      "description": "Ресторант до пристанището, идентифициран в OpenStreetMap.",
-      "address": "Пристанищна зона, Никити 63088",
-      "latitude": 40.2165144,
-      "longitude": 23.6662362,
-      "phone": null,
-      "official": null,
-      "google": {
-        "rating": null,
-        "reviews": null,
-        "url": "https://www.google.com/maps/search/?api=1&query=To+Spitaki+Nikiti"
-      },
-      "tripadvisor": null,
-      "priceLevel": "Няма достатъчно данни",
-      "busy": "Няма достатъчно данни",
-      "dishes": [],
-      "verified": "2026-08-21",
-      "sources": [
-        "https://www.openstreetmap.org/node/5022144416"
-      ],
-      "image": {
-        "src": "images/places/restaurant-ergon-13.jpg",
-        "width": 640,
-        "height": 453,
-        "alt": "Контекстова сцена от Никити към записа „Το σπιτάκι“; изображението не показва конкретното заведение.",
-        "credit": "KaiKemmann",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_13.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
-      }
-    },
-    {
-      "id": "alexandros",
-      "name": "Alexandros",
-      "type": "Кафе-ресторант-бар",
-      "cuisines": [
-        "италианска",
-        "гръцка",
-        "пица",
-        "морски дарове"
-      ],
-      "description": "Крайбрежен ресторант с пица, гръцки ястия и морска кухня.",
+      "description": "Крайбрежен ресторант с външни места; публичните източници използват две имена.",
       "address": "Аιγιαλού, Никити 63088",
-      "latitude": 40.2152527,
-      "longitude": 23.6678991,
+      "latitude": 40.2131241,
+      "longitude": 23.6701676,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": 4.2,
+        "reviews": 1736,
+        "url": "https://www.google.com/maps/place/@40.213143,23.670235,17z/data=!4m10!3m9!1s0x14a89754e5f6e281:0x3ceaea07b9e73c38!5m2!4m1!1i2!8m2!3d40.213143!4d23.670235!9m1!1b1",
+        "verified": "2026-08-21"
+      },
+      "tripadvisor": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g668422-d28034192-Reviews-Iskios_Restaurant-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html",
+        "verified": "2026-08-21"
+      },
+      "priceLevel": "Няма достатъчно данни",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/6718689254"
+      ],
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 0.852,
+        "durationMinutes": 10,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "menu": {
+        "status": "not-found",
+        "label": "Не е намерено публично меню",
+        "url": null,
+        "verified": "2026-08-21"
+      }
+    },
+    {
+      "id": "allegreco",
+      "name": "Allegreco",
+      "type": "Ресторант",
+      "cuisines": [
+        "Няма достатъчно данни"
+      ],
+      "description": "Крайбрежен ресторант, идентифициран в OpenStreetMap.",
+      "address": "Аιγιαλού, Никити 63088",
+      "latitude": 40.2133732,
+      "longitude": 23.6696509,
       "phone": null,
       "official": null,
       "google": {
         "rating": null,
         "reviews": null,
-        "url": "https://www.google.com/maps/search/?api=1&query=Alexandros+Cafe+Restaurant+Bar+Nikiti"
+        "url": "https://www.google.com/maps/search/?api=1&query=Allegreco+Nikiti",
+        "verified": "2026-08-21"
       },
-      "tripadvisor": null,
-      "priceLevel": "€€",
+      "tripadvisor": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g668422-d11866061-Reviews-Allegreco-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html",
+        "verified": "2026-08-21"
+      },
+      "priceLevel": "Няма достатъчно данни",
       "busy": "Няма достатъчно данни",
       "dishes": [],
       "verified": "2026-08-21",
       "sources": [
-        "https://visitsithonia.com/locations/nikiti/",
-        "https://www.openstreetmap.org/node/5022144419"
+        "https://www.openstreetmap.org/node/6720445480"
       ],
-      "image": {
-        "src": "images/places/restaurant-harbour-03.jpg",
-        "width": 640,
-        "height": 427,
-        "alt": "Контекстова сцена от Никити към записа „Alexandros“; изображението не показва конкретното заведение.",
-        "credit": "Kritzolina",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_harbour_03.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 0.904,
+        "durationMinutes": 11,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "menu": {
+        "status": "not-found",
+        "label": "Не е намерено публично меню",
+        "url": null,
+        "verified": "2026-08-21"
       }
     },
     {
@@ -1307,7 +2283,7 @@
       },
       "tripadvisor": {
         "rating": 4,
-        "reviews": 744,
+        "reviews": 750,
         "url": "https://www.tripadvisor.com/Restaurant_Review-g668422-d4475093-Reviews-Arsanas-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html",
         "verified": "2026-08-21"
       },
@@ -1320,321 +2296,174 @@
         "https://www.openstreetmap.org/node/5022144420",
         "https://restaurantguru.com/Arsanas-Nikiti"
       ],
-      "image": {
-        "src": "images/places/restaurant-ergon-17.jpg",
-        "width": 640,
-        "height": 457,
-        "alt": "Контекстова сцена от Никити към записа „Arsanas“; изображението не показва конкретното заведение.",
-        "credit": "KaiKemmann",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_17.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
-      }
-    },
-    {
-      "id": "almira",
-      "name": "Almira / Iskios",
-      "type": "Ресторант",
-      "cuisines": [
-        "Няма достатъчно данни"
-      ],
-      "description": "Крайбрежен ресторант с външни места; публичните източници използват две имена.",
-      "address": "Аιγιαλού, Никити 63088",
-      "latitude": 40.2131241,
-      "longitude": 23.6701676,
-      "phone": null,
-      "official": null,
-      "google": {
-        "rating": null,
-        "reviews": null,
-        "url": "https://www.google.com/maps/search/?api=1&query=Almira+Iskios+Nikiti"
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 1.034,
+        "durationMinutes": 12,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
       },
-      "tripadvisor": null,
-      "priceLevel": "Няма достатъчно данни",
-      "busy": "Няма достатъчно данни",
-      "dishes": [],
-      "verified": "2026-08-21",
-      "sources": [
-        "https://www.openstreetmap.org/node/6718689254"
-      ],
-      "image": {
-        "src": "images/nikiti-taverna.jpg",
-        "width": 1280,
-        "height": 960,
-        "alt": "Контекстова сцена от Никити към записа „Almira / Iskios“; изображението не показва конкретното заведение.",
-        "credit": "Rosa-Maria Rinkl",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Taverne_in_Nikiti.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      "menu": {
+        "status": "external",
+        "label": "Официален сайт / публична галерия",
+        "url": "https://www.arsanas.gr/",
+        "verified": "2026-08-21"
       }
     },
     {
-      "id": "allegreco",
-      "name": "Allegreco",
-      "type": "Ресторант",
-      "cuisines": [
-        "Няма достатъчно данни"
-      ],
-      "description": "Крайбрежен ресторант, идентифициран в OpenStreetMap.",
-      "address": "Аιγιαλού, Никити 63088",
-      "latitude": 40.2133732,
-      "longitude": 23.6696509,
-      "phone": null,
-      "official": null,
-      "google": {
-        "rating": null,
-        "reviews": null,
-        "url": "https://www.google.com/maps/search/?api=1&query=Allegreco+Nikiti"
-      },
-      "tripadvisor": null,
-      "priceLevel": "Няма достатъчно данни",
-      "busy": "Няма достатъчно данни",
-      "dishes": [],
-      "verified": "2026-08-21",
-      "sources": [
-        "https://www.openstreetmap.org/node/6720445480"
-      ],
-      "image": {
-        "src": "images/places/restaurant-harbour-01.jpg",
-        "width": 640,
-        "height": 427,
-        "alt": "Контекстова сцена от Никити към записа „Allegreco“; изображението не показва конкретното заведение.",
-        "credit": "Kritzolina",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_harbour_01.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
-      }
-    },
-    {
-      "id": "avra",
-      "name": "AVRA Beach Bar Restaurant",
-      "type": "Бар-ресторант",
+      "id": "alexandros",
+      "name": "Alexandros",
+      "type": "Кафе-ресторант-бар",
       "cuisines": [
         "италианска",
-        "средиземноморска",
-        "пица",
-        "грил"
-      ],
-      "description": "Крайбрежен бар-ресторант с пици, паста и месо на скара.",
-      "address": "Плаж Никити, 63088",
-      "latitude": 40.2110179,
-      "longitude": 23.6733167,
-      "phone": "+30 23750 23554",
-      "official": "https://www.avra-restaurant.gr/",
-      "google": {
-        "rating": null,
-        "reviews": null,
-        "url": "https://www.google.com/maps/search/?api=1&query=AVRA+Restaurant+Nikiti"
-      },
-      "tripadvisor": null,
-      "priceLevel": "€€",
-      "busy": "Няма достатъчно данни",
-      "dishes": [],
-      "verified": "2026-08-21",
-      "sources": [
-        "https://www.avra-restaurant.gr/",
-        "https://www.openstreetmap.org/node/6720523787"
-      ],
-      "image": {
-        "src": "images/places/restaurant-ergon-13.jpg",
-        "width": 640,
-        "height": 453,
-        "alt": "Контекстова сцена от Никити към записа „AVRA Beach Bar Restaurant“; изображението не показва конкретното заведение.",
-        "credit": "KaiKemmann",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_13.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
-      }
-    },
-    {
-      "id": "kazanis",
-      "name": "Kazanis",
-      "type": "Ресторант-таверна",
-      "cuisines": [
         "гръцка",
-        "риба",
-        "морски дарове",
-        "месо"
-      ],
-      "description": "Крайбрежна гръцка таверна с риба, месо и мезета.",
-      "address": "Paralia Nikitis, Никити 63088",
-      "latitude": 40.2112233,
-      "longitude": 23.6730146,
-      "phone": "+30 23750 23333",
-      "official": null,
-      "google": {
-        "rating": null,
-        "reviews": null,
-        "url": "https://www.google.com/maps/search/?api=1&query=Kazanis+Restaurant+Nikiti"
-      },
-      "tripadvisor": null,
-      "priceLevel": "€€",
-      "busy": "Няма достатъчно данни",
-      "dishes": [],
-      "verified": "2026-08-21",
-      "sources": [
-        "https://www.xo.gr/profile/profile-906843203/el/",
-        "https://www.openstreetmap.org/node/6720523788"
-      ],
-      "image": {
-        "src": "images/places/restaurant-harbour-03.jpg",
-        "width": 640,
-        "height": 427,
-        "alt": "Контекстова сцена от Никити към записа „Kazanis“; изображението не показва конкретното заведение.",
-        "credit": "Kritzolina",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_harbour_03.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
-      }
-    },
-    {
-      "id": "crispy",
-      "name": "Crispy — pizza brunch coffee",
-      "type": "Пицария-ресторант",
-      "cuisines": [
         "пица",
-        "брънч"
+        "морски дарове"
       ],
-      "description": "Неформално заведение за пица и брънч, отбелязано като ресторант в OpenStreetMap.",
-      "address": "Никити 63088",
-      "latitude": 40.2180983,
-      "longitude": 23.6664483,
+      "description": "Крайбрежен ресторант с пица, гръцки ястия и морска кухня.",
+      "address": "Аιγιαλού, Никити 63088",
+      "latitude": 40.2152527,
+      "longitude": 23.6678991,
       "phone": null,
       "official": null,
       "google": {
-        "rating": null,
-        "reviews": null,
-        "url": "https://www.google.com/maps/search/?api=1&query=Crispy+Nikiti+Greece"
+        "rating": 4.5,
+        "reviews": 3193,
+        "url": "https://www.google.com/maps/search/?api=1&query=Alexandros+Cafe+Restaurant+Bar+Nikiti",
+        "verified": "2026-08-21"
       },
-      "tripadvisor": null,
+      "tripadvisor": {
+        "rating": 3.7,
+        "reviews": 128,
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g668422-d9784518-Reviews-Pizza_Alexandros-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html",
+        "verified": "2026-08-21"
+      },
+      "priceLevel": "€€",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://visitsithonia.com/locations/nikiti/",
+        "https://www.openstreetmap.org/node/5022144419"
+      ],
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 1.168,
+        "durationMinutes": 14,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "menu": {
+        "status": "not-found",
+        "label": "Не е намерено публично меню",
+        "url": null,
+        "verified": "2026-08-21"
+      }
+    },
+    {
+      "id": "gyromania",
+      "name": "Gyromania",
+      "type": "Грил с пълно меню",
+      "cuisines": [
+        "гръцка",
+        "грил"
+      ],
+      "description": "Гирос, сувлаки и грил в достъпен неформален формат.",
+      "address": "Никити 63088",
+      "latitude": 40.2157123,
+      "longitude": 23.6674143,
+      "phone": null,
+      "official": "https://gyromanianikiti1988.business.site/",
+      "google": {
+        "rating": 4.4,
+        "reviews": 2875,
+        "url": "https://www.google.com/maps/place/@40.215745,23.667332,17z/data=!4m10!3m9!1s0x14a890aca7d9554d:0xde62f162a02adfbc!5m2!4m1!1i2!8m2!3d40.215745!4d23.667332!9m1!1b1",
+        "verified": "2026-08-21"
+      },
+      "tripadvisor": {
+        "rating": 4.2,
+        "reviews": 283,
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g668422-d8388309-Reviews-Gyromania-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html",
+        "verified": "2026-08-21"
+      },
       "priceLevel": "€",
       "busy": "Няма достатъчно данни",
       "dishes": [],
       "verified": "2026-08-21",
       "sources": [
-        "https://www.openstreetmap.org/node/7985910452"
+        "https://visitsithonia.com/lifestyle/food-drink/restaurants/top-10-restaurants-taverns-in-nikiti/",
+        "https://www.openstreetmap.org/node/2360629377"
       ],
-      "image": {
-        "src": "images/places/restaurant-ergon-17.jpg",
-        "width": 640,
-        "height": 457,
-        "alt": "Контекстова сцена от Никити към записа „Crispy — pizza brunch coffee“; изображението не показва конкретното заведение.",
-        "credit": "KaiKemmann",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_17.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 1.236,
+        "durationMinutes": 15,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "menu": {
+        "status": "external",
+        "label": "Официален сайт / публична галерия",
+        "url": "https://gyromanianikiti1988.business.site/",
+        "verified": "2026-08-21"
       }
     },
     {
-      "id": "the-kitchen",
-      "name": "The Kitchen",
-      "type": "Ресторант",
+      "id": "nel-fuoco",
+      "name": "Nel fuoco",
+      "type": "Ресторант-пицария",
       "cuisines": [
-        "гръцка"
+        "италианска"
       ],
-      "description": "Ресторант в централната част на Никити, означен като гръцка кухня.",
-      "address": "Център, Никити 63088",
-      "latitude": 40.2219317,
-      "longitude": 23.6696595,
+      "description": "Ресторант в крайбрежната зона, отбелязан като италианска кухня в OpenStreetMap.",
+      "address": "Крайбрежна зона, Никити 63088",
+      "latitude": 40.2161776,
+      "longitude": 23.6667682,
       "phone": null,
       "official": null,
       "google": {
-        "rating": null,
-        "reviews": null,
-        "url": "https://www.google.com/maps/search/?api=1&query=The+Kitchen+Nikiti"
+        "rating": 4.2,
+        "reviews": 768,
+        "url": "https://www.google.com/maps/place/@40.216057,23.666979,17z/data=!4m10!3m9!1s0x14a89755db58ba8f:0x5fa3cb3bab239403!5m2!4m1!1i2!8m2!3d40.216057!4d23.666979!9m1!1b1",
+        "verified": "2026-08-21"
       },
-      "tripadvisor": null,
+      "tripadvisor": {
+        "rating": 3.8,
+        "reviews": 94,
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g668422-d10490586-Reviews-Nel_Fuoco-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html",
+        "verified": "2026-08-21"
+      },
       "priceLevel": "Няма достатъчно данни",
       "busy": "Няма достатъчно данни",
       "dishes": [],
       "verified": "2026-08-21",
       "sources": [
-        "https://www.openstreetmap.org/node/10923657287"
+        "https://www.openstreetmap.org/node/1886177291"
       ],
-      "image": {
-        "src": "images/nikiti-taverna.jpg",
-        "width": 1280,
-        "height": 960,
-        "alt": "Контекстова сцена от Никити към записа „The Kitchen“; изображението не показва конкретното заведение.",
-        "credit": "Rosa-Maria Rinkl",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Taverne_in_Nikiti.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
-      }
-    },
-    {
-      "id": "apovrado",
-      "name": "Απόβραδο",
-      "type": "Таверна-ресторант",
-      "cuisines": [
-        "гръцка",
-        "средиземноморска"
-      ],
-      "description": "Таверна в централната част на Никити.",
-      "address": "Център, Никити 63088",
-      "latitude": 40.221543,
-      "longitude": 23.6680164,
-      "phone": null,
-      "official": null,
-      "google": {
-        "rating": null,
-        "reviews": null,
-        "url": "https://www.google.com/maps/search/?api=1&query=Apovrado+Nikiti"
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 1.31,
+        "durationMinutes": 16,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
       },
-      "tripadvisor": null,
-      "priceLevel": "€€",
-      "busy": "Няма достатъчно данни",
-      "dishes": [],
-      "verified": "2026-08-21",
-      "sources": [
-        "https://www.openstreetmap.org/node/10923790647"
-      ],
-      "image": {
-        "src": "images/places/restaurant-harbour-01.jpg",
-        "width": 640,
-        "height": 427,
-        "alt": "Контекстова сцена от Никити към записа „Απόβραδο“; изображението не показва конкретното заведение.",
-        "credit": "Kritzolina",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_harbour_01.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
-      }
-    },
-    {
-      "id": "limeri",
-      "name": "Limeri",
-      "type": "Ресторант",
-      "cuisines": [
-        "Няма достатъчно данни"
-      ],
-      "description": "Ресторант в централната част на Никити, идентифициран в OpenStreetMap.",
-      "address": "Център, Никити 63088",
-      "latitude": 40.2211422,
-      "longitude": 23.6677921,
-      "phone": null,
-      "official": null,
-      "google": {
-        "rating": null,
-        "reviews": null,
-        "url": "https://www.google.com/maps/search/?api=1&query=Limeri+Nikiti"
-      },
-      "tripadvisor": null,
-      "priceLevel": "Няма достатъчно данни",
-      "busy": "Няма достатъчно данни",
-      "dishes": [],
-      "verified": "2026-08-21",
-      "sources": [
-        "https://www.openstreetmap.org/node/10923790648"
-      ],
-      "image": {
-        "src": "images/places/restaurant-ergon-13.jpg",
-        "width": 640,
-        "height": 453,
-        "alt": "Контекстова сцена от Никити към записа „Limeri“; изображението не показва конкретното заведение.",
-        "credit": "KaiKemmann",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_13.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      "menu": {
+        "status": "not-found",
+        "label": "Не е намерено публично меню",
+        "url": null,
+        "verified": "2026-08-21"
       }
     },
     {
@@ -1653,9 +2482,15 @@
       "google": {
         "rating": null,
         "reviews": null,
-        "url": "https://www.google.com/maps/search/?api=1&query=Karma+Restaurant+Nikiti"
+        "url": "https://www.google.com/maps/search/?api=1&query=Karma+Restaurant+Nikiti",
+        "verified": "2026-08-21"
       },
-      "tripadvisor": null,
+      "tripadvisor": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.tripadvisor.com/Search?q=Karma%20Restaurant%20Nikiti",
+        "verified": "2026-08-21"
+      },
       "priceLevel": "Няма достатъчно данни",
       "busy": "Няма достатъчно данни",
       "dishes": [],
@@ -1663,15 +2498,534 @@
       "sources": [
         "https://www.openstreetmap.org/node/10923846268"
       ],
-      "image": {
-        "src": "images/places/restaurant-harbour-03.jpg",
-        "width": 640,
-        "height": 427,
-        "alt": "Контекстова сцена от Никити към записа „Κάρμα“; изображението не показва конкретното заведение.",
-        "credit": "Kritzolina",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_harbour_03.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 1.349,
+        "durationMinutes": 16,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "menu": {
+        "status": "not-found",
+        "label": "Не е намерено публично меню",
+        "url": null,
+        "verified": "2026-08-21"
+      }
+    },
+    {
+      "id": "to-spitaki",
+      "name": "Το σπιτάκι",
+      "type": "Ресторант",
+      "cuisines": [
+        "Няма достатъчно данни"
+      ],
+      "description": "Ресторант до пристанището, идентифициран в OpenStreetMap.",
+      "address": "Пристанищна зона, Никити 63088",
+      "latitude": 40.2165144,
+      "longitude": 23.6662362,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": 4.5,
+        "reviews": 1336,
+        "url": "https://www.google.com/maps/place/@40.216625,23.666178,17z/data=!4m10!3m9!1s0x14a890ac911fc949:0x8327f19718460f3b!5m2!4m1!1i2!8m2!3d40.216625!4d23.666178!9m1!1b1",
+        "verified": "2026-08-21"
+      },
+      "tripadvisor": {
+        "rating": 4.2,
+        "reviews": 192,
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g668422-d4579180-Reviews-To_Spitaki-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html",
+        "verified": "2026-08-21"
+      },
+      "priceLevel": "Няма достатъчно данни",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/5022144416"
+      ],
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 1.368,
+        "durationMinutes": 16,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "menu": {
+        "status": "not-found",
+        "label": "Не е намерено публично меню",
+        "url": null,
+        "verified": "2026-08-21"
+      }
+    },
+    {
+      "id": "antigoni",
+      "name": "Antigoni Taverne",
+      "type": "Таверна",
+      "cuisines": [
+        "гръцка",
+        "риба",
+        "морски дарове"
+      ],
+      "description": "Крайбрежна таверна с традиционни ястия и риба от местни рибари.",
+      "address": "Neakitou, Никити 63088",
+      "latitude": 40.2166334,
+      "longitude": 23.6656451,
+      "phone": "+30 23750 22660",
+      "official": "https://antigoni-restaurant.gr/",
+      "google": {
+        "rating": 4.2,
+        "reviews": 1061,
+        "url": "https://www.google.com/maps/place/@40.216896,23.665958,17z/data=!4m10!3m9!1s0x14a890ac920ae21f:0x534cf01a5afb7827!5m2!4m1!1i2!8m2!3d40.216896!4d23.665958!9m1!1b1",
+        "verified": "2026-08-21"
+      },
+      "tripadvisor": {
+        "rating": 3.9,
+        "reviews": 157,
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g668422-d8621877-Reviews-Antigoni_Taverne-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html",
+        "verified": "2026-08-21"
+      },
+      "priceLevel": "€€",
+      "busy": "Вечер е възможно натоварване; ориентировъчно, без надеждна почасова серия",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://sithonia.discoverhalkidiki.com/?p=23112&post_type=estiatorio",
+        "https://www.openstreetmap.org/node/4743860622",
+        "https://wanderlog.com/place/details/1226598"
+      ],
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 1.437,
+        "durationMinutes": 17,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "menu": {
+        "status": "external",
+        "label": "Официален сайт / публична галерия",
+        "url": "https://antigoni-restaurant.gr/",
+        "verified": "2026-08-21"
+      }
+    },
+    {
+      "id": "akrogiali",
+      "name": "Akrogiali 2",
+      "type": "Ресторант",
+      "cuisines": [
+        "гръцка",
+        "средиземноморска"
+      ],
+      "description": "Крайбрежен ресторант с пълно хранене; менюто не е заснето локално.",
+      "address": "Пристанищна зона, Никити 63088",
+      "latitude": 40.2169772,
+      "longitude": 23.6656139,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": 4.1,
+        "reviews": 2174,
+        "url": "https://www.google.com/maps/place/@40.216865,23.665588,17z/data=!4m10!3m9!1s0x14a890ac8cfba3f1:0xfd54472fb6541ac!5m2!4m1!1i2!8m2!3d40.216865!4d23.665588!9m1!1b1",
+        "verified": "2026-08-21"
+      },
+      "tripadvisor": {
+        "rating": 4,
+        "reviews": 335,
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g668422-d8524618-Reviews-Akrogiali_2-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html",
+        "verified": "2026-08-21"
+      },
+      "priceLevel": "€€",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/5022144414"
+      ],
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 1.441,
+        "durationMinutes": 17,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "menu": {
+        "status": "not-found",
+        "label": "Не е намерено публично меню",
+        "url": null,
+        "verified": "2026-08-21"
+      }
+    },
+    {
+      "id": "three-steps",
+      "name": "3 steps",
+      "type": "Ресторант",
+      "cuisines": [
+        "Няма достатъчно данни"
+      ],
+      "description": "Ресторант в пристанищната зона, идентифициран в OpenStreetMap.",
+      "address": "Пристанищна зона, Никити 63088",
+      "latitude": 40.2172599,
+      "longitude": 23.6657587,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": 3.6,
+        "reviews": 279,
+        "url": "https://www.google.com/maps/place/@40.217302,23.665822,17z/data=!4m10!3m9!1s0x14a891197998c14d:0x417e0c0ac8a986a6!5m2!4m1!1i2!8m2!3d40.217302!4d23.665822!9m1!1b1",
+        "verified": "2026-08-21"
+      },
+      "tripadvisor": {
+        "rating": 3.2,
+        "reviews": 52,
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g668422-d4270539-Reviews-Tria_Skalopatia-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html",
+        "verified": "2026-08-21"
+      },
+      "priceLevel": "Няма достатъчно данни",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/5022144413"
+      ],
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 1.475,
+        "durationMinutes": 18,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "menu": {
+        "status": "not-found",
+        "label": "Не е намерено публично меню",
+        "url": null,
+        "verified": "2026-08-21"
+      }
+    },
+    {
+      "id": "pizza-di-porto",
+      "name": "Pizza di Porto",
+      "type": "Пицария-ресторант",
+      "cuisines": [
+        "италианска",
+        "пица"
+      ],
+      "description": "Пицария в пристанищната зона с формат за пълно хранене.",
+      "address": "Пристанищна зона, Никити 63088",
+      "latitude": 40.2173541,
+      "longitude": 23.6663917,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": 4.5,
+        "reviews": 623,
+        "url": "https://www.google.com/maps/search/?api=1&query=Pizza+di+Porto+Nikiti",
+        "verified": "2026-08-21"
+      },
+      "tripadvisor": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g668422-d7008093-Reviews-Pizza_di_Porto-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html",
+        "verified": "2026-08-21"
+      },
+      "priceLevel": "€€",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/5022144415"
+      ],
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 1.507,
+        "durationMinutes": 18,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "menu": {
+        "status": "not-found",
+        "label": "Не е намерено публично меню",
+        "url": null,
+        "verified": "2026-08-21"
+      }
+    },
+    {
+      "id": "marina",
+      "name": "Taverna Marina",
+      "type": "Ресторант-таверна",
+      "cuisines": [
+        "гръцка",
+        "средиземноморска",
+        "риба",
+        "месо"
+      ],
+      "description": "Пълно меню с традиционни ястия, риба, месо и паста; публикувано е и на български.",
+      "address": "Marina Hotel, Никити 63088",
+      "latitude": 40.2175654,
+      "longitude": 23.6645793,
+      "phone": "+30 23750 22123",
+      "official": "https://www.marina-nikiti.com/copy-of-english",
+      "google": {
+        "rating": 4.5,
+        "reviews": 2328,
+        "url": "https://www.google.com/maps/search/?api=1&query=Taverna+Marina+Nikiti",
+        "verified": "2026-08-21"
+      },
+      "tripadvisor": {
+        "rating": 4,
+        "reviews": 241,
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g668422-d4581348-Reviews-Marina-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html",
+        "verified": "2026-08-21"
+      },
+      "priceLevel": "€€",
+      "busy": "Няма достатъчно данни",
+      "dishes": [
+        "tzatziki",
+        "tirokafteri",
+        "dolmadakia",
+        "gigantes",
+        "fried-zucchini",
+        "smoked-mackerel",
+        "moussaka",
+        "gemista",
+        "fish-soup",
+        "shrimp-pasta"
+      ],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.marina-nikiti.com/copy-of-english",
+        "https://www.openstreetmap.org/node/484898210"
+      ],
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 1.579,
+        "durationMinutes": 19,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "menu": {
+        "status": "external",
+        "label": "Официално меню",
+        "url": "https://www.marina-nikiti.com/copy-of-english",
+        "verified": "2026-08-21"
+      }
+    },
+    {
+      "id": "crispy",
+      "name": "Crispy — pizza brunch coffee",
+      "type": "Пицария-ресторант",
+      "cuisines": [
+        "пица",
+        "брънч"
+      ],
+      "description": "Неформално заведение за пица и брънч, отбелязано като ресторант в OpenStreetMap.",
+      "address": "Никити 63088",
+      "latitude": 40.2180983,
+      "longitude": 23.6664483,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": 4.6,
+        "reviews": 788,
+        "url": "https://www.google.com/maps/place/@40.218026,23.666474,17z/data=!4m10!3m9!1s0x14a891a94860befb:0x8584967d7d11b6cc!5m2!4m1!1i2!8m2!3d40.218026!4d23.666474!9m1!1b1",
+        "verified": "2026-08-21"
+      },
+      "tripadvisor": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g668422-d21037254-Reviews-Crispy_Pizza_Brunch_Coffee-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html",
+        "verified": "2026-08-21"
+      },
+      "priceLevel": "€",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/7985910452"
+      ],
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 1.583,
+        "durationMinutes": 19,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "menu": {
+        "status": "not-found",
+        "label": "Не е намерено публично меню",
+        "url": null,
+        "verified": "2026-08-21"
+      }
+    },
+    {
+      "id": "limeri",
+      "name": "Limeri",
+      "type": "Ресторант",
+      "cuisines": [
+        "Няма достатъчно данни"
+      ],
+      "description": "Ресторант в централната част на Никити, идентифициран в OpenStreetMap.",
+      "address": "Център, Никити 63088",
+      "latitude": 40.2211422,
+      "longitude": 23.6677921,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.google.com/maps/search/?api=1&query=Limeri+Nikiti",
+        "verified": "2026-08-21"
+      },
+      "tripadvisor": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.tripadvisor.com/Search?q=Limeri%20Nikiti",
+        "verified": "2026-08-21"
+      },
+      "priceLevel": "Няма достатъчно данни",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/10923790648"
+      ],
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 1.939,
+        "durationMinutes": 24,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "menu": {
+        "status": "not-found",
+        "label": "Не е намерено публично меню",
+        "url": null,
+        "verified": "2026-08-21"
+      }
+    },
+    {
+      "id": "apovrado",
+      "name": "Απόβραδο",
+      "type": "Таверна-ресторант",
+      "cuisines": [
+        "гръцка",
+        "средиземноморска"
+      ],
+      "description": "Таверна в централната част на Никити.",
+      "address": "Център, Никити 63088",
+      "latitude": 40.221543,
+      "longitude": 23.6680164,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": 4.5,
+        "reviews": 1112,
+        "url": "https://www.google.com/maps/search/?api=1&query=Apovrado+Nikiti",
+        "verified": "2026-08-21"
+      },
+      "tripadvisor": {
+        "rating": 4.4,
+        "reviews": 146,
+        "url": "https://www.tripadvisor.com/Restaurant_Review-g668422-d17724980-Reviews-Apovrado-Nikiti_Sithonia_Halkidiki_Region_Central_Macedonia.html",
+        "verified": "2026-08-21"
+      },
+      "priceLevel": "€€",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/10923790647"
+      ],
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 1.988,
+        "durationMinutes": 24,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "menu": {
+        "status": "not-found",
+        "label": "Не е намерено публично меню",
+        "url": null,
+        "verified": "2026-08-21"
+      }
+    },
+    {
+      "id": "the-kitchen",
+      "name": "The Kitchen",
+      "type": "Ресторант",
+      "cuisines": [
+        "гръцка"
+      ],
+      "description": "Ресторант в централната част на Никити, означен като гръцка кухня.",
+      "address": "Център, Никити 63088",
+      "latitude": 40.2219317,
+      "longitude": 23.6696595,
+      "phone": null,
+      "official": null,
+      "google": {
+        "rating": 4.6,
+        "reviews": 132,
+        "url": "https://www.google.com/maps/search/?api=1&query=The+Kitchen+Nikiti",
+        "verified": "2026-08-21"
+      },
+      "tripadvisor": {
+        "rating": null,
+        "reviews": null,
+        "url": "https://www.tripadvisor.com/Search?q=The%20Kitchen%20Nikiti",
+        "verified": "2026-08-21"
+      },
+      "priceLevel": "Няма достатъчно данни",
+      "busy": "Няма достатъчно данни",
+      "dishes": [],
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/node/10923657287"
+      ],
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 2.059,
+        "durationMinutes": 25,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "menu": {
+        "status": "not-found",
+        "label": "Не е намерено публично меню",
+        "url": null,
+        "verified": "2026-08-21"
       }
     },
     {
@@ -1711,15 +3065,21 @@
         "https://restaurantguru.com/TAVERNA-SONIA-Greece",
         "https://www.openstreetmap.org/way/608392343"
       ],
-      "image": {
-        "src": "images/places/restaurant-ergon-17.jpg",
-        "width": 640,
-        "height": 457,
-        "alt": "Контекстова сцена от Никити към записа „Taverna Sonia“; изображението не показва конкретното заведение.",
-        "credit": "KaiKemmann",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Ergon_Beach_House_Nikiti,_Aigialou,_630_88_Nikiti,_Greece_17.jpg",
-        "context": "Контекстова снимка от Никити; не показва конкретно това заведение."
+      "images": [],
+      "imageShortage": "Не са намерени разрешени снимки, които доказано показват точно този ресторант; не е използван общ заместител.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 5.409,
+        "durationMinutes": 67,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "menu": {
+        "status": "not-found",
+        "label": "Не е намерено публично меню",
+        "url": null,
+        "verified": "2026-08-21"
       }
     }
   ],
@@ -2323,89 +3683,6 @@
   ],
   "sights": [
     {
-      "id": "old-nikiti",
-      "name": "Старо Никити",
-      "type": "Традиционен квартал",
-      "location": "Палеа Никити, над съвременния град",
-      "latitude": 40.230608,
-      "longitude": 23.672701,
-      "driveMinutes": 5,
-      "description": "Каменни къщи и тесни улици в запазеното старо селище.",
-      "history": "Селището се развива от късното Средновековие върху земи на светогорско метохче.",
-      "access": "Свободен достъп; тесни, стръмни и павирани улици. Паркирайте в периферията.",
-      "hours": "Открито обществено пространство",
-      "fee": "Без вход",
-      "verified": "2026-08-21",
-      "image": {
-        "src": "images/old-nikiti.jpg",
-        "alt": "Каменна улица и традиционни къщи в Старо Никити",
-        "credit": "Mihail Sotirov / Wikimedia Commons",
-        "license": "Public domain",
-        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_old_1.JPG"
-      },
-      "sources": [
-        "https://www.visit-halkidiki.gr/wp-content/uploads/2023/05/URBAN-CENTERS-GREECE-HALKIDIKI-5-ROUTES-ENGLISH-GNTO.pdf",
-        "https://www.wikidata.org/wiki/Q111026539"
-      ]
-    },
-    {
-      "id": "agios-nikitas",
-      "name": "Църква „Св. Никита“",
-      "type": "Църква",
-      "location": "Старо Никити",
-      "latitude": 40.2329476,
-      "longitude": 23.6729356,
-      "driveMinutes": 5,
-      "description": "Каменен храм, доминиращ старото селище.",
-      "history": "Публичните туристически източници датират храма от 1867 г.",
-      "access": "Активен православен храм; облекло и поведение, подходящи за богослужебно място.",
-      "hours": "Няма надеждно публикувано туристическо работно време",
-      "fee": "Няма публикувана такса",
-      "verified": "2026-08-21",
-      "image": {
-        "src": "images/places/sight-agios-nikitas.jpg",
-        "width": 640,
-        "height": 360,
-        "alt": "Църквата „Св. Никита“ в Старо Никити",
-        "credit": "LucT",
-        "license": "CC BY-SA 3.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Agios_Nikitas_-_panoramio.jpg"
-      },
-      "sources": [
-        "https://halkidikigreece.gr/sithonia-villages.html",
-        "https://www.openstreetmap.org/way/310798879"
-      ]
-    },
-    {
-      "id": "nikiti-museum",
-      "name": "Исторически и фолклорен музей на Никити",
-      "type": "Музей",
-      "location": "Каменното училище, Старо Никити",
-      "latitude": 40.232705,
-      "longitude": 23.6729793,
-      "driveMinutes": 5,
-      "description": "Местна колекция за историята и всекидневието на Никити през XIX–XX век.",
-      "history": "Музеят е открит през 2015 г. в училище от 1870 г.; общината описва около 1500 дарени предмета.",
-      "access": "Провери по телефон или на място преди посещение.",
-      "hours": "OSM моментна снимка: пон.–съб. 11:00–13:00 и 19:00–22:00; променливо",
-      "fee": "Няма достатъчно данни",
-      "verified": "2026-08-21",
-      "image": {
-        "src": "images/places/sight-old-nikiti-02.jpg",
-        "width": 640,
-        "height": 480,
-        "alt": "Каменна архитектура в Старо Никити, където се намира историческият и фолклорен музей",
-        "credit": "M sotirov",
-        "license": "Public domain",
-        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_old_2.JPG",
-        "context": "Контекст от Старо Никити; не показва самия музей."
-      },
-      "sources": [
-        "https://dimossithonias.gr/egkainia-toy-istorikoy-kai-laografikoy-moyseioy-nikitis-2/",
-        "https://www.openstreetmap.org/node/13002605470"
-      ]
-    },
-    {
       "id": "sofronios",
       "name": "Раннохристиянска базилика „Софроний“",
       "type": "Археологически обект",
@@ -2431,7 +3708,50 @@
       "sources": [
         "https://dimossithonias.gr/wp-content/uploads/2024/09/26-2025-%CE%A8%CE%9D%CE%A94%CE%A91%CE%A6-%CE%A6%CE%9E%CE%94.pdf",
         "https://www.openstreetmap.org/way/507802713"
-      ]
+      ],
+      "route": {
+        "mode": "driving",
+        "distanceKm": 0.54,
+        "durationMinutes": 2,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      }
+    },
+    {
+      "id": "toumba",
+      "name": "Тумба Никити",
+      "type": "Археологически обект",
+      "location": "Източният край на Никити",
+      "latitude": 40.2171553,
+      "longitude": 23.6838642,
+      "driveMinutes": 7,
+      "description": "Регистрирано селищно място от бронзовата и желязната епоха.",
+      "history": "Археологическият кадастър и OSM го описват като праисторическо селище.",
+      "access": "Няма потвърдена туристическа инфраструктура; наблюдавайте само от разрешени места.",
+      "hours": "Няма достатъчно данни",
+      "fee": "Няма достатъчно данни",
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/old-nikiti.jpg",
+        "alt": "Историческата среда на Никити към записа за Тумба Никити",
+        "credit": "Mihail Sotirov / Wikimedia Commons",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_old_1.JPG",
+        "context": "Контекст от историческата среда на Никити; не показва конкретно Тумба Никити."
+      },
+      "sources": [
+        "https://www.arxaiologikoktimatologio.gov.gr/el/monuments_info?id=165296&type=Space",
+        "https://www.openstreetmap.org/way/1228968334"
+      ],
+      "route": {
+        "mode": "driving",
+        "distanceKm": 2.622,
+        "durationMinutes": 8,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      }
     },
     {
       "id": "psalida",
@@ -2460,34 +3780,158 @@
       "sources": [
         "https://www.arxaiologikoktimatologio.gov.gr/el/monuments_info?id=154210&type=Monument",
         "https://www.openstreetmap.org/way/1228974528"
-      ]
+      ],
+      "route": {
+        "mode": "driving",
+        "distanceKm": 3.18,
+        "durationMinutes": 9,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      }
     },
     {
-      "id": "toumba",
-      "name": "Тумба Никити",
-      "type": "Археологически обект",
-      "location": "Източният край на Никити",
-      "latitude": 40.2171553,
-      "longitude": 23.6838642,
-      "driveMinutes": 7,
-      "description": "Регистрирано селищно място от бронзовата и желязната епоха.",
-      "history": "Археологическият кадастър и OSM го описват като праисторическо селище.",
-      "access": "Няма потвърдена туристическа инфраструктура; наблюдавайте само от разрешени места.",
-      "hours": "Няма достатъчно данни",
-      "fee": "Няма достатъчно данни",
+      "id": "old-nikiti",
+      "name": "Старо Никити",
+      "type": "Традиционен квартал",
+      "location": "Палеа Никити, над съвременния град",
+      "latitude": 40.230608,
+      "longitude": 23.672701,
+      "driveMinutes": 5,
+      "description": "Каменни къщи и тесни улици в запазеното старо селище.",
+      "history": "Селището се развива от късното Средновековие върху земи на светогорско метохче.",
+      "access": "Свободен достъп; тесни, стръмни и павирани улици. Паркирайте в периферията.",
+      "hours": "Открито обществено пространство",
+      "fee": "Без вход",
       "verified": "2026-08-21",
       "image": {
         "src": "images/old-nikiti.jpg",
-        "alt": "Историческата среда на Никити към записа за Тумба Никити",
+        "alt": "Каменна улица и традиционни къщи в Старо Никити",
         "credit": "Mihail Sotirov / Wikimedia Commons",
         "license": "Public domain",
-        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_old_1.JPG",
-        "context": "Контекст от историческата среда на Никити; не показва конкретно Тумба Никити."
+        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_old_1.JPG"
       },
       "sources": [
-        "https://www.arxaiologikoktimatologio.gov.gr/el/monuments_info?id=165296&type=Space",
-        "https://www.openstreetmap.org/way/1228968334"
-      ]
+        "https://www.visit-halkidiki.gr/wp-content/uploads/2023/05/URBAN-CENTERS-GREECE-HALKIDIKI-5-ROUTES-ENGLISH-GNTO.pdf",
+        "https://www.wikidata.org/wiki/Q111026539"
+      ],
+      "route": {
+        "mode": "driving",
+        "distanceKm": 3.189,
+        "durationMinutes": 8,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      }
+    },
+    {
+      "id": "nikiti-museum",
+      "name": "Исторически и фолклорен музей на Никити",
+      "type": "Музей",
+      "location": "Каменното училище, Старо Никити",
+      "latitude": 40.232705,
+      "longitude": 23.6729793,
+      "driveMinutes": 5,
+      "description": "Местна колекция за историята и всекидневието на Никити през XIX–XX век.",
+      "history": "Музеят е открит през 2015 г. в училище от 1870 г.; общината описва около 1500 дарени предмета.",
+      "access": "Провери по телефон или на място преди посещение.",
+      "hours": "OSM моментна снимка: пон.–съб. 11:00–13:00 и 19:00–22:00; променливо",
+      "fee": "Няма достатъчно данни",
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/places/sight-old-nikiti-02.jpg",
+        "width": 640,
+        "height": 480,
+        "alt": "Каменна архитектура в Старо Никити, където се намира историческият и фолклорен музей",
+        "credit": "M sotirov",
+        "license": "Public domain",
+        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_old_2.JPG",
+        "context": "Контекст от Старо Никити; не показва самия музей."
+      },
+      "sources": [
+        "https://dimossithonias.gr/egkainia-toy-istorikoy-kai-laografikoy-moyseioy-nikitis-2/",
+        "https://www.openstreetmap.org/node/13002605470"
+      ],
+      "route": {
+        "mode": "driving",
+        "distanceKm": 3.505,
+        "durationMinutes": 9,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      }
+    },
+    {
+      "id": "agios-nikitas",
+      "name": "Църква „Св. Никита“",
+      "type": "Църква",
+      "location": "Старо Никити",
+      "latitude": 40.2329476,
+      "longitude": 23.6729356,
+      "driveMinutes": 5,
+      "description": "Каменен храм, доминиращ старото селище.",
+      "history": "Публичните туристически източници датират храма от 1867 г.",
+      "access": "Активен православен храм; облекло и поведение, подходящи за богослужебно място.",
+      "hours": "Няма надеждно публикувано туристическо работно време",
+      "fee": "Няма публикувана такса",
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/places/sight-agios-nikitas.jpg",
+        "width": 640,
+        "height": 360,
+        "alt": "Църквата „Св. Никита“ в Старо Никити",
+        "credit": "LucT",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Agios_Nikitas_-_panoramio.jpg"
+      },
+      "sources": [
+        "https://halkidikigreece.gr/sithonia-villages.html",
+        "https://www.openstreetmap.org/way/310798879"
+      ],
+      "route": {
+        "mode": "driving",
+        "distanceKm": 3.624,
+        "durationMinutes": 9,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      }
+    },
+    {
+      "id": "agios-nikolaos-village",
+      "name": "Село Агиос Николаос",
+      "type": "Традиционно селище",
+      "location": "Агиос Николаос, североизточно от Никити",
+      "latitude": 40.2491826,
+      "longitude": 23.6941924,
+      "driveMinutes": 12,
+      "description": "Вътрешно село с централен площад, църкви и местен фолклорен музей.",
+      "history": "Селището е историческият административен център за околните крайбрежни махали.",
+      "access": "Обществени улици; центърът е компактен, но настилките са неравни.",
+      "hours": "Открито обществено пространство",
+      "fee": "Без вход",
+      "verified": "2026-08-21",
+      "image": {
+        "src": "images/places/sight-agios-nikolaos.jpg",
+        "width": 640,
+        "height": 427,
+        "alt": "Изглед от село Агиос Николаос в Халкидики",
+        "credit": "Wolfgang Reiter",
+        "license": "CC BY-SA 3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%C3%80gios_Nik%C3%B3laos,IMG2_0209-B.jpg"
+      },
+      "sources": [
+        "https://visitsithonia.com/locations/ormos-panagias/",
+        "https://www.openstreetmap.org/node/11276356890"
+      ],
+      "route": {
+        "mode": "driving",
+        "distanceKm": 8.656,
+        "durationMinutes": 18,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      }
     },
     {
       "id": "chrysokamaro",
@@ -2516,38 +3960,59 @@
       "sources": [
         "https://www.arxaiologikoktimatologio.gov.gr/el/monuments_info?id=165316&type=Space",
         "https://www.openstreetmap.org/node/8887131158"
-      ]
-    },
-    {
-      "id": "agios-nikolaos-village",
-      "name": "Село Агиос Николаос",
-      "type": "Традиционно селище",
-      "location": "Агиос Николаос, североизточно от Никити",
-      "latitude": 40.2491826,
-      "longitude": 23.6941924,
-      "driveMinutes": 12,
-      "description": "Вътрешно село с централен площад, църкви и местен фолклорен музей.",
-      "history": "Селището е историческият административен център за околните крайбрежни махали.",
-      "access": "Обществени улици; центърът е компактен, но настилките са неравни.",
-      "hours": "Открито обществено пространство",
-      "fee": "Без вход",
-      "verified": "2026-08-21",
-      "image": {
-        "src": "images/places/sight-agios-nikolaos.jpg",
-        "width": 640,
-        "height": 427,
-        "alt": "Изглед от село Агиос Николаос в Халкидики",
-        "credit": "Wolfgang Reiter",
-        "license": "CC BY-SA 3.0",
-        "source": "https://commons.wikimedia.org/wiki/File:%C3%80gios_Nik%C3%B3laos,IMG2_0209-B.jpg"
-      },
-      "sources": [
-        "https://visitsithonia.com/locations/ormos-panagias/",
-        "https://www.openstreetmap.org/node/11276356890"
-      ]
+      ],
+      "route": {
+        "mode": "driving",
+        "distanceKm": 9.727,
+        "durationMinutes": 24,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      }
     }
   ],
   "beaches": [
+    {
+      "id": "seaside-villas-beach-access",
+      "name": "Плажен вход при The Seaside Villas (описателно име)",
+      "location": "Южната част на плаж Никити, непосредствено до вилата",
+      "latitude": 40.20755,
+      "longitude": 23.67426,
+      "shore": "Пясъчен публичен плажен участък",
+      "length": "Част от дългата ивица на плаж Никити",
+      "width": "Няма надеждна измерена стойност за този вход",
+      "cleanliness": "Няма текущо измерване за конкретната входна точка",
+      "cleanlinessSource": "https://mapcarta.com/W261535143",
+      "freeZone": "Да; публичната плажна ивица е достъпна без твърдение за запазени чадъри",
+      "organized": "Услугите са променливи по участъка; няма потвърждение за този точен вход",
+      "seabed": "Пясъчен бряг; условията във водата се проверяват на място",
+      "depth": "Няма надеждно измерена стойност",
+      "rocks": "Няма документиран специфичен риск за входа",
+      "hazards": "Няма потвърдени специфични опасности; следете местните флагове и условията в деня",
+      "toilets": "Няма потвърдена обществена тоалетна при точния вход",
+      "services": "Няма потвърдени услуги при точния вход",
+      "noise": "Няма надеждна моментна оценка",
+      "access": "От вилата се следва крайбрежната улица на запад към ивицата; маршрутът е около 2 минути пеша. Booking описва мястото като beachfront и на около 50 м от плаж Никити; картографският маршрут е по-дълъг.",
+      "family": true,
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.booking.com/hotel/gr/the-sea-side-apartment.en-gb.html",
+        "https://mapcarta.com/W261535143",
+        "https://www.openstreetmap.org/way/261535143"
+      ],
+      "images": [],
+      "imageShortage": "Не е намерена разрешена снимка, която доказано показва точно този описателен вход; не е използвана обща снимка.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 0.144,
+        "durationMinutes": 2,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "proximityGroup": 1,
+      "proximityLabel": "До 10 мин пеша от вилата"
+    },
     {
       "id": "nikiti-beach",
       "name": "Плаж Никити",
@@ -2572,54 +4037,32 @@
       "access": "Лесен пешеходен достъп; уличното паркиране се запълва",
       "family": true,
       "verified": "2026-08-21",
-      "image": {
-        "src": "images/nikiti-kastri.jpg",
-        "alt": "Брегът на Никити и заливът към Кастри",
-        "credit": "Tilemahos Efthimiadis / Wikimedia Commons",
-        "license": "CC BY 2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Nikiti,_Halkidiki,_Greece.jpg"
-      },
       "sources": [
         "https://bathingwaterprofiles.gr/en/monitor/eval/2580",
         "https://www.openstreetmap.org/way/27146789"
-      ]
-    },
-    {
-      "id": "mikro-kastri",
-      "name": "Микро Кастри",
-      "location": "Южно от Никити",
-      "latitude": 40.1960696,
-      "longitude": 23.682979,
-      "driveMinutes": 8,
-      "length": "Няма достатъчно данни",
-      "width": "Няма достатъчно данни",
-      "cleanliness": "Няма достатъчно надеждни данни",
-      "freeZone": "Няма достатъчно данни",
-      "organized": "Няма достатъчно данни",
-      "shore": "Пясък и камъчета; ориентировъчно",
-      "seabed": "Няма достатъчно данни",
-      "depth": "Няма достатъчно данни",
-      "rocks": "Вероятни край малкия залив; проверка на място",
-      "hazards": "Ограничено пространство и липса на потвърден спасител",
-      "toilets": "Няма достатъчно данни",
-      "services": "Няма достатъчно данни",
-      "noise": "Ниско до средно; ориентировъчно",
-      "access": "Ограничено паркиране; провери подхода",
-      "family": false,
-      "verified": "2026-08-21",
-      "image": {
-        "src": "images/places/beach-nikiti-03.jpg",
-        "width": 640,
-        "height": 427,
-        "alt": "Брегов контекст от Никити към записа за Микро Кастри",
-        "credit": "Kritzolina",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Nikiti_Beach_03.jpg",
-        "context": "Контекст от крайбрежието на Никити; не показва конкретно Микро Кастри."
+      ],
+      "images": [
+        {
+          "src": "images/places/beach-nikiti-03.jpg",
+          "width": 640,
+          "height": 427,
+          "alt": "Плаж Никити и крайбрежната ивица",
+          "credit": "Kritzolina",
+          "license": "CC BY-SA 4.0",
+          "source": "https://commons.wikimedia.org/wiki/File:Nikiti_Beach_03.jpg"
+        }
+      ],
+      "imageShortage": "Намерени са 1 конкретни разрешени снимки; допълнителни разрешени изображения не са намерени.",
+      "route": {
+        "mode": "walking",
+        "distanceKm": 1.197,
+        "durationMinutes": 14,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
       },
-      "sources": [
-        "https://www.openstreetmap.org/way/27146795"
-      ]
+      "proximityGroup": 2,
+      "proximityLabel": "Останал плаж в Никити"
     },
     {
       "id": "kastri-beach",
@@ -2644,18 +4087,69 @@
       "access": "Малък подход и ограничено паркиране",
       "family": false,
       "verified": "2026-08-21",
-      "image": {
-        "src": "images/nikiti-kastri.jpg",
-        "alt": "Брегът на Никити и заливът към Кастри",
-        "credit": "Tilemahos Efthimiadis / Wikimedia Commons",
-        "license": "CC BY 2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Nikiti,_Halkidiki,_Greece.jpg",
-        "context": "Панорамен изглед към района на Кастри."
-      },
       "sources": [
         "https://visitsithonia.com/locations/nikiti/",
         "https://www.openstreetmap.org/way/178610187"
-      ]
+      ],
+      "images": [
+        {
+          "src": "images/nikiti-kastri.jpg",
+          "alt": "Крайбрежието на Никити към плаж Кастри",
+          "credit": "Tilemahos Efthimiadis / Wikimedia Commons",
+          "license": "CC BY 2.0",
+          "source": "https://commons.wikimedia.org/wiki/File:Nikiti,_Halkidiki,_Greece.jpg"
+        }
+      ],
+      "imageShortage": "Намерени са 1 конкретни разрешени снимки; допълнителни разрешени изображения не са намерени.",
+      "route": {
+        "mode": "driving",
+        "distanceKm": 2.375,
+        "durationMinutes": 10,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "proximityGroup": 3,
+      "proximityLabel": "Плаж извън Никити"
+    },
+    {
+      "id": "mikro-kastri",
+      "name": "Микро Кастри",
+      "location": "Южно от Никити",
+      "latitude": 40.1960696,
+      "longitude": 23.682979,
+      "driveMinutes": 8,
+      "length": "Няма достатъчно данни",
+      "width": "Няма достатъчно данни",
+      "cleanliness": "Няма достатъчно надеждни данни",
+      "freeZone": "Няма достатъчно данни",
+      "organized": "Няма достатъчно данни",
+      "shore": "Пясък и камъчета; ориентировъчно",
+      "seabed": "Няма достатъчно данни",
+      "depth": "Няма достатъчно данни",
+      "rocks": "Вероятни край малкия залив; проверка на място",
+      "hazards": "Ограничено пространство и липса на потвърден спасител",
+      "toilets": "Няма достатъчно данни",
+      "services": "Няма достатъчно данни",
+      "noise": "Ниско до средно; ориентировъчно",
+      "access": "Ограничено паркиране; провери подхода",
+      "family": false,
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.openstreetmap.org/way/27146795"
+      ],
+      "images": [],
+      "imageShortage": "Намерени са 0 конкретни разрешени снимки; допълнителни разрешени изображения не са намерени.",
+      "route": {
+        "mode": "driving",
+        "distanceKm": 2.507,
+        "durationMinutes": 10,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "proximityGroup": 3,
+      "proximityLabel": "Плаж извън Никити"
     },
     {
       "id": "agios-ioannis-beach",
@@ -2680,17 +4174,30 @@
       "access": "Автомобилен достъп; паркингът варира по сектор",
       "family": true,
       "verified": "2026-08-21",
-      "image": {
-        "src": "images/agios-ioannis.jpg",
-        "alt": "Плаж Агиос Йоанис до Никити и островчето Кастри",
-        "credit": "Sakis Hatzis / Wikimedia Commons",
-        "license": "CC BY 2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Ai_Yiannis_beach_in_Nikiti.jpg"
-      },
       "sources": [
         "https://visitsithonia.com/locations/nikiti/",
         "https://www.openstreetmap.org/way/178610190"
-      ]
+      ],
+      "images": [
+        {
+          "src": "images/agios-ioannis.jpg",
+          "alt": "Плаж Агиос Йоанис край Никити",
+          "credit": "Sakis Hatzis / Wikimedia Commons",
+          "license": "CC BY 2.0",
+          "source": "https://commons.wikimedia.org/wiki/File:Ai_Yiannis_beach_in_Nikiti.jpg"
+        }
+      ],
+      "imageShortage": "Намерени са 1 конкретни разрешени снимки; допълнителни разрешени изображения не са намерени.",
+      "route": {
+        "mode": "driving",
+        "distanceKm": 3.866,
+        "durationMinutes": 16,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "proximityGroup": 3,
+      "proximityLabel": "Плаж извън Никити"
     },
     {
       "id": "koviou",
@@ -2715,20 +4222,22 @@
       "access": "Достъп от главния път; паркирането може да е ограничено",
       "family": true,
       "verified": "2026-08-21",
-      "image": {
-        "src": "images/places/beach-kalogria.jpg",
-        "width": 640,
-        "height": 853,
-        "alt": "Крайбрежен контекст южно от Никити към записа за Ковиу",
-        "credit": "ale3andro",
-        "license": "CC BY-SA 2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Kalogria_Beach,_Nikiti,_Chalkidiki,_Greece.jpg",
-        "context": "Контекст от съседния бряг при Калогрия; не показва конкретно Ковиу."
-      },
       "sources": [
         "https://visitsithonia.com/beaches/9-most-popular-beaches-with-natural-shade-in-sithonia/",
         "https://www.openstreetmap.org/way/178610956"
-      ]
+      ],
+      "images": [],
+      "imageShortage": "Намерени са 0 конкретни разрешени снимки; допълнителни разрешени изображения не са намерени.",
+      "route": {
+        "mode": "driving",
+        "distanceKm": 5.893,
+        "durationMinutes": 16,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "proximityGroup": 3,
+      "proximityLabel": "Плаж извън Никити"
     },
     {
       "id": "kalogria",
@@ -2754,19 +4263,32 @@
       "access": "Автомобилен достъп; идвайте рано",
       "family": true,
       "verified": "2026-08-21",
-      "image": {
-        "src": "images/places/beach-kalogria.jpg",
-        "width": 640,
-        "height": 853,
-        "alt": "Плаж Калогрия край Никити",
-        "credit": "ale3andro",
-        "license": "CC BY-SA 2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Kalogria_Beach,_Nikiti,_Chalkidiki,_Greece.jpg"
-      },
       "sources": [
         "https://www.blueflag.gr/el/awards/2026",
         "https://www.openstreetmap.org/way/169010917"
-      ]
+      ],
+      "images": [
+        {
+          "src": "images/places/beach-kalogria.jpg",
+          "width": 640,
+          "height": 853,
+          "alt": "Пясъчната ивица на плаж Калогрия",
+          "credit": "ale3andro",
+          "license": "CC BY-SA 2.0",
+          "source": "https://commons.wikimedia.org/wiki/File:Kalogria_Beach,_Nikiti,_Chalkidiki,_Greece.jpg"
+        }
+      ],
+      "imageShortage": "Намерени са 1 конкретни разрешени снимки; допълнителни разрешени изображения не са намерени.",
+      "route": {
+        "mode": "driving",
+        "distanceKm": 6.052,
+        "durationMinutes": 13,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "proximityGroup": 3,
+      "proximityLabel": "Плаж извън Никити"
     },
     {
       "id": "spathies",
@@ -2791,93 +4313,69 @@
       "access": "Тесен подход и ограничени места",
       "family": false,
       "verified": "2026-08-21",
-      "image": {
-        "src": "images/spathies.jpg",
-        "alt": "Малкият пясъчен залив Спатиес до Никити",
-        "credit": "Sakis Hatzis / Wikimedia Commons",
-        "license": "CC BY 2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Spathies_beach_in_Nikiti.jpg"
-      },
       "sources": [
         "https://visitsithonia.com/beaches/spathies-beach/",
         "https://www.openstreetmap.org/way/178759943"
-      ]
-    },
-    {
-      "id": "elia",
-      "name": "Елия",
-      "location": "Крайбрежието на Елия",
-      "latitude": 40.1434937,
-      "longitude": 23.734124,
-      "driveMinutes": 20,
-      "length": "Дълга ивица; няма надеждна единна стойност",
-      "width": "Варира по сектори",
-      "cleanliness": "Blue Flag 2026 за Elia/Acrotel и Elia 2/Anthemus",
-      "cleanlinessSource": "https://www.blueflag.gr/el/awards/2026",
-      "freeZone": "Няма достатъчно данни за всички сектори",
-      "organized": "Да, при хотелските сектори",
-      "shore": "Пясък и дребни камъчета; варира",
-      "seabed": "Няма достатъчно данни за цялата ивица",
-      "depth": "Няма достатъчно данни",
-      "rocks": "Локални скали и камъни",
-      "hazards": "Дълга и нееднородна ивица; проверете достъпа и флага на конкретния сектор",
-      "toilets": "При организираните обекти",
-      "services": "Хотели и сезонни плажни услуги",
-      "noise": "Средно; варира по сектор",
-      "access": "Някои сектори са свързани с хотелски комплекси; търсете обществен достъп",
-      "family": true,
-      "verified": "2026-08-21",
-      "image": {
-        "src": "images/places/beach-elia.jpg",
-        "width": 640,
-        "height": 480,
-        "alt": "Плаж Елия на Ситония",
-        "credit": "Edal Anton Lefterov",
-        "license": "CC BY-SA 3.0",
-        "source": "https://commons.wikimedia.org/wiki/File:EliaBeach.jpg"
+      ],
+      "images": [
+        {
+          "src": "images/spathies.jpg",
+          "alt": "Един от малките заливи на плаж Спатиес",
+          "credit": "Sakis Hatzis / Wikimedia Commons",
+          "license": "CC BY 2.0",
+          "source": "https://commons.wikimedia.org/wiki/File:Spathies_beach_in_Nikiti.jpg"
+        }
+      ],
+      "imageShortage": "Намерени са 1 конкретни разрешени снимки; допълнителни разрешени изображения не са намерени.",
+      "route": {
+        "mode": "driving",
+        "distanceKm": 6.921,
+        "durationMinutes": 17,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
       },
-      "sources": [
-        "https://www.blueflag.gr/el/awards/2026",
-        "https://www.openstreetmap.org/way/1152385905"
-      ]
+      "proximityGroup": 3,
+      "proximityLabel": "Плаж извън Никити"
     },
     {
-      "id": "lagomandra",
-      "name": "Лагомандра",
-      "location": "Южно от Елия",
-      "latitude": 40.1336655,
-      "longitude": 23.7508148,
-      "driveMinutes": 23,
-      "length": "Няма надеждна стойност",
-      "width": "Няма надеждна стойност",
-      "cleanliness": "Blue Flag 2026 за Lagomandra/Lagomandra Beach Hotel",
-      "cleanlinessSource": "https://www.blueflag.gr/el/awards/2026",
+      "id": "latoura",
+      "name": "Латура",
+      "location": "До Ормос Панагиас",
+      "latitude": 40.2298936,
+      "longitude": 23.737964,
+      "driveMinutes": 17,
+      "length": "Няма достатъчно данни",
+      "width": "Няма достатъчно данни",
+      "cleanliness": "Няма достатъчно надеждни данни",
       "freeZone": "Няма достатъчно данни",
-      "organized": "Да, по част от ивицата",
-      "shore": "Пясък",
-      "seabed": "Пясък с възможни каменисти участъци",
+      "organized": "Няма достатъчно данни",
+      "shore": "Пясък и камъчета; ориентировъчно",
+      "seabed": "Няма достатъчно данни",
       "depth": "Няма достатъчно данни",
-      "rocks": "Възможни по краищата",
-      "hazards": "Сезонно натоварване и движение по главния път",
-      "toilets": "При организирания сектор",
-      "services": "Хотелски и плажни услуги",
+      "rocks": "Вероятни по краищата",
+      "hazards": "Близост до лодки и пристанищно движение",
+      "toilets": "Няма достатъчно данни",
+      "services": "Услуги в Ормос Панагиас",
       "noise": "Средно; ориентировъчно",
-      "access": "Автомобилен достъп; проверете общественото паркиране",
-      "family": true,
+      "access": "Автомобилен достъп; паркирането е ограничено",
+      "family": false,
       "verified": "2026-08-21",
-      "image": {
-        "src": "images/places/beach-lagomandra.jpg",
-        "width": 640,
-        "height": 960,
-        "alt": "Плаж Лагомандра на Ситония",
-        "credit": "Kritzolina",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Lagomandra_Beach_01.jpg"
-      },
       "sources": [
-        "https://www.blueflag.gr/el/awards/2026",
-        "https://www.openstreetmap.org/way/229414810"
-      ]
+        "https://www.openstreetmap.org/way/175494218"
+      ],
+      "images": [],
+      "imageShortage": "Намерени са 0 конкретни разрешени снимки; допълнителни разрешени изображения не са намерени.",
+      "route": {
+        "mode": "driving",
+        "distanceKm": 8.112,
+        "durationMinutes": 18,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "proximityGroup": 3,
+      "proximityLabel": "Плаж извън Никити"
     },
     {
       "id": "trani-ammouda",
@@ -2903,19 +4401,32 @@
       "access": "Автомобилен достъп и паркинги по сектори",
       "family": true,
       "verified": "2026-08-21",
-      "image": {
-        "src": "images/places/beach-trani-ammouda.jpg",
-        "width": 640,
-        "height": 480,
-        "alt": "Плаж Трани Амуда край Ормос Панагиас",
-        "credit": "KaiKemmann",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Angelos_Hotel,_%CE%A0%CE%B1%CF%81%CE%B1%CE%BB%CE%AF%CE%B1_%CE%A4%CF%81%CE%B1%CE%BD%CE%AE_%CE%91%CE%BC%CE%BC%CE%BF%CF%8D%CE%B4%CE%B1,_Trani_Ammouda_beach,_Agios_Nikolaos,_630_78_%CE%8C%CF%81%CE%BC%CE%BF%CF%82_%CE%A0%CE%B1%CE%BD%CE%B1%CE%B3%CE%AF%CE%B1%CF%82_Ormos_Panagias,_Greece.jpg"
-      },
       "sources": [
         "https://www.blueflag.gr/el/awards/2026",
         "https://www.openstreetmap.org/way/54842604"
-      ]
+      ],
+      "images": [
+        {
+          "src": "images/places/beach-trani-ammouda.jpg",
+          "width": 640,
+          "height": 480,
+          "alt": "Плаж Трани Амуда",
+          "credit": "KaiKemmann",
+          "license": "CC BY-SA 4.0",
+          "source": "https://commons.wikimedia.org/wiki/File:Angelos_Hotel,_%CE%A0%CE%B1%CF%81%CE%B1%CE%BB%CE%AF%CE%B1_%CE%A4%CF%81%CE%B1%CE%BD%CE%AE_%CE%91%CE%BC%CE%BC%CE%BF%CF%8D%CE%B4%CE%B1,_Trani_Ammouda_beach,_Agios_Nikolaos,_630_78_%CE%8C%CF%81%CE%BC%CE%BF%CF%82_%CE%A0%CE%B1%CE%BD%CE%B1%CE%B3%CE%AF%CE%B1%CF%82_Ormos_Panagias,_Greece.jpg"
+        }
+      ],
+      "imageShortage": "Намерени са 1 конкретни разрешени снимки; допълнителни разрешени изображения не са намерени.",
+      "route": {
+        "mode": "driving",
+        "distanceKm": 8.168,
+        "durationMinutes": 19,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "proximityGroup": 3,
+      "proximityLabel": "Плаж извън Никити"
     },
     {
       "id": "lagonisi",
@@ -2940,56 +4451,72 @@
       "access": "Достъпът и условията за паркиране може да се променят",
       "family": true,
       "verified": "2026-08-21",
-      "image": {
-        "src": "images/places/beach-trani-ammouda.jpg",
-        "width": 640,
-        "height": 480,
-        "alt": "Крайбрежен контекст около Ормос Панагиас към записа за Лагониси",
-        "credit": "KaiKemmann",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Angelos_Hotel,_%CE%A0%CE%B1%CF%81%CE%B1%CE%BB%CE%AF%CE%B1_%CE%A4%CF%81%CE%B1%CE%BD%CE%AE_%CE%91%CE%BC%CE%BC%CE%BF%CF%8D%CE%B4%CE%B1,_Trani_Ammouda_beach,_Agios_Nikolaos,_630_78_%CE%8C%CF%81%CE%BC%CE%BF%CF%82_%CE%A0%CE%B1%CE%BD%CE%B1%CE%B3%CE%AF%CE%B1%CF%82_Ormos_Panagias,_Greece.jpg",
-        "context": "Контекст от съседния район на Ормос Панагиас; не показва конкретно Лагониси."
-      },
       "sources": [
         "https://www.openstreetmap.org/way/166071797"
-      ]
+      ],
+      "images": [],
+      "imageShortage": "Намерени са 0 конкретни разрешени снимки; допълнителни разрешени изображения не са намерени.",
+      "route": {
+        "mode": "driving",
+        "distanceKm": 8.797,
+        "durationMinutes": 20,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "proximityGroup": 3,
+      "proximityLabel": "Плаж извън Никити"
     },
     {
-      "id": "latoura",
-      "name": "Латура",
-      "location": "До Ормос Панагиас",
-      "latitude": 40.2298936,
-      "longitude": 23.737964,
-      "driveMinutes": 17,
-      "length": "Няма достатъчно данни",
-      "width": "Няма достатъчно данни",
-      "cleanliness": "Няма достатъчно надеждни данни",
-      "freeZone": "Няма достатъчно данни",
-      "organized": "Няма достатъчно данни",
-      "shore": "Пясък и камъчета; ориентировъчно",
-      "seabed": "Няма достатъчно данни",
+      "id": "elia",
+      "name": "Елия",
+      "location": "Крайбрежието на Елия",
+      "latitude": 40.1434937,
+      "longitude": 23.734124,
+      "driveMinutes": 20,
+      "length": "Дълга ивица; няма надеждна единна стойност",
+      "width": "Варира по сектори",
+      "cleanliness": "Blue Flag 2026 за Elia/Acrotel и Elia 2/Anthemus",
+      "cleanlinessSource": "https://www.blueflag.gr/el/awards/2026",
+      "freeZone": "Няма достатъчно данни за всички сектори",
+      "organized": "Да, при хотелските сектори",
+      "shore": "Пясък и дребни камъчета; варира",
+      "seabed": "Няма достатъчно данни за цялата ивица",
       "depth": "Няма достатъчно данни",
-      "rocks": "Вероятни по краищата",
-      "hazards": "Близост до лодки и пристанищно движение",
-      "toilets": "Няма достатъчно данни",
-      "services": "Услуги в Ормос Панагиас",
-      "noise": "Средно; ориентировъчно",
-      "access": "Автомобилен достъп; паркирането е ограничено",
-      "family": false,
+      "rocks": "Локални скали и камъни",
+      "hazards": "Дълга и нееднородна ивица; проверете достъпа и флага на конкретния сектор",
+      "toilets": "При организираните обекти",
+      "services": "Хотели и сезонни плажни услуги",
+      "noise": "Средно; варира по сектор",
+      "access": "Някои сектори са свързани с хотелски комплекси; търсете обществен достъп",
+      "family": true,
       "verified": "2026-08-21",
-      "image": {
-        "src": "images/places/beach-trani-ammouda.jpg",
-        "width": 640,
-        "height": 480,
-        "alt": "Крайбрежен контекст около Ормос Панагиас към записа за Латура",
-        "credit": "KaiKemmann",
-        "license": "CC BY-SA 4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Angelos_Hotel,_%CE%A0%CE%B1%CF%81%CE%B1%CE%BB%CE%AF%CE%B1_%CE%A4%CF%81%CE%B1%CE%BD%CE%AE_%CE%91%CE%BC%CE%BC%CE%BF%CF%8D%CE%B4%CE%B1,_Trani_Ammouda_beach,_Agios_Nikolaos,_630_78_%CE%8C%CF%81%CE%BC%CE%BF%CF%82_%CE%A0%CE%B1%CE%BD%CE%B1%CE%B3%CE%AF%CE%B1%CF%82_Ormos_Panagias,_Greece.jpg",
-        "context": "Контекст от съседния район на Ормос Панагиас; не показва конкретно Латура."
-      },
       "sources": [
-        "https://www.openstreetmap.org/way/175494218"
-      ]
+        "https://www.blueflag.gr/el/awards/2026",
+        "https://www.openstreetmap.org/way/1152385905"
+      ],
+      "images": [
+        {
+          "src": "images/places/beach-elia.jpg",
+          "width": 640,
+          "height": 480,
+          "alt": "Плаж Елия на Ситония",
+          "credit": "Edal Anton Lefterov",
+          "license": "CC BY-SA 3.0",
+          "source": "https://commons.wikimedia.org/wiki/File:EliaBeach.jpg"
+        }
+      ],
+      "imageShortage": "Намерени са 1 конкретни разрешени снимки; допълнителни разрешени изображения не са намерени.",
+      "route": {
+        "mode": "driving",
+        "distanceKm": 10.966,
+        "durationMinutes": 22,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "proximityGroup": 3,
+      "proximityLabel": "Плаж извън Никити"
     },
     {
       "id": "fteroti",
@@ -3014,19 +4541,72 @@
       "access": "Проверете маршрута и законното място за паркиране предварително",
       "family": false,
       "verified": "2026-08-21",
-      "image": {
-        "src": "images/places/beach-elia.jpg",
-        "width": 640,
-        "height": 480,
-        "alt": "Крайбрежен контекст на Ситония към записа за Фтероти",
-        "credit": "Edal Anton Lefterov",
-        "license": "CC BY-SA 3.0",
-        "source": "https://commons.wikimedia.org/wiki/File:EliaBeach.jpg",
-        "context": "Контекст от крайбрежието на Ситония; не показва конкретно Фтероти."
-      },
       "sources": [
         "https://www.openstreetmap.org/way/1215583879"
-      ]
+      ],
+      "images": [],
+      "imageShortage": "Намерени са 0 конкретни разрешени снимки; допълнителни разрешени изображения не са намерени.",
+      "route": {
+        "mode": "driving",
+        "distanceKm": 11.029,
+        "durationMinutes": 22,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "proximityGroup": 3,
+      "proximityLabel": "Плаж извън Никити"
+    },
+    {
+      "id": "lagomandra",
+      "name": "Лагомандра",
+      "location": "Южно от Елия",
+      "latitude": 40.1336655,
+      "longitude": 23.7508148,
+      "driveMinutes": 23,
+      "length": "Няма надеждна стойност",
+      "width": "Няма надеждна стойност",
+      "cleanliness": "Blue Flag 2026 за Lagomandra/Lagomandra Beach Hotel",
+      "cleanlinessSource": "https://www.blueflag.gr/el/awards/2026",
+      "freeZone": "Няма достатъчно данни",
+      "organized": "Да, по част от ивицата",
+      "shore": "Пясък",
+      "seabed": "Пясък с възможни каменисти участъци",
+      "depth": "Няма достатъчно данни",
+      "rocks": "Възможни по краищата",
+      "hazards": "Сезонно натоварване и движение по главния път",
+      "toilets": "При организирания сектор",
+      "services": "Хотелски и плажни услуги",
+      "noise": "Средно; ориентировъчно",
+      "access": "Автомобилен достъп; проверете общественото паркиране",
+      "family": true,
+      "verified": "2026-08-21",
+      "sources": [
+        "https://www.blueflag.gr/el/awards/2026",
+        "https://www.openstreetmap.org/way/229414810"
+      ],
+      "images": [
+        {
+          "src": "images/places/beach-lagomandra.jpg",
+          "width": 640,
+          "height": 960,
+          "alt": "Плаж Лагомандра и боровият бряг",
+          "credit": "Kritzolina",
+          "license": "CC BY-SA 4.0",
+          "source": "https://commons.wikimedia.org/wiki/File:Lagomandra_Beach_01.jpg"
+        }
+      ],
+      "imageShortage": "Намерени са 1 конкретни разрешени снимки; допълнителни разрешени изображения не са намерени.",
+      "route": {
+        "mode": "driving",
+        "distanceKm": 12.19,
+        "durationMinutes": 23,
+        "verified": "2026-08-21",
+        "source": "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+        "note": "Ориентировъчна статична маршрутна моментна снимка; Google Maps може да предложи различен маршрут."
+      },
+      "proximityGroup": 3,
+      "proximityLabel": "Плаж извън Никити"
     }
   ]
 }

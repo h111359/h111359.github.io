@@ -1,19 +1,23 @@
 /**
- * app.js: Progressive catalogue, accessible tabs, filters, and marker explorer for the Nikiti guide.
- * Provides data-driven rendering while preserving the source-visible HTML fallback and offline shell.
+ * app.js: Progressive catalogue, accessible tabs, route actions, filters, and galleries for the Nikiti guide.
+ * Provides data-driven rendering while preserving source-visible route and catalogue fallbacks.
  */
 
 (function enhanceNikitiCatalogue() {
     "use strict";
 
-    // Revision query bypasses older cache-first workers that predate the record photographs.
-    const DATA_URL = "./catalog-data.json?v=4";
+    // Revision query bypasses older cache-first workers that predate villa-based routes and expanded dishes.
+    const DATA_URL = "./catalog-data.json?v=6";
     const ALL_VALUE = "all";
     const DEFAULT_TAB = "food";
     const INITIAL_HASH_ALIGNMENT_DELAY_MS = 100;
     const LOCAL_HOSTNAMES = new Set(["localhost", "127.0.0.1"]);
+    const MINIMUM_RATING_REVIEWS = 50;
+    const ROUTE_ORIGIN = {
+        latitude: 40.207465355104475,
+        longitude: 23.676892454034267
+    };
     const TAB_IDS = ["food", "restaurants", "fish", "sights", "beaches"];
-    const MAP_CATEGORIES = ["restaurants", "sights", "beaches"];
     const IMAGE_DIMENSIONS = {
         "images/moussaka.jpg": [960, 657],
         "images/tsipoura.jpg": [960, 720],
@@ -26,14 +30,14 @@
         food: {
             dataKey: "foods",
             filterALabel: "Категория",
-            filterBLabel: "Ресторант",
+            filterBLabel: "Потвърждение",
             sortOptions: [["name", "Име"], ["price", "Цена"]]
         },
         restaurants: {
             dataKey: "restaurants",
             filterALabel: "Вид заведение",
             filterBLabel: "Кухня",
-            sortOptions: [["name", "Име"], ["rating", "Google рейтинг"], ["popularity", "Популярност"], ["price", "Ценова категория"]]
+            sortOptions: [["distance", "Пешеходна близост"], ["name", "Име"], ["rating", "Google рейтинг"], ["popularity", "Популярност"], ["price", "Ценова категория"]]
         },
         fish: {
             dataKey: "fish",
@@ -45,13 +49,13 @@
             dataKey: "sights",
             filterALabel: "Тип",
             filterBLabel: "Време с автомобил",
-            sortOptions: [["name", "Име"], ["drive", "Време с автомобил"]]
+            sortOptions: [["distance", "Автомобилна близост"], ["name", "Име"], ["drive", "Време с автомобил"]]
         },
         beaches: {
             dataKey: "beaches",
             filterALabel: "Тип бряг",
             filterBLabel: "Удобство",
-            sortOptions: [["name", "Име"], ["drive", "Време с автомобил"], ["family", "За семейства"]]
+            sortOptions: [["proximity", "Група и близост"], ["name", "Име"], ["drive", "Време"], ["family", "За семейства"]]
         }
     };
     const SELECTORS = {
@@ -63,10 +67,7 @@
         filterA: "[data-filter-a]",
         filterB: "[data-filter-b]",
         sort: "[data-sort]",
-        status: "[data-result-status]",
-        map: "[data-map]",
-        mapPlot: "[data-map-plot]",
-        mapFilter: "[data-map-filter]"
+        status: "[data-result-status]"
     };
     let catalogue = null;
     let activeTabId = DEFAULT_TAB;
@@ -146,43 +147,58 @@
     }
 
     /**
-     * Adds a factual local image with its attribution and optional context disclosure.
+     * Adds a keyboard-scrollable gallery of factual local images or an honest shortage notice.
      *
      * @param {HTMLElement} card - Record card receiving the media block.
-     * @param {Object|null|undefined} imageData - Image metadata from the local catalogue.
+     * @param {Object|Object[]|null|undefined} imageData - One image or an array of image metadata.
+     * @param {string} [shortageNote] - Evidence note when fewer than three object-specific images exist.
      * @returns {void}
      */
-    function appendRecordMedia(card, imageData) {
-        const figure = createElement("figure", "record-media");
-        if (!imageData) {
+    function appendRecordMedia(card, imageData, shortageNote) {
+        const images = Array.isArray(imageData) ? imageData : imageData ? [imageData] : [];
+        const media = createElement("section", "record-media-group");
+        media.setAttribute("aria-label", "Снимки на записа");
+
+        if (!images.length) {
             const placeholder = createElement("div", "record-media__placeholder");
             placeholder.setAttribute("role", "img");
-            placeholder.setAttribute("aria-label", "Няма намерена лицензирана снимка");
+            placeholder.setAttribute("aria-label", "Няма намерена лицензирана снимка на конкретния обект");
             placeholder.append(createElement("span", "record-media__symbol", "◌"));
-            placeholder.append(createElement("span", "record-media__missing", "Няма намерена лицензирана снимка"));
-            figure.append(placeholder);
-            card.prepend(figure);
-            return;
+            placeholder.append(createElement("span", "record-media__missing", "Няма намерена лицензирана снимка на конкретния обект"));
+            media.append(placeholder);
+        } else {
+            const gallery = createElement("div", "record-gallery");
+            // The focusable native scroller supports Arrow keys without custom carousel controls.
+            gallery.tabIndex = 0;
+            gallery.setAttribute("aria-label", `Галерия с ${images.length} снимки; използвайте стрелките за хоризонтално превъртане`);
+            images.forEach(function appendImage(imageDataItem) {
+                const figure = createElement("figure", "record-media");
+                const image = document.createElement("img");
+                const storedDimensions = Number.isFinite(imageDataItem.width) && Number.isFinite(imageDataItem.height)
+                    ? [imageDataItem.width, imageDataItem.height]
+                    : null;
+                const dimensions = storedDimensions || IMAGE_DIMENSIONS[imageDataItem.src] || [960, 720];
+                image.src = imageDataItem.src;
+                image.alt = imageDataItem.alt;
+                image.width = dimensions[0];
+                image.height = dimensions[1];
+                image.loading = "lazy";
+                image.decoding = "async";
+                const caption = createElement("figcaption", "record-media__credit");
+                if (imageDataItem.context) {
+                    caption.append(createElement("span", "record-media__context", imageDataItem.context));
+                }
+                caption.append(createExternalLink(`${imageDataItem.credit} · ${imageDataItem.license}`, imageDataItem.source));
+                figure.append(image, caption);
+                gallery.append(figure);
+            });
+            media.append(gallery);
         }
 
-        const image = document.createElement("img");
-        const storedDimensions = Number.isFinite(imageData.width) && Number.isFinite(imageData.height)
-            ? [imageData.width, imageData.height]
-            : null;
-        const dimensions = storedDimensions || IMAGE_DIMENSIONS[imageData.src] || [960, 720];
-        image.src = imageData.src;
-        image.alt = imageData.alt;
-        image.width = dimensions[0];
-        image.height = dimensions[1];
-        image.loading = "lazy";
-        image.decoding = "async";
-        const caption = createElement("figcaption", "record-media__credit");
-        if (imageData.context) {
-            caption.append(createElement("span", "record-media__context", imageData.context));
+        if (shortageNote) {
+            media.append(createElement("p", "record-media__shortage", shortageNote));
         }
-        caption.append(createExternalLink(`${imageData.credit} · ${imageData.license}`, imageData.source));
-        figure.append(image, caption);
-        card.prepend(figure);
+        card.prepend(media);
     }
 
     /**
@@ -209,7 +225,7 @@
      * @param {string} recordId - Stable record identifier.
      * @param {string} badge - Short category label.
      * @param {string} title - Primary record title.
-     * @returns {{card: HTMLElement, body: HTMLElement, details: HTMLDetailsElement, detailList: HTMLDListElement}} Record elements.
+     * @returns {{card: HTMLElement, body: HTMLElement, header: HTMLElement, details: HTMLDetailsElement, detailList: HTMLDListElement}} Record elements.
      */
     function createRecordShell(tabId, recordId, badge, title) {
         const card = createElement("article", "record-card");
@@ -224,7 +240,7 @@
         details.append(detailList);
         body.append(header);
         card.append(body);
-        return {card, body, details, detailList};
+        return {card, body, header, details, detailList};
     }
 
     /**
@@ -241,7 +257,7 @@
     }
 
     /**
-     * Renders one food record with verified restaurant prices and a change warning.
+     * Renders one food record with explicit local-confirmation and price status.
      *
      * @param {Object} food - Food catalogue record.
      * @returns {HTMLElement} Rendered food card.
@@ -249,25 +265,30 @@
     function renderFood(food) {
         const shell = createRecordShell("food", food.id, food.category, food.bulgarian);
         shell.card.dataset.filterA = food.category;
-        shell.card.dataset.filterB = food.offers.map(function getRestaurant(offer) {
-            return offer.restaurant;
-        }).join("|");
+        shell.card.dataset.filterB = food.statusLabel;
         shell.card.dataset.sortName = food.bulgarian;
         shell.card.dataset.sortPrice = String(getFoodPrice(food));
         appendRecordMedia(shell.card, food.image);
+        const statusClass = food.localStatus === "confirmed" ? "record-status--confirmed" : "record-status--unconfirmed";
+        shell.header.append(createElement("span", `record-status ${statusClass}`, food.statusLabel));
         shell.body.append(createElement("p", "record-card__greek", food.greek));
         shell.body.append(createElement("p", "record-card__description", food.description));
-        const prices = createElement("ul", "offer-list");
-        food.offers.forEach(function appendOffer(offer) {
-            const note = offer.priceNote ? ` (${offer.priceNote})` : "";
-            prices.append(createElement("li", "offer-list__item", `${offer.restaurant}: ${formatEuro(offer.price)}${note} · проверено ${offer.verified}`));
-        });
-        shell.body.append(prices);
+        if (food.offers.length) {
+            const prices = createElement("ul", "offer-list");
+            food.offers.forEach(function appendOffer(offer) {
+                const note = offer.priceNote ? ` (${offer.priceNote})` : "";
+                prices.append(createElement("li", "offer-list__item", `${offer.restaurant}: ${formatEuro(offer.price)}${note} · проверено ${offer.verified}`));
+            });
+            shell.body.append(prices);
+        } else {
+            shell.body.append(createElement("p", "price-missing", food.priceStatus));
+        }
+        appendDefinition(shell.detailList, "Нормализирано основно име", food.normalizedName);
         appendDefinition(shell.detailList, "Приготвяне", food.preparation);
         appendDefinition(shell.detailList, "Основни съставки", food.ingredients.join(", "));
         appendDefinition(shell.detailList, "Вкус и текстура", food.taste);
-        shell.details.append(createElement("p", "change-warning", "Рецептата, съставките, наличността и цената могат да се променят; потвърдете в ресторанта."));
-        appendSources(shell.details, food.offers.map(function getSource(offer) {
+        appendDefinition(shell.detailList, "Проверено", food.verified);
+        appendSources(shell.details, food.sources || food.offers.map(function getSource(offer) {
             return offer.source;
         }));
         shell.body.append(shell.details);
@@ -275,13 +296,30 @@
     }
 
     /**
-     * Calculates the documented popularity score from a Google snapshot.
+     * Checks whether a platform snapshot meets the public display contract.
+     *
+     * @param {Object|null} ratingData - Platform rating snapshot.
+     * @returns {boolean} Whether the snapshot has provenance and at least 50 reviews.
+     */
+    function hasDisplayableRating(ratingData) {
+        return Boolean(
+            ratingData
+            && Number.isFinite(ratingData.rating)
+            && Number.isFinite(ratingData.reviews)
+            && ratingData.reviews >= MINIMUM_RATING_REVIEWS
+            && ratingData.url
+            && ratingData.verified
+        );
+    }
+
+    /**
+     * Calculates the documented popularity score from a qualifying Google snapshot.
      *
      * @param {Object|null} googleData - Google rating snapshot.
      * @returns {number|null} Popularity score or null when the snapshot is incomplete.
      */
     function calculatePopularity(googleData) {
-        if (!googleData || !Number.isFinite(googleData.rating) || !Number.isFinite(googleData.reviews)) {
+        if (!hasDisplayableRating(googleData)) {
             return null;
         }
         return googleData.rating * Math.log1p(googleData.reviews);
@@ -305,21 +343,24 @@
      * Renders a platform rating while preserving missing-profile semantics.
      *
      * @param {string} platform - Platform display name.
-     * @param {Object|null} ratingData - Rating snapshot or null when no profile was found.
-     * @param {string|null} fallbackUrl - Optional search/profile URL when a rating was not captured.
+     * @param {Object|null} ratingData - Rating snapshot or manual verification record.
      * @returns {HTMLElement} Rating paragraph with optional link.
      */
-    function renderRating(platform, ratingData, fallbackUrl) {
+    function renderRating(platform, ratingData) {
         const row = createElement("p", "rating-row");
         row.append(createElement("strong", "rating-row__label", `${platform}: `));
-        if (ratingData && Number.isFinite(ratingData.rating) && Number.isFinite(ratingData.reviews)) {
-            row.append(document.createTextNode(`${ratingData.rating.toFixed(1)} / 5 · ${ratingData.reviews.toLocaleString("bg-BG")} отзива · ${ratingData.verified}`));
+        if (hasDisplayableRating(ratingData)) {
+            row.append(document.createTextNode(`${ratingData.rating.toFixed(1)} / 5 · ${ratingData.reviews.toLocaleString("bg-BG")} отзива · проверено ${ratingData.verified} · `));
             row.append(createExternalLink("Профил", ratingData.url));
-        } else if (fallbackUrl) {
-            row.append(document.createTextNode("Няма достатъчно данни за моментна оценка "));
-            row.append(createExternalLink("Провери профила", fallbackUrl));
         } else {
-            row.append(document.createTextNode("Няма открит профил при проверката"));
+            row.append(document.createTextNode("Няма достатъчно данни за моментна оценка"));
+            if (ratingData && ratingData.verified) {
+                row.append(document.createTextNode(` · проверено ${ratingData.verified}`));
+            }
+            if (ratingData && ratingData.url) {
+                row.append(document.createTextNode(" · "));
+                row.append(createExternalLink("Провери профила", ratingData.url));
+            }
         }
         return row;
     }
@@ -333,6 +374,47 @@
      */
     function getGoogleMapsUrl(latitude, longitude) {
         return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${latitude},${longitude}`)}`;
+    }
+
+    /**
+     * Creates a Google Maps Directions link with the villa and destination coordinates embedded.
+     *
+     * @param {number} latitude - Destination latitude in decimal degrees.
+     * @param {number} longitude - Destination longitude in decimal degrees.
+     * @param {string} mode - Google Maps travel mode: walking or driving.
+     * @returns {string} Google Maps Directions URL.
+     */
+    function getGoogleMapsDirectionsUrl(latitude, longitude, mode) {
+        const origin = `${ROUTE_ORIGIN.latitude},${ROUTE_ORIGIN.longitude}`;
+        const destination = `${latitude},${longitude}`;
+        return `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=${mode}`;
+    }
+
+    /**
+     * Formats one dated static route snapshot for Bulgarian readers.
+     *
+     * @param {Object} route - Route snapshot with mode, distance, duration, and verification date.
+     * @returns {string} Compact route summary.
+     */
+    function formatRoute(route) {
+        const modeLabel = route.mode === "walking" ? "пеша" : "с автомобил";
+        const distance = new Intl.NumberFormat("bg-BG", {maximumFractionDigits: 1}).format(route.distanceKm);
+        return `${modeLabel} · ≈ ${distance} км · ≈ ${route.durationMinutes} мин · проверено ${route.verified}`;
+    }
+
+    /**
+     * Adds the two required Google Maps actions for a geographic record.
+     *
+     * @param {HTMLElement} container - Action container receiving the links.
+     * @param {Object} record - Geographic record with coordinates and a route snapshot.
+     * @returns {void}
+     */
+    function appendMapActions(container, record) {
+        container.append(createExternalLink("Място в Google Maps", getGoogleMapsUrl(record.latitude, record.longitude)));
+        container.append(createExternalLink(
+            "Маршрут от вилата",
+            getGoogleMapsDirectionsUrl(record.latitude, record.longitude, record.route.mode)
+        ));
     }
 
     /**
@@ -358,16 +440,19 @@
         shell.card.dataset.filterA = restaurant.type;
         shell.card.dataset.filterB = restaurant.cuisines.join("|");
         shell.card.dataset.sortName = restaurant.name;
-        shell.card.dataset.sortRating = String(restaurant.google && restaurant.google.rating || -1);
+        shell.card.dataset.sortRating = String(hasDisplayableRating(restaurant.google) ? restaurant.google.rating : -1);
         shell.card.dataset.sortPopularity = String(popularity === null ? -1 : popularity);
         shell.card.dataset.sortPrice = String(getPriceLevelValue(restaurant.priceLevel));
-        appendRecordMedia(shell.card, restaurant.image);
+        shell.card.dataset.sortDistance = String(restaurant.route.distanceKm);
+        appendRecordMedia(shell.card, restaurant.images, restaurant.imageShortage);
         shell.body.append(createElement("p", "record-card__description", restaurant.description));
+        shell.body.append(createElement("p", "record-card__route", formatRoute(restaurant.route)));
         shell.body.append(createElement("p", "record-card__meta", `Кухня: ${restaurant.cuisines.join(", ")} · ${restaurant.priceLevel}`));
-        shell.body.append(renderRating("Google", restaurant.google, restaurant.google && restaurant.google.url));
-        shell.body.append(renderRating("Tripadvisor", restaurant.tripadvisor, null));
+        shell.body.append(renderRating("Google", restaurant.google));
+        shell.body.append(renderRating("Tripadvisor", restaurant.tripadvisor));
         appendDefinition(shell.detailList, "Адрес", restaurant.address);
         appendDefinition(shell.detailList, "Координати", `${restaurant.latitude.toFixed(6)}, ${restaurant.longitude.toFixed(6)}`);
+        appendDefinition(shell.detailList, "Маршрут от The Seaside Villas", formatRoute(restaurant.route));
         appendDefinition(shell.detailList, "Телефон", restaurant.phone || "Няма достатъчно данни");
         appendDefinition(shell.detailList, "Популярност", formatPopularity(popularity));
         appendDefinition(shell.detailList, "Вероятно натоварване", restaurant.busy);
@@ -379,12 +464,21 @@
         });
         appendDefinition(shell.detailList, "Проверени ястия", dishNames.length ? dishNames.join(", ") : "Няма достъпно актуално меню, каталогизирано в тази моментна снимка");
         const links = createElement("div", "record-actions");
-        links.append(createExternalLink("Google Maps", getGoogleMapsUrl(restaurant.latitude, restaurant.longitude)));
+        appendMapActions(links, restaurant);
         if (restaurant.official) {
             links.append(createExternalLink("Официален сайт", restaurant.official));
         }
         shell.details.append(links);
-        appendSources(shell.details, restaurant.sources);
+        const menu = createElement("p", "record-menu");
+        menu.append(createElement("strong", "record-menu__label", "Меню: "));
+        if (restaurant.menu.url) {
+            menu.append(createExternalLink(restaurant.menu.label, restaurant.menu.url));
+        } else {
+            menu.append(document.createTextNode(restaurant.menu.label));
+        }
+        menu.append(document.createTextNode(` · проверено ${restaurant.menu.verified}`));
+        shell.details.append(menu);
+        appendSources(shell.details, [...restaurant.sources, restaurant.route.source]);
         shell.body.append(shell.details);
         return shell.card;
     }
@@ -461,7 +555,9 @@
         appendDefinition(shell.detailList, "Обезкостяване", fish.bones);
         appendDefinition(shell.detailList, "Как се яде", fish.eating);
         appendDefinition(shell.detailList, "Съчетание", fish.pairing);
-        shell.details.append(createElement("p", "change-warning", "Внимание: всяка риба може да съдържа кости. Информацията не заменя указанията на ресторанта; помолете персонала за почистване."));
+        if (fish.id === "drakaina" || fish.id === "skorpina") {
+            shell.details.append(createElement("p", "specific-warning", fish.description));
+        }
         appendSources(shell.details, [
             `https://fishbase.se/summary/${encodeURIComponent(fish.scientific.replace(" ", "-"))}.html`,
             "https://www.fao.org/4/i1276b/i1276b00.htm",
@@ -496,22 +592,25 @@
     function renderSight(sight) {
         const shell = createRecordShell("sights", sight.id, sight.type, sight.name);
         shell.card.dataset.filterA = sight.type;
-        shell.card.dataset.filterB = classifyDrive(sight.driveMinutes);
+        shell.card.dataset.filterB = classifyDrive(sight.route.durationMinutes);
         shell.card.dataset.sortName = sight.name;
-        shell.card.dataset.sortDrive = String(sight.driveMinutes);
+        shell.card.dataset.sortDrive = String(sight.route.durationMinutes);
+        shell.card.dataset.sortDistance = String(sight.route.distanceKm);
         appendRecordMedia(shell.card, sight.image);
         shell.body.append(createElement("p", "record-card__description", sight.description));
-        shell.body.append(createElement("p", "record-card__meta", `≈ ${sight.driveMinutes} мин с автомобил · ${sight.location}`));
+        shell.body.append(createElement("p", "record-card__route", formatRoute(sight.route)));
+        shell.body.append(createElement("p", "record-card__meta", sight.location));
         appendDefinition(shell.detailList, "История", sight.history);
         appendDefinition(shell.detailList, "Координати", `${sight.latitude.toFixed(6)}, ${sight.longitude.toFixed(6)}`);
+        appendDefinition(shell.detailList, "Маршрут от The Seaside Villas", formatRoute(sight.route));
         appendDefinition(shell.detailList, "Достъп", sight.access);
         appendDefinition(shell.detailList, "Работно време", sight.hours);
         appendDefinition(shell.detailList, "Вход", sight.fee);
         appendDefinition(shell.detailList, "Проверено", sight.verified);
         const links = createElement("div", "record-actions");
-        links.append(createExternalLink("Google Maps", getGoogleMapsUrl(sight.latitude, sight.longitude)));
+        appendMapActions(links, sight);
         shell.details.append(links);
-        appendSources(shell.details, sight.sources);
+        appendSources(shell.details, [...sight.sources, sight.route.source]);
         shell.body.append(shell.details);
         return shell.card;
     }
@@ -546,16 +645,19 @@
      * @returns {HTMLElement} Rendered beach card.
      */
     function renderBeach(beach) {
-        const shell = createRecordShell("beaches", beach.id, classifyDrive(beach.driveMinutes), beach.name);
+        const shell = createRecordShell("beaches", beach.id, beach.proximityLabel, beach.name);
         shell.card.dataset.filterA = beach.shore;
         shell.card.dataset.filterB = classifyBeachFeatures(beach).join("|");
         shell.card.dataset.sortName = beach.name;
-        shell.card.dataset.sortDrive = String(beach.driveMinutes);
+        shell.card.dataset.sortDrive = String(beach.route.durationMinutes);
+        shell.card.dataset.sortProximity = String((beach.proximityGroup * 1000) + beach.route.distanceKm);
         shell.card.dataset.sortFamily = beach.family ? "1" : "0";
-        appendRecordMedia(shell.card, beach.image);
-        shell.body.append(createElement("p", "record-card__description", `${beach.location} · ≈ ${beach.driveMinutes} мин с автомобил`));
+        appendRecordMedia(shell.card, beach.images, beach.imageShortage);
+        shell.body.append(createElement("p", "record-card__description", beach.location));
+        shell.body.append(createElement("p", "record-card__route", formatRoute(beach.route)));
         shell.body.append(createElement("p", "record-card__meta", `${beach.shore} · ${beach.family ? "подходящост за семейства: да, с обичайния родителски надзор" : "подходящост за семейства: преценете на място"}`));
         appendDefinition(shell.detailList, "Координати", `${beach.latitude.toFixed(6)}, ${beach.longitude.toFixed(6)}`);
+        appendDefinition(shell.detailList, "Маршрут от The Seaside Villas", formatRoute(beach.route));
         appendDefinition(shell.detailList, "Размери", `${beach.length}; ширина: ${beach.width}`);
         appendDefinition(shell.detailList, "Чистота", beach.cleanliness);
         appendDefinition(shell.detailList, "Свободна зона", beach.freeZone);
@@ -568,11 +670,10 @@
         appendDefinition(shell.detailList, "Шум", beach.noise);
         appendDefinition(shell.detailList, "Достъп и паркиране", beach.access);
         appendDefinition(shell.detailList, "Последна проверка", beach.verified);
-        shell.details.append(createElement("p", "change-warning", "Чистотата, шумът, свободната зона, услугите и натоварването са променливи и ориентировъчни; проверете условията при пристигане."));
         const links = createElement("div", "record-actions");
-        links.append(createExternalLink("Google Maps", getGoogleMapsUrl(beach.latitude, beach.longitude)));
+        appendMapActions(links, beach);
         shell.details.append(links);
-        appendSources(shell.details, [beach.cleanlinessSource, ...beach.sources]);
+        appendSources(shell.details, [beach.cleanlinessSource, ...beach.sources, beach.route.source]);
         shell.body.append(shell.details);
         return shell.card;
     }
@@ -707,7 +808,7 @@
     function getSortValue(card, sortMode) {
         const dataKey = `sort${sortMode.charAt(0).toUpperCase()}${sortMode.slice(1)}`;
         const rawValue = card.dataset[dataKey] || "";
-        return ["price", "rating", "popularity", "drive", "family"].includes(sortMode)
+        return ["price", "rating", "popularity", "drive", "distance", "proximity", "family"].includes(sortMode)
             ? Number(rawValue)
             : normalizeText(rawValue);
     }
@@ -877,80 +978,6 @@
     }
 
     /**
-     * Builds an interactive, offline-capable coordinate plot from all mapped records.
-     *
-     * @returns {void}
-     */
-    function initializeMap() {
-        const mapSection = document.querySelector(SELECTORS.map);
-        const plot = document.querySelector(SELECTORS.mapPlot);
-        if (!mapSection || !plot) {
-            return;
-        }
-        const mappedRecords = [];
-        MAP_CATEGORIES.forEach(function collectCategory(category) {
-            const dataKey = TAB_CONFIG[category].dataKey;
-            catalogue[dataKey].forEach(function addMappedRecord(record) {
-                mappedRecords.push({category, record});
-            });
-        });
-        const latitudes = mappedRecords.map(function getLatitude(item) {
-            return item.record.latitude;
-        });
-        const longitudes = mappedRecords.map(function getLongitude(item) {
-            return item.record.longitude;
-        });
-        const bounds = {
-            minLat: Math.min(...latitudes),
-            maxLat: Math.max(...latitudes),
-            minLon: Math.min(...longitudes),
-            maxLon: Math.max(...longitudes)
-        };
-        mappedRecords.forEach(function appendMarker(item) {
-            const marker = createElement("button", `map-marker map-marker--${item.category}`);
-            marker.type = "button";
-            marker.dataset.mapCategory = item.category;
-            marker.dataset.target = `record-${item.category}-${item.record.id}`;
-            marker.setAttribute("aria-label", `${item.record.name}: отвори записа`);
-            marker.title = item.record.name;
-            const horizontalRange = bounds.maxLon - bounds.minLon || 1;
-            const verticalRange = bounds.maxLat - bounds.minLat || 1;
-            const left = 5 + ((item.record.longitude - bounds.minLon) / horizontalRange) * 90;
-            const top = 5 + ((bounds.maxLat - item.record.latitude) / verticalRange) * 90;
-            // Marker positions are dynamically derived from verified coordinates within the plotted bounds.
-            marker.style.setProperty("--marker-left", `${left}%`);
-            marker.style.setProperty("--marker-top", `${top}%`);
-            marker.addEventListener("click", function openMappedRecord() {
-                activateTab(item.category, true);
-                window.requestAnimationFrame(function scrollToRecord() {
-                    const target = document.getElementById(marker.dataset.target);
-                    if (target) {
-                        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-                        target.scrollIntoView({behavior: reducedMotion ? "auto" : "smooth", block: "center"});
-                        target.classList.add("is-map-target");
-                        window.setTimeout(function clearTargetState() {
-                            target.classList.remove("is-map-target");
-                        }, 1800);
-                    }
-                });
-            });
-            plot.append(marker);
-        });
-        document.querySelectorAll(SELECTORS.mapFilter).forEach(function connectMapFilter(button) {
-            button.addEventListener("click", function filterMapMarkers() {
-                const category = button.dataset.mapFilter;
-                document.querySelectorAll(SELECTORS.mapFilter).forEach(function updatePressedState(filterButton) {
-                    filterButton.setAttribute("aria-pressed", String(filterButton === button));
-                });
-                plot.querySelectorAll(".map-marker").forEach(function updateMarker(marker) {
-                    marker.hidden = category !== ALL_VALUE && marker.dataset.mapCategory !== category;
-                });
-            });
-        });
-        mapSection.hidden = false;
-    }
-
-    /**
      * Registers the folder-scoped service worker on secure or local test origins.
      *
      * @returns {void}
@@ -980,7 +1007,6 @@
             catalogue = await response.json();
             renderCatalogue();
             initializeFilters();
-            initializeMap();
             alignInitialHashTarget();
         } catch (error) {
             console.warn("The structured Nikiti catalogue could not be loaded.", error);

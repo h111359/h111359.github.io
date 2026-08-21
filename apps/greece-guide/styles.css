@@ -1,7 +1,7 @@
 /**
  * styles.css: Mobile-first editorial system for the Nikiti catalogue.
- * Sections: tokens, foundation, header, tabs, filters, catalogue cards,
- * map, footer, responsive and motion rules.
+ * Sections: tokens, foundation, header, route origin, tabs, filters,
+ * catalogue cards, galleries, footer, responsive and motion rules.
  */
 
 /* ============================================================
@@ -32,10 +32,6 @@
   --color-coral-deep: #86331f;
   /* Sand — evidence and detail surface. */
   --color-sand: #e5cfaa;
-  /* Olive — sight marker with high contrast. */
-  --color-olive: #5a663a;
-  /* Sky — beach marker and decorative sea field. */
-  --color-sky: #5fa8bd;
   /* White — copy and icons on dark surfaces. */
   --color-white: #ffffff;
   /* Border — quiet division between content units. */
@@ -44,8 +40,6 @@
   --color-focus: #ffbf47;
   /* Shadow — restrained card lift. */
   --color-shadow: rgba(23, 56, 60, 0.14);
-  /* Shadow strong — legible elevated focus state. */
-  --color-shadow-strong: rgba(9, 61, 70, 0.28);
 
   /* Extra-small type — source credits and status labels. */
   --font-size-xs: 0.78rem;
@@ -76,8 +70,6 @@
   --radius-sm: 0.35rem;
   /* Medium radius — cards and input controls. */
   --radius-md: 0.85rem;
-  /* Large radius — editorial images and map. */
-  --radius-lg: 1.6rem;
   /* Reading width — keeps explanatory text comfortable. */
   --reading-width: 68ch;
   /* Canvas width — limits wide-screen line and grid expansion. */
@@ -286,6 +278,39 @@ a:hover {
 }
 
 /* ============================================================
+   Fixed route origin
+   Design intent: Make the villa and snapshot boundary visible before the tabs.
+   ============================================================ */
+
+.origin-strip {
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-sand);
+}
+
+.origin-strip__inner {
+  display: grid;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.origin-strip h2 {
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-md);
+}
+
+.origin-strip p:last-child {
+  margin-bottom: 0;
+}
+
+.origin-strip .record-link {
+  width: fit-content;
+  min-height: var(--control-height);
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ============================================================
    Catalogue tabs
    Design intent: Five stable decisions remain reachable by thumb and keyboard.
    ============================================================ */
@@ -303,17 +328,17 @@ a:hover {
 
 .catalogue-tabs__scroll {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--space-1);
-  overflow-x: auto;
   padding-block: var(--space-2);
-  scrollbar-width: thin;
 }
 
 .catalogue-tab {
-  flex: 0 0 auto;
+  flex: 1 1 auto;
   min-height: var(--control-height);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   padding: var(--space-2) var(--space-3);
   border: 1px solid transparent;
   border-radius: 999px;
@@ -374,8 +399,7 @@ a:hover {
   letter-spacing: normal;
 }
 
-.filter-reset,
-.map-filters button {
+.filter-reset {
   min-height: var(--control-height);
   padding: var(--space-2) var(--space-3);
   border: 1px solid var(--color-sea);
@@ -386,8 +410,7 @@ a:hover {
 }
 
 /* Hover state: fill secondary controls while retaining their label contrast. */
-.filter-reset:hover,
-.map-filters button:hover {
+.filter-reset:hover {
   background: var(--color-sea-pale);
 }
 
@@ -430,32 +453,6 @@ a:hover {
 .catalogue-grid {
   display: grid;
   gap: var(--space-4);
-}
-
-.catalogue-lead-media {
-  display: grid;
-  grid-template-columns: minmax(8rem, 0.42fr) minmax(0, 1fr);
-  gap: var(--space-3);
-  align-items: end;
-  max-width: var(--reading-width);
-  margin-bottom: var(--space-5);
-  padding: var(--space-3);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-paper);
-}
-
-.catalogue-lead-media img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  border-radius: var(--radius-sm);
-  object-fit: cover;
-}
-
-.catalogue-lead-media figcaption {
-  margin-bottom: 0;
-  color: var(--color-ink-muted);
-  font-size: var(--font-size-xs);
 }
 
 .fallback-list article,
@@ -508,6 +505,26 @@ a:hover {
   margin-bottom: 0;
 }
 
+.record-status {
+  display: inline-block;
+  margin-top: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+}
+
+.record-status--confirmed {
+  background: var(--color-sea-pale);
+  color: var(--color-sea-deep);
+}
+
+.record-status--unconfirmed {
+  background: color-mix(in srgb, var(--color-sand) 65%, var(--color-paper));
+  color: var(--color-coral-deep);
+}
+
 .record-card__greek {
   margin-bottom: var(--space-2);
   color: var(--color-coral-deep);
@@ -517,13 +534,30 @@ a:hover {
 }
 
 .record-card__description,
-.record-card__meta {
+.record-card__meta,
+.record-card__route {
   margin-bottom: var(--space-3);
 }
 
 .record-card__meta {
   color: var(--color-ink-muted);
   font-size: var(--font-size-sm);
+}
+
+.record-card__route {
+  padding: var(--space-2) var(--space-3);
+  border-left: 0.3rem solid var(--color-sea);
+  background: var(--color-sea-pale);
+  color: var(--color-sea-deep);
+  font-size: var(--font-size-sm);
+  font-weight: 800;
+}
+
+.price-missing,
+.record-menu {
+  color: var(--color-ink-muted);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
 }
 
 .offer-list {
@@ -598,8 +632,7 @@ a:hover {
   font-size: var(--font-size-xs);
 }
 
-.change-warning,
-.panel-warning {
+.specific-warning {
   padding: var(--space-3);
   border-left: 0.3rem solid var(--color-coral);
   background: color-mix(in srgb, var(--color-sand) 55%, var(--color-paper));
@@ -607,16 +640,26 @@ a:hover {
   font-size: var(--font-size-sm);
 }
 
-.panel-warning {
-  max-width: var(--reading-width);
-  margin: var(--space-5) 0 0;
+.record-media-group {
+  min-width: 0;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-paper-muted);
+}
+
+.record-gallery {
+  display: flex;
+  max-width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
 }
 
 .record-media {
+  flex: 0 0 100%;
   position: relative;
   margin-bottom: 0;
-  border-top: 1px solid var(--color-border);
   background: var(--color-paper-muted);
+  scroll-snap-align: start;
 }
 
 .record-media img,
@@ -672,156 +715,12 @@ a:hover {
   color: color-mix(in srgb, var(--color-white) 82%, var(--color-sea-pale));
 }
 
-/* Map target state: a temporary outline connects a marker to its record. */
-.record-card.is-map-target {
-  outline: 0.28rem solid var(--color-focus);
-  outline-offset: 0.25rem;
-  box-shadow: 0 1rem 2.2rem var(--color-shadow-strong);
-}
-
-/* ============================================================
-   Coordinate map
-   Design intent: Provide an offline spatial overview without pretending to be a road map.
-   ============================================================ */
-
-.map-section {
-  padding-block: var(--space-7);
-  background: var(--color-paper);
-}
-
-.map-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  margin-bottom: var(--space-4);
-}
-
-/* Pressed state: selected map category uses the primary sea surface. */
-.map-filters button[aria-pressed="true"] {
-  background: var(--color-sea);
-  color: var(--color-white);
-}
-
-.coordinate-map {
-  position: relative;
-  min-height: clamp(25rem, 70vw, 43rem);
-  overflow: hidden;
-  border: 0.4rem solid var(--color-paper-muted);
-  border-radius: var(--radius-lg);
-  background:
-    radial-gradient(circle at 66% 44%, var(--color-paper) 0 3%, transparent 3.3%),
-    linear-gradient(142deg, var(--color-sand) 0 47%, var(--color-sky) 47.3% 100%);
-  box-shadow: inset 0 0 0 1px var(--color-border);
-}
-
-.coordinate-map::before,
-.coordinate-map::after {
-  position: absolute;
-  border: 1px solid color-mix(in srgb, var(--color-white) 45%, transparent);
-  border-radius: 50%;
-  content: "";
-}
-
-.coordinate-map::before {
-  right: -8%;
-  bottom: 8%;
-  width: 45%;
-  height: 15%;
-  transform: rotate(-18deg);
-}
-
-.coordinate-map::after {
-  right: 12%;
-  bottom: 27%;
-  width: 30%;
-  height: 11%;
-  transform: rotate(-10deg);
-}
-
-.coordinate-map__label {
-  position: absolute;
-  /* Map labels layer: below all interactive markers. */
-  z-index: 1;
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--color-paper) 83%, transparent);
+.record-media__shortage {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border-top: 1px solid var(--color-border);
   color: var(--color-ink-muted);
   font-size: var(--font-size-xs);
-  font-weight: 800;
-}
-
-.coordinate-map__label--north {
-  top: var(--space-3);
-  left: var(--space-3);
-}
-
-.coordinate-map__label--nikiti {
-  top: 48%;
-  left: 43%;
-}
-
-.coordinate-map__label--sea {
-  right: var(--space-4);
-  bottom: var(--space-4);
-}
-
-.map-marker {
-  position: absolute;
-  /* Map markers layer: above map labels and schematic coast details. */
-  z-index: 3;
-  top: var(--marker-top);
-  left: var(--marker-left);
-  width: 1.35rem;
-  min-height: 1.35rem;
-  padding: 0;
-  border: 0.16rem solid var(--color-white);
-  border-radius: 50% 50% 50% 0;
-  background: var(--color-coral);
-  box-shadow: 0 0.2rem 0.45rem var(--color-shadow-strong);
-  transform: translate(-50%, -100%) rotate(-45deg);
-}
-
-/* Hover state: enlarge the marker while keeping its mapped anchor fixed. */
-.map-marker:hover {
-  transform: translate(-50%, -100%) rotate(-45deg) scale(1.25);
-}
-
-/* Keyboard focus state: keep the marker transform while exposing its focus ring. */
-.map-marker:focus-visible {
-  transform: translate(-50%, -100%) rotate(-45deg) scale(1.25);
-}
-
-.map-marker--sights {
-  background: var(--color-olive);
-}
-
-.map-marker--beaches {
-  background: var(--color-sea);
-}
-
-.map-legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2) var(--space-4);
-  margin-top: var(--space-3);
-  color: var(--color-ink-muted);
-  font-size: var(--font-size-sm);
-}
-
-.legend-dot {
-  width: 0.8rem;
-  height: 0.8rem;
-  display: inline-block;
-  border-radius: 50%;
-  background: var(--color-coral);
-}
-
-.legend-dot--sights {
-  background: var(--color-olive);
-}
-
-.legend-dot--beaches {
-  background: var(--color-sea);
 }
 
 /* ============================================================
@@ -870,6 +769,18 @@ a:hover {
     text-align: right;
   }
 
+  .catalogue-tabs__scroll {
+    flex-wrap: nowrap;
+  }
+
+  .catalogue-tab {
+    flex: 1 1 0;
+  }
+
+  .origin-strip__inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
   .catalogue-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -912,8 +823,7 @@ a:hover {
 @media print {
   .skip-link,
   .catalogue-tabs,
-  .filter-section,
-  .map-section {
+  .filter-section {
     display: none !important;
   }
 

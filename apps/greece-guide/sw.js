@@ -3,7 +3,7 @@
  * Pre-caches the structured snapshot, interface, and every locally licensed image.
  */
 
-const CACHE_NAME = "greece-guide-v4";
+const CACHE_NAME = "greece-guide-v6";
 const GUIDE_CACHE_PREFIX = "greece-guide-";
 const GET_METHOD = "GET";
 const NAVIGATION_MODE = "navigate";
@@ -11,10 +11,10 @@ const RECORD_COLLECTION_KEYS = ["foods", "restaurants", "fish", "sights", "beach
 const CORE_ASSETS = [
     "./",
     "./index.html",
-    "./styles.css?v=4",
-    "./app.js?v=4",
+    "./styles.css?v=6",
+    "./app.js?v=6",
     "./sw.js",
-    "./catalog-data.json?v=4",
+    "./catalog-data.json?v=6",
     "./images/image-licenses.json"
 ];
 
@@ -26,8 +26,11 @@ const CORE_ASSETS = [
  */
 function collectCatalogueImageAssets(catalogue) {
     const imagePaths = RECORD_COLLECTION_KEYS.flatMap(function collectCollectionImages(collectionKey) {
-        return catalogue[collectionKey].map(function getRecordImage(record) {
-            return `./${record.image.src}`;
+        return catalogue[collectionKey].flatMap(function getRecordImages(record) {
+            const images = Array.isArray(record.images) ? record.images : record.image ? [record.image] : [];
+            return images.map(function getImagePath(image) {
+                return `./${image.src}`;
+            });
         });
     });
     return Array.from(new Set(imagePaths));
@@ -41,7 +44,7 @@ function collectCatalogueImageAssets(catalogue) {
 async function cacheCompleteLocalSnapshot() {
     const cache = await caches.open(CACHE_NAME);
     await cache.addAll(CORE_ASSETS);
-    const catalogueResponse = await cache.match("./catalog-data.json?v=4");
+    const catalogueResponse = await cache.match("./catalog-data.json?v=6");
     if (!catalogueResponse) {
         throw new Error("The cached catalogue snapshot is unavailable.");
     }
