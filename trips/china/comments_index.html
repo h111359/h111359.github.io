@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gallery & Text Blocks Editor</title>
+  <link rel="stylesheet" href="comments_styles.css" />
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Gallery & Text Blocks Editor</h1>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="card">
+      <div class="section">
+        <div class="row" style="align-items:start;">
+          <textarea id="src" class="input" placeholder="Paste here..."></textarea>
+          <div class="controls">
+            <button id="upload" class="primary">Upload</button>
+            <button id="download" class="primary">Download</button>
+            <button id="clear">Clear</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="row">
+          <div class="muted">Rendered items</div>
+          <div class="controls">
+            <span class="pill"><input type="checkbox" id="allToggle" checked/> Toggle all</span>
+          </div>
+        </div>
+        <div id="grid" class="grid" aria-live="polite"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="comments_app.js"></script>
+</body>
+</html>
