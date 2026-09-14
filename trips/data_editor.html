@@ -3,7 +3,7 @@
   data_editor.html: Standalone local editor for any trip data directory and its events.js registry.
   Component: Data Editor — full CRUD and media correction for GALLERY_ITEMS plus GALLERY_EVENT_INDEX editing.
   Context: Shared multi-trip publishing tools.
-  Requires a Chromium-based browser (Chrome 86+ or Edge 86+) for File System Access API.
+  Local helper works in modern browsers; manual File System Access fallback requires Chromium.
 -->
 <html lang="en">
 <head>
@@ -399,31 +399,6 @@
     }
 
     /* ============================================================
-       Validation Warning Area — shown above Save when issues are found
-       ============================================================ */
-    #validation-area {
-      display: none;
-      background: #fef9c3;
-      border: 1px solid #fbbf24;
-      border-radius: 6px;
-      padding: 12px;
-      margin-bottom: 12px;
-    }
-    #validation-area h3 { margin-bottom: 6px; font-size: 13px; }
-    #validation-area ul { padding-left: 18px; font-size: 12px; }
-    #btn-dismiss-validation {
-      margin-top: 8px;
-      background: #f59e0b;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      padding: 4px 10px;
-      cursor: pointer;
-      font-size: 12px;
-    }
-    #btn-dismiss-validation:hover { background: #d97706; }
-
-    /* ============================================================
        Global Add Buttons Row
        ============================================================ */
     .global-add-row {
@@ -777,6 +752,18 @@
       border: 1px solid var(--ai-panel-border);
       border-radius: 4px;
     }
+
+    /* Trip workflow: reuse editor tokens; a fluid grid keeps primary inputs readable on narrow screens. */
+    .trip-panel { margin-bottom: var(--ai-space-panel); padding: var(--ai-space-panel); background: var(--ai-panel-surface); border: 1px solid var(--ai-panel-border); }
+    .trip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: var(--ai-space-standard); }
+    .trip-field { display: flex; flex-direction: column; gap: var(--ai-space-compact); margin-block: var(--ai-space-standard); min-width: 0; }
+    .trip-field input, .trip-field textarea, .trip-panel select { padding: var(--ai-space-compact); color: var(--ai-control-text); background: var(--ai-panel-surface); border: 1px solid var(--ai-panel-border); max-width: 100%; }
+    .trip-field textarea { min-height: 12rem; }
+    .trip-panel button { padding: var(--ai-space-compact) var(--ai-space-standard); margin: var(--ai-space-compact); }
+    .trip-panel :focus-visible { outline: 2px solid var(--ai-control-text); outline-offset: 2px; }
+    #trip-status, #generation-summary { white-space: pre-wrap; overflow-wrap: anywhere; }
+    .trip-panel summary { cursor: pointer; padding-block: var(--ai-space-standard); }
+    [hidden] { display: none; }
   </style>
 </head>
 <body>
@@ -826,6 +813,33 @@
      ============================================================ -->
 <main id="app-main">
 
+  <!-- Trip management: native selects/buttons use arrows and Enter/Space; details disclose secondary forms. -->
+  <section id="trip-workflow" class="trip-panel" aria-label="Trip workflow">
+    <h1>Trip workspace</h1>
+    <p id="trip-status" role="status" aria-live="polite">Use a launcher for trip creation, settings, Drive generation and preview. Manual data-folder editing remains available in Chromium.</p>
+    <div id="helper-controls" hidden>
+      <label for="trip-select">Trip</label>
+      <select id="trip-select"><option value="">Choose a trip</option></select>
+      <button type="button" id="reload-trips">Refresh trip list</button>
+      <details><summary>Create new trip</summary><div id="create-trip-fields" class="trip-grid"></div></details>
+      <div id="trip-selected-controls" hidden>
+        <button type="button" id="reload-trip">Reload trip / repair feedback</button>
+        <button type="button" id="preview-trip">Preview trip</button>
+        <details><summary>Trip settings</summary><div id="settings-fields"></div><button type="button" id="save-settings">Save settings</button></details>
+        <details id="drive-generation"><summary>Add or regenerate a part from Google Drive</summary>
+          <button type="button" id="new-part-mode">New part identity</button>
+          <div id="generation-fields" class="trip-grid"></div>
+          <section id="generation-review" hidden aria-label="Review discovered media">
+            <pre id="generation-summary"></pre>
+            <p id="replacement-warning" hidden>Replacement removes descriptions, text blocks, visibility, corrections and custom ordering.</p>
+            <button type="button" id="confirm-generation">Confirm and save reviewed part</button>
+          </section>
+        </details>
+      </div>
+    </div>
+  </section>
+
+
   <!--
     OpenAI Settings
     Design intent: Keep an optional, security-conscious AI workflow close to the editor header.
@@ -872,13 +886,6 @@
     <button id="btn-add-registry-entry" type="button">＋ Add event entry</button>
     <button id="btn-save-events-js" type="button">Save events.js</button>
   </section> <!-- end #registry-section -->
-
-  <!-- Validation warning area — displayed before save when issues are detected -->
-  <div id="validation-area" role="alert" aria-live="polite">
-    <h3>⚠ Pre-save validation warnings</h3>
-    <ul id="validation-list"></ul>
-    <button id="btn-dismiss-validation" type="button">Dismiss and continue saving</button>
-  </div>
 
   <!-- Global add buttons — top position (above the item list) -->
   <div class="global-add-row" id="global-add-top">
@@ -952,9 +959,6 @@ let eventRegistry = [];
 /** @type {HTMLElement|null} The contentEditable field that last received focus; used by the toolbar. */
 let lastFocusedEditable = null;
 
-/** @type {Function|null} Promise resolve callback awaited during the save-validation flow. */
-let pendingValidationResolve = null;
-
 /** @type {string|null} Complete source text from the last accepted selected-event read. */
 let acceptedSourceText = null;
 
@@ -1009,7 +1013,6 @@ const DRIVE_PREVIEW_PATH_PATTERN = /^\/file\/d\/([a-zA-Z0-9_-]+)\/preview\/?$/;
 // ============================================================
 let elEventSelect, elUnsavedBadge, elSaveNotification, elSaveBtn,
     elItemList, elRegistrySection, elRegistryList,
-    elValidationArea, elValidationList, elBtnDismissValidation,
     elRefreshBtn, elRefreshStatus, elOpenAiSettings, elOpenAiApiKey,
     elOpenAiKeyStatus, elOpenAiBasePrompt, elOpenAiOutputLanguage,
     elOpenAiStatus, elAiReviewDialog, elAiReviewItem, elAiReviewOutput;
@@ -1026,9 +1029,6 @@ document.addEventListener('DOMContentLoaded', () => {
   elItemList             = document.getElementById('item-list');
   elRegistrySection      = document.getElementById('registry-section');
   elRegistryList         = document.getElementById('registry-list');
-  elValidationArea       = document.getElementById('validation-area');
-  elValidationList       = document.getElementById('validation-list');
-  elBtnDismissValidation = document.getElementById('btn-dismiss-validation');
   elRefreshBtn           = document.getElementById('btn-refresh');
   elRefreshStatus        = document.getElementById('refresh-status');
   elOpenAiSettings       = document.getElementById('openai-settings');
@@ -1048,7 +1048,6 @@ document.addEventListener('DOMContentLoaded', () => {
   elSaveBtn.addEventListener('click', handleSave);
   elRefreshBtn.addEventListener('click', handleManualRefresh);
   elEventSelect.addEventListener('change', handleEventSelectChange);
-  elBtnDismissValidation.addEventListener('click', handleDismissValidation);
   document.getElementById('btn-set-openai-key').addEventListener('click', handleSetOpenAiKey);
   document.getElementById('btn-clear-openai-key').addEventListener('click', handleClearOpenAiKey);
   document.getElementById('btn-ai-replace').addEventListener('click', () => applyAiReview('replace'));
@@ -1075,7 +1074,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('visibilitychange', handleVisibilityChange);
   window.addEventListener('pagehide', clearOpenAiMemory);
   restoreOpenAiSettings();
-  restoreSession();
+  initializeTripWorkflow();
 });
 
 // ============================================================
@@ -1250,15 +1249,17 @@ async function readSessionValue(key) {
 /** Restores a previously authorized folder and event without requesting permission. @returns {Promise<void>} */
 async function restoreSession() {
   if (!window.showDirectoryPicker) return;
+  const epoch = TRIP_STATE.epoch;
   try {
     const storedHandle = await readSessionValue(DIRECTORY_HANDLE_KEY);
     if (!storedHandle || typeof storedHandle.queryPermission !== 'function') return;
     if (await storedHandle.queryPermission({ mode: 'readwrite' }) !== 'granted') return;
+    if (TRIP_STATE.epoch !== epoch || directoryHandle) return;
     directoryHandle = storedHandle;
     await loadEventsJs();
     const lastEventData = await readSessionValue(LAST_EVENT_KEY);
     const restoredIndex = eventRegistry.findIndex((entry) => entry.data === lastEventData);
-    if (restoredIndex >= 0) await loadEvent(restoredIndex);
+    if (restoredIndex >= 0 && TRIP_STATE.epoch === epoch) await loadEvent(restoredIndex);
   } catch (err) {
     // Restoration is opportunistic; the folder picker remains available as recovery.
     showRefreshStatus(`Session restore unavailable: ${err.message}`, true);
@@ -1271,21 +1272,17 @@ async function restoreSession() {
  * @returns {Promise<void>}
  */
 async function openFolder() {
-  try {
-    // readwrite mode is required so the same handle can be used for in-place saves
-    directoryHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+  await runTripAction(async () => {
+    if (!window.showDirectoryPicker) throw new Error('Manual folder mode requires Chrome or Edge. Use the local launcher in this browser.');
+    if (hasTripDrafts() && !confirm('Open a folder and discard all unsaved drafts?')) return;
+    const folder = await window.showDirectoryPicker({ mode: 'readwrite' });
+    resetTripSelection();
+    TRIP_STATE.trip = ''; directoryHandle = folder;
+    document.getElementById('trip-select').value = '';
+    document.getElementById('trip-selected-controls').hidden = true;
     await loadEventsJs();
-    try {
-      await storeSessionValue(DIRECTORY_HANDLE_KEY, directoryHandle);
-    } catch (storageError) {
-      showRefreshStatus(`Folder opened; session could not be remembered: ${storageError.message}`, true);
-    }
-  } catch (err) {
-    // AbortError means the user dismissed the picker — no action needed
-    if (err.name !== 'AbortError') {
-      alert(`Failed to open folder: ${err.message}`);
-    }
-  }
+    await storeSessionValue(DIRECTORY_HANDLE_KEY, folder).catch(error => tripStatus(`Folder opened; session unavailable: ${error.message}`));
+  });
 }
 
 /**
@@ -1296,25 +1293,15 @@ async function openFolder() {
  * @returns {Promise<void>}
  */
 async function loadEventsJs() {
-  const fileHandle = await directoryHandle.getFileHandle('events.js');
-  const file = await fileHandle.getFile();
-  const text = await file.text();
-
-  // Evaluate the local file in an isolated scope; window is shadowed to capture the assignment
-  const evalFn = new Function(`
-    let window = {};
-    ${text}
-    return window.GALLERY_EVENT_INDEX;
-  `);
-  const result = evalFn();
-
-  if (!Array.isArray(result)) {
-    alert('events.js does not define window.GALLERY_EVENT_INDEX as an array.');
-    return;
-  }
-  // Shallow-copy each entry to avoid mutating the evaluated object
-  eventRegistry = result.map(e => ({ slug: e.slug || '', title: e.title || '', data: e.data || '' }));
-  populateEventDropdown();
+  const owner = directoryHandle;
+  const epoch = TRIP_STATE.epoch;
+  const fileHandle = await owner.getFileHandle('events.js');
+  const text = await readFileHandleText(fileHandle);
+  if (directoryHandle !== owner || TRIP_STATE.epoch !== epoch) return;
+  // Manual local source remains trusted; helper source has already passed the literal-only parser.
+  const result = new Function(`let window = {};\n${text}\nreturn window.GALLERY_EVENT_INDEX;`)();
+  if (!Array.isArray(result)) throw new Error('events.js must define GALLERY_EVENT_INDEX as an array.');
+  acceptRegistry(text, fileHandle.version, result);
 }
 
 /**
@@ -1348,6 +1335,11 @@ function populateEventDropdown() {
  * @returns {Promise<void>}
  */
 async function handleEventSelectChange() {
+  await runTripAction(selectEventDraft);
+}
+
+/** @returns {Promise<void>} Change event while holding the UI action guard. */
+async function selectEventDraft() {
   const selectedIdx = parseInt(elEventSelect.value, 10);
   if (isNaN(selectedIdx)) return;
 
@@ -1376,12 +1368,16 @@ async function handleEventSelectChange() {
  */
 async function loadEvent(index) {
   const entry = eventRegistry[index];
+  const owner = directoryHandle;
+  const epoch = ++TRIP_STATE.epoch;
   // entry.data may be a relative path like "data/event-*.js"; extract the bare filename
   const filename = entry.data.replace(/^.*\//, '');
 
   const fileHandle = await directoryHandle.getFileHandle(filename);
   const text = await readFileHandleText(fileHandle);
   const loadedItems = normalizeEditorItems(parseEventSource(text, filename));
+  if (directoryHandle !== owner || epoch !== TRIP_STATE.epoch) return;
+  fileHandle.registryData = entry.data;
   abortActiveAiOperation(
     'OpenAI request cancelled because the active event changed. No description was changed.',
     'warning'
@@ -1389,7 +1385,8 @@ async function loadEvent(index) {
   discardAiReview('Generated description discarded because the active event changed.', 'warning');
   items = loadedItems;
   currentEventHandle = fileHandle;
-  currentEventIndex = index;
+  currentEventIndex = eventRegistry.indexOf(entry);
+  elEventSelect.value = String(currentEventIndex);
   editorRevision += 1;
   acceptedSourceText = text;
   pendingExternalText = null;
@@ -1400,9 +1397,14 @@ async function loadEvent(index) {
   renderItems();
   startRefreshPolling();
   showRefreshStatus('Event loaded.', false);
-  storeSessionValue(LAST_EVENT_KEY, entry.data).catch((err) => {
+  try {
+    if (owner.helperTrip) localStorage.setItem(`trip-editor-last-event:${owner.helperTrip}`, entry.data);
+    else storeSessionValue(LAST_EVENT_KEY, entry.data).catch(error => {
+      showRefreshStatus(`Event loaded; selection could not be remembered: ${error.message}`, true);
+    });
+  } catch (err) {
     showRefreshStatus(`Event loaded; selection could not be remembered: ${err.message}`, true);
-  });
+  }
 }
 
 /**
@@ -1486,28 +1488,26 @@ function renderRegistryPanel() {
     const titleInput = makeTextInput('reg-title', entry.title, `Title for registry entry ${i + 1}`);
     const dataInput  = makeTextInput('reg-data',  entry.data,  `Data path for registry entry ${i + 1}`);
 
+    const saved = TRIP_STATE.savedEntries.some(item => item.slug === entry.slug && item.data === entry.data);
+    slugInput.readOnly = saved; dataInput.readOnly = saved;
+    [slugInput, titleInput, dataInput].forEach(input => input.addEventListener('input', () => { syncRegistryFromDOM(); registryChanged(); }));
+
     const btnUp = makeRegistryMoveBtn('▲', i === 0, () => {
       syncRegistryFromDOM();
       [eventRegistry[i - 1], eventRegistry[i]] = [eventRegistry[i], eventRegistry[i - 1]];
-      renderRegistryPanel();
+      registryChanged(); renderRegistryPanel();
     });
     const btnDown = makeRegistryMoveBtn('▼', i === eventRegistry.length - 1, () => {
       syncRegistryFromDOM();
       [eventRegistry[i], eventRegistry[i + 1]] = [eventRegistry[i + 1], eventRegistry[i]];
-      renderRegistryPanel();
+      registryChanged(); renderRegistryPanel();
     });
 
     const btnRemove = document.createElement('button');
     btnRemove.type = 'button';
     btnRemove.className = 'btn-reg-remove';
     btnRemove.textContent = '✕ Remove';
-    btnRemove.addEventListener('click', () => {
-      if (window.confirm(`Remove event entry "${entry.title || entry.slug}"?`)) {
-        syncRegistryFromDOM();
-        eventRegistry.splice(i, 1);
-        renderRegistryPanel();
-      }
-    });
+    btnRemove.addEventListener('click', () => runTripAction(() => removePart(i)));
 
     const actionsDiv = document.createElement('div');
     actionsDiv.className = 'reg-actions';
@@ -1582,7 +1582,7 @@ function syncRegistryFromDOM() {
 function handleAddRegistryEntry() {
   syncRegistryFromDOM();
   eventRegistry.push({ slug: '', title: '', data: '' });
-  renderRegistryPanel();
+  registryChanged(); renderRegistryPanel();
 }
 
 /**
@@ -1591,26 +1591,9 @@ function handleAddRegistryEntry() {
  * @returns {Promise<void>}
  */
 async function saveEventsJs() {
-  syncRegistryFromDOM();
-
-  let output = 'window.GALLERY_EVENT_INDEX = [\n';
-  eventRegistry.forEach((entry, i) => {
-    const comma = i < eventRegistry.length - 1 ? ',' : '';
-    output += `  { slug: "${serializePlainText(entry.slug)}", title: "${serializePlainText(entry.title)}", data: "${serializePlainText(entry.data)}" }${comma}\n`;
-  });
-  output += '];\n';
-
-  try {
-    const evHandle = await directoryHandle.getFileHandle('events.js');
-    const writable = await evHandle.createWritable();
-    await writable.write(output);
-    await writable.close();
-    populateEventDropdown();
-    alert('events.js saved successfully.');
-  } catch (err) {
-    alert(`Failed to save events.js: ${err.message}`);
-  }
+  await runTripAction(saveRegistryDraft);
 }
+
 
 // ============================================================
 // Item Card Rendering (Task 4)
@@ -2772,6 +2755,7 @@ function commitExternalSource(sourceText) {
   items = refreshedItems;
   editorRevision += 1;
   acceptedSourceText = sourceText;
+  if (currentEventHandle?.latest) currentEventHandle.version = currentEventHandle.latest.version;
   pendingExternalText = null;
   dirty = false;
   elUnsavedBadge.style.display = 'none';
@@ -2784,10 +2768,13 @@ function commitExternalSource(sourceText) {
  * @returns {Promise<void>}
  */
 async function refreshSelectedEvent(forceCommit) {
-  if (!currentEventHandle || currentEventIndex < 0 || refreshInProgress) return;
+  if (!currentEventHandle || currentEventIndex < 0 || refreshInProgress || TRIP_STATE.busy) return;
   refreshInProgress = true;
+  const owner = currentEventHandle;
+  const epoch = TRIP_STATE.epoch;
   try {
-    const sourceText = await readFileHandleText(currentEventHandle);
+    const sourceText = await readFileHandleText(owner);
+    if (currentEventHandle !== owner || TRIP_STATE.epoch !== epoch || TRIP_STATE.busy) return;
     const entry = eventRegistry[currentEventIndex];
     const filename = entry.data.replace(/^.*\//, '');
     // Validate before comparison so an invalid external file never replaces last-good state.
@@ -2961,82 +2948,608 @@ function validate() {
 }
 
 /**
- * Handles the dismiss button click in the validation warning area.
- * Hides the area and resolves the pending save promise so the save can continue.
- * @returns {void}
+ * Saves the selected event through the current storage adapter with a guarded UI snapshot.
+ * Invalid media URLs require explicit confirmation; failed writes retain dirty state.
+ * @returns {Promise<void>} Settles after save or accessible error feedback.
  */
-function handleDismissValidation() {
-  elValidationArea.style.display = 'none';
-  if (pendingValidationResolve) {
-    pendingValidationResolve();
-    pendingValidationResolve = null;
+async function handleSave() {
+  await runTripAction(saveEventDraft);
+}
+
+
+// ============================================================
+// Trip workflow — helper transport and draft coordination
+// ============================================================
+const TRIP_STATE = {
+  token: '', presets: {}, trip: '', epoch: 0, busy: false,
+  config: null, configVersion: null, configDirty: false,
+  registrySource: '', registryVersion: null, registryDirty: false,
+  savedEntries: [], deleted: new Map(), prepared: null, fallbackBlocked: false
+};
+const SETTINGS_LABELS = { language: 'Language', locale: 'Date locale', pageTitle: 'Page title', heading: 'Heading', heroEyebrow: 'Header eyebrow', subtitle: 'Subtitle', tripFacts: 'Trip facts', pageDescription: 'Page description' };
+const SETTINGS_FIELDS = ['language', 'locale', 'pageTitle', 'heading', 'heroEyebrow', 'subtitle', 'tripFacts', 'pageDescription'];
+const THEME_FIELDS = ['canvas', 'surface', 'surfaceRaised', 'ink', 'inkSoft', 'inkMuted', 'accent', 'accentStrong', 'accentSoft', 'secondary', 'secondarySoft', 'focus', 'heroWash'];
+
+/** @param {string} path - API path. @param {Object|null} body - Optional mutation. @returns {Promise<Object>} JSON response. @throws {Error} On rejected operations. */
+async function tripApi(path, body = null) {
+  const options = { cache: 'no-store' };
+  if (body !== null) Object.assign(options, {
+    method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Trip-Token': TRIP_STATE.token },
+    body: JSON.stringify(body)
+  });
+  const response = await fetch(path, options);
+  const result = await response.json();
+  if (!response.ok) {
+    const error = new Error(result.error || 'Local editor request failed.');
+    error.code = result.code;
+    throw error;
+  }
+  return result;
+}
+
+/** @param {string} message - Operation/validation feedback. @returns {void} */
+function tripStatus(message) {
+  // Path, stale-version and validation errors are announced by this persistent live region.
+  document.getElementById('trip-status').textContent = message;
+}
+
+/** @returns {boolean} Whether any affected authoring draft would be lost. */
+function hasTripDrafts() {
+  return dirty || TRIP_STATE.configDirty || TRIP_STATE.registryDirty;
+}
+
+/** @param {Function} action - Async UI operation. @returns {Promise<void>} Completes with accessible error feedback. */
+async function runTripAction(action) {
+  if (TRIP_STATE.busy) return;
+  TRIP_STATE.busy = true;
+  // Freeze editing during a coordinated snapshot/save; no keystrokes can be marked clean accidentally.
+  document.getElementById('app-main').inert = true;
+  document.getElementById('app-header').inert = true;
+  document.getElementById('trip-workflow').setAttribute('aria-busy', 'true');
+  try { await action(); }
+  catch (error) { tripStatus(error.message); }
+  finally {
+    TRIP_STATE.busy = false;
+    document.getElementById('app-main').inert = false;
+    document.getElementById('app-header').inert = false;
+    document.getElementById('trip-workflow').setAttribute('aria-busy', 'false');
   }
 }
 
-/**
- * Handles the Save button click.
- * Acquires a writable stream first (while the user gesture is active), then runs
- * validation. If violations are found, shows a dismissible warning and awaits user
- * confirmation before proceeding. Serializes items[], writes the event file in place,
- * and shows a temporary saved notification on success.
- *
- * createWritable() is called before the validation await because Chrome's File System
- * Access API requires transient user activation at the time of the call; waiting for
- * the async validation-dismiss flow would expire the activation and block the write.
- * @returns {Promise<void>}
- */
-async function handleSave() {
-  if (currentEventIndex === -1 || !currentEventHandle) return;
+/** Helper-backed file handle compatible with the existing local editor read surface. */
+class HelperFileHandle {
+  /** @param {string} trip - Trip identity. @param {string} path - Trip-relative file. */
+  constructor(trip, path) { this.trip = trip; this.path = path; this.version = undefined; this.latest = null; }
+  /** @returns {Promise<Object>} File-like text getter with a versioned snapshot. */
+  async getFile() {
+    const result = await tripApi(`/api/file?trip=${encodeURIComponent(this.trip)}&path=${encodeURIComponent(this.path)}`);
+    this.latest = result;
+    if (this.version === undefined) this.version = result.version;
+    return { text: async () => result.text };
+  }
+}
 
-  // Acquire the writable stream while the user gesture is still active.
-  // Must be called before any async UI waits to keep transient activation valid.
-  let writable;
-  try {
-    writable = await currentEventHandle.createWritable();
-  } catch (err) {
-    alert(`Save failed: ${err.message}`);
+/** @param {string} trip - Trip slug. @returns {Object} Helper storage adapter using the existing getFileHandle interface. */
+function helperDirectory(trip) {
+  return { helperTrip: trip, getFileHandle: async name => new HelperFileHandle(trip, `data/${name}`) };
+}
+
+/** @returns {Promise<void>} Discover helper mode or restore manual folder mode. */
+async function initializeTripWorkflow() {
+  buildTripForms();
+  window.addEventListener('beforeunload', event => {
+    if (hasTripDrafts()) { event.preventDefault(); event.returnValue = ''; }
+  });
+  if (location.protocol !== 'file:') {
+    try {
+      const session = await tripApi('/api/session');
+      if (!session.token || !session.presets) throw new Error('Not a trip helper.');
+      TRIP_STATE.token = session.token;
+      TRIP_STATE.presets = session.presets;
+      document.getElementById('helper-controls').hidden = false;
+      document.getElementById('browser-note').textContent = 'Local helper connected';
+      await refreshTrips();
+      let last = '';
+      try { last = localStorage.getItem('trip-editor-last-trip') || ''; }
+      catch (error) { tripStatus(`Session storage unavailable: ${error.message}`); }
+      if ([...document.getElementById('trip-select').options].some(option => option.value === last) && last) {
+        await runTripAction(() => selectTrip(last));
+      }
+      return;
+    } catch (error) {
+      tripStatus(`Helper unavailable. Open a launcher for trip settings and Drive generation. ${error.message}`);
+    }
+  }
+  await restoreSession();
+}
+
+/** @returns {Promise<void>} Refresh discovery without discarding the current trip. */
+async function refreshTrips() {
+  const result = await tripApi('/api/trips');
+  const select = document.getElementById('trip-select');
+  select.replaceChildren(new Option('Choose a trip', ''));
+  result.trips.forEach(trip => select.add(new Option(trip.title, trip.slug)));
+  select.value = TRIP_STATE.trip;
+  tripStatus(result.errors.length ? result.errors.join('\n') : 'Ready. Choose a trip or create one.');
+}
+
+/** @returns {void} Clear stale event/AI ownership when switching storage. */
+function resetTripSelection() {
+  TRIP_STATE.epoch += 1;
+  stopRefreshPolling();
+  abortActiveAiOperation('AI request cancelled because the trip changed.', 'warning');
+  discardAiReview('AI review discarded because the trip changed.', 'warning');
+  currentEventHandle = null;
+  currentEventIndex = -1;
+  items = [];
+  dirty = false;
+  acceptedSourceText = null;
+  pendingExternalText = null;
+  editorRevision += 1;
+  TRIP_STATE.config = null;
+  TRIP_STATE.configDirty = false;
+  TRIP_STATE.registryDirty = false;
+  TRIP_STATE.deleted.clear();
+  TRIP_STATE.prepared = null;
+  elSaveBtn.disabled = true;
+  elRefreshBtn.disabled = true;
+  elUnsavedBadge.style.display = 'none';
+  renderItems();
+  document.getElementById('generation-review').hidden = true;
+}
+
+/** @param {string} slug - Selected trip. @returns {Promise<void>} Load registry/settings with draft protection. */
+async function selectTrip(slug) {
+  if (!slug || (hasTripDrafts() && !confirm('Switch trip and discard unsaved event, settings and registry changes?'))) {
+    document.getElementById('trip-select').value = TRIP_STATE.trip;
     return;
   }
-
-  const violations = validate();
-  if (violations.length > 0) {
-    // Populate and show the validation warning area
-    elValidationList.innerHTML = '';
-    violations.forEach((v) => {
-      const li = document.createElement('li');
-      li.textContent = `Item ${v.index + 1}: ${v.message}`;
-      elValidationList.appendChild(li);
-    });
-    elValidationArea.style.display = 'block';
-    // Ensure the warning is visible even when the user has scrolled down
-    elValidationArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-    // Pause execution until the user dismisses the warning
-    await new Promise((resolve) => {
-      pendingValidationResolve = resolve;
-    });
-  }
-
-  const output = buildOutput();
+  // Load registry first so a failed switch retains the previous drafts and selection.
+  const registry = await tripApi(`/api/file?trip=${encodeURIComponent(slug)}&path=data/events.js`);
+  resetTripSelection();
+  TRIP_STATE.trip = slug;
+  directoryHandle = helperDirectory(slug);
+  acceptRegistry(registry.text, registry.version, registry.value);
+  document.getElementById('trip-select').value = slug;
+  document.getElementById('trip-selected-controls').hidden = false;
   try {
-    await writable.write(output);
-    await writable.close();
-
-    acceptedSourceText = output;
-    dirty = false;
-    elUnsavedBadge.style.display = 'none';
-
-    // Brief success notification — auto-hides after 2 seconds
-    elSaveNotification.style.display = '';
-    setTimeout(() => { elSaveNotification.style.display = 'none'; }, 2000);
-    if (pendingExternalText !== null) {
-      // Re-read after Save: the write may have superseded the deferred disk version.
-      await refreshSelectedEvent(false);
-    }
-  } catch (err) {
-    try { await writable.abort(); } catch (_) { /* best-effort abort on write failure */ }
-    alert(`Save failed: ${err.message}`);
+    const config = await tripApi(`/api/file?trip=${encodeURIComponent(slug)}&path=trip-config.js`);
+    TRIP_STATE.config = config.value;
+    TRIP_STATE.configVersion = config.version;
+    renderTripSettings();
+    const validation = await tripApi(`/api/registry-errors?trip=${encodeURIComponent(slug)}`);
+    tripStatus(validation.errors.length ? `Registry repair required:\n${validation.errors.join('\n')}` : `Opened ${slug}.`);
+  } catch (error) {
+    document.getElementById('settings-fields').replaceChildren();
+    tripStatus(`Settings unavailable; existing event editing remains available. ${error.message}`);
   }
+  try {
+    localStorage.setItem('trip-editor-last-trip', slug);
+    const lastEvent = localStorage.getItem(`trip-editor-last-event:${slug}`);
+    const index = eventRegistry.findIndex(entry => entry.data === lastEvent);
+    if (index >= 0) await loadEvent(index);
+  }
+  catch (error) { tripStatus(`Trip opened; session could not be remembered: ${error.message}`); }
+}
+
+/** @param {string} text - Registry source. @param {string|null} version - Helper version. @param {Object[]} value - Parsed entries. @returns {void} */
+function acceptRegistry(text, version, value) {
+  const selectedData = currentEventHandle?.path || currentEventHandle?.registryData;
+  eventRegistry = value.map(entry => ({ ...entry }));
+  TRIP_STATE.registrySource = text;
+  TRIP_STATE.registryVersion = version;
+  TRIP_STATE.savedEntries = value.map(entry => ({ ...entry }));
+  TRIP_STATE.registryDirty = false;
+  TRIP_STATE.deleted.clear();
+  currentEventIndex = eventRegistry.findIndex(entry => entry.data === selectedData);
+  populateEventDropdown();
+  renderRegistryPanel();
+}
+
+/** @param {string} id - Field ID. @param {string} labelText - Visible name. @param {string} value - Initial value. @param {string} type - Input type. @returns {HTMLElement} Labeled field. */
+function tripField(id, labelText, value = '', type = 'text') {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'trip-field';
+  const label = document.createElement('label');
+  label.htmlFor = id;
+  label.textContent = labelText;
+  const input = document.createElement(type === 'textarea' ? 'textarea' : 'input');
+  input.id = id;
+  if (type !== 'textarea') input.type = type;
+  input.value = value;
+  wrapper.append(label, input);
+  return wrapper;
+}
+
+/** @param {string} id - Button ID. @param {string} label - Visible text. @param {Function} action - Async operation. @returns {HTMLButtonElement} Keyboard-accessible button. */
+function tripButton(id, label, action) {
+  // Native button: Enter/Space activates; operation errors appear in the live status region.
+  const button = document.createElement('button');
+  button.type = 'button'; button.id = id; button.textContent = label;
+  button.addEventListener('click', () => runTripAction(action));
+  return button;
+}
+
+/** @returns {void} Build labeled trip and Drive controls with native disclosure/keyboard behavior. */
+function buildTripForms() {
+  const create = document.getElementById('create-trip-fields');
+  create.append(tripField('new-trip-name', 'Trip name'), tripField('new-trip-slug', 'URL slug'),
+    tripField('new-trip-folder', 'Public Drive folder (optional)'));
+  const languageLabel = document.createElement('label');
+  languageLabel.htmlFor = 'new-trip-language'; languageLabel.textContent = 'Language';
+  const language = document.createElement('select'); language.id = 'new-trip-language';
+  language.add(new Option('Български', 'bg')); language.add(new Option('English', 'en'));
+  create.append(languageLabel, language, tripButton('create-trip', 'Create new trip', createTrip));
+  document.getElementById('new-trip-name').addEventListener('input', async () => {
+    const name = document.getElementById('new-trip-name').value;
+    try {
+      const result = await tripApi(`/api/slug?name=${encodeURIComponent(name)}`);
+      if (document.getElementById('new-trip-name').value === name && !document.getElementById('new-trip-slug').dataset.edited) {
+        document.getElementById('new-trip-slug').value = result.slug;
+      }
+    } catch (error) { tripStatus(error.message); }
+  });
+  document.getElementById('new-trip-slug').addEventListener('input', event => { event.target.dataset.edited = 'true'; });
+  document.getElementById('trip-select').addEventListener('change', event => runTripAction(() => selectTrip(event.target.value)));
+  document.getElementById('reload-trips').addEventListener('click', () => runTripAction(refreshTrips));
+  document.getElementById('reload-trip').addEventListener('click', () => runTripAction(() => selectTrip(TRIP_STATE.trip)));
+  document.getElementById('save-settings').addEventListener('click', () => runTripAction(saveTripSettings));
+  document.getElementById('preview-trip').addEventListener('click', previewTrip);
+  buildGenerationForm();
+}
+
+/** @returns {Promise<void>} Create an empty trip, then offer ordinary reviewed generation. */
+async function createTrip() {
+  if (hasTripDrafts() && !confirm('Create and select a new trip? Current unsaved drafts will be discarded.')) return;
+  const name = document.getElementById('new-trip-name').value;
+  const slug = document.getElementById('new-trip-slug').value || (await tripApi(`/api/slug?name=${encodeURIComponent(name)}`)).slug;
+  const result = await tripApi('/api/create', { name, slug, language: document.getElementById('new-trip-language').value });
+  const folder = document.getElementById('new-trip-folder').value;
+  // Consent above covers selecting this newly created trip; avoid asking twice.
+  resetTripSelection();
+  await refreshTrips();
+  await selectTrip(result.slug);
+  if (folder) {
+    document.getElementById('part-folder').value = folder;
+    document.getElementById('part-title').value = name;
+    document.getElementById('drive-generation').open = true;
+    await suggestPartIdentity();
+    tripStatus('Empty trip created. Review the part date/title and choose Discover media.');
+  }
+}
+
+/** @returns {void} Render config fields, preserving unknown config values in the draft object. */
+function renderTripSettings() {
+  const container = document.getElementById('settings-fields');
+  container.replaceChildren();
+  const basic = document.createElement('div'); basic.className = 'trip-grid';
+  const advanced = document.createElement('details');
+  const summary = document.createElement('summary'); summary.textContent = 'Advanced settings'; advanced.append(summary);
+  SETTINGS_FIELDS.forEach((key, index) => {
+    const field = tripField(`setting-${key}`, SETTINGS_LABELS[key], TRIP_STATE.config[key] ?? '');
+    if (key === 'language') {
+      const select = document.createElement('select'); select.id = 'setting-language';
+      select.add(new Option('Български', 'bg')); select.add(new Option('English', 'en'));
+      select.value = TRIP_STATE.config.language; field.querySelector('input').replaceWith(select);
+    }
+    (index < 4 ? basic : advanced).append(field);
+  });
+  THEME_FIELDS.forEach(key => advanced.append(tripField(`theme-${key}`, `Theme: ${key}`, TRIP_STATE.config.theme?.[key] ?? '')));
+  advanced.append(tripField('setting-labels', 'Localized labels (JSON object)', JSON.stringify(TRIP_STATE.config.labels || {}, null, 2), 'textarea'));
+  container.append(basic, advanced);
+  container.querySelectorAll('input,textarea,select').forEach(input => input.addEventListener('input', () => { TRIP_STATE.configDirty = true; tripStatus('Unsaved trip settings.'); }));
+  document.getElementById('setting-language').addEventListener('change', changeTripLanguage);
+}
+
+/** @returns {Object} Complete settings draft with preserved unknown values. @throws {Error} On malformed label JSON. */
+function settingsDraft() {
+  if (!TRIP_STATE.config) throw new Error('Settings cannot be saved until the config file is repaired.');
+  const config = JSON.parse(JSON.stringify(TRIP_STATE.config));
+  SETTINGS_FIELDS.forEach(key => { config[key] = document.getElementById(`setting-${key}`).value; });
+  config.theme = { ...(config.theme || {}) };
+  THEME_FIELDS.forEach(key => {
+    const value = document.getElementById(`theme-${key}`).value;
+    if (value) config.theme[key] = value; else delete config.theme[key];
+  });
+  config.labels = JSON.parse(document.getElementById('setting-labels').value);
+  if (!config.labels || Array.isArray(config.labels) || typeof config.labels !== 'object') throw new Error('Labels must be a JSON object.');
+  if (!['bg', 'en'].includes(config.language)) throw new Error('Choose language bg or en.');
+  new Intl.DateTimeFormat(config.locale); // Reports invalid locale before any write.
+  return config;
+}
+
+/** @returns {void} Change preset labels/locale while retaining authored overrides and theme. */
+function changeTripLanguage() {
+  try {
+    const config = settingsDraft();
+    const oldPreset = TRIP_STATE.presets[TRIP_STATE.config.language] || {};
+    const next = TRIP_STATE.presets[config.language];
+    for (const [key, value] of Object.entries(next.labels)) {
+      if (!(key in config.labels) || config.labels[key] === oldPreset.labels?.[key]) config.labels[key] = value;
+    }
+    if (!config.locale || config.locale === oldPreset.locale) config.locale = next.locale;
+    TRIP_STATE.config = config;
+    TRIP_STATE.configDirty = true;
+    renderTripSettings();
+  } catch (error) { tripStatus(error.message); }
+}
+
+/** @returns {Promise<void>} Save settings using the last accepted config version. */
+async function saveTripSettings() {
+  const config = settingsDraft();
+  const source = assignmentSource('GALLERY_TRIP_CONFIG', config);
+  const result = await tripApi('/api/commit', { trip: TRIP_STATE.trip,
+    changes: { 'trip-config.js': source }, versions: { 'trip-config.js': TRIP_STATE.configVersion } });
+  TRIP_STATE.config = config; TRIP_STATE.configVersion = result.versions['trip-config.js']; TRIP_STATE.configDirty = false;
+  tripStatus('Trip settings saved.');
+}
+
+/** @param {string} name - Global assignment. @param {*} value - Literal value. @returns {string} Portable JS source. */
+function assignmentSource(name, value) {
+  return `window.${name} = ${JSON.stringify(value, null, 2).replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029')};\n`;
+}
+
+/** @returns {void} Build the reviewed Drive form; all controls have native labels and keyboard activation. */
+function buildGenerationForm() {
+  const form = document.getElementById('generation-fields');
+  form.append(tripField('part-date', 'Date', new Date().toISOString().slice(0, 10), 'date'),
+    tripField('part-title', 'Part title'), tripField('part-slug', 'Part URL slug'),
+    tripField('part-file', 'Filename (event-*.js)'), tripField('part-folder', 'Public Drive folder URL'));
+  form.append(tripButton('suggest-part', 'Suggest slug and filename', suggestPartIdentity),
+    tripButton('discover-part', 'Discover media', preparePart),
+    tripButton('use-selected-part', 'Regenerate selected part', useSelectedPart));
+  document.getElementById('confirm-generation').addEventListener('click', () => runTripAction(commitPart));
+  ['part-date', 'part-title'].forEach(id => document.getElementById(id).addEventListener('change', () => {
+    if (!document.getElementById('part-slug').readOnly) runTripAction(suggestPartIdentity);
+  }));
+  document.getElementById('new-part-mode').addEventListener('click', () => {
+    ['part-slug', 'part-file'].forEach(id => { document.getElementById(id).readOnly = false; });
+    runTripAction(suggestPartIdentity);
+  });
+}
+
+/** @returns {Promise<void>} Suggest an editable date/title-based part identity. */
+async function suggestPartIdentity() {
+  const title = document.getElementById('part-title').value;
+  const date = document.getElementById('part-date').value.replaceAll('-', '');
+  const result = await tripApi(`/api/slug?name=${encodeURIComponent(title)}`);
+  const slug = `event-${date}-${result.slug}`;
+  document.getElementById('part-slug').value = slug;
+  document.getElementById('part-file').value = `${slug}.js`;
+}
+
+/** @returns {void} Fill regeneration identity without allowing a saved rename. */
+function useSelectedPart() {
+  const entry = eventRegistry[currentEventIndex];
+  if (!entry) throw new Error('Select an existing part first.');
+  document.getElementById('part-title').value = entry.title;
+  document.getElementById('part-slug').value = entry.slug;
+  document.getElementById('part-file').value = entry.data.slice(5);
+  ['part-slug', 'part-file'].forEach(id => { document.getElementById(id).readOnly = true; });
+}
+
+/** @returns {Promise<void>} Discover media without writing; require clean drafts to avoid losing edits. */
+async function preparePart() {
+  if (hasTripDrafts()) throw new Error('Save or discard your event, registry and settings drafts before discovering media.');
+  const date = document.getElementById('part-date').value;
+  if (!date) throw new Error('A part date is required.');
+  tripStatus('Discovering and validating public media… Large folders can take several minutes.');
+  TRIP_STATE.prepared = null;
+  document.getElementById('generation-review').hidden = true;
+  const result = await tripApi('/api/prepare', {
+    trip: TRIP_STATE.trip, slug: document.getElementById('part-slug').value,
+    title: document.getElementById('part-title').value, data: `data/${document.getElementById('part-file').value}`,
+    folder: document.getElementById('part-folder').value
+  });
+  TRIP_STATE.prepared = result;
+  document.getElementById('generation-review').hidden = false;
+  document.getElementById('generation-summary').textContent = `${result.entry.title}\n${result.entry.data}\n${result.count} valid media\n${result.names.join('\n')}\n${result.report}`;
+  document.getElementById('replacement-warning').hidden = !result.overwrite;
+  tripStatus('Discovery complete. Review the result, then confirm to write. Review expires in ten minutes.');
+}
+
+/** @returns {Promise<void>} Commit exactly the reviewed result with explicit overwrite consent. */
+async function commitPart() {
+  const prepared = TRIP_STATE.prepared;
+  if (!prepared) throw new Error('Discover media first.');
+  if (hasTripDrafts()) throw new Error('Save or discard drafts, then discover again before confirming.');
+  const warning = prepared.overwrite
+    ? 'Replace this event? Descriptions, text blocks, visibility, corrections and custom ordering will be lost.'
+    : `Create ${prepared.count} media records and the registry entry?`;
+  if (!confirm(warning)) return;
+  await tripApi('/api/generate', { trip: TRIP_STATE.trip, id: prepared.id, confirmed: true, overwriteConfirmed: prepared.overwrite });
+  TRIP_STATE.prepared = null;
+  document.getElementById('generation-review').hidden = true;
+  await loadEventsJs();
+  await loadEvent(eventRegistry.findIndex(entry => entry.slug === prepared.entry.slug));
+  tripStatus('Part and registry saved together.');
+}
+
+/** @returns {void} Mark registry edits and keep selected data identity stable after structural changes. */
+function registryChanged() {
+  TRIP_STATE.registryDirty = true;
+  tripStatus('Unsaved registry changes.');
+  const data = currentEventHandle?.path || currentEventHandle?.registryData;
+  currentEventIndex = eventRegistry.findIndex(entry => entry.data === data);
+  populateEventDropdown();
+}
+
+/** @param {number} index - Registry row. @returns {Promise<void>} Queue confirmed deletion of registration and data. */
+async function removePart(index) {
+  const entry = eventRegistry[index];
+  const saved = TRIP_STATE.savedEntries.some(item => item.slug === entry.slug && item.data === entry.data);
+  if (saved && !/^data\/event-[a-z0-9_-]+\.js$/.test(entry.data)) throw new Error('Repair this invalid saved data path manually before deletion.');
+  if (!confirm(saved ? `Delete "${entry.title || entry.slug}" and its event file when saving the registry? Authored content will be removed.` : 'Remove this unsaved entry?')) return;
+  if (saved && eventRegistry.some((other, otherIndex) => otherIndex !== index && other.data === entry.data)) {
+    throw new Error('The event file is referenced by another row. Repair duplicate records manually before deletion.');
+  }
+  if (saved) {
+    const handle = await directoryHandle.getFileHandle(entry.data.slice(5));
+    const source = await readFileHandleText(handle);
+    TRIP_STATE.deleted.set(entry.data, { source, version: handle.version });
+  }
+  if (currentEventIndex === index) {
+    if (dirty && !confirm('Discard the unsaved edits to this deleted part?')) { TRIP_STATE.deleted.delete(entry.data); return; }
+    currentEventHandle = null; currentEventIndex = -1; items = []; dirty = false;
+    abortActiveAiOperation('Part removed.', 'warning'); discardAiReview('Part removed.', 'warning');
+    stopRefreshPolling(); renderItems(); elSaveBtn.disabled = true; elRefreshBtn.disabled = true;
+  }
+  syncRegistryFromDOM();
+  eventRegistry.splice(index, 1); registryChanged(); renderRegistryPanel();
+  tripStatus('Deletion queued. Save the registry to apply it.');
+}
+
+/** @returns {Promise<Object>} Collect a valid registry batch, including new empty parts and deletions. */
+async function registryBatch() {
+  syncRegistryFromDOM();
+  const changes = {}, versions = {}, originals = {};
+  const seenSlugs = new Set(), seenPaths = new Set();
+  for (const entry of eventRegistry) {
+    if (!/^[a-z0-9]+(?:[-_][a-z0-9]+)*$/.test(entry.slug) || !entry.title?.trim() || !/^data\/event-[a-z0-9_-]+\.js$/.test(entry.data)) {
+      throw new Error('Each part needs a portable slug, title and data/event-*.js path. Repair legacy errors before saving.');
+    }
+    if (seenSlugs.has(entry.slug) || seenPaths.has(entry.data)) throw new Error('Duplicate slug or data target. Repair saved identities manually.');
+    seenSlugs.add(entry.slug); seenPaths.add(entry.data);
+    try { await directoryHandle.getFileHandle(entry.data.slice(5)).then(handle => handle.getFile()); }
+    catch (error) {
+      const isNew = !TRIP_STATE.savedEntries.some(item => item.data === entry.data);
+      if (!isNew || (directoryHandle.helperTrip && error.code !== 'not_found') || (!directoryHandle.helperTrip && error.name !== 'NotFoundError')) throw error;
+      changes[entry.data] = assignmentSource('GALLERY_ITEMS', []); versions[entry.data] = null; originals[entry.data] = null;
+    }
+  }
+  for (const [path, previous] of TRIP_STATE.deleted) {
+    changes[path] = null; versions[path] = previous.version; originals[path] = previous.source;
+  }
+  changes['data/events.js'] = assignmentSource('GALLERY_EVENT_INDEX', eventRegistry);
+  versions['data/events.js'] = TRIP_STATE.registryVersion;
+  originals['data/events.js'] = TRIP_STATE.registrySource;
+  return { changes, versions, originals };
+}
+
+/** @param {Object} batch - Changes, versions and originals. @returns {Promise<Object>} New versions after coordinated persistence. */
+async function commitEditorBatch(batch) {
+  if (directoryHandle.helperTrip) return tripApi('/api/commit', { trip: TRIP_STATE.trip,
+    changes: batch.changes, versions: batch.versions, deleteConfirmed: TRIP_STATE.deleted.size > 0 });
+  if (TRIP_STATE.fallbackBlocked) throw new Error('Folder writes are blocked after rollback failure. Recover originals before reloading.');
+  return commitFolderBatch(batch);
+}
+
+/** @param {Object} batch - Manual-folder source snapshots. @returns {Promise<Object>} Empty version map; throws on conflict/rollback failure. */
+async function commitFolderBatch(batch) {
+  const folder = directoryHandle;
+  const originals = batch.originals;
+  for (const path of Object.keys(batch.changes)) {
+    let current = null;
+    try { current = await readFileHandleText(await folder.getFileHandle(path.slice(5))); }
+    catch (error) { if (error.name !== 'NotFoundError') throw error; }
+    if (current !== originals[path]) throw new Error(`${path} changed on disk; reload before saving.`);
+  }
+  const applied = [];
+  try {
+    for (const [path, source] of Object.entries(batch.changes)) {
+      applied.push(path);
+      await writeFolderSource(folder, path, source);
+    }
+  } catch (error) {
+    const failures = [];
+    for (const path of applied.reverse()) {
+      try { await writeFolderSource(folder, path, originals[path]); }
+      catch (restoreError) { failures.push(`${path}: ${restoreError.message}`); }
+    }
+    if (failures.length) {
+      TRIP_STATE.fallbackBlocked = true;
+      // Keep originals available for recovery even if directory permission was revoked.
+      const blob = new Blob([JSON.stringify(originals, null, 2)], { type: 'application/json' });
+      const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'trip-editor-recovery.json';
+      link.textContent = 'Download original files for recovery'; document.getElementById('trip-workflow').append(link);
+      throw new Error(`Rollback failed; download originals before closing. ${failures.join('; ')}`);
+    }
+    throw new Error(`Save failed; originals restored. ${error.message}`);
+  }
+  return { versions: {} };
+}
+
+/** @param {Object} folder - Authorized native directory. @param {string} path - data/file path. @param {string|null} source - Source or deletion. @returns {Promise<void>} Writes one file. */
+async function writeFolderSource(folder, path, source) {
+  const name = path.slice(5);
+  if (source === null) {
+    try { await folder.removeEntry(name); } catch (error) { if (error.name !== 'NotFoundError') throw error; }
+    return;
+  }
+  const handle = await folder.getFileHandle(name, { create: true });
+  const stream = await handle.createWritable();
+  try { await stream.write(source); await stream.close(); }
+  catch (error) { await stream.abort().catch(abortError => console.warn('Abort failed', abortError)); throw error; }
+}
+
+/** @returns {Promise<void>} Save the complete registry batch without losing selected event ownership. */
+async function saveRegistryDraft() {
+  if (!directoryHandle) throw new Error('Open a trip or data folder first.');
+  const batch = await registryBatch();
+  const result = await commitEditorBatch(batch);
+  acceptRegistry(batch.changes['data/events.js'], result.versions['data/events.js'], eventRegistry);
+  tripStatus('Registry saved, including confirmed deletions.');
+}
+
+/** @returns {Promise<void>} Save the selected event with version checks and stable ownership. */
+async function saveEventDraft() {
+  if (!currentEventHandle) throw new Error('Select an event first.');
+  syncItemsFromDOM();
+  const violations = validate();
+  if (violations.length && !confirm(`${violations.map(item => item.message).join('\n')}\nSave despite these media URL warnings?`)) return;
+  const output = buildOutput();
+  const path = eventRegistry[currentEventIndex].data;
+  const result = await commitEditorBatch({ changes: { [path]: output }, versions: { [path]: currentEventHandle.version }, originals: { [path]: acceptedSourceText } });
+  currentEventHandle.version = result.versions[path];
+  acceptedSourceText = output; dirty = false;
+  elUnsavedBadge.style.display = 'none';
+  elSaveNotification.style.display = '';
+  setTimeout(() => { elSaveNotification.style.display = 'none'; }, 2000);
+  tripStatus('Event saved.');
+  if (pendingExternalText !== null) window.setTimeout(() => refreshSelectedEvent(false), 0);
+}
+
+/** @returns {void} Preview saved data after confirmed coordinated saving of all affected valid drafts. */
+function previewTrip() {
+  if (TRIP_STATE.busy || !TRIP_STATE.trip || !directoryHandle?.helperTrip) return;
+  if (hasTripDrafts() && !confirm('Save all affected event, registry and settings drafts before preview?')) return;
+  // Open in the user gesture to satisfy popup rules; remove opener before loading authored content.
+  const preview = window.open('about:blank', '_blank');
+  if (!preview) { tripStatus('Allow a new tab for preview and try again.'); return; }
+  preview.opener = null;
+  runTripAction(async () => {
+    try {
+      if (hasTripDrafts()) await savePreviewDrafts();
+      const entry = eventRegistry[currentEventIndex];
+      const hash = entry ? `#event=${encodeURIComponent(entry.slug)}` : '';
+      preview.location.replace(`${location.origin}/trips/${encodeURIComponent(TRIP_STATE.trip)}/index.html${hash}`);
+      tripStatus('Preview opened.');
+    } catch (error) { preview.close(); throw error; }
+  });
+}
+
+/** @returns {Promise<void>} Atomically save only affected valid drafts; keep all dirty flags on failure. */
+async function savePreviewDrafts() {
+  const batch = TRIP_STATE.registryDirty ? await registryBatch() : { changes: {}, versions: {}, originals: {} };
+  let config = null, output = null;
+  if (TRIP_STATE.configDirty) {
+    config = settingsDraft(); batch.changes['trip-config.js'] = assignmentSource('GALLERY_TRIP_CONFIG', config);
+    batch.versions['trip-config.js'] = TRIP_STATE.configVersion;
+  }
+  if (dirty) {
+    syncItemsFromDOM();
+    if (validate().length) throw new Error('Correct invalid media URLs before preview.');
+    output = buildOutput();
+    const path = eventRegistry[currentEventIndex].data;
+    batch.changes[path] = output; batch.versions[path] = currentEventHandle.version;
+  }
+  const result = await commitEditorBatch(batch);
+  if (config) { TRIP_STATE.config = config; TRIP_STATE.configVersion = result.versions['trip-config.js']; TRIP_STATE.configDirty = false; }
+  if (output !== null) {
+    currentEventHandle.version = result.versions[eventRegistry[currentEventIndex].data];
+    acceptedSourceText = output; dirty = false; elUnsavedBadge.style.display = 'none';
+  }
+  if ('data/events.js' in batch.changes) acceptRegistry(batch.changes['data/events.js'], result.versions['data/events.js'], eventRegistry);
 }
 
 </script>

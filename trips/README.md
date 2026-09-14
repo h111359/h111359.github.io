@@ -1,48 +1,62 @@
 # Shared trip journal workflow
 
-The trip system publishes independent static journals while keeping the gallery application, editor, and data-generation workflow reusable. It needs only GitHub Pages and a modern browser; there is no server-side component or JavaScript build step.
+Trip journals publish as ordinary static HTML, CSS and JavaScript on GitHub Pages. The browser editor adds a local Python authoring service; no server or build step is needed for published pages.
+
+## Start the editor
+
+Install Python 3.10 or newer. The helper uses only its standard library; no packages or virtual environment are required.
+
+- **Linux (Ubuntu):** Right-click `trips/start-editor.sh` in Files and choose **Run as a Program**. The script is executable and opens a terminal for the helper. If a download stripped its executable permission, enable **Properties → Permissions → Allow executing file as program** first. Double-clicking shell scripts in modern Ubuntu Files opens them as text; use the explicit Run action. The script resolves its own location, so moving the repository or launching from another folder is supported. No desktop shortcut or installation is required.
+- **Windows:** Double-click `trips/start-editor.bat`. It tries the Python launcher (`py -3`) and then `python` on PATH. Missing/old Python produces an installation message.
+
+The launcher opens `http://127.0.0.1:8765/trips/data_editor.html` in the default browser and keeps a terminal open. **Ctrl+C** stops the helper; pending request workers finish first. Linux terminal hangup and supported termination signals also request shutdown. An occupied port causes an error rather than connecting to another service. Close the old helper and retry. If the browser does not open, the terminal prints its URL.
+
+From a terminal at the repository root, run `./trips/start-editor.sh`. On Windows use `py -3 trips/scripts/trip_editor_server.py`. Closing a Windows console can forcibly terminate Python before pending writes finish; use Ctrl+C and wait for exit before closing the window.
+
+Helper mode works in modern Chrome, Firefox and Edge. **Open a trip data/ folder** retains the Chromium File System Access fallback, including in-place event and registry editing. A data-folder handle does not authorize parent config access: trip creation, settings, Drive generation and automatic preview require helper mode. Offline manual editing still works; Drive discovery and existing AI actions require network access.
 
 ## Architecture
 
-Real trips are root-level peer folders:
+Real trips are peers below `trips/`:
 
 ```text
-china/
-  index.html
-  trip-config.js
-  data/
-    events.js
-    event-*.js
-<trip-slug>/
-  index.html
-  trip-config.js
-  data/
 trips/
+  china/                  existing trip, unchanged by the authoring upgrade
+  2026/                   existing trip, unchanged by the authoring upgrade
+  <trip-slug>/
+    index.html
+    trip-config.js
+    data/
+      events.js
+      event-*.js
   shared/
     gallery.css
     gallery.js
-  template/
+  template/               reusable shell/config and empty event registry
   data_editor.html
+  start-editor.sh
+  start-editor.bat
+  scripts/
+    trip_editor_server.py loopback endpoints and static preview
+    trip_storage.py       literal parsing, portable paths and coordinated writes
+    drive_generation.py   reviewed reuse of the existing CLI generator
 scripts/
-  generate_trip_event.py
+  generate_trip_event.py  existing standalone generator
 ```
 
-Each trip owns only its page shell, identity/configuration, event registry, and story data. `trips/shared/gallery.js` reads `window.GALLERY_TRIP_CONFIG`, `window.GALLERY_EVENT_INDEX`, and the selected event's `window.GALLERY_ITEMS`. `trips/shared/gallery.css` supplies the common responsive presentation.
+A **trip** owns its page shell, configuration and data directory. A **part** owns one event data file and one `events.js` registration. Empty, exactly-one-part and multiple-part trips are supported. Template, shared and scripts directories are excluded from discovery. The template uses `../shared/gallery.css` and `../shared/gallery.js`, matching its new location under `trips/<slug>/`.
 
-The template is not another real trip. Its empty registry deliberately displays the configured no-events state until the copied folder receives event data.
+## Create and configure a trip
 
-## Create a trip
+1. Open **Create new trip**, enter a name and review the suggested URL slug. Bulgarian and `bg-BG` are defaults; English is available.
+2. Choose **Create new trip**. The editor copies the template exclusively into `trips/<slug>/` and selects the new empty trip. Existing destinations are left untouched; select the existing trip from the dropdown instead.
+3. Open **Trip settings** to edit identity and basic language settings. **Advanced settings** contains theme values, trip facts, description and localized labels. Choose **Save settings**.
+4. Optionally enter a public Drive folder during creation. The empty trip is created first, then the ordinary reviewed part-generation form is offered. A failed Drive operation does not remove that trip.
 
-1. Copy `trips/template/` to a new root-level folder whose name is the public trip slug, for example `family-weekend/`.
-2. Edit only the copied `trip-config.js` to establish the trip identity and optional theme overrides.
-3. Generate or manually create one or more `data/event-*.js` files.
-4. Open `trips/data_editor.html` in Chrome or Edge and select the copied trip's `data/` folder.
-5. Add each event to `events.js` through the editor, check its title and data path, and save.
-6. Preview the new root-level URL through a local HTTP server, then publish the files through GitHub Pages.
-
-The template uses root-relative `/trips/shared/` asset references. This works at the custom-domain site root both before and after the folder is copied. A deployment hosted below a URL prefix must adjust those two shared asset paths.
+Generated slugs use lowercase ASCII and Bulgarian transliteration: ж→zh, й→y, х→h, ц→ts, ч→ch, ш→sh, щ→sht, ъ→a, ь→y, ю→yu, я→ya; other Bulgarian letters use their straightforward Latin equivalents. Non-alphanumeric separators become hyphens. For example, `Пътуване до София` becomes `patuvane-do-sofiya`. Edited slugs permit lowercase letters/digits separated by hyphens or underscores; reserved Windows names, case collisions, traversal and symlinks are rejected.
 
 ## Trip configuration
+
 
 Every `trip-config.js` defines `window.GALLERY_TRIP_CONFIG` before the registry and shared controller load. The supported trip-level values are:
 
@@ -59,7 +73,7 @@ Every `trip-config.js` defines `window.GALLERY_TRIP_CONFIG` before the registry 
 | `theme` | Optional semantic color overrides such as `accent`, `secondary`, `canvas`, and `focus`. |
 | `labels` | Optional localized overrides for shared interface and state messages. |
 
-The shared controller provides complete English label defaults. The China configuration supplies Bulgarian labels and the existing warm lacquer-and-jade theme.
+New trips receive complete Bulgarian or English presets, including empty-trip copy. The China configuration remains unchanged. The settings editor preserves custom labels and theme overrides when switching language, and retains unknown JSON-compatible config fields. Advanced settings include every supported theme value, including heroWash, and a labeled JSON editor for localized messages. Executable JavaScript expressions in configuration are rejected without overwriting the file; repair them manually to use settings editing. Saving preserves literal values, not original comments or formatting.
 
 ## Event registry and event data
 
@@ -86,19 +100,40 @@ Media can be images or videos. Only `visible: false` hides a media record, so le
 
 Media records may also include `flipHorizontal: true`, `flipVertical: true`, and `rotation: 90`, `180`, or `270`. These correction fields are optional: omitted flips default to `false`, and an omitted rotation defaults to `0`, so existing event records render unchanged. The data editor writes only active corrections and previews them before save.
 
-## Generate an event from Google Drive
+## Add, edit or delete parts
+
+Use the existing **events.js registry** panel to add blank parts, change titles, reorder entries or remove parts. New identities are editable before their first save; saved slugs and filenames are locked to preserve bookmarks. A newly registered missing event file is created as an empty part together with its registry entry.
+
+Removing a saved part queues deletion of **both** its registry entry and event file after confirmation. **Save registry** applies the coordinated operation. An event file still referenced by another row cannot be deleted. Existing malformed or duplicate registry records remain readable and existing event files remain editable, but every registry-changing operation requires the full registry to be valid. Correct editable titles in the panel; if a repair needs a saved slug or filename change, repair the source manually, then choose **Reload trip / repair feedback**. The editor does not silently rename saved identities.
+
+Event editing retains rich text, text blocks, media visibility, flips, quarter-turn rotation, ordering and AI description controls. Helper mode remembers the last trip and event; manual mode remembers a user-authorized folder and event when browser permissions/storage allow it. Revoked access or cleared storage requires reopening the folder. API keys remain in tab memory.
+
+Settings, registry and event drafts are tracked separately. Switching trips asks before discarding any of them. The selected event refreshes manually or every five seconds while visible; external changes are deferred while dirty, stale writes are rejected, and failed parsing retains the last valid state. Late loads and AI results cannot replace a newly selected trip/event.
+
+## Generate a part from a public Drive folder
+
+1. Save any outstanding drafts. Open **Add or regenerate a part from Google Drive**.
+2. Enter the date, title and public Drive folder URL. Use **Suggest slug and filename** or edit the new identity. For replacement, choose **Regenerate selected part** to retain its saved identity; **New part identity** returns to creation mode.
+3. Choose **Discover media**. Review the included filenames, valid count and skip report. Large folders can take several minutes because each selected child is validated.
+4. Choose **Confirm and save reviewed part**. The helper rechecks file versions and writes the event plus registry together. A review expires after ten minutes and can be committed only once.
+
+Replacement requires explicit confirmation that descriptions, text blocks, visibility, corrections and custom ordering will be lost. Failed discovery, zero supported media, denied replacement, stale versions or failed registry writes leave the original files intact under the runtime recovery policy below. Folder URLs are not stored in the public event registry or configuration; enter the URL again for regeneration.
+
+The helper imports the existing CLI generator's discovery, filtering, public validation and serialization functions. It uses no credentials, visits only direct folder children, and never changes permissions. Its parser relies on public Drive HTML, so live behavior can change independently of this repository.
+
+### Standalone CLI
 
 The Python 3.10+ generator accepts a public folder URL or ID and creates exactly one event file:
 
 ```sh
-python scripts/generate_trip_event.py "https://drive.google.com/drive/folders/FOLDER_ID" --output family-weekend/data/event-day-1.js
+python scripts/generate_trip_event.py "https://drive.google.com/drive/folders/FOLDER_ID" --output trips/family-weekend/data/event-day-1.js
 ```
 
 Use `--overwrite` only when intentionally replacing an existing event:
 
 ```sh
 python scripts/generate_trip_event.py FOLDER_ID \
-  --output family-weekend/data/event-day-1.js \
+  --output trips/family-weekend/data/event-day-1.js \
   --overwrite
 ```
 
@@ -125,35 +160,32 @@ Google does not publish a supported unauthenticated equivalent of the Drive API'
 
 Public folder access is not treated as proof that every selected child is reachable. The generator validates files individually without cookies, tokens, API keys, OAuth, or credential files. This is the strongest check available within the credential-free workflow, but Google remains the authority for the final viewer response.
 
-## Edit data locally
+## Preview and recovery
 
-Open `trips/data_editor.html` directly in Chrome 86+ or Edge 86+. The File System Access API requires a Chromium-based browser and a user-selected directory.
+**Preview trip** opens the helper URL in a new tab, including `#event=<slug>` for the selected part. With unsaved changes it offers to save all affected valid drafts together; declining, validation failure or any failed save cancels preview. Allow the new tab if the browser blocks it. Publishing remains a separate manual Git/GitHub Pages workflow.
 
-1. Choose **Open a trip data/ folder** and select the `data/` directory inside any trip.
-2. Select an event from the loaded `events.js` registry.
-3. Add, remove, reorder, or edit media and text blocks; update descriptions, rich text, visibility, flips, and quarter-turn rotation as needed.
-4. Use **Refresh** to compare the selected file with disk or rely on the five-second foreground poll.
-5. Save the current event in place. Dirty-state protection defers external changes and warns before local edits are discarded.
-6. Expand **events.js registry** to add, remove, reorder, or update event registrations, then save the registry separately.
+Coordinated writes keep originals while the helper runs. A caught failure restores replaced/deleted originals and removes new partial output. If restoring a file also fails, the helper blocks further writes and reports a hidden `.trip-editor-recovery-*` directory containing numbered `*.original` files. Stop editing, recover those originals and repair the underlying disk/permission problem before restarting; keep recovery directories out of published content. Manual folder mode offers a downloadable original-source recovery file if rollback fails.
 
-The editor persists a user-authorized directory handle and last selection when the browser permits it. Revoked permissions, another browser origin, or cleared browser storage require selecting the folder again. The editor does not contact Google Drive and does not generate files from folders.
+This is **runtime rollback**, not a durable transaction journal. Power loss, forced process termination or forcibly closing a Windows console can interrupt it; there is no automatic restart recovery. Review both the event and registry against retained originals after an abrupt termination. File versions detect conflicting edits, but arbitrary simultaneous changes by an external editor during filesystem replacement are not a supported transaction participant.
 
-## Preview and publish
+## Verification
 
-Serve the repository root locally so dynamic event scripts and root-relative shared assets use the same paths as GitHub Pages:
+Run from the repository root:
 
 ```sh
-python -m http.server 8765
+python -B -m unittest discover -s tests -p 'test_generate_trip_event.py' -v
+python -B -m unittest discover -s tests -p 'test_trip_editor.py' -v
 ```
 
-Check both the trip root and at least one bookmarkable event hash. Confirm navigation, search, images, video previews, text blocks, descriptions, visibility, and lightbox behavior before committing. Publishing is the normal GitHub Pages workflow; no compilation step is required.
+The suites use temporary repositories and synthetic Drive responses, without external requests. HTTP tests require permission to bind loopback sockets. Open `http://127.0.0.1:8765/tests/trip_editor_browser.html` while the helper runs, then choose **Run tests in memory**. The harness executes the actual editor/gallery logic with mocked storage and text-only gallery fixtures; it never changes repository files or contacts Drive/OpenAI.
 
-## Automated verification
+The implementation was checked with 12 existing generator tests, 25 helper tests, and 14 browser assertions in both headless Chrome and Firefox. A separate disposable browser-to-helper run covered creation, synthetic Drive review, coordinated generation, settings saving and selected-part preview. Desktop and mobile screenshots were inspected. After replacing the Linux desktop entry with an executable shell script, all 28 helper/launcher tests passed. Launcher checks cover relocation, literal arguments, missing Python and simulated terminal startup; a real loopback check served the editor and stopped cleanly with SIGINT. Interactive Files startup remains a manual check.
 
-The generator test suite covers folder reference parsing, natural sorting, media filtering and skip reporting, JavaScript escaping, schema serialization, resource keys, guarded overwrite behavior, and representative embedded-folder response parsing:
+The remaining interactive acceptance checks are:
 
-```sh
-python -m unittest tests/test_generate_trip_event.py -v
-```
+- Linux Files **Run as a Program** startup, plus terminal shutdown on the owner's desktop.
+- Windows double-click startup/shutdown, missing Python and occupied-port behavior.
+- Edge and actual Chromium File System Access permission/restoration dialogs; the automated fallback test uses a mock directory handle.
+- One owner-supplied public Drive folder through discovery, generation and preview; live Drive and live AI service calls were not tested.
 
-Tests are network-free and use only synthetic identifiers. A live public folder remains an integration check because the Drive page is undocumented and can change independently of this repository.
+Record the platform/browser and outcome when performing these checks. Automated results do not establish interactive file-manager behavior, Windows console behavior or current Drive availability.
