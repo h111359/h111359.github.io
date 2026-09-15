@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<!-- trip_gallery_browser.html: Dependency-free runtime regressions for the shared book gallery. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trip book gallery checks</title>
+</head>
+<body>
+  <!-- Results expose the outcome to both a reader and the local browser runner. -->
+  <h1>Trip book gallery checks</h1>
+  <pre id="results" role="status"></pre>
+  <div id="fixtures"></div>
+  <!-- Actual gallery code runs in isolated frames with deterministic event data and media. -->
+  <script>
+  /** Runtime fixture suite: exercises page navigation, overflow, modal focus, and localized empty states. */
+  (async () => {
+    const results = document.getElementById('results');
+    const [template, controller, config] = await Promise.all([
+      fetch('../trips/template/index.html').then(response => response.text()),
+      fetch('../trips/shared/gallery.js').then(response => response.text()),
+      fetch('../trips/template/trip-config.js').then(response => response.text())
+    ]);
+    const delay = () => new Promise(resolve => setTimeout(resolve, 80));
+    const assert = (condition, message) => { if (!condition) throw new Error(message); };
+    const media = (name, extra = {}) => ({ name, preview: 'https://drive.google.com/file/d/fixture/preview', ...extra });
+    const items = [
+      { type: 'text', title: 'Long story', body: '<p>Trusted <strong>rich text</strong> and a <a href="#example">link</a>.</p>'.repeat(100) },
+      media('image.jpg', { title: 'Image title', rotation: 90, flipHorizontal: true, desc: '<p>A caption with <em>formatting</em>.</p>'.repeat(70) }),
+      media('hidden.jpg', { visible: false }),
+      media('movie.mp4', { desc: 'Video caption' }),
+      ...Array.from({length: 7}, (_, index) => ({ type: 'text', title: `Page ${index + 4}`, body: 'Short text' }))
+    ];
+    const wrapScript = source => '<script>' + source + '<' + '/script>';
+    try {
+      for (const [width, height, scale, count = 3, itemCount = 10] of [[320,568,100], [320,640,125], [768,1024,100], [1366,768,200], [320,640,100,0], [320,640,100,1,1], [320,640,100,1,10]]) {
+        const frame = document.createElement('iframe');
+        frame.title = `Book at ${width} by ${height}, ${scale}% text`;
+        frame.style.width = `${width}px`; frame.style.height = `${height}px`;
+        document.getElementById('fixtures').appendChild(frame);
+        const entries = Array.from({length:count}, (_, index) => index).map(index => ({slug:`event-${index}`,title:`Event ${index}`,data:`data/${index}.js`}));
+        const setup = `
+          window.history.pushState = window.history.replaceState = () => {};
+          window.GALLERY_EVENT_INDEX = ${JSON.stringify(entries)};
+          const fixtureItems = ${JSON.stringify(itemCount === 1 ? items.slice(0,1) : items)};
+          const append = Element.prototype.appendChild;
+          Element.prototype.appendChild = function(node) {
+            if (node.id === 'eventDataScript') {
+              window.GALLERY_ITEMS = node.src.endsWith('/1.js') ? [] : fixtureItems;
+              queueMicrotask(() => node.dispatchEvent(new Event('load')));
+              return node;
+            }
+            return append.call(this,node);
+          };
+          // Supply a local portrait for deterministic intrinsic-dimension containment checks.
+          const descriptor = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src');
+          Object.defineProperty(HTMLImageElement.prototype, 'src', {...descriptor, set(value) {
+            descriptor.set.call(this, value.includes('google') ? 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="800"><rect width="400" height="800" fill="tan"/></svg>') : value);
+          }});
+          document.documentElement.style.fontSize = '${scale}%';
+        `;
+        frame.srcdoc = template.replace('../shared/gallery.css', '/trips/shared/gallery.css')
+          .replace(/<script[\s\S]*?<\/script>/g, '')
+          .replace('</body>', wrapScript(config + setup + controller) + '</body>');
+        await new Promise(resolve => frame.onload = resolve);
+        await delay();
+        const win = frame.contentWindow, doc = win.document;
+        const get = selector => doc.querySelector(selector);
+        const clickText = text => {
+          const button = [...doc.querySelectorAll('button,a')].find(node => (node.getAttribute('aria-label') || node.textContent) === text);
+          assert(button, `Missing control ${text}`); button.click();
+        };
+        const fits = () => {
+          assert(doc.documentElement.scrollWidth === doc.documentElement.clientWidth, 'Horizontal document overflow');
+          assert(doc.documentElement.scrollHeight === doc.documentElement.clientHeight, 'Vertical document overflow');
+          assert(get('#gallery').clientHeight > 40, 'Content page lost its available height');
+          assert(get('#siteHeader .book-navigation'), 'Navigation is missing from the title ribbon');
+          assert(!get('#main-content .book-navigation'), 'Bottom navigation still consumes content height');
+        };
+        fits();
+        if (count < 2) {
+          assert(!get('.event-navigation a'), 'Sequential controls on empty/single trip');
+          assert(get('.event-search').hidden, 'Unnecessary event search');
+          assert(Boolean(get('.item-navigation')) === (itemCount > 1 && count > 0), 'Item availability incorrectly depends on event count');
+          get('#openNavigator').click();
+          assert(doc.activeElement.id === 'closeNavigator', 'Empty/single trip panel unusable');
+          assert(get('.trip-context').textContent.trim(), 'Trip context missing');
+          get('#closeNavigator').click();
+          results.textContent += `PASS ${count} event(s), ${count ? itemCount : 0} item(s): applicable navigation and trip context\n`;
+          frame.remove(); continue;
+        }
+        get('#heroHeading').textContent = 'A longer trip title that wraps naturally';
+        await delay(); fits();
+        assert(get('#gallery').children.length === 1, 'More than one current item');
+        assert(get('.story-body strong'), 'Trusted markup lost');
+        // Arrow navigation shares button boundaries and leaves editable fields in control of their keys.
+        const pressArrow = (key, target = doc.activeElement, options = {}) => target.dispatchEvent(new win.KeyboardEvent('keydown', {key, bubbles:true, cancelable:true, ...options}));
+        pressArrow('ArrowLeft');
+        assert(get('.page-number').value === '1', 'Left arrow wrapped before first item');
+        pressArrow('ArrowRight');
+        assert(get('.page-number').value === '2', 'Right arrow did not advance');
+        pressArrow('ArrowLeft');
+        assert(get('.page-number').value === '1', 'Left arrow did not return');
+        pressArrow('ArrowRight', get('.page-number'));
+        pressArrow('ArrowRight', doc.activeElement, {altKey:true});
+        assert(get('.page-number').value === '1', 'Arrow shortcut intercepted editing or browser keys');
+        const scroll = get('.story-card__inner'); scroll.scrollTop = 150;
+        const before = get('#gallery').getBoundingClientRect().width;
+        get('#openNavigator').click();
+        assert(doc.activeElement.id === 'closeNavigator', 'Opening focus');
+        pressArrow('ArrowRight');
+        assert(get('.page-number').value === '1', 'Arrow navigated behind Events');
+        assert(get('#main-content').inert && get('#siteHeader').inert, 'Background remains interactive');
+        assert(before === get('#gallery').getBoundingClientRect().width, 'Drawer shifts gallery');
+        const oldWidth = frame.style.width;
+        frame.style.width = width > 600 ? '320px' : '768px'; await delay();
+        assert(get('#main-content').inert, 'Resize unlocked open overlay');
+        frame.style.width = oldWidth; await delay();
+        const lastEvent = get('[data-event-slug="event-2"]'); lastEvent.focus();
+        win.dispatchEvent(new win.KeyboardEvent('keydown', {key:'Tab', bubbles:true, cancelable:true}));
+        assert(doc.activeElement.id === 'closeNavigator', 'Overlay Tab escaped');
+        get('#eventSearch').value = 'nothing'; get('#eventSearch').dispatchEvent(new win.Event('input'));
+        get('#closeNavigator').click();
+        assert(scroll.scrollTop === 150, 'Dismissal resets text position');
+        assert(doc.activeElement.id === 'openNavigator', 'Dismissal focus');
+        assert(get('#eventSearch').value === '', 'Search not cleared');
+        clickText('Следващ елемент'); await delay(); fits();
+        assert(get('.media-caption h3').textContent === 'Image title', 'Media title missing');
+        const imageBounds = get('.media-button img').getBoundingClientRect();
+        const frameBounds = get('.media-button').getBoundingClientRect();
+        assert(imageBounds.width <= frameBounds.width + 1 && imageBounds.height <= frameBounds.height + 1, 'Quarter-turn image clipped');
+        assert(get('.media-caption').scrollTop === 0, 'New caption not at top');
+        assert(doc.activeElement.tagName === 'H3', 'Item heading focus');
+        // Verify full-width horizontal captions and heading-only controls through rotation and resize.
+        const assertCaptionLayout = () => {
+          const photo = get('.media-button img');
+          const mediaBox = get('.media-button').getBoundingClientRect();
+          const captionBox = get('.media-caption').getBoundingClientRect();
+          const quarterTurn = photo.classList.contains('media-transform--quarter-turn');
+          const ratio = quarterTurn ? photo.naturalHeight / photo.naturalWidth : photo.naturalWidth / photo.naturalHeight;
+          if (ratio < 1) {
+            assert(captionBox.left >= mediaBox.right - 1, 'Portrait caption is not on the right');
+            assert(Math.abs(captionBox.top - mediaBox.top) < 1, 'Portrait caption is not aligned at the top');
+          } else {
+            const galleryBox = get('#gallery').getBoundingClientRect();
+            assert(captionBox.top >= mediaBox.bottom - 1, 'Landscape caption is not below the photo');
+            assert(Math.abs(captionBox.width - galleryBox.width) < 1, 'Landscape caption does not span the gallery');
+            assert(Math.abs(captionBox.left - galleryBox.left) < 1, 'Caption left edge is misaligned');
+            const rootSize = parseFloat(win.getComputedStyle(doc.documentElement).fontSize);
+            const expectedSize = Math.min(Math.max(1.2 * rootSize, 0.018 * win.innerWidth), 1.4 * rootSize);
+            assert(Math.abs(parseFloat(win.getComputedStyle(get('.media-caption')).fontSize) - expectedSize) < 0.1, 'Caption font was not reduced one step');
+          }
+          assert(!get('.media-side-button'), 'Image-side navigation remains');
+          assert(Math.abs(mediaBox.width - get('.media-card').clientWidth / (ratio < 1 ? 2 : 1)) < 2, 'Removed arrows still reserve image space');
+          fits();
+        };
+        assertCaptionLayout();
+        // The corrected portrait fixture is landscape initially; changing its source exercises both orientations and near-square images.
+        for (const [sourceWidth, sourceHeight] of [[800,400], [800,780], [780,800], [400,800]]) {
+          const photo = get('.media-button img');
+          await new Promise(resolve => {
+            photo.addEventListener('load', resolve, {once: true});
+            photo.src = 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="${sourceWidth}" height="${sourceHeight}"><rect width="100%" height="100%" fill="tan"/></svg>`);
+          });
+          await delay(); assertCaptionLayout();
+        }
+        frame.style.width = width > 600 ? (scale > 100 ? '1000px' : '320px') : '1000px';
+        await delay(); assertCaptionLayout();
+        frame.style.width = oldWidth;
+        await delay(); assertCaptionLayout();
+        // A brief caption releases space to the image, while longer text remains reachable internally.
+        const caption = get('.media-caption');
+        const longCaption = caption.innerHTML;
+        const longHeight = caption.getBoundingClientRect().height;
+        caption.textContent = 'Brief.';
+        frame.style.width = `${width - 1}px`;
+        await delay();
+        frame.style.width = oldWidth;
+        await delay(); assertCaptionLayout();
+        assert(caption.getBoundingClientRect().height <= longHeight + 1, 'Short caption did not release image space');
+        if (scale === 100) {
+          assert(caption.getBoundingClientRect().height < longHeight - 5, 'Caption height remains fixed');
+          assert(caption.scrollHeight <= caption.clientHeight + 1, 'Short caption requires scrolling');
+        }
+        caption.innerHTML = longCaption;
+        frame.style.width = `${width - 1}px`;
+        await delay();
+        frame.style.width = oldWidth;
+        await delay(); assertCaptionLayout();
+        assert(caption.scrollHeight > caption.clientHeight, 'Long caption lost internal scrolling');
+        get('.media-button').click(); await delay();
+        assert(!get('#lightbox').hidden, 'Magnifier did not open viewer');
+        const zoomIn = get('[data-zoom-direction="in"]');
+        const zoomOut = get('[data-zoom-direction="out"]');
+        const zoomBounds = get('.zoom-controls').getBoundingClientRect();
+        assert(Math.abs((zoomBounds.left + zoomBounds.right) / 2 - doc.documentElement.clientWidth / 2) < 1, 'Zoom controls are not centered');
+        const modalPage = get('.page-number').value;
+        pressArrow('ArrowRight');
+        assert(get('.page-number').value === modalPage, 'Arrow navigated behind image modal');
+        assert(zoomIn.textContent === '+' && zoomOut.textContent === '−', 'Zoom symbols missing');
+        const toolbarBox = get('.lightbox-toolbar').getBoundingClientRect();
+        const bodyBox = get('#lightboxBody').getBoundingClientRect();
+        assert(toolbarBox.bottom <= bodyBox.top, 'Zoom toolbar overlaps the image');
+        assert(toolbarBox.right <= win.innerWidth, 'Zoom toolbar overflows viewport');
+        zoomIn.focus();
+        for (let step = 1; step <= 12; step++) {
+          zoomIn.click();
+          assert(get('.zoom-level').textContent === `${100 + step * 25}%`, 'Repeated zoom-in failed');
+          assert(doc.activeElement === zoomIn, 'Zoom moved keyboard focus');
+        }
+        assert(get('#lightboxBody').scrollWidth > get('#lightboxBody').clientWidth * 3, `High zoom cannot pan: ${get('#lightboxBody').scrollWidth}/${get('#lightboxBody').clientWidth}, stage ${win.getComputedStyle(get('.image-stage')).width}, zoom ${get('#lightboxBody').style.getPropertyValue('--image-zoom')}`);
+        zoomIn.click(); assert(get('.zoom-level').textContent === '400%', 'Upper zoom limit failed');
+        assert(zoomIn.getAttribute('aria-disabled') === 'true', 'Upper limit not announced');
+        for (let step = 1; step <= 12; step++) {
+          zoomOut.click();
+          assert(get('.zoom-level').textContent === `${400 - step * 25}%`, 'Repeated zoom-out failed');
+        }
+        zoomOut.click(); assert(get('.zoom-level').textContent === '100%', 'Lower zoom limit failed');
+        assert(!get('#lightboxBody').classList.contains('is-zoomed'), 'Fit view not restored');
+        zoomIn.click();
+        get('#closeLightbox').click(); get('.media-button').click(); await delay();
+        assert(get('.zoom-level').textContent === '100%', 'Reopening did not reset zoom');
+        get('#closeLightbox').click(); assert(doc.activeElement.classList.contains('media-button'), 'Viewer return focus');
+        clickText('Следващ елемент'); await delay();
+        assert(get('.media-button--video'), 'Hidden image created an extra page');
+        clickText('Предишен елемент'); await delay();
+        assert(get('.page-number').value === '2', 'Heading previous did not navigate');
+        clickText('Следващ елемент'); await delay();
+        get('.media-button').click(); await delay();
+        assert(get('.lightbox__frame').src.includes('autoplay=0'), 'Video automatically starts');
+        win.dispatchEvent(new win.KeyboardEvent('keydown', {key:'Escape', bubbles:true}));
+        assert(get('#lightbox').hidden && !get('.lightbox__frame'), 'Outgoing video frame remains');
+        assert(get('.page-number').value === '3', 'Incorrect current page');
+        assert(!get('.item-dot') && !get('.dot-navigation'), 'Navigation dots remain');
+        const jump = (value, type = 'keydown') => {
+          const input = get('.page-number');
+          input.focus(); input.value = value;
+          input.dispatchEvent(type === 'keydown'
+            ? new win.KeyboardEvent('keydown', {key:'Enter', bubbles:true})
+            : new win.Event('change', {bubbles:true}));
+        };
+        for (const invalid of ['', '0', '-1', '11', '1.5', 'abc']) {
+          jump(invalid);
+          assert(get('.page-number').value === '3', `Invalid page accepted: ${invalid}`);
+        }
+        jump('4'); await delay();
+        assert(get('.story-card h3').textContent === 'Page 4', 'Typed page destination');
+        assert(doc.activeElement === get('.story-card h3'), 'Page jump did not focus content');
+        assert([...doc.querySelectorAll('.item-navigation button')].every(button => button.getBoundingClientRect().width <= 45), 'Page buttons stretch');
+        fits();
+        clickText('Последна страница'); await delay();
+        assert(get('.page-number').value === '10', 'Last page destination');
+        assert(!get('[aria-label="Следващ елемент"]') && !get('[aria-label="Последна страница"]'), 'Last item wraps');
+        clickText('Първа страница'); await delay();
+        assert(get('.page-number').value === '1', 'First page destination');
+        assert(!get('[aria-label="Предишен елемент"]'), 'First item wraps');
+        jump('5', 'change'); await delay();
+        assert(get('.story-card h3').textContent === 'Page 5', 'Change did not commit page');
+        clickText('Предишен елемент'); await delay();
+        assert(get('.page-number').value === '4', 'Previous page destination');
+        get('#openNavigator').click(); get('[data-event-slug="event-1"]').click(); await delay();
+        assert(doc.activeElement.id === 'eventTitle', 'Event heading focus');
+        assert(!get('.item-navigation') && !get('.dot-navigation'), 'Empty event has item controls');
+        get('#openNavigator').click(); get('[data-event-slug="event-0"]').click(); await delay();
+        assert(get('.story-card h3').textContent === 'Long story', 'Event did not reset to first item');
+        fits();
+        results.textContent += `PASS ${width}×${height} at ${scale}%: book pages, text, page input, events, modals, zoom, focus, viewport\n`;
+        frame.remove();
+      }
+      document.body.dataset.result = 'pass';
+    } catch (error) {
+      results.textContent += `FAIL ${error.stack}\n`;
+      document.body.dataset.result = 'fail';
+    }
+  })();
+  </script>
+</body>
+</html>

@@ -13,9 +13,10 @@
   const HASH_EVENT_KEY = "event";
   const EVENT_DATA_SCRIPT_ID = "eventDataScript";
   const THUMBNAIL_WIDTH = 1600;
+  const IMAGE_ZOOM_MIN = 1;
+  const IMAGE_ZOOM_MAX = 4;
+  const IMAGE_ZOOM_STEP = 0.25;
   const ICON_VIEW_BOX = "0 0 24 24";
-  const PORTRAIT_MAX_ASPECT_RATIO = 0.9;
-  const SQUARE_MAX_ASPECT_RATIO = 1.1;
   const QUARTER_TURN_DEGREES = 90;
   const HALF_ROTATION_DEGREES = 180;
   const FULL_ROTATION_DEGREES = 360;
@@ -29,7 +30,20 @@
     "lightbox__body--square",
     "lightbox__body--landscape"
   ]);
-  const DRAWER_MEDIA_QUERY = window.matchMedia("(max-width: 53.75rem)");
+  // Shared defaults localize new controls without overwriting authored trip labels.
+  const BOOK_LABELS = Object.freeze({
+    en: { previousEvent: "Previous event", nextEvent: "Next event", eventNavigation: "Browse events",
+      previousItem: "Previous item", nextItem: "Next item", itemNavigation: "Browse items",
+      itemDestination: "Item {number}: {title}", itemPosition: "{number} / {total}",
+      firstItem: "First page", lastItem: "Last page", pageNumber: "Page number", textNoun: "Text",
+      zoomIn: "Zoom in", zoomOut: "Zoom out" },
+    bg: { previousEvent: "Предишно събитие", nextEvent: "Следващо събитие", eventNavigation: "Преглед на събития",
+      previousItem: "Предишен елемент", nextItem: "Следващ елемент", itemNavigation: "Преглед на елементи",
+      itemDestination: "Елемент {number}: {title}", itemPosition: "{number} / {total}",
+      firstItem: "Първа страница", lastItem: "Последна страница", pageNumber: "Номер на страница", textNoun: "Текст",
+      zoomIn: "Увеличи", zoomOut: "Намали" }
+  });
+
   const DEFAULT_LABELS = Object.freeze({
     skipLink: "Skip to content",
     openNavigator: "Open event navigator",
@@ -142,7 +156,7 @@
       tripFacts: typeof source.tripFacts === "string" ? source.tripFacts.trim() : "",
       pageDescription: stringValue("pageDescription"),
       theme,
-      labels: { ...DEFAULT_LABELS, ...labels }
+      labels: { ...DEFAULT_LABELS, ...(BOOK_LABELS[stringValue("language").split("-")[0]] || BOOK_LABELS.en), ...labels }
     };
   }
 
@@ -177,7 +191,9 @@
     activeDataScript: null,
     lightboxTrigger: null,
     lightboxItem: null,
-    drawerOpen: false
+    imageZoom: IMAGE_ZOOM_MIN,
+    drawerOpen: false,
+    currentItem: 0
   };
 
   const DOM = {
@@ -570,7 +586,6 @@
     }
     button.addEventListener("click", () => {
       navigateToEvent(eventEntry.slug, { historyMode: "push" });
-      closeDrawer({ restoreFocus: true });
     });
     item.appendChild(button);
     return item;
@@ -593,7 +608,7 @@
 
     if (visibleEvents.length === 0) {
       const emptyMessage = createElement("p", "event-groups__empty");
-      emptyMessage.textContent = formatLabel("noSearchResults");
+      emptyMessage.textContent = formatLabel(APP_STATE.events.length ? "noSearchResults" : "noEvents");
       DOM.eventGroups.appendChild(emptyMessage);
     } else {
       const groupedEvents = groupEventsByDate(visibleEvents);
@@ -645,6 +660,7 @@
    * @returns {void}
    */
   function setDrawerBackgroundInert(isInert) {
+    DOM.skipLink.inert = isInert;
     DOM.siteHeader.inert = isInert;
     DOM.main.inert = isInert;
   }
@@ -655,7 +671,7 @@
    * @returns {void}
    */
   function openDrawer() {
-    if (!DRAWER_MEDIA_QUERY.matches || APP_STATE.drawerOpen) {
+    if (APP_STATE.drawerOpen) {
       return;
     }
 
@@ -669,7 +685,9 @@
     DOM.openNavigator.setAttribute("aria-expanded", "true");
     document.body.classList.add("drawer-open");
     setDrawerBackgroundInert(true);
-    DOM.closeNavigator.focus();
+    DOM.navigator.inert = false;
+    DOM.closeNavigator.focus({ preventScroll: true });
+    DOM.eventGroups.querySelector('[aria-current="page"]')?.scrollIntoView({ block: "nearest" });
   }
 
   /**
@@ -692,14 +710,16 @@
     document.body.classList.remove("drawer-open");
     setDrawerBackgroundInert(false);
 
-    if (DRAWER_MEDIA_QUERY.matches) {
-      DOM.navigator.setAttribute("aria-hidden", "true");
-    }
+    DOM.navigator.setAttribute("aria-hidden", "true");
+    DOM.navigator.inert = true;
+    APP_STATE.searchTerm = "";
+    DOM.eventSearch.value = "";
+    renderEventNavigator();
     DOM.navigator.removeAttribute("role");
     DOM.navigator.removeAttribute("aria-modal");
 
     if (restoreFocus) {
-      DOM.openNavigator.focus();
+      DOM.openNavigator.focus({ preventScroll: true });
     }
   }
 
@@ -709,17 +729,8 @@
    * @returns {void}
    */
   function synchronizeDrawerMode() {
-    if (DRAWER_MEDIA_QUERY.matches) {
-      DOM.navigator.setAttribute("aria-hidden", APP_STATE.drawerOpen ? "false" : "true");
-      return;
-    }
-
-    if (APP_STATE.drawerOpen) {
-      closeDrawer({ restoreFocus: false });
-    }
-    DOM.navigator.removeAttribute("aria-hidden");
-    DOM.navigator.removeAttribute("role");
-    DOM.navigator.removeAttribute("aria-modal");
+    DOM.navigator.setAttribute("aria-hidden", APP_STATE.drawerOpen ? "false" : "true");
+    DOM.navigator.inert = !APP_STATE.drawerOpen;
   }
 
   /* ============================================================
@@ -857,6 +868,7 @@
       return {
         kind: VIDEO_NAME_PATTERN.test(name) ? "video" : "image",
         preview,
+        title: String(item.title || ""),
         desc: String(item.desc || ""),
         driveId,
         resourceKey: extractDriveResourceKey(preview),
@@ -941,10 +953,10 @@
     const correctedWidth = isQuarterTurn ? height : width;
     const correctedHeight = isQuarterTurn ? width : height;
     const aspectRatio = correctedWidth / correctedHeight;
-    if (aspectRatio < PORTRAIT_MAX_ASPECT_RATIO) {
+    if (aspectRatio < 1) {
       return "portrait";
     }
-    if (aspectRatio <= SQUARE_MAX_ASPECT_RATIO) {
+    if (aspectRatio === 1) {
       return "square";
     }
     return "landscape";
@@ -1016,7 +1028,7 @@
    * @returns {HTMLElement} Article containing a lazy thumbnail, optional story, and lightbox action.
    */
   function createMediaCard(item, mediaIndex) {
-    const hasDescription = item.desc.trim().length > 0;
+    const hasDescription = item.desc.trim().length > 0 || item.title.trim().length > 0;
     const cardClasses = [
       "media-card",
       "media-card--orientation-pending",
@@ -1047,6 +1059,7 @@
     });
     image.addEventListener("load", () => {
       applyMediaOrientation(card, image, item);
+      fitVisibleMedia();
     });
     image.addEventListener("error", () => {
       handleThumbnailError(image, button, item.driveId, item.resourceKey);
@@ -1068,6 +1081,15 @@
       const caption = createElement("div", "media-caption");
       // Rich text is trusted local content authored through data_editor.html and must retain formatting.
       caption.innerHTML = item.desc;
+      if (item.title.trim()) {
+        const title = createElement("h3");
+        title.textContent = item.title;
+        caption.prepend(title);
+      }
+      // Native focusable scroll region supports arrows/PageDown without trapping Tab.
+      caption.tabIndex = 0;
+      caption.setAttribute("role", "region");
+      caption.setAttribute("aria-label", item.title || image.alt);
       card.appendChild(caption);
     }
 
@@ -1083,6 +1105,9 @@
   function createStoryCard(item) {
     const card = createElement("article", "story-card");
     const inner = createElement("div", "story-card__inner");
+    inner.tabIndex = 0;
+    inner.setAttribute("role", "region");
+    inner.setAttribute("aria-label", item.title || formatLabel("textNoun"));
 
     if (item.title.trim()) {
       const title = createElement("h3");
@@ -1137,26 +1162,158 @@
    * @returns {void}
    */
   function renderGallery(items) {
-    DOM.gallery.replaceChildren();
+    APP_STATE.media = items;
+    APP_STATE.currentItem = 0;
     DOM.gallery.setAttribute("aria-busy", "false");
+    showItem(0, false);
+  }
 
-    if (items.length === 0) {
-      DOM.eventStatus.textContent = formatLabel("emptyEvent");
-      DOM.gallery.appendChild(
-        createStateCard(formatLabel("emptyEvent"), "empty")
-      );
-      return;
-    }
+  // Native buttons support Enter/Space; every generated control has a visible or accessible label.
+  function bookButton(labelKey, action, className = "book-button") {
+    const button = createElement("button", className);
+    button.type = "button";
+    button.textContent = formatLabel(labelKey);
+    button.addEventListener("click", action);
+    return button;
+  }
 
-    let mediaIndex = 0;
-    items.forEach((item) => {
-      if (item.kind === "text") {
-        DOM.gallery.appendChild(createStoryCard(item));
-        return;
+  // Links retain bookmarkable destinations and native modifier-click behavior.
+  function createEventControls() {
+    const nav = createElement("nav", "event-navigation");
+    nav.setAttribute("aria-label", formatLabel("eventNavigation"));
+    const index = APP_STATE.events.indexOf(APP_STATE.activeEvent);
+    if (APP_STATE.events.length < 2 || index < 0) return nav;
+    [-1, 1].forEach((direction) => {
+      const entry = APP_STATE.events[index + direction];
+      if (!entry) return;
+      const link = createElement("a", "book-button");
+      link.href = `#${new URLSearchParams({ event: entry.slug })}`;
+      link.textContent = formatLabel(direction < 0 ? "previousEvent" : "nextEvent");
+      link.addEventListener("click", (event) => {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        navigateToEvent(entry.slug);
+      });
+      nav.appendChild(link);
+    });
+    return nav;
+  }
+
+  // Only the active page exists in the DOM, excluding hidden media from playback and the focus order.
+  function showItem(index, focus = true) {
+    closeLightbox();
+    APP_STATE.currentItem = index;
+    const item = APP_STATE.media[index];
+    const card = !item ? createStateCard(formatLabel("emptyEvent"), "empty")
+      : item.kind === "text" ? createStoryCard(item) : createMediaCard(item, index);
+    card.tabIndex = -1;
+    card.setAttribute("aria-label", formatLabel("itemDestination", {
+      number: index + 1, title: item?.title || formatLabel(item?.kind === "text" ? "textNoun" : item?.kind === "video" ? "videoNoun" : "imageNoun")
+    }));
+    DOM.gallery.replaceChildren(card);
+    renderBookNavigation();
+    card.querySelectorAll("h3").forEach((heading) => { heading.tabIndex = -1; });
+    if (focus) (card.querySelector("h3") || card).focus({ preventScroll: true });
+  }
+
+  // Compact native buttons retain localized names and Enter/Space activation.
+  function itemButton(labelKey, symbol, index) {
+    const button = bookButton(labelKey, () => showItem(index));
+    button.setAttribute("aria-label", button.textContent);
+    button.title = button.textContent;
+    button.textContent = symbol;
+    return button;
+  }
+
+  // The labeled text field supports numeric keyboards, Enter, and commit-on-blur.
+  function createPageInput() {
+    const position = createElement("label", "item-position");
+    const label = createElement("span", "visually-hidden");
+    label.textContent = formatLabel("pageNumber");
+    const input = createElement("input", "page-number");
+    input.type = "text";
+    input.inputMode = "numeric";
+    input.value = String(APP_STATE.currentItem + 1);
+    input.autocomplete = "off";
+    const total = createElement("span");
+    total.textContent = ` / ${APP_STATE.media.length}`;
+    const commit = () => {
+      const value = input.value.trim();
+      const page = Number(value);
+      // Accept only whole decimal page numbers in this event; restore invalid edits.
+      if (/^[0-9]+$/.test(value) && Number.isSafeInteger(page) && page >= 1 && page <= APP_STATE.media.length) {
+        if (page !== APP_STATE.currentItem + 1) showItem(page - 1);
       }
+      input.value = String(APP_STATE.currentItem + 1);
+    };
+    input.addEventListener("change", commit);
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") { event.preventDefault(); commit(); }
+    });
+    position.append(label, input, total);
+    return position;
+  }
 
-      DOM.gallery.appendChild(createMediaCard(item, mediaIndex));
-      mediaIndex += 1;
+  function renderBookNavigation() {
+    const navigation = DOM.siteHeader.querySelector(".book-navigation");
+    navigation.replaceChildren();
+    if (APP_STATE.media.length > 1) {
+      const items = createElement("nav", "item-navigation");
+      items.setAttribute("aria-label", formatLabel("itemNavigation"));
+      if (APP_STATE.currentItem > 0) {
+        items.append(itemButton("firstItem", "«", 0), itemButton("previousItem", "‹", APP_STATE.currentItem - 1));
+      }
+      items.appendChild(createPageInput());
+      if (APP_STATE.currentItem < APP_STATE.media.length - 1) {
+        items.append(itemButton("nextItem", "›", APP_STATE.currentItem + 1), itemButton("lastItem", "»", APP_STATE.media.length - 1));
+      }
+      navigation.appendChild(items);
+    }
+    navigation.appendChild(createEventControls());
+  }
+
+  // Grid tracks measure real wrapped headings and controls, leaving precisely the remaining viewport to content.
+  function initializeBookLayout() {
+    document.body.classList.add("book-gallery");
+    DOM.eventTitle.tabIndex = -1;
+    const context = createElement("div", "trip-context");
+    context.append(DOM.heroSubtitle, DOM.tripFacts);
+    DOM.navigator.querySelector(".navigator__header").after(context);
+    DOM.eventSearchForm.hidden = APP_STATE.events.length < 2;
+    DOM.siteHeader.querySelector(".hero__inner").appendChild(createElement("div", "book-navigation"));
+    const toolbar = createElement("div", "lightbox-toolbar");
+    toolbar.appendChild(DOM.closeLightbox);
+    DOM.lightbox.prepend(toolbar);
+    const resizeObserver = new ResizeObserver(fitVisibleMedia);
+    resizeObserver.observe(DOM.gallery);
+    resizeObserver.observe(DOM.lightboxBody);
+  }
+
+  // Full-width text has a fixed wrapping measure; reserve its natural height up to half the page.
+  function fitStackedCaption(card, caption) {
+    const availableHeight = card.clientHeight;
+    const scrollTop = caption.scrollTop;
+    caption.style.height = "0px";
+    const captionHeight = Math.min(caption.scrollHeight, availableHeight / 2);
+    card.style.gridTemplateRows = `${availableHeight - captionHeight}px minmax(0, 1fr)`;
+    caption.style.height = "";
+    caption.scrollTop = scrollTop;
+  }
+
+  // Rotation swaps the source box before containment so quarter-turned images lose no source pixels.
+  function fitVisibleMedia() {
+    document.querySelectorAll(".media-button img, .lightbox__image, .lightbox__frame").forEach((image) => {
+      const frame = image.parentElement;
+      const quarterTurn = image.classList.contains("media-transform--quarter-turn");
+      const card = frame.closest(".media-card");
+      const caption = card?.querySelector(".media-caption");
+      if (caption && image.naturalWidth && image.naturalHeight) {
+        if (card.classList.contains("media-card--portrait")) card.style.gridTemplateRows = "";
+        else fitStackedCaption(card, caption);
+      }
+      const bounds = frame.getBoundingClientRect();
+      image.style.width = `${quarterTurn ? bounds.height : bounds.width}px`;
+      image.style.height = `${quarterTurn ? bounds.width : bounds.height}px`;
     });
   }
 
@@ -1166,6 +1323,8 @@
    * @returns {void}
    */
   function renderLoadingState() {
+    APP_STATE.media = [];
+    renderBookNavigation();
     DOM.gallery.setAttribute("aria-busy", "true");
     DOM.gallery.replaceChildren(
       createStateCard(formatLabel("loadingContent"), "loading")
@@ -1247,13 +1406,14 @@
    * @returns {void}
    */
   function setLightboxBackgroundInert(isInert) {
+    DOM.skipLink.inert = isInert;
     DOM.siteHeader.inert = isInert;
-    DOM.navigator.inert = isInert;
+    DOM.navigator.inert = isInert || !APP_STATE.drawerOpen;
     DOM.main.inert = isInert;
   }
 
   /**
-   * Builds a Drive preview URL, adding autoplay only for video records.
+   * Builds a Drive preview URL with automatic video playback disabled.
    *
    * @param {Object} item - Normalized media item holding the protected preview reference.
    * @returns {string} Existing Drive preview URL with optional video autoplay preference.
@@ -1265,7 +1425,7 @@
 
     try {
       const previewUrl = new URL(item.preview);
-      previewUrl.searchParams.set("autoplay", "1");
+      previewUrl.searchParams.set("autoplay", "0");
       return previewUrl.toString();
     } catch (error) {
       console.error(formatLabel("videoUrlErrorLog"), error);
@@ -1325,13 +1485,16 @@
           item.rotation
         );
         applyLightboxOrientation(item);
+        fitVisibleMedia();
       });
       image.addEventListener("error", () => {
         handleLightboxImageError(image, item);
       });
       applyMediaTransform(image, item);
       image.src = buildThumbnailUrl(item.driveId, item.resourceKey);
-      return image;
+      const stage = createElement("div", "image-stage");
+      stage.appendChild(image);
+      return stage;
     }
 
     const frame = createElement("iframe", "lightbox__frame");
@@ -1363,9 +1526,55 @@
     applyLightboxOrientation(item);
     DOM.lightboxBody.replaceChildren(media);
     DOM.lightbox.hidden = false;
+    APP_STATE.imageZoom = IMAGE_ZOOM_MIN;
+    DOM.lightboxBody.style.setProperty("--image-zoom", IMAGE_ZOOM_MIN);
+    DOM.lightboxBody.classList.remove("is-zoomed");
+    DOM.lightboxBody.scrollTo(0, 0);
+    DOM.lightbox.querySelector(".zoom-controls")?.remove();
+    if (item.kind === "image") {
+      const controls = createElement("div", "zoom-controls");
+      // Native +/− buttons retain focus for repeated Enter/Space activation; labels name the action.
+      for (const [label, symbol, step] of [["zoomOut", "−", -IMAGE_ZOOM_STEP], ["zoomIn", "+", IMAGE_ZOOM_STEP]]) {
+        const button = bookButton(label, () => setImageZoom(APP_STATE.imageZoom + step));
+        button.textContent = symbol;
+        button.setAttribute("aria-label", formatLabel(label));
+        button.title = formatLabel(label);
+        button.dataset.zoomDirection = step > 0 ? "in" : "out";
+        controls.appendChild(button);
+      }
+      const level = createElement("output", "zoom-level");
+      level.setAttribute("aria-live", "polite");
+      controls.appendChild(level);
+      DOM.lightbox.querySelector(".lightbox-toolbar").prepend(controls);
+      setImageZoom(IMAGE_ZOOM_MIN);
+    }
+    requestAnimationFrame(fitVisibleMedia);
     document.body.classList.add("lightbox-open");
     setLightboxBackgroundInert(true);
     DOM.closeLightbox.focus();
+  }
+
+  // Scale the scrollable stage, preserving the viewed center while keeping toolbar focus stable.
+  function setImageZoom(level) {
+    const body = DOM.lightboxBody;
+    if (!body.querySelector("img")) return;
+    const previous = APP_STATE.imageZoom;
+    const zoom = Math.min(IMAGE_ZOOM_MAX, Math.max(IMAGE_ZOOM_MIN, level));
+    const centerX = (body.scrollLeft + body.clientWidth / 2) / previous;
+    const centerY = (body.scrollTop + body.clientHeight / 2) / previous;
+    APP_STATE.imageZoom = zoom;
+    body.style.setProperty("--image-zoom", zoom);
+    body.classList.toggle("is-zoomed", zoom > IMAGE_ZOOM_MIN);
+    fitVisibleMedia();
+    body.scrollTo(centerX * zoom - body.clientWidth / 2, centerY * zoom - body.clientHeight / 2);
+    body.tabIndex = 0;
+    body.setAttribute("role", "region");
+    body.setAttribute("aria-labelledby", "lightboxTitle");
+    const controls = DOM.lightbox.querySelector(".zoom-controls");
+    controls.querySelector(".zoom-level").textContent = `${Math.round(zoom * 100)}%`;
+    // aria-disabled keeps the focused control reachable at a limit; clamping prevents extra changes.
+    controls.querySelector('[data-zoom-direction="in"]').setAttribute("aria-disabled", String(zoom === IMAGE_ZOOM_MAX));
+    controls.querySelector('[data-zoom-direction="out"]').setAttribute("aria-disabled", String(zoom === IMAGE_ZOOM_MIN));
   }
 
   /**
@@ -1383,6 +1592,7 @@
       frame.src = "about:blank";
     }
     DOM.lightboxBody.replaceChildren();
+    DOM.lightbox.querySelector(".zoom-controls")?.remove();
     DOM.lightboxBody.classList.remove(...LIGHTBOX_ORIENTATION_CLASSES);
     DOM.lightbox.hidden = true;
     document.body.classList.remove("lightbox-open");
@@ -1471,8 +1681,12 @@
       writeEventHash(slug, historyMode);
     }
 
+    closeDrawer({ restoreFocus: false });
+    closeLightbox();
     if (APP_STATE.activeSlug === slug && !forceReload) {
       updateNavigatorSelection(slug);
+      if (DOM.gallery.getAttribute("aria-busy") !== "true") showItem(0, false);
+      DOM.eventTitle.focus({ preventScroll: true });
       return;
     }
 
@@ -1482,6 +1696,9 @@
     const currentLoadSequence = APP_STATE.loadSequence;
     updateNavigatorSelection(slug);
     renderEventHeading(eventEntry);
+    DOM.main.querySelector(".event-heading .event-navigation")?.remove();
+    DOM.eventTitle.closest(".event-heading").appendChild(createEventControls());
+    DOM.eventTitle.focus({ preventScroll: true });
     renderLoadingState();
 
     try {
@@ -1510,6 +1727,7 @@
    * @returns {void}
    */
   function navigateFromHash(fallbackHistoryMode) {
+    if (!APP_STATE.events.length) return;
     const requestedSlug = readEventSlugFromHash();
 
     // Source-level anchors such as #main-content must remain available to keyboard and no-script users.
@@ -1532,7 +1750,7 @@
      ============================================================ */
 
   /**
-   * Handles global Escape and Tab patterns for the active modal surface.
+   * Handles modal Escape/Tab patterns and Left/Right navigation between book items.
    *
    * @param {KeyboardEvent} event - Page-level keydown event.
    * @returns {void}
@@ -1555,7 +1773,18 @@
         return;
       }
       trapFocus(event, DOM.navigator);
+      return;
     }
+
+    // Preserve text editing, native control keys, and modified browser shortcuts.
+    if (event.defaultPrevented || event.isComposing || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    if (event.target instanceof Element && (event.target.isContentEditable || event.target.closest("input, textarea, select, video, audio, [role='slider'], [role='spinbutton']"))) return;
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    if (DOM.gallery.getAttribute("aria-busy") === "true") return;
+    const index = APP_STATE.currentItem + (event.key === "ArrowLeft" ? -1 : 1);
+    if (index < 0 || index >= APP_STATE.media.length) return;
+    event.preventDefault();
+    showItem(index);
   }
 
   /**
@@ -1578,6 +1807,20 @@
     DOM.drawerScrim.addEventListener("click", () => {
       closeDrawer({ restoreFocus: true });
     });
+    // Mouse dragging supplements native touch and keyboard scrolling in the zoomed image region.
+    let panStart = null;
+    DOM.lightboxBody.addEventListener("pointerdown", (event) => {
+      if (event.pointerType !== "mouse" || event.button !== 0 || !DOM.lightboxBody.classList.contains("is-zoomed")) return;
+      event.preventDefault();
+      panStart = { x: event.clientX, y: event.clientY, left: DOM.lightboxBody.scrollLeft, top: DOM.lightboxBody.scrollTop };
+      DOM.lightboxBody.setPointerCapture(event.pointerId);
+    });
+    DOM.lightboxBody.addEventListener("pointermove", (event) => {
+      if (!panStart) return;
+      DOM.lightboxBody.scrollLeft = panStart.left + panStart.x - event.clientX;
+      DOM.lightboxBody.scrollTop = panStart.top + panStart.y - event.clientY;
+    });
+    DOM.lightboxBody.addEventListener("lostpointercapture", () => { panStart = null; });
     DOM.closeLightbox.addEventListener("click", closeLightbox);
     DOM.lightbox.addEventListener("click", (event) => {
       if (event.target === DOM.lightbox) {
@@ -1591,7 +1834,7 @@
     window.addEventListener("hashchange", () => {
       navigateFromHash("replace");
     });
-    DRAWER_MEDIA_QUERY.addEventListener("change", synchronizeDrawerMode);
+
   }
 
   /**
@@ -1609,6 +1852,9 @@
     APP_STATE.eventBySlug = new Map(
       APP_STATE.events.map((eventEntry) => [eventEntry.slug, eventEntry])
     );
+    initializeBookLayout();
+    renderTripFacts();
+    renderEventNavigator();
     bindInterfaceEvents();
     synchronizeDrawerMode();
 
@@ -1626,8 +1872,6 @@
       return;
     }
 
-    renderTripFacts();
-    renderEventNavigator();
     navigateFromHash("replace");
   }
 

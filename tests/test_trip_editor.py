@@ -139,8 +139,16 @@ class StorageTests(TripFixture):
         import re
         controller = (REPOSITORY / 'trips/shared/gallery.js').read_text()
         keys = set(re.findall(r'formatLabel\("([^"]+)"', controller))
+        # Book controls ship localized shared defaults, so existing editor presets need no migration.
+        book_labels = controller.split('const BOOK_LABELS = Object.freeze({', 1)[1].split('});', 1)[0]
+        shared_keys = []
         for language in ('en', 'bg'):
-            self.assertFalse(keys - language_preset(language)['labels'].keys())
+            # Values can contain brace tokens; capture through the next language declaration instead.
+            language_block = book_labels.split(f'{language}: {{', 1)[1].split('bg: {', 1)[0]
+            localized_keys = set(re.findall(r'(\w+): "', language_block))
+            shared_keys.append(localized_keys)
+            self.assertFalse(keys - language_preset(language)['labels'].keys() - localized_keys)
+        self.assertEqual(shared_keys[0], shared_keys[1])
 
     def test_version_conflict_preserves_external_change(self) -> None:
         """A stale browser snapshot cannot replace a newer external edit."""
