@@ -497,10 +497,11 @@ body.book-gallery {
   min-width: 0;
   padding: var(--space-2) var(--book-inset);
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
   gap: var(--space-2);
 }
-.event-heading { min-width: 0; }
+/* Event context shares the header ribbon and wraps with controls without reserving a separate content row. */
+.event-heading { min-width: 0; flex: 1 1 18rem; }
 .event-heading h2 { margin: 0; font: 600 var(--book-heading-size)/1.2 var(--font-display); overflow-wrap: anywhere; }
 .event-heading__date { margin: 0; font-size: var(--font-size-label); color: var(--color-lacquer); }
 .event-heading__status { margin: 0; font-size: var(--font-size-small); }
@@ -672,7 +673,12 @@ body.book-gallery {
 
 /* Phones: 6px outer inset plus 8px text padding gives 14px per side at default text size. */
 @media (max-width: 40rem) {
-  :root { --book-inset: 0.375rem; --book-text-padding: 0.5rem; }
+  :root {
+    --book-inset: 0.375rem;
+    --book-text-padding: 0.5rem;
+    /* Two 12.5% reading-size steps above the former 1.2rem mobile caption. */
+    --book-caption-size: 1.51875rem;
+  }
   .navigator { width: 100%; }
   .navigator-trigger svg { display: none; }
 }

@@ -182,3 +182,6 @@
 - [20260915-231020-R-20260915-2307] [A] Replace the image modal Increase/Decrease controls with properly positioned + and - buttons that repeatedly adjust zoom in steps and support a higher magnification than the previous viewer.
 - [20260915-231759-R-20260915-2315] [A] Support Left and Right keyboard arrows to navigate to the previous and next gallery item.
 - [20260915-231759-R-20260915-2315] [A] Center the image modal minus/plus zoom controls horizontally.
+- [20260916-001017-R-20260916-0008] [A] Remove duplicate Previous event and Next event controls on mobile so each available direction appears only once, superseding the earlier duplicated event navigation requirement.
+- [20260916-001017-R-20260916-0008] [A] Increase text beneath gallery images on mobile by at least two font-size steps, superseding the previous mobile caption reduction.
+- [20260916-001017-R-20260916-0008] [A] Merge the event-title area into the heading area on both mobile and desktop.

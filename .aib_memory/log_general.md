@@ -72,3 +72,5 @@
 20260915-201025: aib-modify: input archived (R-20260915-2307; request closed)
 20260915-201523: aib-modify: Step 1 Read instructions
 20260915-201808: aib-modify: input archived R-20260915-2315 (post-close log recorded in general log)
+20260915-210806: aib-modify: Step 1 Read instructions
+20260915-211032: aib-modify: input archived R-20260916-0008; request closed; seven browser scenarios passed. Post-close logging uses general log because no active request remains.

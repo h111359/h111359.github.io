@@ -1280,6 +1280,10 @@
     context.append(DOM.heroSubtitle, DOM.tripFacts);
     DOM.navigator.querySelector(".navigator__header").after(context);
     DOM.eventSearchForm.hidden = APP_STATE.events.length < 2;
+    // Keep event context in the shared ribbon at every width, preserving its focus and live status nodes.
+    DOM.siteHeader.querySelector(".hero__inner").insertBefore(
+      DOM.eventTitle.closest(".event-heading"), DOM.openNavigator
+    );
     DOM.siteHeader.querySelector(".hero__inner").appendChild(createElement("div", "book-navigation"));
     const toolbar = createElement("div", "lightbox-toolbar");
     toolbar.appendChild(DOM.closeLightbox);
@@ -1696,8 +1700,6 @@
     const currentLoadSequence = APP_STATE.loadSequence;
     updateNavigatorSelection(slug);
     renderEventHeading(eventEntry);
-    DOM.main.querySelector(".event-heading .event-navigation")?.remove();
-    DOM.eventTitle.closest(".event-heading").appendChild(createEventControls());
     DOM.eventTitle.focus({ preventScroll: true });
     renderLoadingState();
 

@@ -76,6 +76,10 @@
           assert(get('#gallery').clientHeight > 40, 'Content page lost its available height');
           assert(get('#siteHeader .book-navigation'), 'Navigation is missing from the title ribbon');
           assert(!get('#main-content .book-navigation'), 'Bottom navigation still consumes content height');
+          assert(get('#siteHeader #eventTitle'), 'Event title is missing from the shared header');
+          assert(!get('#main-content .event-heading'), 'Separate event heading still consumes content height');
+          const eventLinks = [...doc.querySelectorAll('.event-navigation a')];
+          assert(new Set(eventLinks.map(link => link.href)).size === eventLinks.length, 'Duplicate sequential event controls');
         };
         fits();
         if (count < 2) {
@@ -147,8 +151,10 @@
             assert(Math.abs(captionBox.width - galleryBox.width) < 1, 'Landscape caption does not span the gallery');
             assert(Math.abs(captionBox.left - galleryBox.left) < 1, 'Caption left edge is misaligned');
             const rootSize = parseFloat(win.getComputedStyle(doc.documentElement).fontSize);
-            const expectedSize = Math.min(Math.max(1.2 * rootSize, 0.018 * win.innerWidth), 1.4 * rootSize);
-            assert(Math.abs(parseFloat(win.getComputedStyle(get('.media-caption')).fontSize) - expectedSize) < 0.1, 'Caption font was not reduced one step');
+            const expectedSize = win.matchMedia('(max-width: 40rem)').matches
+              ? 1.2 * 1.125 ** 2 * rootSize
+              : Math.min(Math.max(1.2 * rootSize, 0.018 * win.innerWidth), 1.4 * rootSize);
+            assert(Math.abs(parseFloat(win.getComputedStyle(get('.media-caption')).fontSize) - expectedSize) < 0.1, 'Caption font does not match the mobile enlargement or desktop size');
           }
           assert(!get('.media-side-button'), 'Image-side navigation remains');
           assert(Math.abs(mediaBox.width - get('.media-card').clientWidth / (ratio < 1 ? 2 : 1)) < 2, 'Removed arrows still reserve image space');
