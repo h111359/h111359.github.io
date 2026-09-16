@@ -185,3 +185,4 @@
 - [20260916-001017-R-20260916-0008] [A] Remove duplicate Previous event and Next event controls on mobile so each available direction appears only once, superseding the earlier duplicated event navigation requirement.
 - [20260916-001017-R-20260916-0008] [A] Increase text beneath gallery images on mobile by at least two font-size steps, superseding the previous mobile caption reduction.
 - [20260916-001017-R-20260916-0008] [A] Merge the event-title area into the heading area on both mobile and desktop.
+- [20260916-070730-R-20260916-0707] [A] Reduce text beneath gallery images on mobile to match the font size of standalone text elements, superseding the previous mobile caption enlargement.

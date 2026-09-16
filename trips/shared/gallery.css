@@ -676,8 +676,8 @@ body.book-gallery {
   :root {
     --book-inset: 0.375rem;
     --book-text-padding: 0.5rem;
-    /* Two 12.5% reading-size steps above the former 1.2rem mobile caption. */
-    --book-caption-size: 1.51875rem;
+    /* Mobile captions match standalone text pages for a consistent reading size. */
+    --book-caption-size: var(--book-reading-size);
   }
   .navigator { width: 100%; }
   .navigator-trigger svg { display: none; }
