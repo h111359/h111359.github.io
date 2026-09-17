@@ -79,3 +79,4 @@
 - [20260915-231020-R-20260915-2307] [A] Use the fitted image as the minimum zoom because shrinking below it would waste the viewing area; preserve toolbar focus across repeated zoom actions so keyboard users can adjust magnification without returning from the panning region each time.
 - [20260915-231759-R-20260915-2315] [A] Reserve arrow navigation for the unobstructed book view because text editing, image panning, and modal interaction must retain their native keyboard behavior; apply existing item boundaries without crossing events.
 - [20260916-001017-R-20260916-0008] [A] Interpret the requested two mobile font-size steps using the established 12.5 percent reading scale so the enlargement remains consistent with previous typography adjustments.
+- [20260917-050522-R-20260917-0503] [A] Treat the trips landing page as a visitor directory of actual journals; exclude the reusable template and authoring utilities because they are not trip destinations.
