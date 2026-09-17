@@ -439,9 +439,13 @@ svg {
 :root {
   --book-inset: 1rem; /* Outer inset combines with text padding for 24–32px desktop sides. */
   --book-text-padding: 0.75rem;
-  --book-reading-size: clamp(1.35rem, 2.025vw, 1.575rem); /* Reading text grows another 12.5% across viewport sizes. */
-  --book-caption-size: clamp(1.2rem, 1.8vw, 1.4rem); /* Horizontal captions return one reading-size step to leave more image space. */
   --book-heading-size: 1.25rem;
+  /* Reading text and captions sit exactly one typographic point below the unchanged page titles. */
+  --book-reading-size: calc(var(--book-heading-size) - 1pt);
+  --book-caption-size: var(--book-reading-size);
+  /* Preserve content titles at their former responsive sizes independently of the reduced body text. */
+  --book-content-heading-size: calc(clamp(1.35rem, 2.025vw, 1.575rem) * 1.2);
+  --book-caption-heading-size: calc(clamp(1.2rem, 1.8vw, 1.4rem) * 1.2);
 }
 html { height: 100%; scroll-behavior: auto; }
 body.book-gallery {
@@ -587,6 +591,8 @@ body.book-gallery {
 /* Horizontal text spans the content width even when the contained photo is narrower. */
 .media-card--story .media-caption { width: 100%; }
 .media-card--story:not(.media-card--portrait) .media-caption {
+  /* Landscape content titles retain their original, slightly smaller responsive scale. */
+  --book-content-heading-size: var(--book-caption-heading-size);
   font-size: var(--book-caption-size);
   padding: var(--space-2);
 }
@@ -632,7 +638,7 @@ body.book-gallery {
   font: var(--book-reading-size)/1.65 var(--font-display);
   white-space: pre-wrap;
 }
-.media-caption h3, .story-card h3 { margin: 0 0 var(--space-2); font-size: 1.2em; line-height: 1.2; }
+.media-caption h3, .story-card h3 { margin: 0 0 var(--space-2); font-size: var(--book-content-heading-size); line-height: 1.2; }
 .media-caption > :first-child, .story-body > :first-child { margin-top: 0; }
 .media-caption > :last-child, .story-body > :last-child { margin-bottom: 0; }
 .story-card { background: var(--color-surface); }
@@ -678,6 +684,8 @@ body.book-gallery {
     --book-text-padding: 0.5rem;
     /* Mobile captions match standalone text pages for a consistent reading size. */
     --book-caption-size: var(--book-reading-size);
+    /* Mobile caption titles previously inherited the standalone reading scale. */
+    --book-caption-heading-size: var(--book-content-heading-size);
   }
   .navigator { width: 100%; }
   .navigator-trigger svg { display: none; }

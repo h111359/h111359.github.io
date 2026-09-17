@@ -32,13 +32,11 @@
   ]);
   // Shared defaults localize new controls without overwriting authored trip labels.
   const BOOK_LABELS = Object.freeze({
-    en: { previousEvent: "Previous event", nextEvent: "Next event", eventNavigation: "Browse events",
-      previousItem: "Previous item", nextItem: "Next item", itemNavigation: "Browse items",
+    en: { previousItem: "Previous item", nextItem: "Next item", itemNavigation: "Browse items",
       itemDestination: "Item {number}: {title}", itemPosition: "{number} / {total}",
       firstItem: "First page", lastItem: "Last page", pageNumber: "Page number", textNoun: "Text",
       zoomIn: "Zoom in", zoomOut: "Zoom out" },
-    bg: { previousEvent: "Предишно събитие", nextEvent: "Следващо събитие", eventNavigation: "Преглед на събития",
-      previousItem: "Предишен елемент", nextItem: "Следващ елемент", itemNavigation: "Преглед на елементи",
+    bg: { previousItem: "Предишен елемент", nextItem: "Следващ елемент", itemNavigation: "Преглед на елементи",
       itemDestination: "Елемент {number}: {title}", itemPosition: "{number} / {total}",
       firstItem: "Първа страница", lastItem: "Последна страница", pageNumber: "Номер на страница", textNoun: "Текст",
       zoomIn: "Увеличи", zoomOut: "Намали" }
@@ -1177,28 +1175,6 @@
     return button;
   }
 
-  // Links retain bookmarkable destinations and native modifier-click behavior.
-  function createEventControls() {
-    const nav = createElement("nav", "event-navigation");
-    nav.setAttribute("aria-label", formatLabel("eventNavigation"));
-    const index = APP_STATE.events.indexOf(APP_STATE.activeEvent);
-    if (APP_STATE.events.length < 2 || index < 0) return nav;
-    [-1, 1].forEach((direction) => {
-      const entry = APP_STATE.events[index + direction];
-      if (!entry) return;
-      const link = createElement("a", "book-button");
-      link.href = `#${new URLSearchParams({ event: entry.slug })}`;
-      link.textContent = formatLabel(direction < 0 ? "previousEvent" : "nextEvent");
-      link.addEventListener("click", (event) => {
-        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
-        event.preventDefault();
-        navigateToEvent(entry.slug);
-      });
-      nav.appendChild(link);
-    });
-    return nav;
-  }
-
   // Only the active page exists in the DOM, excluding hidden media from playback and the focus order.
   function showItem(index, focus = true) {
     closeLightbox();
@@ -1269,7 +1245,6 @@
       }
       navigation.appendChild(items);
     }
-    navigation.appendChild(createEventControls());
   }
 
   // Grid tracks measure real wrapped headings and controls, leaving precisely the remaining viewport to content.

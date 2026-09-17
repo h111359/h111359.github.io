@@ -80,3 +80,5 @@
 - [20260915-231759-R-20260915-2315] [A] Reserve arrow navigation for the unobstructed book view because text editing, image panning, and modal interaction must retain their native keyboard behavior; apply existing item boundaries without crossing events.
 - [20260916-001017-R-20260916-0008] [A] Interpret the requested two mobile font-size steps using the established 12.5 percent reading scale so the enlargement remains consistent with previous typography adjustments.
 - [20260917-050522-R-20260917-0503] [A] Treat the trips landing page as a visitor directory of actual journals; exclude the reusable template and authoring utilities because they are not trip destinations.
+
+- [20260917-051325-R-20260917-0511] [A] Use the persistent trip/event header as the reference for the requested smaller reading text because the reported oversized body text already sits below its own content headings; preserve content-heading sizes as well to honor the title-size constraint.

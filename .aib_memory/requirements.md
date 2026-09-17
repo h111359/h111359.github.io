@@ -187,3 +187,7 @@
 - [20260916-001017-R-20260916-0008] [A] Merge the event-title area into the heading area on both mobile and desktop.
 - [20260916-070730-R-20260916-0707] [A] Reduce text beneath gallery images on mobile to match the font size of standalone text elements, superseding the previous mobile caption enlargement.
 - [20260917-050522-R-20260917-0503] [A] Create trips/index.html with links to the trip sub-pages.
+
+- [20260917-051325-R-20260917-0511] [A] Set trip reading text and captions in trips/shared/gallery.css one point smaller than the header titles while keeping existing header/title sizes unchanged, superseding earlier reading-text enlargements.
+
+- [20260917-053404-R-20260917-0533] [A] Remove the Previous event (Предишно събитие) and Next event (Следващо събитие) buttons from the shared trip gallery header for multipart trips, superseding the earlier sequential event-control requirement.
