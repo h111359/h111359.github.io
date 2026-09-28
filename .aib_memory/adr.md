@@ -82,3 +82,7 @@
 - [20260917-050522-R-20260917-0503] [A] Treat the trips landing page as a visitor directory of actual journals; exclude the reusable template and authoring utilities because they are not trip destinations.
 
 - [20260917-051325-R-20260917-0511] [A] Use the persistent trip/event header as the reference for the requested smaller reading text because the reported oversized body text already sits below its own content headings; preserve content-heading sizes as well to honor the title-size constraint.
+
+- [20260919-205128-R-20260919-2037] [A] Reuse the existing coordinated batch writer for navigation saves because partial success across independently saved drafts would make a failed departure ambiguous.
+- [20260919-205128-R-20260919-2037] [A] Treat inaccessible history destinations as recoverable navigation failures because retaining only a loaded registry could leave the visible screen associated with the wrong trip.
+- [20260919-205128-R-20260919-2037] [A] Retain same-document history entries during a cancelled departure so Stay does not destroy the user’s available Forward path.

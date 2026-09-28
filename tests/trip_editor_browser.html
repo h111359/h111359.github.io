@@ -51,7 +51,8 @@
     RESULTS.textContent = ''; passed = 0; failed = 0;
     const source = await fetch('../trips/data_editor.html').then(response => response.text());
     // Disable only automatic connection/restoration; every function under test is the repository implementation.
-    const fixture = source.replace('  initializeTripWorkflow();', '  buildTripForms();')
+    const fixture = source.replace('  initializeTripWorkflow();', '  buildTripForms(); initializeScreens();')
+      .replace("'use strict';", "'use strict'; const originalPush = history.pushState.bind(history), originalReplace = history.replaceState.bind(history); history.pushState = state => originalPush(state, ''); history.replaceState = state => originalReplace(state, '');")
       .replace('<head>', '<head><meta http-equiv="Content-Security-Policy" content="img-src data:; connect-src \'none\'; frame-src \'none\'">');
     const editor = await loadFrame(document.getElementById('editor'), fixture);
     await editor.eval(`(async () => {
@@ -106,7 +107,7 @@
         records.forEach(entry => fixtureFiles.set(entry.data, assignmentSource('GALLERY_ITEMS', [{ type: 'text', title: 'Story', body: '<p>Original</p>', desc: '' }])));
         const config = { language: 'bg', locale: 'bg-BG', heading: 'Trip', theme: { heroWash: 'pink', future: 'keep' }, labels: { events: 'Събития', close: 'Custom close' }, future: { nested: [1, true] } };
         fixtureFiles.set('trip-config.js', assignmentSource('GALLERY_TRIP_CONFIG', config));
-        TRIP_STATE.config = config;
+        TRIP_STATE.config = config; SCREEN_STATE.savedConfig = structuredClone(config);
         TRIP_STATE.configVersion = fixtureFiles.get('trip-config.js');
         TRIP_STATE.presets = { bg: { locale: 'bg-BG', labels: {events: 'Събития', close: 'Затвори'} }, en: { locale: 'en-US', labels: {events: 'Events', close: 'Close'} } };
         fixtureFail = false;
@@ -166,7 +167,7 @@
       })()`), 'Preview consent/failure/hash policy failed');
     });
     await check('Dirty trip switch cancellation preserves loaded content', async () => {
-      assert(await editor.eval(`(async () => { await resetFixture(); dirty=true; window.confirm=()=>false; await selectTrip('other'); window.confirm=()=>true; return TRIP_STATE.trip==='test' && dirty && currentEventHandle.path==='data/event-one.js'; })()`), 'Cancelled switch changed state');
+      assert(await editor.eval(`(async () => { await resetFixture(); dirty=true; const pending=selectTrip('other'); document.getElementById('navigation-stay').click(); await pending; return TRIP_STATE.trip==='test' && dirty && currentEventHandle.path==='data/event-one.js'; })()`), 'Cancelled switch changed state');
     });
     await check('Late polling results cannot replace a newly selected event', async () => {
       assert(await editor.eval(`(async () => {
@@ -190,6 +191,108 @@
         activeAiOperation={controller:{abort:()=>{aborted=true;}}}; resetTripSelection(); handleClearOpenAiKey();
         return retained && aborted && !openAiApiKey;
       })()`), 'AI state was not preserved/cancelled correctly');
+    });
+    await check('Three screens show only their controls and title-only lists', async () => {
+      assert(await editor.eval(`(async () => {
+        await resetFixture(); commitScreen({screen:'parts',trip:'test'});
+        const parts = !document.getElementById('parts-screen').hidden && document.getElementById('part-screen').hidden && document.getElementById('btn-save').hidden;
+        const titles = [...document.querySelectorAll('#part-list a')].map(link=>link.textContent).join(',') === 'event-one,event-two';
+        await navigateScreen({screen:'part',trip:'test',data:'data/event-two.js'});
+        return parts && titles && !document.getElementById('part-screen').hidden && !document.getElementById('btn-save').hidden && document.querySelectorAll('#breadcrumbs a').length===2;
+      })()`), 'Screen visibility, titles or breadcrumbs are incorrect');
+    });
+    await check('Navigation Stay and Discard preserve or restore actual content', async () => {
+      assert(await editor.eval(`(async () => {
+        await resetFixture(); commitScreen(partRoute()); items[0].body='Unsaved'; renderItems(); dirty=true;
+        let pending=navigateScreen({screen:'parts',trip:'test'}); document.getElementById('navigation-stay').click(); await pending;
+        if(SCREEN_STATE.route.screen!=='part' || !dirty || items[0].body!=='Unsaved') return false;
+        pending=navigateScreen({screen:'parts',trip:'test'}); document.getElementById('navigation-discard').click(); await pending;
+        return SCREEN_STATE.route.screen==='parts' && !dirty && items[0].body==='<p>Original</p>';
+      })()`), 'Stay or discard lost its intended draft semantics');
+    });
+    await check('Save and continue writes content in helper and manual modes', async () => {
+      for (const helper of [true,false]) assert(await editor.eval(`(async () => {
+        await resetFixture(${helper}); commitScreen(partRoute()); items[0].body='Saved by navigation'; renderItems(); dirty=true;
+        const pending=navigateScreen({screen:'parts',trip:TRIP_STATE.trip}); document.getElementById('navigation-save').click(); await pending;
+        return SCREEN_STATE.route.screen==='parts' && !dirty && fixtureFiles.get('data/event-one.js').includes('Saved by navigation');
+      })()`), 'Navigation save failed in storage mode ' + helper);
+    });
+    await check('Failed navigation save keeps edits, route and actionable dialog', async () => {
+      assert(await editor.eval(`(async () => {
+        await resetFixture(); commitScreen(partRoute()); dirty=true; fixtureFail=true;
+        const pending=navigateScreen({screen:'parts',trip:'test'}); await document.getElementById('navigation-save').onclick();
+        const retained=dirty && SCREEN_STATE.route.screen==='part' && document.getElementById('unsaved-dialog').open && document.getElementById('navigation-error').textContent.includes('Stay');
+        document.getElementById('navigation-stay').click(); await pending; fixtureFail=false; return retained;
+      })()`), 'Failure navigated or lost edits');
+    });
+    await check('Discard restores settings preset and registry deletions together', async () => {
+      assert(await editor.eval(`(async () => {
+        await resetFixture(); document.getElementById('setting-language').value='en'; changeTripLanguage();
+        await removePart(1); const pending=resolveNavigationDrafts(); document.getElementById('navigation-discard').click(); await pending;
+        return !hasTripDrafts() && eventRegistry.length===2 && TRIP_STATE.deleted.size===0 && TRIP_STATE.config.language==='bg' && document.getElementById('setting-language').value==='bg';
+      })()`), 'Discard did not restore all accepted drafts');
+    });
+    await check('Blank creation opens the saved part in both storage modes', async () => {
+      for (const helper of [true,false]) assert(await editor.eval(`(async () => {
+        await resetFixture(${helper}); document.getElementById('blank-part-title').value='Blank title'; document.getElementById('blank-part-slug').value='blank-part';
+        await createBlankPart(); stopRefreshPolling();
+        return SCREEN_STATE.route.screen==='part' && eventRegistry[currentEventIndex].title==='Blank title' && items.length===0 && fixtureFiles.has('data/event-blank-part.js');
+      })()`), 'Blank creation failed in storage mode ' + helper);
+    });
+    await check('Browser Back Stay, Discard and Forward retain hierarchy', async () => {
+      assert(await editor.eval(`(async () => {
+        await resetFixture(); commitScreen({screen:'parts',trip:'test'}); commitScreen(partRoute()); dirty=true;
+        const until=async predicate=>{for(let i=0;i<200;i++){if(predicate())return;await new Promise(resolve=>setTimeout(resolve,5));}throw new Error('History timed out');};
+        history.back(); await until(()=>document.getElementById('unsaved-dialog').open); document.getElementById('navigation-stay').click(); await until(()=>!SCREEN_STATE.navigating);
+        if(SCREEN_STATE.route.screen!=='part' || !dirty) return false;
+        history.back(); await until(()=>document.getElementById('unsaved-dialog').open); document.getElementById('navigation-discard').click(); await until(()=>!SCREEN_STATE.navigating);
+        if(SCREEN_STATE.route.screen!=='parts' || dirty) return false;
+        history.forward(); await until(()=>SCREEN_STATE.route.screen==='part' && !SCREEN_STATE.navigating); stopRefreshPolling(); return true;
+      })()`), 'Browser traversal diverged from the editor screen');
+    });
+    await check('Validation failure blocks navigation before writing', async () => {
+      assert(await editor.eval(`(async () => {
+        await resetFixture(); commitScreen(partRoute()); const original=fixtureFiles.get('data/event-one.js');
+        items=[{name:'invalid.jpg',preview:'',desc:''}]; renderItems(); dirty=true;
+        const pending=navigateScreen({screen:'parts',trip:'test'}); await document.getElementById('navigation-save').onclick();
+        const retained=dirty && SCREEN_STATE.route.screen==='part' && fixtureFiles.get('data/event-one.js')===original && document.getElementById('navigation-error').textContent.includes('invalid media');
+        document.getElementById('navigation-stay').click(); await pending; return retained;
+      })()`), 'Validation permitted navigation or changed stored content');
+    });
+    await check('Manual external conflict retains navigation drafts', async () => {
+      assert(await editor.eval(`(async () => {
+        await resetFixture(false); commitScreen(partRoute()); dirty=true; fixtureFiles.set('data/event-one.js','external content');
+        const pending=navigateScreen({screen:'parts',trip:''}); await document.getElementById('navigation-save').onclick();
+        const retained=dirty && SCREEN_STATE.route.screen==='part' && fixtureFiles.get('data/event-one.js')==='external content';
+        document.getElementById('navigation-stay').click(); await pending; return retained;
+      })()`), 'Manual external changes were overwritten by navigation');
+    });
+    await check('Browser Back waits for successful retry after failed save', async () => {
+      assert(await editor.eval(`(async () => {
+        await resetFixture(); commitScreen({screen:'parts',trip:'test'}); commitScreen(partRoute()); dirty=true; fixtureFail=true;
+        const until=async predicate=>{for(let i=0;i<200;i++){if(predicate())return;await new Promise(resolve=>setTimeout(resolve,5));}throw new Error('History timed out');};
+        history.back(); await until(()=>document.getElementById('unsaved-dialog').open);
+        await document.getElementById('navigation-save').onclick();
+        if(!dirty || SCREEN_STATE.route.screen!=='part' || history.state.route.screen!=='part') return false;
+        fixtureFail=false; await document.getElementById('navigation-save').onclick(); await until(()=>!SCREEN_STATE.navigating);
+        return SCREEN_STATE.route.screen==='parts' && !dirty && history.state.route.screen==='parts';
+      })()`), 'History moved before a successful save');
+    });
+    await check('Folder picker opens parts and invalid folders retain selection', async () => {
+      assert(await editor.eval(`(async () => {
+        await resetFixture(false); window.showDirectoryPicker=async()=>({name:'Manual trip',getDirectoryHandle:async()=>nativeFolder});
+        await openFolder();
+        const opened=SCREEN_STATE.route.screen==='parts' && SCREEN_STATE.manualTitle==='Manual trip' && currentEventIndex===-1;
+        const original=directoryHandle; window.showDirectoryPicker=async()=>({getDirectoryHandle:async()=>({getFileHandle:async()=>{throw new Error('Missing registry');}})});
+        await openFolder(); return opened && directoryHandle===original && SCREEN_STATE.route.screen==='parts';
+      })()`), 'Folder opening did not preserve the new workflow or last valid selection');
+    });
+    await check('Missing history destinations retain the complete last-valid selection', async () => {
+      assert(await editor.eval(`(async () => {
+        await resetFixture(); commitScreen(partRoute()); const original=currentEventHandle;
+        await navigateScreen({screen:'part',trip:'other-trip',data:'data/event-missing.js'}); stopRefreshPolling();
+        return TRIP_STATE.trip==='test' && currentEventHandle===original && currentEventIndex===0 && SCREEN_STATE.route.trip==='test' && items[0].body==='<p>Original</p>';
+      })()`), 'Failed destination replaced the current selection');
     });
     await galleryChecks();
     RESULTS.textContent += `\n${passed} passed; ${failed} failed.\n`;

@@ -13,7 +13,7 @@ The launcher opens `http://127.0.0.1:8765/trips/data_editor.html` in the default
 
 From a terminal at the repository root, run `./trips/start-editor.sh`. On Windows use `py -3 trips/scripts/trip_editor_server.py`. Closing a Windows console can forcibly terminate Python before pending writes finish; use Ctrl+C and wait for exit before closing the window.
 
-Helper mode works in modern Chrome, Firefox and Edge. **Open a trip data/ folder** retains the Chromium File System Access fallback, including in-place event and registry editing. A data-folder handle does not authorize parent config access: trip creation, settings, Drive generation and automatic preview require helper mode. Offline manual editing still works; Drive discovery and existing AI actions require network access.
+Every fresh page opening starts on **Trips**, including both launchers and reloads. Helper mode works in modern Chrome, Firefox and Edge. Without the helper, **Open trip folder** starts the Chromium File System Access fallback, including in-place content and part management. Select either the trip folder or its `data/` subfolder. A data-folder handle does not authorize parent config access: trip creation, settings, Drive generation and automatic preview require helper mode. Offline manual editing still works; Drive discovery and existing AI actions require network access.
 
 ## Architecture
 
@@ -102,20 +102,24 @@ Media records may also include `flipHorizontal: true`, `flipVertical: true`, and
 
 ## Add, edit or delete parts
 
-Use the existing **events.js registry** panel to add blank parts, change titles, reorder entries or remove parts. New identities are editable before their first save; saved slugs and filenames are locked to preserve bookmarks. A newly registered missing event file is created as an empty part together with its registry entry.
+The editor has three screens, with title-only lists and breadcrumbs: **Trips → Trip title → Part title**. Choose a trip, then choose one of its parts in published order. Breadcrumb ancestors and browser Back/Forward navigate between these screens. A new trip opens an empty parts screen with **Add first part**.
 
-Removing a saved part queues deletion of **both** its registry entry and event file after confirmation. **Save registry** applies the coordinated operation. An event file still referenced by another row cannot be deleted. Existing malformed or duplicate registry records remain readable and existing event files remain editable, but every registry-changing operation requires the full registry to be valid. Correct editable titles in the panel; if a repair needs a saved slug or filename change, repair the source manually, then choose **Reload trip / repair feedback**. The editor does not silently rename saved identities.
+On the parts screen, **Create blank part** asks for a title and portable URL slug, saves the empty file and registry together, then opens the content editor. **Manage parts** reveals title, order and deletion controls. New identities are editable before their first save; saved slugs and filenames remain locked to preserve bookmarks. **Save part changes** applies registry edits and creates missing files for new entries.
 
-Event editing retains rich text, text blocks, media visibility, flips, quarter-turn rotation, ordering and AI description controls. Helper mode remembers the last trip and event; manual mode remembers a user-authorized folder and event when browser permissions/storage allow it. Revoked access or cleared storage requires reopening the folder. API keys remain in tab memory.
+Removing a saved part queues deletion of **both** its registry entry and event file after confirmation. An event file still referenced by another row cannot be deleted. Existing malformed or duplicate registry records remain readable and existing content remains editable, but every registry-changing operation requires the full registry to be valid. Correct editable titles in **Manage parts**; if a repair needs a saved slug or filename change, repair the source manually, then use **Trip settings → Reload trip / repair feedback**.
 
-Settings, registry and event drafts are tracked separately. Switching trips asks before discarding any of them. The selected event refreshes manually or every five seconds while visible; external changes are deferred while dirty, stale writes are rejected, and failed parsing retains the last valid state. Late loads and AI results cannot replace a newly selected trip/event.
+The part screen retains rich text, text blocks, media visibility, flips, quarter-turn rotation, ordering, refresh, preview and AI description controls, with a visible **Save** button. Trip settings and part management remain on the parent parts screen. AI settings are a secondary disclosure; API keys remain in tab memory. The layouts support desktop and tablet portrait, with visible keyboard focus and touch-sized primary actions.
+
+Settings, registry and content drafts remain separate. Leaving through breadcrumbs, trip/part selection or browser history offers **Save and continue**, **Discard and continue**, and **Stay**. Saving coordinates affected drafts and only navigates after successful validation and writing. Failures retain edits and report how to proceed. Discard restores accepted snapshots; Stay keeps the location and edits. Closing or reloading uses the browser's standard unsaved-change warning.
+
+The selected part refreshes manually or every five seconds while visible; external changes are deferred while dirty, stale writes are rejected, and failed parsing retains the last valid state. Late loads and AI results cannot replace a newly selected trip/part. Manual-folder mode begins with explicit folder selection, then uses the same parts and content screens; creation of entire trips, trip settings, Drive import and automatic preview require the helper.
 
 ## Generate a part from a public Drive folder
 
-1. Save any outstanding drafts. Open **Add or regenerate a part from Google Drive**.
-2. Enter the date, title and public Drive folder URL. Use **Suggest slug and filename** or edit the new identity. For replacement, choose **Regenerate selected part** to retain its saved identity; **New part identity** returns to creation mode.
+1. Save any outstanding drafts. On the parts screen choose **Import from Google Drive**.
+2. Enter the date, title and public Drive folder URL. Use **Suggest slug and filename** or edit the new identity. For replacement, choose a **Part to replace**, then **Use replacement identity** to retain its saved identity; **New part identity** returns to creation mode.
 3. Choose **Discover media**. Review the included filenames, valid count and skip report. Large folders can take several minutes because each selected child is validated.
-4. Choose **Confirm and save reviewed part**. The helper rechecks file versions and writes the event plus registry together. A review expires after ten minutes and can be committed only once.
+4. Choose **Confirm and save reviewed part**. The helper rechecks file versions and writes the event plus registry together. A review expires after ten minutes and can be committed only once. Successful import opens the created part’s content editor.
 
 Replacement requires explicit confirmation that descriptions, text blocks, visibility, corrections and custom ordering will be lost. Failed discovery, zero supported media, denied replacement, stale versions or failed registry writes leave the original files intact under the runtime recovery policy below. Folder URLs are not stored in the public event registry or configuration; enter the URL again for regeneration.
 

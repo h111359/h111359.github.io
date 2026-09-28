@@ -764,6 +764,94 @@
     #trip-status, #generation-summary { white-space: pre-wrap; overflow-wrap: anywhere; }
     .trip-panel summary { cursor: pointer; padding-block: var(--ai-space-standard); }
     [hidden] { display: none; }
+    /* ============================================================
+       Screen design system — quiet surfaces and clear actions for desktop/tablet authoring
+       ============================================================ */
+    :root {
+      /* Canvas, paper, ink and muted text establish a consistent neutral editor palette. */
+      --editor-canvas: #f3f5f7;
+      --editor-paper: #ffffff;
+      --editor-ink: #172c36;
+      --editor-muted: #526570;
+      /* Teal identifies primary actions and focus; borders separate compact lists. */
+      --editor-action: #09675f;
+      --editor-action-hover: #074d47;
+      --editor-line: #cbd5da;
+      --editor-soft: #e6efee;
+      --editor-error: #a32323;
+      /* Shared spacing, radius and type scale for every screen and touch target. */
+      --editor-space-xs: .375rem;
+      --editor-space-sm: .75rem;
+      --editor-space: 1rem;
+      --editor-space-lg: 1.5rem;
+      --editor-space-xl: 2.5rem;
+      --editor-radius: .65rem;
+      --editor-font: 1rem;
+      --editor-small: .875rem;
+      --editor-title: 2rem;
+      --editor-target: 2.75rem;
+    }
+    body { background: var(--editor-canvas); color: var(--editor-ink); font-size: var(--editor-font); line-height: 1.55; }
+    #app-main { max-width: 72rem; padding: var(--editor-space-lg) var(--editor-space-xl) var(--editor-space-xl); }
+    #app-header { background: var(--editor-paper); color: var(--editor-ink); border-bottom: 1px solid var(--editor-line); padding: var(--editor-space-sm) var(--editor-space-xl); gap: var(--editor-space-sm); }
+    #app-header .header-title { font-size: var(--editor-font); }
+    #browser-note { background: var(--editor-soft); color: var(--editor-muted); padding: var(--editor-space-xs) var(--editor-space-sm); font-size: var(--editor-small); }
+    #breadcrumbs { display: flex; flex-wrap: wrap; align-items: center; gap: var(--editor-space-sm); margin-bottom: var(--editor-space); overflow-wrap: anywhere; }
+    #breadcrumbs a { padding-block: var(--editor-space-xs); color: var(--editor-action); }
+    #breadcrumbs [aria-current] { font-weight: 650; }
+    #trip-workflow { margin-bottom: var(--editor-space-lg); color: var(--editor-muted); font-size: var(--editor-small); }
+    h1 { font-size: var(--editor-title); line-height: 1.2; overflow-wrap: anywhere; margin-bottom: var(--editor-space-sm); }
+    .eyebrow { font-size: var(--editor-small); letter-spacing: .12em; color: var(--editor-muted); margin-bottom: var(--editor-space-xs); }
+    .screen-intro { color: var(--editor-muted); margin-bottom: var(--editor-space-lg); }
+    .screen-actions { display: flex; flex-wrap: wrap; gap: var(--editor-space-sm); margin-block: var(--editor-space); }
+    .title-list { list-style: none; border: 1px solid var(--editor-line); border-radius: var(--editor-radius); overflow: hidden; background: var(--editor-paper); margin-block: var(--editor-space-lg); }
+    .title-list:empty { display: none; }
+    .title-list li + li { border-top: 1px solid var(--editor-line); }
+    .title-list a { display: block; padding: var(--editor-space-sm) var(--editor-space); color: var(--editor-ink); text-decoration: none; overflow-wrap: anywhere; min-height: var(--editor-target); }
+    /* Hover highlights the complete title row, matching its keyboard/touch activation area. */
+    .title-list a:hover { background: var(--editor-soft); }
+    .empty-state { padding: var(--editor-space-lg); background: var(--editor-paper); border: 1px dashed var(--editor-line); border-radius: var(--editor-radius); margin-block: var(--editor-space); }
+    body button, body .trip-panel button, body .global-add-row button, body .insert-row button, body .reg-actions button, body .media-transform-controls button,
+    body #btn-open-folder, body #btn-toggle-registry, body #btn-refresh, body #btn-add-registry-entry, body #btn-save-events-js, body .fmt-btn {
+      min-height: var(--editor-target); padding: var(--editor-space-xs) var(--editor-space-sm); border: 1px solid var(--editor-line); border-radius: var(--editor-radius); background: var(--editor-paper); color: var(--editor-ink); font: inherit; font-size: var(--editor-small); cursor: pointer; margin: 0;
+    }
+    body button.primary, body #btn-save, body #btn-save-events-js, body #save-settings {
+      min-height: var(--editor-target); background: var(--editor-action); border: 1px solid var(--editor-action); color: var(--editor-paper); border-radius: var(--editor-radius); padding: var(--editor-space-xs) var(--editor-space); font-size: var(--editor-font);
+    }
+    /* Pointer feedback retains contrast for all primary and secondary actions. */
+    body button:hover { background: var(--editor-soft); color: var(--editor-ink); }
+    body button.primary:hover, body #btn-save:hover, body #btn-save-events-js:hover, body #save-settings:hover { background: var(--editor-action-hover); color: var(--editor-paper); }
+    /* Disabled controls remain legible while signaling that the action is unavailable. */
+    body button:disabled { opacity: .55; cursor: default; }
+    /* Visible inset focus on list links avoids clipping within rounded list boundaries. */
+    body :focus-visible { outline: 3px solid var(--editor-action); outline-offset: 2px; }
+    .title-list a:focus-visible { outline-offset: -3px; }
+    .trip-panel, #registry-section, #openai-settings { background: var(--editor-paper); border: 1px solid var(--editor-line); border-radius: var(--editor-radius); padding: var(--editor-space); margin-block: var(--editor-space); }
+    details summary { cursor: pointer; font-weight: 650; min-height: var(--editor-target); padding-block: var(--editor-space-xs); }
+    .trip-field input, .trip-field textarea, .trip-panel select, body .field-group input[type="text"], body .registry-entry input[type="text"], body .rich-field { background: var(--editor-paper); color: var(--editor-ink); border: 1px solid var(--editor-line); border-radius: var(--editor-radius); padding: var(--editor-space-sm); font-size: var(--editor-font); min-height: var(--editor-target); }
+    .visibility-control { min-height: var(--editor-target); padding: var(--editor-space-xs) var(--editor-space-sm); }
+    .trip-field label, body .field-group label { font-size: var(--editor-small); color: var(--editor-muted); text-transform: none; letter-spacing: normal; }
+    #fmt-toolbar { border-top: 1px solid var(--editor-line); padding-top: var(--editor-space-sm); gap: var(--editor-space-xs); }
+    #fmt-color-wrap, #fmt-color-btn { min-width: var(--editor-target); min-height: var(--editor-target); }
+    #refresh-status { color: var(--editor-muted); font-size: var(--editor-small); }
+    /* Refresh failures use the same error color as navigation validation feedback. */
+    #refresh-status.is-error, #navigation-error { color: var(--editor-error); }
+    .item-card { border-radius: var(--editor-radius); margin-bottom: var(--editor-space); }
+    .item-card-header { flex-wrap: wrap; gap: var(--editor-space-xs); }
+    .global-add-row, .insert-row { flex-wrap: wrap; gap: var(--editor-space-sm); }
+    #unsaved-dialog { margin: auto; padding: var(--editor-space-lg); max-width: min(38rem, calc(100% - 2rem)); border: 1px solid var(--editor-line); border-radius: var(--editor-radius); color: var(--editor-ink); background: var(--editor-paper); }
+    /* Modal backdrop isolates the pending navigation decision from inert editor controls. */
+    #unsaved-dialog::backdrop { background: rgb(23 44 54 / .55); }
+    /* Attribute selectors must beat existing component display rules for inactive screens and controls. */
+    body [hidden] { display: none !important; }
+    /* Tablet portrait: reduce outer padding and stack media fields without shrinking touch controls. */
+    @media (max-width: 900px) {
+      #app-main, #app-header { padding: var(--editor-space); }
+      .registry-entry { display: grid; grid-template-columns: 1fr; }
+      .reg-slug, .reg-data, .reg-title { width: 100%; }
+      .trip-grid { grid-template-columns: 1fr; }
+    }
+
   </style>
 </head>
 <body>
@@ -772,17 +860,18 @@
      Application Header — folder open, event navigation, toolbar, save
      ============================================================ -->
 <header id="app-header">
-  <span class="header-title">📂 Gallery Data Editor</span>
+  <span class="header-title">Trip editor</span>
   <!-- Chromium requirement notice — File System Access API is Chromium-only -->
   <span id="browser-note">⚠ Requires Chrome or Edge (Chromium 86+)</span>
-  <button id="btn-open-folder" type="button">Open a trip data/ folder</button>
+  <span id="legacy-selects" hidden><label for="trip-select">Trip</label><select id="trip-select"></select>
   <label id="event-select-label" for="event-select">Event:</label>
   <select id="event-select" aria-label="Select event to edit">
     <option disabled selected value="">— open folder first —</option>
   </select>
+  </span>
   <span id="unsaved-badge" aria-live="polite">● Unsaved changes</span>
   <span id="save-notification" aria-live="polite">Saved ✓</span>
-  <button id="btn-toggle-registry" type="button">events.js registry ▾</button>
+
   <!-- Refresh button: native button supports keyboard activation; status is announced separately. -->
   <button id="btn-refresh" type="button" disabled>Refresh</button>
   <button id="btn-save" type="button" disabled>Save</button>
@@ -813,31 +902,54 @@
      ============================================================ -->
 <main id="app-main">
 
-  <!-- Trip management: native selects/buttons use arrows and Enter/Space; details disclose secondary forms. -->
-  <section id="trip-workflow" class="trip-panel" aria-label="Trip workflow">
-    <h1>Trip workspace</h1>
-    <p id="trip-status" role="status" aria-live="polite">Use a launcher for trip creation, settings, Drive generation and preview. Manual data-folder editing remains available in Chromium.</p>
+  <!-- Screen hierarchy: native links support Enter; aria-current marks the current location. -->
+  <nav id="breadcrumbs" aria-label="Breadcrumb"></nav>
+  <section id="trip-workflow" aria-label="Editor status">
+    <p id="trip-status" role="status" aria-live="polite">Connecting to the local helper…</p>
+  </section>
+  <!-- Landing: a compact title list is the primary entry point on desktop and tablet. -->
+  <section id="trips-screen" aria-labelledby="trips-title">
+    <p class="eyebrow">LOCAL TRIP EDITOR</p>
+    <h1 id="trips-title" tabindex="-1">Trips</h1>
+    <p class="screen-intro">Choose a trip to work on its parts.</p>
     <div id="helper-controls" hidden>
-      <label for="trip-select">Trip</label>
-      <select id="trip-select"><option value="">Choose a trip</option></select>
-      <button type="button" id="reload-trips">Refresh trip list</button>
-      <details><summary>Create new trip</summary><div id="create-trip-fields" class="trip-grid"></div></details>
-      <div id="trip-selected-controls" hidden>
-        <button type="button" id="reload-trip">Reload trip / repair feedback</button>
-        <button type="button" id="preview-trip">Preview trip</button>
-        <details><summary>Trip settings</summary><div id="settings-fields"></div><button type="button" id="save-settings">Save settings</button></details>
-        <details id="drive-generation"><summary>Add or regenerate a part from Google Drive</summary>
-          <button type="button" id="new-part-mode">New part identity</button>
-          <div id="generation-fields" class="trip-grid"></div>
-          <section id="generation-review" hidden aria-label="Review discovered media">
-            <pre id="generation-summary"></pre>
-            <p id="replacement-warning" hidden>Replacement removes descriptions, text blocks, visibility, corrections and custom ordering.</p>
-            <button type="button" id="confirm-generation">Confirm and save reviewed part</button>
-          </section>
-        </details>
-      </div>
+      <div class="screen-actions"><button type="button" id="show-create-trip" class="primary">Create new trip</button><button type="button" id="reload-trips">Refresh list</button></div>
+      <ul id="trip-list" class="title-list" aria-label="Trips"></ul>
+      <details id="create-trip-panel" class="trip-panel" hidden><summary>Create new trip</summary><div id="create-trip-fields" class="trip-grid"></div></details>
+    </div>
+    <div id="manual-controls" hidden>
+      <button id="btn-open-folder" type="button">Open trip folder</button>
+      <p class="screen-intro">Select a trip folder or its data folder in Chrome or Edge. Trip creation, settings, Drive imports and preview require the Python launcher.</p>
     </div>
   </section>
+  <!-- Parts: management forms remain secondary disclosures below the published-order list. -->
+  <section id="parts-screen" hidden aria-labelledby="parts-title">
+    <p class="eyebrow">TRIP PARTS</p><h1 id="parts-title" tabindex="-1"></h1>
+    <p class="screen-intro">Select a part to edit its content.</p>
+    <ul id="part-list" class="title-list" aria-label="Parts in published order"></ul>
+    <div id="parts-empty" class="empty-state" hidden><p>This trip has no parts yet.</p><button id="add-first-part" type="button" class="primary">Add first part</button></div>
+    <div class="screen-actions"><button id="show-blank-part" type="button" class="primary">Create blank part</button><button id="show-drive-import" type="button">Import from Google Drive</button><button id="btn-toggle-registry" type="button" aria-expanded="false">Manage parts</button></div>
+    <details id="blank-part-panel" class="trip-panel" hidden><summary>Create blank part</summary>
+      <div class="trip-grid"><div class="trip-field"><label for="blank-part-title">Part title</label><input id="blank-part-title" type="text"></div><div class="trip-field"><label for="blank-part-slug">URL slug (lowercase letters, numbers and hyphens)</label><input id="blank-part-slug" type="text"></div></div>
+      <button id="create-blank-part" type="button" class="primary">Create and edit part</button>
+    </details>
+    <div id="registry-mount"></div>
+    <p id="manual-capabilities" class="screen-intro" hidden>Folder mode supports content and part management. Use the Python launcher for trip settings, Drive imports and preview.</p>
+    <div id="trip-selected-controls" hidden>
+      <details class="trip-panel" id="trip-settings-panel"><summary>Trip settings</summary><div id="settings-fields"></div><button type="button" id="save-settings">Save settings</button><button type="button" id="reload-trip">Reload trip / repair feedback</button></details>
+      <details id="drive-generation" class="trip-panel" hidden><summary>Import from Google Drive</summary>
+        <button type="button" id="new-part-mode">New part identity</button>
+        <div class="trip-field"><label for="replace-part-select">Part to replace</label><select id="replace-part-select"></select></div>
+        <div id="generation-fields" class="trip-grid"></div>
+        <section id="generation-review" hidden aria-label="Review discovered media"><pre id="generation-summary"></pre><p id="replacement-warning" hidden>Replacement removes descriptions, text blocks, visibility, corrections and custom ordering.</p><button type="button" id="confirm-generation">Confirm and save reviewed part</button></section>
+      </details>
+      <button type="button" id="preview-trip">Preview trip</button>
+    </div>
+  </section>
+  <!-- Content: primary save/formatting stays in the header; secondary AI settings are disclosed. -->
+  <section id="part-screen" hidden aria-labelledby="part-title-heading">
+    <p class="eyebrow">PART CONTENT</p><h1 id="part-title-heading" tabindex="-1"></h1>
+    <div class="screen-actions"><button id="preview-part" type="button">Preview part</button></div>
 
 
   <!--
@@ -878,13 +990,13 @@
   </details>
 
   <!-- ============================================================
-       events.js Registry Editor Panel — collapsed by default
+       Manage parts Panel — collapsed by default
        ============================================================ -->
-  <section id="registry-section" style="display:none;" aria-label="events.js registry editor">
-    <h2>events.js Registry Editor</h2>
+  <section id="registry-section" hidden aria-label="Part management">
+    <h2>Manage parts</h2>
     <div id="registry-list" role="list" aria-label="Event registry entries"></div>
-    <button id="btn-add-registry-entry" type="button">＋ Add event entry</button>
-    <button id="btn-save-events-js" type="button">Save events.js</button>
+    <button id="btn-add-registry-entry" type="button">Add registry entry</button>
+    <button id="btn-save-events-js" type="button">Save part changes</button>
   </section> <!-- end #registry-section -->
 
   <!-- Global add buttons — top position (above the item list) -->
@@ -902,6 +1014,7 @@
     <button type="button" id="btn-add-text-bottom">＋ Add text block (bottom)</button>
   </div>
 
+  </section> <!-- end #part-screen -->
 </main> <!-- end #app-main -->
 
 <!--
@@ -909,6 +1022,12 @@
   Design intent: Separate untrusted generated text from editable event data until explicit approval.
   Accessibility: Native modal focus handling; Escape and Cancel close without applying; labeled actions use Enter/Space.
 -->
+<!-- Native modal traps focus; Escape means Stay. Buttons use Enter/Space and save errors are announced. -->
+<dialog id="unsaved-dialog" aria-labelledby="unsaved-title" aria-describedby="unsaved-description">
+  <h2 id="unsaved-title">Save your changes?</h2><p id="unsaved-description">You have unsaved changes on this screen.</p>
+  <p id="navigation-error" role="alert"></p>
+  <div class="screen-actions"><button id="navigation-save" type="button" class="primary">Save and continue</button><button id="navigation-discard" type="button">Discard and continue</button><button id="navigation-stay" type="button" autofocus>Stay</button></div>
+</dialog>
 <dialog id="ai-review-dialog" aria-labelledby="ai-review-title" aria-describedby="ai-review-item ai-review-output">
   <h2 id="ai-review-title">Review generated description</h2>
   <p id="ai-review-item"></p>
@@ -1274,13 +1393,24 @@ async function restoreSession() {
 async function openFolder() {
   await runTripAction(async () => {
     if (!window.showDirectoryPicker) throw new Error('Manual folder mode requires Chrome or Edge. Use the local launcher in this browser.');
-    if (hasTripDrafts() && !confirm('Open a folder and discard all unsaved drafts?')) return;
-    const folder = await window.showDirectoryPicker({ mode: 'readwrite' });
+    if (!await resolveNavigationDrafts()) return;
+    const picked = await window.showDirectoryPicker({ mode: 'readwrite' });
+    let folder = picked;
+    try { folder = await picked.getDirectoryHandle('data'); }
+    catch (error) { if (error.name !== 'NotFoundError') throw error; }
+    // Validate before replacing the current folder and its last valid selection.
+    const source = await readFileHandleText(await folder.getFileHandle('events.js'));
+    const records = new Function(`let window = {}; ${source}; return window.GALLERY_EVENT_INDEX;`)();
+    if (!Array.isArray(records)) throw new Error('The folder must contain data/events.js or events.js.');
     resetTripSelection();
     TRIP_STATE.trip = ''; directoryHandle = folder;
     document.getElementById('trip-select').value = '';
     document.getElementById('trip-selected-controls').hidden = true;
     await loadEventsJs();
+    SCREEN_STATE.manualTitle = picked.name || 'Trip folder';
+    SCREEN_STATE.folderId = ++SCREEN_STATE.nextFolderId;
+    SCREEN_STATE.folders.set(SCREEN_STATE.folderId, { folder, title: SCREEN_STATE.manualTitle });
+    commitScreen({ screen: 'parts', trip: '', folder: SCREEN_STATE.folderId });
     await storeSessionValue(DIRECTORY_HANDLE_KEY, folder).catch(error => tripStatus(`Folder opened; session unavailable: ${error.message}`));
   });
 }
@@ -1343,16 +1473,10 @@ async function selectEventDraft() {
   const selectedIdx = parseInt(elEventSelect.value, 10);
   if (isNaN(selectedIdx)) return;
 
-  if (dirty) {
-    const confirmed = window.confirm('Switch event? Unsaved changes will be lost.');
-    if (!confirmed) {
-      // Restore dropdown to the currently loaded event
-      elEventSelect.value = currentEventIndex === -1 ? '' : String(currentEventIndex);
-      return;
-    }
-  }
+  if (!await resolveNavigationDrafts()) { populateEventDropdown(); return; }
   try {
     await loadEvent(selectedIdx);
+    commitScreen(partRoute());
   } catch (err) {
     alert(`Failed to load event: ${err.message}`);
     // Restore dropdown to the previously loaded event on failure
@@ -1459,7 +1583,7 @@ function parseEventSource(sourceText, filename) {
 }
 
 // ============================================================
-// events.js Registry Editor (Task 3)
+// Manage parts (Task 3)
 // ============================================================
 
 /**
@@ -1468,8 +1592,9 @@ function parseEventSource(sourceText, filename) {
  * @returns {void}
  */
 function toggleRegistryPanel() {
-  const isVisible = elRegistrySection.style.display !== 'none';
-  elRegistrySection.style.display = isVisible ? 'none' : 'block';
+  const isVisible = !elRegistrySection.hidden;
+  elRegistrySection.hidden = isVisible;
+  document.getElementById('btn-toggle-registry').setAttribute('aria-expanded', String(!isVisible));
   if (!isVisible) renderRegistryPanel();
 }
 
@@ -1552,6 +1677,8 @@ function makeRegistryMoveBtn(label, isDisabled, onClick) {
   btn.type = 'button';
   btn.className = 'btn-reg-move';
   btn.textContent = label;
+  // Arrow glyphs need a spoken action name; native buttons support Enter/Space.
+  btn.setAttribute('aria-label', label === '▲' ? 'Move part up' : 'Move part down');
   btn.disabled = isDisabled;
   btn.addEventListener('click', onClick);
   return btn;
@@ -2100,6 +2227,9 @@ function makeRichTextField(fieldName, labelText, htmlValue, cardIndex) {
   const field = document.createElement('div');
   field.className = 'rich-field';
   field.contentEditable = 'true';
+  // Multiline textbox semantics identify native contenteditable keyboard editing to assistive technology.
+  field.setAttribute('role', 'textbox');
+  field.setAttribute('aria-multiline', 'true');
   field.setAttribute('aria-label', `${labelText} rich text editor for item ${cardIndex + 1}`);
   field.dataset.field = fieldName;
   // Normalize literal lines before DOM parsing while preserving all existing HTML markup.
@@ -3037,6 +3167,7 @@ function helperDirectory(trip) {
 /** @returns {Promise<void>} Discover helper mode or restore manual folder mode. */
 async function initializeTripWorkflow() {
   buildTripForms();
+  initializeScreens();
   window.addEventListener('beforeunload', event => {
     if (hasTripDrafts()) { event.preventDefault(); event.returnValue = ''; }
   });
@@ -3049,18 +3180,15 @@ async function initializeTripWorkflow() {
       document.getElementById('helper-controls').hidden = false;
       document.getElementById('browser-note').textContent = 'Local helper connected';
       await refreshTrips();
-      let last = '';
-      try { last = localStorage.getItem('trip-editor-last-trip') || ''; }
-      catch (error) { tripStatus(`Session storage unavailable: ${error.message}`); }
-      if ([...document.getElementById('trip-select').options].some(option => option.value === last) && last) {
-        await runTripAction(() => selectTrip(last));
-      }
+      renderScreen();
       return;
     } catch (error) {
       tripStatus(`Helper unavailable. Open a launcher for trip settings and Drive generation. ${error.message}`);
     }
   }
-  await restoreSession();
+  document.getElementById('manual-controls').hidden = false;
+  tripStatus('Open a trip folder to begin. Trip settings and Drive imports require the Python launcher.');
+  renderScreen();
 }
 
 /** @returns {Promise<void>} Refresh discovery without discarding the current trip. */
@@ -3070,6 +3198,7 @@ async function refreshTrips() {
   select.replaceChildren(new Option('Choose a trip', ''));
   result.trips.forEach(trip => select.add(new Option(trip.title, trip.slug)));
   select.value = TRIP_STATE.trip;
+  renderTripList(result.trips);
   tripStatus(result.errors.length ? result.errors.join('\n') : 'Ready. Choose a trip or create one.');
 }
 
@@ -3100,7 +3229,7 @@ function resetTripSelection() {
 
 /** @param {string} slug - Selected trip. @returns {Promise<void>} Load registry/settings with draft protection. */
 async function selectTrip(slug) {
-  if (!slug || (hasTripDrafts() && !confirm('Switch trip and discard unsaved event, settings and registry changes?'))) {
+  if (!slug || !await resolveNavigationDrafts()) {
     document.getElementById('trip-select').value = TRIP_STATE.trip;
     return;
   }
@@ -3125,11 +3254,11 @@ async function selectTrip(slug) {
   }
   try {
     localStorage.setItem('trip-editor-last-trip', slug);
-    const lastEvent = localStorage.getItem(`trip-editor-last-event:${slug}`);
-    const index = eventRegistry.findIndex(entry => entry.data === lastEvent);
-    if (index >= 0) await loadEvent(index);
+
   }
   catch (error) { tripStatus(`Trip opened; session could not be remembered: ${error.message}`); }
+  SCREEN_STATE.savedConfig = structuredClone(TRIP_STATE.config);
+  renderScreen();
 }
 
 /** @param {string} text - Registry source. @param {string|null} version - Helper version. @param {Object[]} value - Parsed entries. @returns {void} */
@@ -3144,6 +3273,7 @@ function acceptRegistry(text, version, value) {
   currentEventIndex = eventRegistry.findIndex(entry => entry.data === selectedData);
   populateEventDropdown();
   renderRegistryPanel();
+  renderPartList();
 }
 
 /** @param {string} id - Field ID. @param {string} labelText - Visible name. @param {string} value - Initial value. @param {string} type - Input type. @returns {HTMLElement} Labeled field. */
@@ -3178,7 +3308,7 @@ function buildTripForms() {
   const languageLabel = document.createElement('label');
   languageLabel.htmlFor = 'new-trip-language'; languageLabel.textContent = 'Language';
   const language = document.createElement('select'); language.id = 'new-trip-language';
-  language.add(new Option('Български', 'bg')); language.add(new Option('English', 'en'));
+  language.add(new Option('Bulgarian', 'bg')); language.add(new Option('English', 'en'));
   create.append(languageLabel, language, tripButton('create-trip', 'Create new trip', createTrip));
   document.getElementById('new-trip-name').addEventListener('input', async () => {
     const name = document.getElementById('new-trip-name').value;
@@ -3190,7 +3320,7 @@ function buildTripForms() {
     } catch (error) { tripStatus(error.message); }
   });
   document.getElementById('new-trip-slug').addEventListener('input', event => { event.target.dataset.edited = 'true'; });
-  document.getElementById('trip-select').addEventListener('change', event => runTripAction(() => selectTrip(event.target.value)));
+  document.getElementById('trip-select').addEventListener('change', event => navigateScreen({ screen: 'parts', trip: event.target.value }));
   document.getElementById('reload-trips').addEventListener('click', () => runTripAction(refreshTrips));
   document.getElementById('reload-trip').addEventListener('click', () => runTripAction(() => selectTrip(TRIP_STATE.trip)));
   document.getElementById('save-settings').addEventListener('click', () => runTripAction(saveTripSettings));
@@ -3200,7 +3330,7 @@ function buildTripForms() {
 
 /** @returns {Promise<void>} Create an empty trip, then offer ordinary reviewed generation. */
 async function createTrip() {
-  if (hasTripDrafts() && !confirm('Create and select a new trip? Current unsaved drafts will be discarded.')) return;
+  if (!await resolveNavigationDrafts()) return;
   const name = document.getElementById('new-trip-name').value;
   const slug = document.getElementById('new-trip-slug').value || (await tripApi(`/api/slug?name=${encodeURIComponent(name)}`)).slug;
   const result = await tripApi('/api/create', { name, slug, language: document.getElementById('new-trip-language').value });
@@ -3209,9 +3339,11 @@ async function createTrip() {
   resetTripSelection();
   await refreshTrips();
   await selectTrip(result.slug);
+  commitScreen({ screen: 'parts', trip: result.slug });
   if (folder) {
     document.getElementById('part-folder').value = folder;
     document.getElementById('part-title').value = name;
+    document.getElementById('drive-generation').hidden = false;
     document.getElementById('drive-generation').open = true;
     await suggestPartIdentity();
     tripStatus('Empty trip created. Review the part date/title and choose Discover media.');
@@ -3229,7 +3361,7 @@ function renderTripSettings() {
     const field = tripField(`setting-${key}`, SETTINGS_LABELS[key], TRIP_STATE.config[key] ?? '');
     if (key === 'language') {
       const select = document.createElement('select'); select.id = 'setting-language';
-      select.add(new Option('Български', 'bg')); select.add(new Option('English', 'en'));
+      select.add(new Option('Bulgarian', 'bg')); select.add(new Option('English', 'en'));
       select.value = TRIP_STATE.config.language; field.querySelector('input').replaceWith(select);
     }
     (index < 4 ? basic : advanced).append(field);
@@ -3281,6 +3413,8 @@ async function saveTripSettings() {
   const result = await tripApi('/api/commit', { trip: TRIP_STATE.trip,
     changes: { 'trip-config.js': source }, versions: { 'trip-config.js': TRIP_STATE.configVersion } });
   TRIP_STATE.config = config; TRIP_STATE.configVersion = result.versions['trip-config.js']; TRIP_STATE.configDirty = false;
+  SCREEN_STATE.savedConfig = structuredClone(config);
+  renderScreen();
   tripStatus('Trip settings saved.');
 }
 
@@ -3297,7 +3431,7 @@ function buildGenerationForm() {
     tripField('part-file', 'Filename (event-*.js)'), tripField('part-folder', 'Public Drive folder URL'));
   form.append(tripButton('suggest-part', 'Suggest slug and filename', suggestPartIdentity),
     tripButton('discover-part', 'Discover media', preparePart),
-    tripButton('use-selected-part', 'Regenerate selected part', useSelectedPart));
+    tripButton('use-selected-part', 'Use replacement identity', useSelectedPart));
   document.getElementById('confirm-generation').addEventListener('click', () => runTripAction(commitPart));
   ['part-date', 'part-title'].forEach(id => document.getElementById(id).addEventListener('change', () => {
     if (!document.getElementById('part-slug').readOnly) runTripAction(suggestPartIdentity);
@@ -3320,7 +3454,7 @@ async function suggestPartIdentity() {
 
 /** @returns {void} Fill regeneration identity without allowing a saved rename. */
 function useSelectedPart() {
-  const entry = eventRegistry[currentEventIndex];
+  const entry = eventRegistry[Number(document.getElementById('replace-part-select').value)];
   if (!entry) throw new Error('Select an existing part first.');
   document.getElementById('part-title').value = entry.title;
   document.getElementById('part-slug').value = entry.slug;
@@ -3362,6 +3496,7 @@ async function commitPart() {
   document.getElementById('generation-review').hidden = true;
   await loadEventsJs();
   await loadEvent(eventRegistry.findIndex(entry => entry.slug === prepared.entry.slug));
+  commitScreen(partRoute());
   tripStatus('Part and registry saved together.');
 }
 
@@ -3372,6 +3507,7 @@ function registryChanged() {
   const data = currentEventHandle?.path || currentEventHandle?.registryData;
   currentEventIndex = eventRegistry.findIndex(entry => entry.data === data);
   populateEventDropdown();
+  renderPartList();
 }
 
 /** @param {number} index - Registry row. @returns {Promise<void>} Queue confirmed deletion of registration and data. */
@@ -3538,18 +3674,291 @@ async function savePreviewDrafts() {
   }
   if (dirty) {
     syncItemsFromDOM();
-    if (validate().length) throw new Error('Correct invalid media URLs before preview.');
+    if (validate().length) throw new Error('Correct invalid media URLs in the part before saving and continuing.');
     output = buildOutput();
     const path = eventRegistry[currentEventIndex].data;
-    batch.changes[path] = output; batch.versions[path] = currentEventHandle.version;
+    batch.changes[path] = output; batch.versions[path] = currentEventHandle.version; batch.originals[path] = acceptedSourceText;
   }
   const result = await commitEditorBatch(batch);
-  if (config) { TRIP_STATE.config = config; TRIP_STATE.configVersion = result.versions['trip-config.js']; TRIP_STATE.configDirty = false; }
+  if (config) { TRIP_STATE.config = config; TRIP_STATE.configVersion = result.versions['trip-config.js']; TRIP_STATE.configDirty = false; SCREEN_STATE.savedConfig = structuredClone(config); }
   if (output !== null) {
     currentEventHandle.version = result.versions[eventRegistry[currentEventIndex].data];
     acceptedSourceText = output; dirty = false; elUnsavedBadge.style.display = 'none';
   }
   if ('data/events.js' in batch.changes) acceptRegistry(batch.changes['data/events.js'], result.versions['data/events.js'], eventRegistry);
+  if (pendingExternalText !== null) window.setTimeout(() => refreshSelectedEvent(false), 0);
+}
+
+// ============================================================
+// Screen navigation — one route and one draft decision for all departures
+// ============================================================
+const SCREEN_STATE = {
+  route: { screen: 'trips', trip: '' }, position: 0, manualTitle: 'Trip folder',
+  folders: new Map(), folderId: 0, nextFolderId: 0, savedConfig: null, historyWaiter: null, navigating: false
+};
+
+/** @returns {Object} Stable route for the selected part, independent of list order. */
+function partRoute() {
+  return { screen: 'part', trip: TRIP_STATE.trip, folder: SCREEN_STATE.folderId,
+    data: eventRegistry[currentEventIndex]?.data };
+}
+
+/** @returns {string} Display title without changing authored content language. */
+function selectedTripTitle() {
+  return TRIP_STATE.config?.heading || TRIP_STATE.config?.pageTitle ||
+    (TRIP_STATE.trip ? document.querySelector(`#trip-select option[value="${CSS.escape(TRIP_STATE.trip)}"]`)?.textContent || TRIP_STATE.trip : SCREEN_STATE.manualTitle);
+}
+
+/** @param {Object} route - Screen destination. @returns {string} Bookmarkable local URL. */
+function screenUrl(route) {
+  const query = new URLSearchParams({ screen: route.screen });
+  if (route.trip) query.set('trip', route.trip);
+  if (route.data) query.set('part', route.data);
+  return `${location.pathname}${location.search}#${query}`;
+}
+
+/** @param {Object} route - Accepted destination. @param {boolean} push - Add a history entry. @returns {void} */
+function commitScreen(route, push = true) {
+  if (route.screen !== 'part' || route.data !== SCREEN_STATE.route.data || route.trip !== SCREEN_STATE.route.trip) {
+    abortActiveAiOperation('AI request cancelled because the editor location changed.', 'warning');
+    discardAiReview('AI review discarded because the editor location changed.', 'warning');
+    lastFocusedEditable = null;
+  }
+  SCREEN_STATE.route = { ...route };
+  if (push) SCREEN_STATE.position += 1;
+  history[push ? 'pushState' : 'replaceState']({ tripEditor: true, position: SCREEN_STATE.position, route }, '', screenUrl(route));
+  renderScreen();
+  // Focus after the action guard releases inert, so keyboard navigation lands on the new screen heading.
+  setTimeout(() => document.querySelector(`#${route.screen === 'trips' ? 'trips-title' : route.screen === 'parts' ? 'parts-title' : 'part-title-heading'}`)?.focus(), 0);
+}
+
+/** @param {string} title - Authored title. @param {Object} route - Destination. @returns {HTMLAnchorElement} Native keyboard link. */
+function screenLink(title, route) {
+  const link = document.createElement('a');
+  link.textContent = title; link.href = screenUrl(route);
+  link.addEventListener('click', event => { event.preventDefault(); navigateScreen(route); });
+  return link;
+}
+
+/** @param {Object[]} trips - Discovered trips. @returns {void} Render a compact title-only list. */
+function renderTripList(trips) {
+  const list = document.getElementById('trip-list'); list.replaceChildren();
+  trips.forEach(trip => {
+    const row = document.createElement('li');
+    const link = screenLink(trip.title || 'Untitled trip', { screen: 'parts', trip: trip.slug });
+    link.dataset.trip = trip.slug; row.append(link); list.append(row);
+  });
+  if (!trips.length) { const row = document.createElement('li'); row.textContent = 'No trips yet. Create your first trip.'; list.append(row); }
+}
+
+/** @returns {void} Render published-order titles and replacement choices from the registry draft. */
+function renderPartList() {
+  const list = document.getElementById('part-list');
+  if (!list) return;
+  list.replaceChildren();
+  const replacement = document.getElementById('replace-part-select');
+  const previous = replacement.value; replacement.replaceChildren();
+  eventRegistry.forEach((entry, index) => {
+    const title = entry.title || 'Untitled part';
+    const row = document.createElement('li');
+    row.append(screenLink(title, { screen: 'part', trip: TRIP_STATE.trip, folder: SCREEN_STATE.folderId, data: entry.data })); list.append(row);
+    replacement.add(new Option(title, String(index)));
+  });
+  if ([...replacement.options].some(option => option.value === previous)) replacement.value = previous;
+  document.getElementById('parts-empty').hidden = eventRegistry.length > 0;
+}
+
+/** @returns {void} Apply the screen hierarchy and mode capabilities without rebuilding editable drafts. */
+function renderScreen() {
+  const route = SCREEN_STATE.route, isPart = route.screen === 'part';
+  ['trips', 'parts', 'part'].forEach(name => { document.getElementById(`${name}-screen`).hidden = route.screen !== name; });
+  document.getElementById('parts-title').textContent = selectedTripTitle();
+  document.getElementById('part-title-heading').textContent = eventRegistry[currentEventIndex]?.title || 'Untitled part';
+  ['btn-save', 'btn-refresh', 'fmt-toolbar', 'refresh-status'].forEach(id => { document.getElementById(id).hidden = !isPart; });
+  document.getElementById('trip-selected-controls').hidden = !directoryHandle?.helperTrip;
+  document.getElementById('manual-capabilities').hidden = Boolean(directoryHandle?.helperTrip);
+  document.getElementById('show-drive-import').hidden = !directoryHandle?.helperTrip;
+  document.getElementById('preview-part').hidden = !directoryHandle?.helperTrip;
+  const nav = document.getElementById('breadcrumbs'); nav.replaceChildren();
+  const crumbs = [{ title: 'Trips', route: { screen: 'trips', trip: '' } }];
+  if (route.screen !== 'trips') crumbs.push({ title: selectedTripTitle(), route: { screen: 'parts', trip: TRIP_STATE.trip, folder: SCREEN_STATE.folderId } });
+  if (isPart) crumbs.push({ title: eventRegistry[currentEventIndex]?.title || 'Untitled part', route });
+  crumbs.forEach((crumb, index) => {
+    if (index) { const separator = document.createElement('span'); separator.textContent = '›'; separator.setAttribute('aria-hidden', 'true'); nav.append(separator); }
+    const element = index === crumbs.length - 1 ? document.createElement('span') : screenLink(crumb.title, crumb.route);
+    if (index === crumbs.length - 1) { element.textContent = crumb.title; element.setAttribute('aria-current', 'page'); }
+    nav.append(element);
+  });
+  document.querySelectorAll('#trip-list a').forEach(link => {
+    if (link.dataset.trip === TRIP_STATE.trip && TRIP_STATE.config) link.textContent = selectedTripTitle();
+  });
+  document.title = `${crumbs.at(-1).title} · Trip editor`;
+  renderPartList();
+}
+
+/** @returns {void} Restore accepted snapshots; discarded values can never be saved by a later navigation. */
+function discardNavigationDrafts() {
+  abortActiveAiOperation('AI request cancelled when edits were discarded.', 'warning');
+  discardAiReview('AI review discarded.', 'warning');
+  if (dirty && acceptedSourceText !== null) {
+    items = normalizeEditorItems(parseEventSource(acceptedSourceText, 'selected part')); dirty = false;
+    editorRevision += 1; renderItems(); elUnsavedBadge.style.display = 'none';
+  }
+  if (TRIP_STATE.registryDirty) acceptRegistry(TRIP_STATE.registrySource, TRIP_STATE.registryVersion, TRIP_STATE.savedEntries);
+  if (TRIP_STATE.configDirty) {
+    TRIP_STATE.config = structuredClone(SCREEN_STATE.savedConfig); TRIP_STATE.configDirty = false;
+    if (TRIP_STATE.config) renderTripSettings();
+  }
+  if (pendingExternalText !== null) window.setTimeout(() => refreshSelectedEvent(false), 0);
+}
+
+/** @returns {Promise<boolean>} True only after an explicit successful save or discard; failures retain the dialog and drafts. */
+function resolveNavigationDrafts() {
+  if (!hasTripDrafts()) return Promise.resolve(true);
+  const dialog = document.getElementById('unsaved-dialog');
+  const errorRegion = document.getElementById('navigation-error'); errorRegion.textContent = '';
+  const buttons = [...dialog.querySelectorAll('button')];
+  return new Promise(resolve => {
+    const finish = accepted => { dialog.close(); resolve(accepted); };
+    dialog.oncancel = event => { event.preventDefault(); if (!buttons[0].disabled) finish(false); };
+    document.getElementById('navigation-stay').onclick = () => finish(false);
+    document.getElementById('navigation-discard').onclick = () => { discardNavigationDrafts(); finish(true); };
+    document.getElementById('navigation-save').onclick = async () => {
+      buttons.forEach(button => { button.disabled = true; });
+      try { await savePreviewDrafts(); finish(true); }
+      catch (error) {
+        // Validation and stale-write failures are announced inside the still-open dialog.
+        errorRegion.textContent = `${error.message} Choose Stay to correct the problem, then try again.`;
+        tripStatus(errorRegion.textContent);
+      } finally { buttons.forEach(button => { button.disabled = false; }); }
+    };
+    dialog.showModal();
+  });
+}
+
+/** @param {Object} route - Destination. @returns {Promise<void>} Load destination before committing visible navigation. @throws {Error} If inaccessible. */
+async function loadScreenRoute(route) {
+  // A history entry may refer to a removed trip/part. Keep the complete last-valid selection if loading fails.
+  const previous = {
+    state: { ...TRIP_STATE, deleted: new Map(TRIP_STATE.deleted) }, directoryHandle,
+    currentEventHandle, currentEventIndex, items, eventRegistry, acceptedSourceText, pendingExternalText,
+    savedConfig: SCREEN_STATE.savedConfig, folderId: SCREEN_STATE.folderId, manualTitle: SCREEN_STATE.manualTitle
+  };
+  try { await loadScreenDestination(route); }
+  catch (error) {
+    const epoch = TRIP_STATE.epoch + 1;
+    Object.assign(TRIP_STATE, previous.state, { epoch });
+    directoryHandle = previous.directoryHandle; currentEventHandle = previous.currentEventHandle;
+    currentEventIndex = previous.currentEventIndex; items = previous.items; eventRegistry = previous.eventRegistry;
+    acceptedSourceText = previous.acceptedSourceText; pendingExternalText = previous.pendingExternalText;
+    SCREEN_STATE.savedConfig = previous.savedConfig; SCREEN_STATE.folderId = previous.folderId; SCREEN_STATE.manualTitle = previous.manualTitle;
+    document.getElementById('trip-select').value = TRIP_STATE.trip;
+    populateEventDropdown(); renderRegistryPanel(); renderItems();
+    if (TRIP_STATE.config) renderTripSettings();
+    elSaveBtn.disabled = !currentEventHandle; elRefreshBtn.disabled = !currentEventHandle;
+    if (currentEventHandle) startRefreshPolling();
+    renderScreen();
+    throw error;
+  }
+}
+
+/** @param {Object} route - Destination. @returns {Promise<void>} Load its storage and optional part. @throws {Error} On unavailable data. */
+async function loadScreenDestination(route) {
+  if (route.screen === 'trips') return;
+  if (route.trip && (TRIP_STATE.trip !== route.trip || !directoryHandle?.helperTrip)) await selectTrip(route.trip);
+  if (!route.trip && route.folder && (directoryHandle?.helperTrip || SCREEN_STATE.folderId !== route.folder)) {
+    const saved = SCREEN_STATE.folders.get(route.folder);
+    if (!saved) throw new Error('Open this trip folder again from Trips.');
+    const handle = await saved.folder.getFileHandle('events.js');
+    const text = await readFileHandleText(handle);
+    const records = new Function(`let window={}; ${text}; return window.GALLERY_EVENT_INDEX;`)();
+    if (!Array.isArray(records)) throw new Error('The selected folder registry is invalid.');
+    resetTripSelection(); TRIP_STATE.trip = ''; directoryHandle = saved.folder;
+    SCREEN_STATE.folderId = route.folder; SCREEN_STATE.manualTitle = saved.title;
+    acceptRegistry(text, undefined, records);
+  }
+  if (route.screen === 'part') {
+    const index = eventRegistry.findIndex(entry => entry.data === route.data);
+    if (index < 0) throw new Error('This part is no longer in the trip. Select another part from the parts screen.');
+    await loadEvent(index);
+  }
+}
+
+/** @param {Object} route - Link destination. @returns {Promise<void>} Serialize guarded navigation with other editor actions. */
+async function navigateScreen(route) {
+  if (SCREEN_STATE.navigating) return;
+  await runTripAction(async () => {
+    if (!await resolveNavigationDrafts()) return;
+    await loadScreenRoute(route); commitScreen(route);
+  });
+}
+
+/** @param {number} delta - History distance. @returns {Promise<void>} Wait for the actual traversal before changing screen state. */
+function traverseScreenHistory(delta) {
+  return new Promise(resolve => { SCREEN_STATE.historyWaiter = resolve; history.go(delta); });
+}
+
+/** @param {PopStateEvent} event - Browser history change. @returns {Promise<void>} Restore current URL before asking; replay only approved departures. */
+async function handleScreenHistory(event) {
+  if (SCREEN_STATE.historyWaiter) {
+    const resolve = SCREEN_STATE.historyWaiter; SCREEN_STATE.historyWaiter = null; resolve(); return;
+  }
+  if (!event.state?.tripEditor) return;
+  const target = event.state, delta = target.position - SCREEN_STATE.position;
+  if (!delta) return;
+  if (SCREEN_STATE.navigating) { await traverseScreenHistory(-delta); return; }
+  SCREEN_STATE.navigating = true;
+  // Browser Back already moved the URL. Undo it while the modal owns the decision, preserving Forward entries.
+  await traverseScreenHistory(-delta);
+  await runTripAction(async () => {
+    if (!await resolveNavigationDrafts()) return;
+    await loadScreenRoute(target.route);
+    await traverseScreenHistory(delta);
+    SCREEN_STATE.position = target.position; commitScreen(target.route, false);
+  });
+  SCREEN_STATE.navigating = false;
+}
+
+/** @param {string} id - Disclosure. @param {string} focusId - Initial editable field. @returns {void} */
+function openScreenPanel(id, focusId) {
+  document.getElementById(id).hidden = false;
+  document.getElementById(id).open = true;
+  document.getElementById(focusId).focus();
+}
+
+/** @returns {Promise<void>} Create a validated blank part with the existing coordinated registry writer, then open it. */
+async function createBlankPart() {
+  if (hasTripDrafts()) throw new Error('Save or discard pending part and settings changes before creating a blank part.');
+  const title = document.getElementById('blank-part-title').value.trim();
+  const slug = document.getElementById('blank-part-slug').value.trim();
+  if (!title || !/^[a-z0-9]+(?:[-_][a-z0-9]+)*$/.test(slug)) throw new Error('Enter a part title and a lowercase URL slug using letters, numbers, hyphens or underscores.');
+  const entry = { title, slug, data: `data/event-${slug}.js` };
+  if (eventRegistry.some(part => part.slug === slug || part.data === entry.data)) throw new Error('That part identity already exists. Choose another URL slug.');
+  try {
+    await directoryHandle.getFileHandle(entry.data.slice(5)).then(handle => handle.getFile());
+    throw new Error('That filename already exists. Choose another URL slug.');
+  } catch (error) { if (error.name !== 'NotFoundError' && error.code !== 'not_found') throw error; }
+  eventRegistry.push(entry); registryChanged(); renderRegistryPanel();
+  await saveRegistryDraft();
+  await loadEvent(eventRegistry.findIndex(part => part.data === entry.data));
+  document.getElementById('blank-part-title').value = ''; document.getElementById('blank-part-slug').value = '';
+  document.getElementById('blank-part-panel').open = false;
+  document.getElementById('blank-part-panel').hidden = true;
+  commitScreen(partRoute()); tripStatus('Blank part created. Add media or text, then Save.');
+}
+
+/** @returns {void} Bind native screen controls and start fresh at Trips on every page opening. */
+function initializeScreens() {
+  document.getElementById('registry-mount').append(elRegistrySection);
+  document.getElementById('show-create-trip').addEventListener('click', () => openScreenPanel('create-trip-panel', 'new-trip-name'));
+  ['add-first-part', 'show-blank-part'].forEach(id => document.getElementById(id).addEventListener('click', () => openScreenPanel('blank-part-panel', 'blank-part-title')));
+  document.getElementById('show-drive-import').addEventListener('click', () => openScreenPanel('drive-generation', 'part-title'));
+  document.getElementById('create-blank-part').addEventListener('click', () => runTripAction(createBlankPart));
+  document.getElementById('preview-part').addEventListener('click', previewTrip);
+  window.addEventListener('popstate', handleScreenHistory);
+  // Reload starts on Trips but retains the history counter so older entries still have valid distances.
+  SCREEN_STATE.position = history.state?.tripEditor ? history.state.position : 0;
+  commitScreen({ screen: 'trips', trip: '' }, false);
 }
 
 </script>

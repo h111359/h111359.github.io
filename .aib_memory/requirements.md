@@ -191,3 +191,17 @@
 - [20260917-051325-R-20260917-0511] [A] Set trip reading text and captions in trips/shared/gallery.css one point smaller than the header titles while keeping existing header/title sizes unchanged, superseding earlier reading-text enlargements.
 
 - [20260917-053404-R-20260917-0533] [A] Remove the Previous event (Предишно събитие) and Next event (Следващо събитие) buttons from the shared trip gallery header for multipart trips, superseding the earlier sequential event-control requirement.
+
+- [20260919-205128-R-20260919-2037] [A] Redesign local trip authoring into three focused screens: Trips, the selected trip’s parts, and the selected part’s content, with title-only trip and published-order part lists.
+- [20260919-205128-R-20260919-2037] [A] Both launchers and fresh editor openings must start on Trips; new trips must open an empty parts screen with Add first part, superseding automatic startup selection restoration.
+- [20260919-205128-R-20260919-2037] [A] Keep trip settings and part creation, renaming, ordering and deletion on the parts screen in secondary forms, with stable saved slugs and filenames.
+- [20260919-205128-R-20260919-2037] [A] Offer Create blank part and reviewed Import from Google Drive on the parts screen; successful creation or import must open the new part’s content editor.
+- [20260919-205128-R-20260919-2037] [A] Keep existing content-authoring controls on the part screen with a prominent Save action and clearly grouped secondary controls.
+- [20260919-205128-R-20260919-2037] [A] Provide Trips → Trip title → Part title breadcrumbs with navigable ancestors and a distinguished current location, coordinated with browser Back and Forward.
+- [20260919-205128-R-20260919-2037] [A] Guard breadcrumb navigation, trip or part switching and browser history with Save and continue, Discard and continue, and Stay; successful saving is required before navigation, and failed validation or writes retain edits and show actionable feedback.
+- [20260919-205128-R-20260919-2037] [A] Discard and continue must discard affected drafts before navigating; Stay must retain both the current screen and edits; closing and reloading use the standard browser unsaved-change warning.
+- [20260919-205128-R-20260919-2037] [A] Use consistent English interface labels and accessible controls across desktop and tablet layouts, including portrait, without translating trip content or adding a language switch; mobile editing remains outside scope.
+- [20260919-205128-R-20260919-2037] [A] Apply the same screen organization in helper and manual-folder modes; helper mode discovers repository trips, while manual mode starts with Open trip folder and explains helper-only capabilities.
+- [20260919-205128-R-20260919-2037] [A] Preserve separate content, registry and configuration drafts, stale asynchronous result rejection, external-change checks, deletion confirmations, coordinated-write recovery and Drive-import consent throughout the redesign.
+- [20260919-205128-R-20260919-2037] [A] Keep the local helper on Python 3.10+ standard library, loopback-only with existing path validation, and retain vanilla frontend code without a build toolchain.
+- [20260919-205128-R-20260919-2037] [A] Update product context to describe the redesigned editor screens, navigation, draft handling and storage-mode differences.
